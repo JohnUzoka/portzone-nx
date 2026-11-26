@@ -17,25 +17,49 @@ namespace
 
     constexpr int ABOUT_TAB = 4; // sidebar position: Browse, Installed, Game files, a separator, About
 
-    // A tab's content, built once the sidebar's focus has rested on it. borealis builds a tab whenever its sidebar
-    // item gains focus, so moving down from Browse to About would build Installed and Game files on the way.
+    // A tab's content, built once the sidebar's focus has rested on it (borealis builds a tab whenever its sidebar
+    // item gains focus, so moving down from Browse to About would build Installed and Game files on the way). With a
+    // cache, the content is kept when another tab is shown, and coming back shows it again at once.
     class LazyTab : public brls::Box
     {
       public:
-        explicit LazyTab(std::function<brls::View*()> make)
+        LazyTab(std::shared_ptr<TabCache> cache, int slot, std::function<brls::View*()> make)
             : brls::Box(brls::Axis::COLUMN)
+            , cache(std::move(cache))
         {
             setGrow(1);
             setAlignItems(brls::AlignItems::STRETCH);
-            brls::delay(120, [this, alive = alive, make = std::move(make)] {
-                if (*alive)
-                    addView(make());
+            if (this->cache && this->cache->views.count(slot))
+            {
+                content = this->cache->views[slot];
+                addView(content); // its lists read their ports' states again
+                return;
+            }
+            brls::delay(120, [this, slot, alive = alive, make = std::move(make)] {
+                if (!*alive)
+                    return;
+                content = make();
+                if (this->cache)
+                    this->cache->views[slot] = content;
+                addView(content);
             });
         }
-        ~LazyTab() override { *alive = false; }
+        ~LazyTab() override
+        {
+            *alive = false;
+            // Kept for next time: taken out before Box's destructor deletes it, and without a parent, which is
+            // about to be gone (a detached view still lays itself out through its parent).
+            if (cache && content)
+            {
+                removeView(content, false);
+                content->setParent(nullptr);
+            }
+        }
 
       private:
-        AliveFlag alive = std::make_shared<bool>(true);
+        std::shared_ptr<TabCache> cache;
+        brls::View* content = nullptr;
+        AliveFlag alive     = std::make_shared<bool>(true);
     };
 
     brls::View* gameFilesTab()
@@ -169,6 +193,12 @@ namespace
 
 } // namespace
 
+TabCache::~TabCache()
+{
+    for (auto& [tab, view] : views)
+        delete view;
+}
+
 HomeActivity::~HomeActivity() { *alive = false; }
 
 brls::View* HomeActivity::createContentView()
@@ -275,14 +305,16 @@ void HomeActivity::showCatalog(int tab)
         box->setAlignItems(brls::AlignItems::STRETCH);
         tabs = new brls::TabFrame();
         tabs->setGrow(1);
-        const auto lazy = [](std::function<brls::View*()> make) {
-            return [make = std::move(make)] { return new LazyTab(make); };
+        tabCache = std::make_shared<TabCache>(); // the old one goes with the old tabs, deleting what it kept
+        const auto lazy = [this](int slot, std::function<brls::View*()> make) {
+            return [cache = tabCache, slot, make = std::move(make)] { return new LazyTab(cache, slot, make); };
         };
-        tabs->addTab("Browse", lazy([] { return new BrowseView(false); }));
-        tabs->addTab("Installed", lazy([] { return new BrowseView(true); }));
-        tabs->addTab("Game files", lazy([] { return gameFilesTab(); }));
+        tabs->addTab("Browse", lazy(0, [] { return new BrowseView(false); }));
+        tabs->addTab("Installed", lazy(1, [] { return new BrowseView(true); }));
+        tabs->addTab("Game files", lazy(2, [] { return gameFilesTab(); }));
         tabs->addSeparator();
-        tabs->addTab("About", lazy([this] { return aboutTab([this] { chooseTheme(); }); }));
+        // Not kept: it shows the update check's result, which arrives after start.
+        tabs->addTab("About", [this] { return new LazyTab(nullptr, 0, [this] { return aboutTab([this] { chooseTheme(); }); }); });
         box->addView(tabs);
         tabs->focusTab(tab);
     });

@@ -7,10 +7,26 @@
 #include <borealis.hpp>
 
 #include "catalog.hpp"
+#include "state.hpp"
 #include "ui/widgets.hpp"
 
 namespace pz::ui
 {
+
+// A port's card in a list: its status line is filled in once the list has read the port's state (in the background:
+// reading the SD card for every card would hold up the controls while a tab opens).
+class PortCard
+{
+  public:
+    explicit PortCard(std::string id)
+        : id(std::move(id))
+    {
+    }
+    virtual ~PortCard() = default;
+    virtual void showState(const Port& port, const PortState& state) = 0;
+
+    const std::string id;
+};
 
 // The port list. Filters (kind, system the game came from) and the card/grid view live in one menu, opened with
 // the Filter and view button or X; a line above the list says what is shown. `installedOnly` lists installed ports.
@@ -19,7 +35,7 @@ class BrowseView : public brls::Box
   public:
     explicit BrowseView(bool installedOnly);
     ~BrowseView() override;
-    // Back from a game's page: an update there may have cleared the banner.
+    // Shown again (another tab, a game's page): the banner, and what installs changed in the list.
     void willAppear(bool resetState) override;
 
     // The update check for installed games finished: every Browse and Installed view on screen redraws.
@@ -30,7 +46,9 @@ class BrowseView : public brls::Box
     void fillBanner();
     void fillPortUpdates();
     void fillList();
-    void addPage(); // views for the next ports of `shown`
+    void addPage();               // views for the next ports of `shown`
+    void readStates(size_t from); // the states of cards[from...], read in the background
+    std::vector<std::string> wanted() const; // the ports the filters and search let through, in order
     void openFilters();
     void openSearch();
     void chooseKind();
@@ -52,41 +70,36 @@ class BrowseView : public brls::Box
     std::vector<std::string> shown;
     size_t built = 0;
     std::vector<brls::View*> lastRow; // grid: the last row built, for moving up and down
+    std::vector<PortCard*> cards;     // every card built, in order (the views belong to `list`)
+    unsigned generation = 0;          // bumped when the list is rebuilt: states read for the old one are dropped
+    std::chrono::steady_clock::time_point statesRead; // when the cards' states were last read
     AliveFlag alive             = std::make_shared<bool>(true);
 };
 
 // A port as a wide card: icon, title, author, description, status. Opens the port's page.
-class PortRow : public CulledBox
+class PortRow : public CulledBox, public PortCard
 {
   public:
     explicit PortRow(const Port& port);
     ~PortRow() override;
-    void willAppear(bool resetState) override;
+    void showState(const Port& port, const PortState& state) override;
 
   private:
-    void refresh();
-
-    std::string id;
     brls::Box* statusSlot = nullptr;
     AliveFlag alive       = std::make_shared<bool>(true);
-    std::chrono::steady_clock::time_point refreshed; // when refresh() last read the port's state
 };
 
 // A port as a grid tile: big icon, title, status. Opens the port's page.
-class PortTile : public brls::Box
+class PortTile : public brls::Box, public PortCard
 {
   public:
     PortTile(const Port& port, float width);
     ~PortTile() override;
-    void willAppear(bool resetState) override;
+    void showState(const Port& port, const PortState& state) override;
 
   private:
-    void refresh();
-
-    std::string id;
     brls::Label* status = nullptr;
     AliveFlag alive     = std::make_shared<bool>(true);
-    std::chrono::steady_clock::time_point refreshed; // when refresh() last read the port's state
 };
 
 } // namespace pz::ui

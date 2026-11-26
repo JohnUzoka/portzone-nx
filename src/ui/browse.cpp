@@ -61,9 +61,9 @@ namespace
         return views;
     }
 
-    // Whether a card should read its port's state again. willAppear arrives once for every addView above it while a
-    // list is built (row, list, tab: several in one frame); one read is enough then. Later (back from a game's page,
-    // which may have installed it) it reads again.
+    // Whether a list should read its cards' states again. willAppear arrives once for every addView above it while a
+    // tab is built (several in one frame); one read is enough then. Later (another tab, a game's page, which may
+    // have installed something) it reads again.
     bool refreshDue(std::chrono::steady_clock::time_point& last)
     {
         const auto now = std::chrono::steady_clock::now();
@@ -218,6 +218,12 @@ void BrowseView::willAppear(bool resetState)
 {
     brls::Box::willAppear(resetState);
     rebuild(banner, filtersButton, [this](brls::Box*) { fillBanner(); });
+    if (!refreshDue(statesRead))
+        return;
+    if (installedOnly && wanted() != shown)
+        apply(); // something was installed or removed
+    else
+        readStates(0);
 }
 
 void BrowseView::apply()
@@ -346,7 +352,7 @@ void BrowseView::chooseView()
     brls::Application::pushActivity(new brls::Activity(dropdown));
 }
 
-void BrowseView::fillList()
+std::vector<std::string> BrowseView::wanted() const
 {
     // The catalog is already A-Z by title.
     const std::string query = lower(search);
@@ -364,16 +370,23 @@ void BrowseView::fillList()
             const std::string& y = b->originalPlatform();
             return x.empty() != y.empty() ? y.empty() : lower(x) < lower(y); // ports with no system last
         });
-
-    shown.clear();
+    std::vector<std::string> ids;
     for (const Port* port : ports)
-        shown.push_back(port->info.id);
+        ids.push_back(port->info.id);
+    return ids;
+}
+
+void BrowseView::fillList()
+{
+    shown = wanted();
     built = 0;
     lastRow.clear();
+    cards.clear();
+    generation++;
 
     if (shown.empty())
     {
-        std::string message = installedOnly && query.empty() && filter == 0 && systemFilter.empty() ?
+        std::string message = installedOnly && search.empty() && filter == 0 && systemFilter.empty() ?
             "Nothing installed yet. Install a port from Browse." : "No ports match.";
         if (!search.empty())
             message = "No ports match \"" + search + "\". Press - to search again.";
@@ -390,6 +403,7 @@ void BrowseView::addPage()
     // nears the end.
     const size_t end = std::min(shown.size(), built + (grid ? GRID_COLUMNS * 4 : 12));
     std::vector<brls::View*> added;
+    const size_t firstCard = cards.size();
 
     if (!grid)
         for (size_t i = built; i < end; i++)
@@ -399,6 +413,7 @@ void BrowseView::addPage()
                 auto* row = new PortRow(*port);
                 list->addView(row);
                 added.push_back(row);
+                cards.push_back(row);
             }
         }
     else
@@ -416,6 +431,7 @@ void BrowseView::addPage()
                         tile->setMarginLeft(GRID_GAP);
                     row->addView(tile);
                     tiles.push_back(tile);
+                    cards.push_back(tile);
                 }
             if (tiles.empty())
             {
@@ -433,6 +449,7 @@ void BrowseView::addPage()
         }
 
     built = end;
+    readStates(firstCard);
     if (built == shown.size())
         return;
     // Focus on the last two rows (or three cards) built brings the next page before the end is reached.
@@ -446,9 +463,40 @@ void BrowseView::addPage()
         });
 }
 
+void BrowseView::readStates(size_t from)
+{
+    statesRead = std::chrono::steady_clock::now();
+    if (from >= cards.size())
+        return;
+    // Copies: the catalog may be replaced (a reload) while the background reads.
+    auto ports = std::make_shared<std::vector<Port>>();
+    std::vector<size_t> which;
+    for (size_t i = from; i < cards.size(); i++)
+        if (const Port* port = Catalog::get().find(cards[i]->id))
+        {
+            ports->push_back(*port);
+            which.push_back(i);
+        }
+    using States = std::shared_ptr<std::vector<PortState>>;
+    ui::background<States>(alive,
+        [ports] {
+            auto states = std::make_shared<std::vector<PortState>>();
+            for (const Port& port : *ports)
+                states->push_back(portState(port));
+            return states;
+        },
+        [this, which, read = generation](States states) {
+            if (read != generation)
+                return; // the list was rebuilt meanwhile
+            for (size_t k = 0; k < which.size(); k++)
+                if (const Port* port = Catalog::get().find(cards[which[k]]->id))
+                    cards[which[k]]->showState(*port, (*states)[k]);
+        });
+}
+
 PortRow::PortRow(const Port& port)
     : CulledBox(brls::Axis::ROW)
-    , id(port.info.id)
+    , PortCard(port.info.id)
 {
     setFocusable(true);
     setAlignItems(brls::AlignItems::CENTER);
@@ -477,7 +525,7 @@ PortRow::PortRow(const Port& port)
     statusSlot->setShrink(0);
     addView(statusSlot);
 
-    registerClickAction([id = id](brls::View*) {
+    registerClickAction([id = port.info.id](brls::View*) {
         openPort(id);
         return true;
     });
@@ -486,29 +534,18 @@ PortRow::PortRow(const Port& port)
 
 PortRow::~PortRow() { *alive = false; }
 
-void PortRow::willAppear(bool resetState)
+void PortRow::showState(const Port& port, const PortState& state)
 {
-    brls::Box::willAppear(resetState);
-    if (refreshDue(refreshed))
-        refresh();
-}
-
-void PortRow::refresh()
-{
-    const Port* port = Catalog::get().find(id);
-    if (!port)
-        return;
-    const PortState state = portState(*port);
     statusSlot->clearViews();
-    if (const std::string tag = portupdates::pending(id); !tag.empty())
+    if (const std::string tag = portupdates::pending(port.info.id); !tag.empty())
         statusSlot->addView(pill("Update: " + tag, accentColor()));
     else
-        statusSlot->addView(pill(stateSummary(*port, state), stateColor(stateGood(*port, state), state.installed)));
+        statusSlot->addView(pill(stateSummary(port, state), stateColor(stateGood(port, state), state.installed)));
 }
 
 PortTile::PortTile(const Port& port, float width)
     : brls::Box(brls::Axis::COLUMN)
-    , id(port.info.id)
+    , PortCard(port.info.id)
 {
     setFocusable(true);
     setWidth(width);
@@ -536,7 +573,7 @@ PortTile::PortTile(const Port& port, float width)
     status->setMarginTop(4);
     addView(status);
 
-    registerClickAction([id = id](brls::View*) {
+    registerClickAction([id = port.info.id](brls::View*) {
         openPort(id);
         return true;
     });
@@ -545,27 +582,16 @@ PortTile::PortTile(const Port& port, float width)
 
 PortTile::~PortTile() { *alive = false; }
 
-void PortTile::willAppear(bool resetState)
+void PortTile::showState(const Port& port, const PortState& state)
 {
-    brls::Box::willAppear(resetState);
-    if (refreshDue(refreshed))
-        refresh();
-}
-
-void PortTile::refresh()
-{
-    const Port* port = Catalog::get().find(id);
-    if (!port)
-        return;
-    const PortState state = portState(*port);
-    if (const std::string tag = portupdates::pending(id); !tag.empty())
+    if (const std::string tag = portupdates::pending(port.info.id); !tag.empty())
     {
         status->setText("Update: " + tag);
         status->setTextColor(accentColor());
         return;
     }
-    status->setText(stateShort(*port, state));
-    status->setTextColor(stateColor(stateGood(*port, state), state.installed));
+    status->setText(stateShort(port, state));
+    status->setTextColor(stateColor(stateGood(port, state), state.installed));
 }
 
 } // namespace pz::ui
