@@ -61,6 +61,18 @@ namespace
         return views;
     }
 
+    // Whether a card should read its port's state again. willAppear arrives once for every addView above it while a
+    // list is built (row, list, tab: several in one frame); one read is enough then. Later (back from a game's page,
+    // which may have installed it) it reads again.
+    bool refreshDue(std::chrono::steady_clock::time_point& last)
+    {
+        const auto now = std::chrono::steady_clock::now();
+        if (now - last < std::chrono::milliseconds(250))
+            return false;
+        last = now;
+        return true;
+    }
+
 } // namespace
 
 BrowseView::BrowseView(bool installedOnly)
@@ -338,10 +350,11 @@ void BrowseView::fillList()
 {
     // The catalog is already A-Z by title.
     const std::string query = lower(search);
+    const std::set<std::string> installed = installedOnly ? installedIds(Catalog::get().ports) : std::set<std::string>();
     std::vector<const Port*> ports;
     for (const auto& port : Catalog::get().ports)
         if (matches(port, filter) && (systemFilter.empty() || port.originalPlatform() == systemFilter) &&
-            (!installedOnly || portState(port).installed) && searched(port, query))
+            (!installedOnly || installed.count(port.info.id)) && searched(port, query))
             ports.push_back(&port);
     if (settings().sortOrder == 1)
         std::reverse(ports.begin(), ports.end());
@@ -373,7 +386,9 @@ void BrowseView::fillList()
 void BrowseView::addPage()
 {
     const bool grid  = settings().gridView;
-    const size_t end = std::min(shown.size(), built + (grid ? GRID_COLUMNS * 8 : 24));
+    // Four rows of tiles, or twelve cards: a screen and a half, so a tab opens quickly; the next page arrives as focus
+    // nears the end.
+    const size_t end = std::min(shown.size(), built + (grid ? GRID_COLUMNS * 4 : 12));
     std::vector<brls::View*> added;
 
     if (!grid)
@@ -461,7 +476,6 @@ PortRow::PortRow(const Port& port)
     statusSlot = new brls::Box(brls::Axis::ROW);
     statusSlot->setShrink(0);
     addView(statusSlot);
-    refresh();
 
     registerClickAction([id = id](brls::View*) {
         openPort(id);
@@ -475,7 +489,8 @@ PortRow::~PortRow() { *alive = false; }
 void PortRow::willAppear(bool resetState)
 {
     brls::Box::willAppear(resetState);
-    refresh();
+    if (refreshDue(refreshed))
+        refresh();
 }
 
 void PortRow::refresh()
@@ -520,7 +535,6 @@ PortTile::PortTile(const Port& port, float width)
     status->setWidth(width - 24);
     status->setMarginTop(4);
     addView(status);
-    refresh();
 
     registerClickAction([id = id](brls::View*) {
         openPort(id);
@@ -534,7 +548,8 @@ PortTile::~PortTile() { *alive = false; }
 void PortTile::willAppear(bool resetState)
 {
     brls::Box::willAppear(resetState);
-    refresh();
+    if (refreshDue(refreshed))
+        refresh();
 }
 
 void PortTile::refresh()

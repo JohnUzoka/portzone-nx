@@ -19,6 +19,25 @@ PortState portState(const Port& port)
     return state;
 }
 
+std::set<std::string> installedIds(const std::vector<Port>& ports)
+{
+    // installed/<id>.json, one per port PortZone installed (installer.cpp's recordPath).
+    std::set<std::string> recorded;
+    std::error_code ec;
+    for (fs::directory_iterator it(dataDir() / "installed", ec), end; !ec && it != end; it.increment(ec))
+        if (it->path().extension() == ".json")
+            recorded.insert(it->path().stem().string());
+
+    std::set<std::string> out;
+    for (const Port& port : ports)
+    {
+        std::error_code existsError;
+        if (port.manifest ? fs::exists(sdPath(port.manifest->binary), existsError) : recorded.count(port.info.id) > 0)
+            out.insert(port.info.id);
+    }
+    return out;
+}
+
 bool stateGood(const Port& port, const PortState& state)
 {
     return state.installed && (!state.data || state.data->ready);

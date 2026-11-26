@@ -436,9 +436,11 @@ namespace
     {
         Server& s  = server();
         json ports = json::array();
+        const std::set<std::string> installed = installedIds(s.ports);
         for (const Port& port : s.ports)
         {
-            const PortState state = portState(port);
+            // A port with neither a portzone.json nor an install has nothing on the card to read.
+            const PortState state = port.manifest || installed.count(port.info.id) ? portState(port) : PortState();
             const char* kind      = port.section() == Section::EasySetup ? "easy" :
                      port.section() == Section::PrepareOnPc             ? "prep" :
                      port.section() == Section::BuildOnPc               ? "pc" :

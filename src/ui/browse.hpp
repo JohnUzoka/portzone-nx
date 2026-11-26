@@ -1,5 +1,6 @@
 #pragma once
 
+#include <chrono>
 #include <string>
 #include <vector>
 
@@ -68,6 +69,7 @@ class PortRow : public CulledBox
     std::string id;
     brls::Box* statusSlot = nullptr;
     AliveFlag alive       = std::make_shared<bool>(true);
+    std::chrono::steady_clock::time_point refreshed; // when refresh() last read the port's state
 };
 
 // A port as a grid tile: big icon, title, status. Opens the port's page.
@@ -84,6 +86,7 @@ class PortTile : public brls::Box
     std::string id;
     brls::Label* status = nullptr;
     AliveFlag alive     = std::make_shared<bool>(true);
+    std::chrono::steady_clock::time_point refreshed; // when refresh() last read the port's state
 };
 
 } // namespace pz::ui

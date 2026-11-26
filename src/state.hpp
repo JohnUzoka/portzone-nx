@@ -1,7 +1,9 @@
 #pragma once
 
 #include <optional>
+#include <set>
 #include <string>
+#include <vector>
 
 #include "catalog.hpp"
 #include "files.hpp"
@@ -19,6 +21,10 @@ struct PortState
 };
 
 PortState portState(const Port& port);
+
+// The ids of `ports` that are installed (portState's `installed`), cheaply: one listing of PortZone's install records
+// and a check for each port with a portzone.json, instead of portState's reads for every port.
+std::set<std::string> installedIds(const std::vector<Port>& ports);
 
 // One line for lists: "Ready to play", "Installed · files missing", ...
 std::string stateSummary(const Port& port, const PortState& state);

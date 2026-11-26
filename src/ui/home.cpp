@@ -17,6 +17,27 @@ namespace
 
     constexpr int ABOUT_TAB = 4; // sidebar position: Browse, Installed, Game files, a separator, About
 
+    // A tab's content, built once the sidebar's focus has rested on it. borealis builds a tab whenever its sidebar
+    // item gains focus, so moving down from Browse to About would build Installed and Game files on the way.
+    class LazyTab : public brls::Box
+    {
+      public:
+        explicit LazyTab(std::function<brls::View*()> make)
+            : brls::Box(brls::Axis::COLUMN)
+        {
+            setGrow(1);
+            setAlignItems(brls::AlignItems::STRETCH);
+            brls::delay(120, [this, alive = alive, make = std::move(make)] {
+                if (*alive)
+                    addView(make());
+            });
+        }
+        ~LazyTab() override { *alive = false; }
+
+      private:
+        AliveFlag alive = std::make_shared<bool>(true);
+    };
+
     brls::View* gameFilesTab()
     {
         auto* frame = new brls::ScrollingFrame();
@@ -119,8 +140,7 @@ namespace
         box->addView(atStartHint);
 
         box->addView(header("Sources", "Press Y on any tab to reload"));
-        const bool offline = Catalog::get().source != Catalog::Source::Network;
-        std::string list   = "Port list: " + config().indexUrl;
+        std::string list = "Port list: " + config().indexUrl;
         if (Catalog::get().source == Catalog::Source::Cache)
             list += " (offline: last downloaded copy)";
         else if (Catalog::get().source == Catalog::Source::BuiltIn)
@@ -129,13 +149,18 @@ namespace
         box->addView(textRow("SD card: " + config().sdRoot.string()));
         if (!config().draftsDir.empty())
             box->addView(textRow("Draft portzone.json files: " + config().draftsDir.string()));
-        box->addView(header("Ports"));
+        // Only the ports with something to say: a portzone.json, or one that couldn't be used. A row for each of the
+        // hundreds of others would make this tab slow to open and long to scroll.
+        size_t withManifest = 0;
+        for (const auto& port : Catalog::get().ports)
+            withManifest += port.manifest ? 1 : 0;
+        box->addView(header("Ports", std::to_string(withManifest) + " of " + std::to_string(Catalog::get().ports.size()) +
+                                         " have a portzone.json; the rest are manual installs"));
         for (const auto& port : Catalog::get().ports)
         {
-            std::string source = port.manifest ? "portzone.json from " + port.manifestSource :
-                !port.manifestError.empty()    ? port.manifestError :
-                offline                        ? "portzone.json not checked (offline)" :
-                                                 "no portzone.json";
+            if (!port.manifest && port.manifestError.empty())
+                continue;
+            const std::string source = port.manifest ? "portzone.json from " + port.manifestSource : port.manifestError;
             box->addView(textRow(port.info.title + ": " + source, 18, port.manifestError.empty() ? mutedColor() : badColor()));
         }
         frame->setContentView(box);
@@ -250,11 +275,14 @@ void HomeActivity::showCatalog(int tab)
         box->setAlignItems(brls::AlignItems::STRETCH);
         tabs = new brls::TabFrame();
         tabs->setGrow(1);
-        tabs->addTab("Browse", [] { return new BrowseView(false); });
-        tabs->addTab("Installed", [] { return new BrowseView(true); });
-        tabs->addTab("Game files", [] { return gameFilesTab(); });
+        const auto lazy = [](std::function<brls::View*()> make) {
+            return [make = std::move(make)] { return new LazyTab(make); };
+        };
+        tabs->addTab("Browse", lazy([] { return new BrowseView(false); }));
+        tabs->addTab("Installed", lazy([] { return new BrowseView(true); }));
+        tabs->addTab("Game files", lazy([] { return gameFilesTab(); }));
         tabs->addSeparator();
-        tabs->addTab("About", [this] { return aboutTab([this] { chooseTheme(); }); });
+        tabs->addTab("About", lazy([this] { return aboutTab([this] { chooseTheme(); }); }));
         box->addView(tabs);
         tabs->focusTab(tab);
     });
