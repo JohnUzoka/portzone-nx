@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ports.schema.json",
+  "title": "PortZone index",
+  "description": "ports.json: every listed port. Added by pull request; the port's own portzone.json, if it has one, adds the rest.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["ports"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "ports": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/port" }
+    }
+  },
+  "$defs": {
+    "port": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "url", "title", "author", "description"],
+      "properties": {
+        "id": {
+          "description": "Unique name. Sphaira keys installs by it; the default install folder is /switch/<id>.",
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]{0,62}$"
+        },
+        "url": {
+          "description": "The port's GitHub repository, exactly https://github.com/<owner>/<repo>.",
+          "type": "string",
+          "pattern": "^https://github\\.com/[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$"
+        },
+        "title": { "type": "string", "minLength": 1, "maxLength": 95 },
+        "author": { "type": "string", "minLength": 1, "maxLength": 63 },
+        "description": {
+          "description": "One or two sentences: what the game is and what the player must bring. Used when portzone.json has no description.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 511
+        },
+        "icon": {
+          "description": "Square HTTPS PNG or JPEG, 256x256 or larger, at most 1 MB. Used when the port has no portzone.json icon. Omitted: the repository owner's GitHub avatar.",
+          "type": "string",
+          "pattern": "^https://\\S+$"
+        },
+        "banner": {
+          "description": "Wide HTTPS PNG or JPEG, 16:9 (1280x720), at most 2 MB. Used when the port has no portzone.json banner.",
+          "type": "string",
+          "pattern": "^https://\\S+$"
+        },
+        "platform": {
+          "description": "Used when the port has no portzone.json platform.",
+          "$ref": "portzone.schema.json#/$defs/platform"
+        }
+      }
+    }
+  }
+}

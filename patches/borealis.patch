@@ -1,0 +1,44 @@
+diff --git a/library/lib/platforms/switch/switch_font.cpp b/library/lib/platforms/switch/switch_font.cpp
+index 586b243..21e72dc 100644
+--- a/library/lib/platforms/switch/switch_font.cpp
++++ b/library/lib/platforms/switch/switch_font.cpp
+@@ -37,6 +37,7 @@ void SwitchFontLoader::loadFonts()
+     {
+         brls::Logger::info("Load custom font: {}", USER_FONT_PATH);
+     }
++#ifndef BOREALIS_NO_SHARED_FONTS // PortZone: emulator test builds run without the system's font archive
+     else
+     {
+         brls::Logger::warning("Cannot find custom font, (Searched at: {})", USER_FONT_PATH);
+@@ -80,6 +81,7 @@ void SwitchFontLoader::loadFonts()
+         nvgAddFallbackFontId(vg, Application::getFont(FONT_REGULAR), Application::getFont(FONT_SWITCH_ICONS));
+     else
+         Logger::error("switch: could not load Extended shared font: {:#x}", rc);
++#endif
+ 
+     // Material icons
+     if (this->loadMaterialFromResources())
+diff --git a/library/lib/platforms/switch/switch_wrapper.c b/library/lib/platforms/switch/switch_wrapper.c
+index 3faad3b..2b63b80 100644
+--- a/library/lib/platforms/switch/switch_wrapper.c
++++ b/library/lib/platforms/switch/switch_wrapper.c
+@@ -48,7 +48,9 @@ void userAppInit()
+ #endif
+ 
+     romfsInit();
++#ifndef BOREALIS_NO_SHARED_FONTS // PortZone: emulator test builds run without the system's font archive
+     plInitialize(PlServiceType_User);
++#endif
+     setsysInitialize();
+     setInitialize();
+     psmInitialize();
+@@ -71,7 +73,9 @@ void userAppExit()
+     // system theme, system version...
+     setsysExit();
+     // system font
++#ifndef BOREALIS_NO_SHARED_FONTS
+     plExit();
++#endif
+ 
+     romfsExit();
+ 

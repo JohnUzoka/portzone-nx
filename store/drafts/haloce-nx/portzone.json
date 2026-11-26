@@ -1,0 +1,59 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JohnUzoka/portzone-nx/main/store/schema/portzone.schema.json",
+  "format": 1,
+  "description": "Halo: Combat Evolved from the decompilation, drawn with deko3d, with online play through OpenCE. Needs your own Xbox disc image.",
+  "banner": "docs/images/switch-online.jpg",
+  "platform": { "original": "Xbox", "runs_on": ["switch"] },
+  "install": {
+    "binary": "sdmc:/haloce-nx/halo.nro",
+    "steps": [{ "asset": "halo-switch-release.zip", "unzip": "sdmc:/haloce-nx" }]
+  },
+  "launch": {
+    "full_memory": true,
+    "notes": ["The game updates itself from its GitHub releases, asking first."]
+  },
+  "game_data": {
+    "dir": "sdmc:/haloce-nx",
+    "inputs": [
+      {
+        "id": "game",
+        "label": "Halo: Combat Evolved Xbox disc image",
+        "options": [
+          { "label": "Disc image (.iso)", "files": [{ "path": "*.iso", "note": "Your Xbox disc" }] },
+          { "label": "Disc image (.xiso)", "files": [{ "path": "*.xiso", "note": "Your Xbox disc" }] }
+        ]
+      },
+      {
+        "id": "custom-maps",
+        "label": "Custom Edition maps",
+        "required": false,
+        "options": [
+          {
+            "label": "Map files",
+            "files": [{ "path": "custom_maps/", "match": "*.map", "note": "Sent by the host to players who lack them" }]
+          }
+        ]
+      }
+    ],
+    "prepare": {
+      "where": "switch",
+      "summary": "The first start copies the maps and movies out of the disc image, then starts the game.",
+      "done": ["maps/", "bink/"]
+    },
+    "generated": [
+      { "path": "maps/", "note": "Game data from your disc" },
+      { "path": "bink/", "note": "Movies from your disc" },
+      { "path": "icon.jpg", "note": "The game's icon, for a forwarder" },
+      { "path": "config.toml", "note": "Settings" },
+      { "path": "profiles/", "note": "Player profiles" },
+      { "path": "saves/", "note": "Checkpoints and saved games" },
+      { "path": "cache/", "note": "Map caches, safe to delete" },
+      { "path": "logs/", "note": "halo.log, debug.txt, gamestate.txt" }
+    ]
+  },
+  "steps": [
+    "Make an image of your own Halo: Combat Evolved Xbox disc (.iso or .xiso).",
+    "Copy it to haloce-nx/ at the root of the SD card.",
+    "Start halo.nro with full memory. The first start copies the game data out of the image."
+  ]
+}

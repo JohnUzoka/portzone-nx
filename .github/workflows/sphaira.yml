@@ -1,0 +1,43 @@
+name: sphaira
+
+on:
+  schedule:
+    - cron: "41 5 * * *"
+  push:
+    branches: [main]
+    paths: ["store/**"]
+  pull_request:
+    paths: ["store/**"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sphaira
+  cancel-in-progress: false
+
+jobs:
+  sphaira:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install jsonschema
+      - name: Check
+        if: github.event_name == 'pull_request'
+        run: python store/scripts/build_sphaira.py --check --drafts store/drafts
+      - name: Build
+        if: github.event_name != 'pull_request'
+        run: python store/scripts/build_sphaira.py
+      - name: Commit sphaira.json
+        if: github.event_name != 'pull_request'
+        run: |
+          git add store/sphaira.json
+          git diff --cached --quiet && exit 0
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Update sphaira.json"
+          git push

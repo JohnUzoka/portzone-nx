@@ -1,0 +1,44 @@
+{
+  "packages": [
+    {
+      "name": "haloce-nx",
+      "title": "Halo: Combat Evolved",
+      "author": "nx-mod",
+      "description": "Halo: Combat Evolved from the decompilation, drawn with deko3d, with online play through OpenCE. Needs your own Xbox disc image.",
+      "details": "Halo: Combat Evolved from the decompilation, drawn with deko3d, with online play through OpenCE. Needs your own Xbox disc image.\n\nInstall\n1. Make an image of your own Halo: Combat Evolved Xbox disc (.iso or .xiso).\n2. Copy it to haloce-nx/ at the root of the SD card.\n3. Start halo.nro with full memory. The first start copies the game data out of the image.\n\nYour files, in haloce-nx/\n- Halo: Combat Evolved Xbox disc image (required), one of:\n  - Disc image (.iso): *.iso (Your Xbox disc)\n  - Disc image (.xiso): *.xiso (Your Xbox disc)\n- Custom Edition maps (optional): custom_maps/*.map (Sent by the host to players who lack them)\n\nOn the Switch: The first start copies the maps and movies out of the disc image, then starts the game.\n\nLaunch\n- Start it with full memory: hold R while starting a game, or use a forwarder. Not from the Album.\n- The game updates itself from its GitHub releases, asking first.",
+      "url": "https://github.com/nx-mod/haloce-nx",
+      "release": "latest",
+      "asset": "halo-switch-release.zip",
+      "target": "sdmc:/haloce-nx",
+      "marker": "sdmc:/haloce-nx/halo.nro",
+      "icon": "https://github.com/nx-mod.png?size=256",
+      "banner_url": "https://raw.githubusercontent.com/nx-mod/haloce-nx/HEAD/docs/images/switch-online.jpg"
+    },
+    {
+      "name": "sa2-nx",
+      "title": "Sonic Adventure 2",
+      "author": "ChanseyIsTheBest",
+      "description": "Sonic Adventure 2 (Xbox Live Arcade), statically recompiled with ReXGlue and drawn with deko3d: 60 FPS at stock clocks. Needs your own Xbox 360 copy, converted on a PC.",
+      "details": "Sonic Adventure 2 (Xbox Live Arcade), statically recompiled with ReXGlue and drawn with deko3d: 60 FPS at stock clocks. Needs your own Xbox 360 copy, converted on a PC.\n\nInstall\n1. On a PC, open https://chanseyisthebest.github.io/sa2-nx-installer/\n2. Give it the package file 525E7BB1E72A2DB99AB79281BA24938048198FAD58, or the whole 58411202 folder from your Xbox 360 (the Battle DLC is optional), and press Create sa2-nx.zip.\n3. Extract sa2-nx.zip to the root of the SD card. It makes switch/sa2-nx/.\n4. Start sa2.nro with full memory.\n\nYour files, in switch/sa2-nx/\n- Game files made by the web installer from your Xbox 360 copy (required): game_root.nxpack (The game's files, about 1.2 GB), game_root.nxidx (Index of the pack), deko3d_glsl.bin (Shaders made from your copy)\n\nOn a PC, with sa2-nx web installer (https://chanseyisthebest.github.io/sa2-nx-installer/): The installer page converts your Xbox 360 package in the browser: movies to H.265, music to Opus, everything else into one pack.\n\nLaunch\n- Start it with full memory: hold R while starting a game, or use a forwarder. Not from the Album.\n- A forwarder must be set to a 39-bit address space.\n- Hold A+B+X+Y+L+R for the game menu.",
+      "url": "https://github.com/ChanseyIsTheBest/sa2-nx",
+      "release": "latest",
+      "asset": "sa2.nro",
+      "target": "sdmc:/switch/sa2-nx",
+      "marker": "sdmc:/switch/sa2-nx/sa2.nro",
+      "icon": "https://raw.githubusercontent.com/ChanseyIsTheBest/sa2-nx/HEAD/tools/switch/icon/sa2_icon.jpg"
+    },
+    {
+      "name": "triaevum",
+      "title": "Ocarina of Time 3D Recompiled",
+      "author": "JohnUzoka",
+      "description": "TriAevum, the Ocarina of Time 3D recompilation, on Switch with gyro aiming, touch controls and in-game updates. Needs your own decrypted cartridge dump.",
+      "details": "TriAevum, the Ocarina of Time 3D recompilation, on Switch with gyro aiming, touch controls and in-game updates. Needs your own decrypted cartridge dump.\n\nInstall\n1. Dump and decrypt your own Ocarina of Time 3D cartridge with GodMode9 on a modded 3DS. eShop copies (.cia) and other versions do not work.\n2. Copy the .3ds or .cci file to switch/oot3dre/.\n3. Start the game with full memory. The first start imports the dump.\n\nYour files, in switch/oot3dre/\n- Ocarina of Time 3D cartridge dump, decrypted: USA Rev 1, or European (original or Rev 1) (required), one of:\n  - Cartridge dump (.3ds): *.3ds (Your decrypted dump)\n  - Cartridge dump (.cci): *.cci (Your decrypted dump)\n  - Extracted dump: import/code.bin (Decompressed code), import/exheader.bin (ExHeader), import/romfs.bin (RomFS (IVFC))\n- Single Screen Experience HUD art, for consoles without internet (optional): singlescreen_322.zip (The game offers to download it itself when online)\n- HD texture pack (HenrikoMagnifico, 1080p) (optional): textures/pack.json (Turn on in L3+R3, Video, HD textures)\n\nOn the Switch: The first start turns your dump into the game files (about a minute), then asks whether to keep the dump.\n\nLaunch\n- Start it with full memory: hold R while starting a game, or use a forwarder. Not from the Album.\n- A Sphaira forwarder works. Forwarders from the nsp-forwarder website have been reported to close the game.\n- Press both sticks in (L3+R3) for settings, the performance overlay and updates.",
+      "url": "https://github.com/JohnUzoka/TriAevum-Switch",
+      "release": "latest",
+      "asset": "-switch.zip",
+      "target": "sdmc:/",
+      "marker": "sdmc:/switch/oot3dre/oot3d_native_game.nro",
+      "icon": "https://raw.githubusercontent.com/JohnUzoka/TriAevum-Switch/HEAD/res/switch/icon.jpg"
+    }
+  ]
+}

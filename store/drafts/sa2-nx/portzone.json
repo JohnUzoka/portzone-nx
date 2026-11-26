@@ -1,0 +1,51 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JohnUzoka/portzone-nx/main/store/schema/portzone.schema.json",
+  "format": 1,
+  "description": "Sonic Adventure 2 (Xbox Live Arcade), statically recompiled with ReXGlue and drawn with deko3d: 60 FPS at stock clocks. Needs your own Xbox 360 copy, converted on a PC.",
+  "icon": "tools/switch/icon/sa2_icon.jpg",
+  "platform": { "original": "Xbox 360", "runs_on": ["switch"] },
+  "install": {
+    "binary": "sdmc:/switch/sa2-nx/sa2.nro",
+    "steps": [{ "asset": "sa2.nro", "copy": "sdmc:/switch/sa2-nx" }]
+  },
+  "launch": {
+    "full_memory": true,
+    "notes": [
+      "A forwarder must be set to a 39-bit address space.",
+      "Hold A+B+X+Y+L+R for the game menu."
+    ]
+  },
+  "game_data": {
+    "dir": "sdmc:/switch/sa2-nx",
+    "inputs": [
+      {
+        "id": "game",
+        "label": "Game files made by the web installer from your Xbox 360 copy",
+        "options": [
+          {
+            "label": "sa2-nx.zip, extracted to the SD root",
+            "files": [
+              { "path": "game_root.nxpack", "note": "The game's files, about 1.2 GB" },
+              { "path": "game_root.nxidx", "note": "Index of the pack" },
+              { "path": "deko3d_glsl.bin", "note": "Shaders made from your copy" }
+            ]
+          }
+        ]
+      }
+    ],
+    "prepare": {
+      "where": "pc",
+      "summary": "The installer page converts your Xbox 360 package in the browser: movies to H.265, music to Opus, everything else into one pack.",
+      "tool": { "name": "sa2-nx web installer", "url": "https://chanseyisthebest.github.io/sa2-nx-installer/" }
+    },
+    "generated": [
+      { "path": "sa2.toml", "note": "Settings; delete it to get the defaults back" }
+    ]
+  },
+  "steps": [
+    "On a PC, open https://chanseyisthebest.github.io/sa2-nx-installer/",
+    "Give it the package file 525E7BB1E72A2DB99AB79281BA24938048198FAD58, or the whole 58411202 folder from your Xbox 360 (the Battle DLC is optional), and press Create sa2-nx.zip.",
+    "Extract sa2-nx.zip to the root of the SD card. It makes switch/sa2-nx/.",
+    "Start sa2.nro with full memory."
+  ]
+}

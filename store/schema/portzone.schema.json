@@ -1,0 +1,278 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "portzone.schema.json",
+  "title": "portzone.json",
+  "description": "A port's own install contract for PortZone, at the top of its repository's default branch. Optional: without it PortZone shows the README and the release files.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["format", "install", "steps"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "format": { "const": 1 },
+    "description": {
+      "description": "Replaces the store's description. One or two sentences: what the game is and what the player must bring.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 511
+    },
+    "icon": {
+      "description": "Square PNG or JPEG in this repository, 256x256 or larger, at most 1 MB. Path from the repository root, read from the default branch: \"res/switch/icon.jpg\".",
+      "$ref": "#/$defs/repoImage"
+    },
+    "banner": {
+      "description": "Wide PNG or JPEG in this repository, 16:9 (1280x720), at most 2 MB. Shown at the top of the port's page; keep the middle clear of text, the edges may be cropped.",
+      "$ref": "#/$defs/repoImage"
+    },
+    "platform": { "$ref": "#/$defs/platform" },
+    "release": {
+      "description": "Which releases to install from. Omitted: the newest stable release that has every step's file.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "prerelease": {
+          "description": "true: prereleases count too. Sphaira always takes them.",
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "install": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["binary"],
+      "properties": {
+        "binary": {
+          "description": "The .nro the player launches. Its presence means the port is installed.",
+          "$ref": "#/$defs/sdNro"
+        },
+        "steps": {
+          "description": "What PortZone does with the release's files, in order; a later step overwrites what an earlier one wrote. Omit when there is nothing to download because a PC tool makes the game.",
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/step" }
+        }
+      }
+    },
+    "launch": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "full_memory": {
+          "description": "Needs a game's memory: title takeover (hold R) or a forwarder, not the Album.",
+          "type": "boolean",
+          "default": true
+        },
+        "notes": { "type": "array", "items": { "$ref": "#/$defs/text" } }
+      }
+    },
+    "game_data": {
+      "description": "The player's own files. Never link to copyrighted data.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["dir", "inputs"],
+      "properties": {
+        "dir": { "description": "Folder every path below is relative to.", "$ref": "#/$defs/sdPath" },
+        "inputs": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/input" }
+        },
+        "prepare": {
+          "description": "A conversion before the first play.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["where", "summary"],
+          "properties": {
+            "where": {
+              "description": "switch: the port converts the inputs on its first start. pc: the player runs a tool on a computer, and the inputs are what it makes.",
+              "enum": ["switch", "pc"]
+            },
+            "summary": { "$ref": "#/$defs/text" },
+            "tool": {
+              "description": "What the player uses to unpack or convert their copy: a web installer, the tool's download page, or a guide (a README section, a wiki page) when there is no tool. PortZone shows the name and the link.",
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["name", "url"],
+              "properties": {
+                "name": { "$ref": "#/$defs/text" },
+                "url": { "$ref": "#/$defs/https" }
+              }
+            },
+            "done": {
+              "description": "Files the conversion leaves. When all are present the required inputs count as met, so a player who deleted the original after converting still shows as ready.",
+              "type": "array",
+              "minItems": 1,
+              "items": { "$ref": "#/$defs/relPath" }
+            }
+          }
+        },
+        "generated": {
+          "description": "Files the port writes itself (settings, saves). Shown in the layout so players know they are not missing.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["path", "note"],
+            "properties": {
+              "path": { "$ref": "#/$defs/relPath" },
+              "note": { "$ref": "#/$defs/text" }
+            }
+          }
+        }
+      }
+    },
+    "steps": {
+      "description": "What the player does, in order, one action per step.",
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/text" }
+    }
+  },
+  "$defs": {
+    "text": { "type": "string", "minLength": 1 },
+    "https": { "type": "string", "pattern": "^https://\\S+$" },
+    "platform": {
+      "description": "Where the game came from, and which consoles this port runs on.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "original": {
+          "description": "What the port was made from: the system the game came out on, PC, or Source for a game whose source code is the starting point (open-source and fan games, source releases). Shown as a tag and used by the Browse filter. Missing one? Add it to this list by pull request.",
+          "enum": [
+            "PC", "Source", "DOS", "Arcade", "Mobile",
+            "NES", "SNES", "N64", "GameCube", "Wii", "Wii U", "Switch",
+            "Game Boy", "Game Boy Color", "Game Boy Advance", "DS", "3DS",
+            "PlayStation", "PlayStation 2", "PlayStation 3", "PlayStation 4", "PSP", "PS Vita",
+            "Xbox", "Xbox 360", "Xbox One",
+            "Master System", "Genesis", "Saturn", "Dreamcast", "Game Gear", "PC Engine"
+          ]
+        },
+        "runs_on": {
+          "description": "Consoles this port's release runs on. Omitted: [\"switch\"].",
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "enum": ["switch", "switch2"] }
+        }
+      }
+    },
+    "repoImage": {
+      "type": "string",
+      "pattern": "^(?!/)(?!.*(^|/)\\.\\.(/|$))[^\\\\:*?]+\\.([pP][nN][gG]|[jJ][pP][eE]?[gG])$"
+    },
+    "sdFolder": {
+      "description": "A folder on the SD card; sdmc:/ is its root.",
+      "type": "string",
+      "pattern": "^(?!.*/\\.\\.(/|$))sdmc:/([^\\\\:*?]*[^/])?$"
+    },
+    "step": {
+      "description": "One release file: unzip it into a folder, or copy it into one.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["asset"],
+      "properties": {
+        "asset": {
+          "description": "End of the release file's name, case-insensitive: \"sa2.nro\", \"-switch.zip\".",
+          "type": "string",
+          "pattern": "^[^/\\\\]+$"
+        },
+        "unzip": { "description": "Extract the zip into this folder.", "$ref": "#/$defs/sdFolder" },
+        "from": {
+          "description": "With unzip: only this folder of the zip, without the folder itself: \"bundle/\".",
+          "type": "string",
+          "pattern": "^(?!/)(?!.*(^|/)\\.\\.(/|$))[^\\\\:]+/$"
+        },
+        "copy": { "description": "Put the file in this folder, as it is.", "$ref": "#/$defs/sdFolder" },
+        "name": {
+          "description": "With copy: the file's name in the folder, when it differs from the release file's.",
+          "type": "string",
+          "pattern": "^[^/\\\\:*?]+$"
+        }
+      },
+      "oneOf": [
+        {
+          "required": ["unzip"],
+          "not": { "anyOf": [{ "required": ["copy"] }, { "required": ["name"] }] },
+          "properties": { "asset": { "pattern": "\\.[zZ][iI][pP]$" } }
+        },
+        {
+          "required": ["copy"],
+          "not": { "anyOf": [{ "required": ["unzip"] }, { "required": ["from"] }] }
+        }
+      ]
+    },
+    "sdPath": {
+      "type": "string",
+      "pattern": "^(?!.*/\\.\\.(/|$))sdmc:/[^\\\\:*?]*[^/]$"
+    },
+    "sdNro": {
+      "type": "string",
+      "pattern": "^(?!.*/\\.\\.(/|$))sdmc:/[^\\\\:*?]*\\.nro$"
+    },
+    "relPath": {
+      "description": "Relative to game_data.dir, case-insensitive. * and ? work in the last part; a trailing / is a folder.",
+      "type": "string",
+      "pattern": "^(?!/)(?!.*(^|/)\\.\\.(/|$))[^\\\\:]+$"
+    },
+    "input": {
+      "description": "Something the player brings. Met when every file of any one option is present.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "label", "options"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9_-]*$" },
+        "label": { "$ref": "#/$defs/text" },
+        "required": { "description": "false: optional content, like an expansion.", "type": "boolean", "default": true },
+        "options": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["label", "files"],
+            "properties": {
+              "label": { "$ref": "#/$defs/text" },
+              "url": { "description": "Only for files their owner gives away, like shareware.", "$ref": "#/$defs/https" },
+              "files": {
+                "type": "array",
+                "minItems": 1,
+                "items": { "$ref": "#/$defs/file" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "file": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path"],
+      "properties": {
+        "path": { "$ref": "#/$defs/relPath" },
+        "match": {
+          "description": "With a folder path: the folder must hold at least one file matching this, e.g. \"*.pck\". Only those files are sent or moved into it.",
+          "type": "string",
+          "pattern": "^[^/\\\\:]+$"
+        },
+        "markers": {
+          "description": "With a folder path: files (or folders, ending in /) inside it that prove it is the right one, e.g. [\"liblist.gam\", \"halflife.wad\"]. A folder holding them all is found wherever the player put it, and everything in it goes along.",
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/relPath" }
+        },
+        "note": { "$ref": "#/$defs/text" },
+        "size": { "description": "Exact size in bytes, when only one version works.", "type": "integer", "minimum": 0 },
+        "sha256": {
+          "description": "Accepted hashes. Checked only for files up to 64 MiB.",
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+        }
+      },
+      "dependentSchemas": {
+        "match": { "properties": { "path": { "pattern": "/$" } } },
+        "markers": { "properties": { "path": { "pattern": "/$" } } }
+      }
+    }
+  }
+}

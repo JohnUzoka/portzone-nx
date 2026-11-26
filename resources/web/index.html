@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>PortZone: add games from your PC</title>
+<style>
+:root {
+    --bg: #11141d; --card: #1f2434; --line: #343b50; --text: #eceff6; --muted: #929bb4;
+    --accent: #7c8cff; --good: #58d68d; --bad: #ff7070; --warn: #ffc46b; --raised: #2a3046; --hover: #262c45;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+main { max-width: 1000px; margin: 0 auto; padding: 20px 16px 72px; }
+h1 { font-size: 1.6rem; line-height: 1.25; margin: 8px 0 10px; }
+h2 { font-size: 1.2rem; line-height: 1.3; margin: 0 0 12px; }
+h3 { font-size: 1.05rem; margin: 0; }
+p { margin: 10px 0; }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.small { font-size: .9rem; }
+.good { color: var(--good); }
+.bad { color: var(--bad); }
+.warn { color: var(--warn); }
+.center { text-align: center; }
+.lead { margin: 0 0 22px; }
+.section-title { margin: 34px 0 16px; }
+.hidden { display: none !important; }
+.card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+    padding: 18px; margin: 16px 0;
+}
+.card > :first-child { margin-top: 0; }
+.card > :last-child { margin-bottom: 0; }
+button {
+    font: inherit; color: var(--text); background: var(--raised); border: 1px solid var(--line);
+    border-radius: 10px; padding: 12px 18px; min-height: 48px; cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+}
+button:hover { border-color: var(--accent); }
+button:disabled { opacity: .45; cursor: default; }
+button.primary, a.button.primary { background: var(--accent); border-color: var(--accent); color: #10132a; font-weight: 600; }
+a.button {
+    font: inherit; color: var(--text); background: var(--raised); border: 1px solid var(--line); border-radius: 10px;
+    padding: 12px 18px; min-height: 48px; display: inline-flex; align-items: center; text-decoration: none;
+}
+a.button:hover { border-color: var(--accent); }
+button.small { padding: 8px 14px; min-height: 42px; font-size: .92rem; }
+button.link { background: none; border: none; color: var(--accent); padding: 10px 0; min-height: 44px; }
+.row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.row + p, .row + div, .row + ul, .bar + p, button + p, .button + p { margin-top: 14px; }
+
+.drop {
+    border: 2px dashed var(--line); border-radius: 16px; padding: 30px 18px; text-align: center;
+    background: var(--card); transition: border-color .15s, background .15s;
+}
+.drop .big { font-size: 1.25rem; font-weight: 600; margin-bottom: 10px; }
+.drop .row { justify-content: center; margin-top: 20px; }
+body.dragging .drop, .drop.over { border-color: var(--accent); background: var(--hover); }
+.after-drop { margin: 12px 0 0; }
+
+.banner { border-radius: 12px; padding: 12px 14px; margin: 16px 0; border: 1px solid var(--line); }
+.banner.error { border-color: var(--bad); color: var(--bad); }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+.gamecard {
+    display: flex; gap: 14px; align-items: flex-start; padding: 14px; color: var(--text); text-decoration: none;
+    background: var(--card); border: 1px solid var(--line); border-radius: 14px; min-width: 0;
+}
+.gamecard:hover, .gamecard:focus { border-color: var(--accent); outline: none; }
+.gamecard .body { flex: 1; min-width: 0; }
+.gamecard .title { font-weight: 600; font-size: 1.05rem; line-height: 1.3; word-break: break-word; }
+.byline { color: var(--muted); font-size: .9rem; margin-top: 4px; word-break: break-word; }
+.meta { margin-top: 10px; }
+.status { font-size: .9rem; margin-top: 8px; }
+.icon {
+    width: 80px; height: 80px; border-radius: 18px; overflow: hidden; flex: none; background: var(--raised);
+    display: flex; align-items: center; justify-content: center;
+}
+.icon img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.icon.big { width: 96px; height: 96px; border-radius: 22px; }
+.icon.tile { color: var(--accent); font-weight: 700; font-size: 1.6rem; letter-spacing: .5px; }
+.icon.big.tile { font-size: 2rem; }
+.pill {
+    display: inline-block; font-size: .78rem; font-weight: 600; padding: 3px 10px; border-radius: 99px;
+    border: 1px solid currentColor;
+}
+.pill.easy { color: var(--accent); }
+.pill.pc { color: var(--warn); }
+.pill.manual { color: var(--muted); }
+
+.back { margin: 0 0 4px; }
+.chev {
+    display: inline-block; width: 9px; height: 9px; margin: 0 8px 0 3px;
+    border-left: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg);
+}
+.other-games { margin: 34px 0 0; }
+.other-games button.link { color: var(--muted); }
+.steps { list-style: none; counter-reset: step; padding: 0; margin: 0; }
+.steps > li { counter-increment: step; position: relative; padding-left: 46px; margin: 0 0 24px; }
+.steps > li:last-child { margin-bottom: 0; }
+.steps > li::before {
+    content: counter(step); position: absolute; left: 0; top: 0; width: 32px; height: 32px; border-radius: 50%;
+    background: var(--accent); color: #10132a; font-weight: 700; display: flex; align-items: center; justify-content: center;
+}
+.steps > li > p:first-child { margin-top: 4px; }
+.steps .drop { margin-top: 14px; }
+.game-head { display: flex; gap: 18px; align-items: flex-start; }
+.game-head .body { flex: 1; min-width: 0; }
+.game-head h1 { margin: 0; word-break: break-word; }
+.description { white-space: pre-line; margin-top: 16px; }
+
+.input { border-top: 1px solid var(--line); padding: 16px 0 4px; margin-top: 16px; }
+.input:first-child { border-top: none; padding-top: 0; margin-top: 0; }
+.input-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; align-items: center; }
+.input .label { margin-top: 12px; }
+.state { font-size: .85rem; font-weight: 600; padding: 3px 10px; border-radius: 99px; border: 1px solid currentColor; }
+.needs { margin: 8px 0 0; padding-left: 20px; color: var(--muted); font-size: .92rem; }
+.needs li { margin: 4px 0; word-break: break-word; }
+code { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .9em; color: var(--text); word-break: break-all; }
+.target {
+    border: 1px dashed var(--line); border-radius: 10px; padding: 10px 12px; margin-top: 14px;
+    display: flex; flex-wrap: wrap; gap: 10px; align-items: center; transition: border-color .15s, background .15s;
+}
+.target .hint { color: var(--muted); font-size: .9rem; flex: 1 1 160px; }
+.target.over { border-color: var(--accent); background: var(--hover); }
+
+.choice {
+    display: flex; gap: 12px; align-items: flex-start; padding: 14px; margin: 10px 0;
+    border: 1px solid var(--line); border-radius: 12px; cursor: pointer;
+}
+.choice input { width: 24px; height: 24px; margin: 2px 0 0; flex: none; accent-color: var(--accent); }
+.choice .body { flex: 1; min-width: 0; }
+.choice .body > * + * { margin-top: 6px; }
+.dests { margin: 4px 0 0; padding-left: 20px; font-size: .9rem; color: var(--muted); }
+.dests li { word-break: break-all; }
+.badge {
+    display: inline-block; font-size: .8rem; padding: 2px 8px; border-radius: 99px; margin: 0 6px 0 0;
+    background: var(--raised); color: var(--muted);
+}
+.badge.met { color: var(--good); }
+.group { border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; margin: 12px 0; }
+.group > p { margin: 0 0 6px; }
+.bar { height: 14px; background: var(--raised); border-radius: 99px; overflow: hidden; margin: 14px 0; }
+.bar > div { height: 100%; width: 0; background: var(--accent); transition: width .2s; }
+.bar.small { height: 8px; margin-top: 8px; }
+ul.plain { list-style: none; padding: 0; margin: 8px 0; }
+ul.plain li { padding: 4px 0; word-break: break-word; }
+
+.panel-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.crumbs { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 6px; margin: 12px 0 14px; word-break: break-all; }
+.crumbs button.link { padding: 6px 2px; min-height: 36px; }
+.crumbs .here { font-weight: 600; padding: 6px 2px; }
+.entries { border: 1px solid var(--line); border-radius: 12px; margin-top: 14px; overflow: hidden; }
+.entry {
+    display: flex; justify-content: space-between; align-items: center; gap: 10px; width: 100%;
+    min-height: 48px; padding: 10px 14px; border: none; border-radius: 0; border-top: 1px solid var(--line);
+    background: none; text-align: left; word-break: break-all;
+}
+.entry:first-child { border-top: none; }
+button.entry:hover { background: var(--hover); }
+.entry .name { flex: 1; min-width: 0; }
+.entry .kind { color: var(--muted); font-size: .88rem; flex: none; }
+.folder-name::before { content: ""; display: inline-block; width: 14px; height: 11px; margin-right: 8px; border-radius: 2px; background: var(--accent); vertical-align: -1px; }
+#browser.over { border-color: var(--accent); background: var(--hover); }
+
+@media (max-width: 600px) {
+    main { padding: 14px 12px 56px; }
+    .drop .row button { flex: 1 1 100%; }
+    .card { padding: 16px 14px; }
+    .icon { width: 72px; height: 72px; border-radius: 16px; }
+    .icon.big { width: 80px; height: 80px; border-radius: 18px; }
+    .game-head { gap: 14px; }
+    .grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<main>
+    <div id="catalogView">
+        <h1>Add games from your PC</h1>
+        <p class="muted lead">Drop the game files you own here. PortZone works out what each game needs and sends just those files to the right place on the Switch's SD card.</p>
+        <section id="catalogTop">
+            <section class="drop">
+                <div class="big">Drop game files or folders here</div>
+                <div class="muted small">PortZone looks at the names and sizes, finds what each game needs and sends only that.</div>
+                <div class="row">
+                    <button id="pickFolder" type="button" class="primary">Choose a folder</button>
+                    <button id="pickFiles" type="button">Choose files</button>
+                </div>
+            </section>
+            <p class="center after-drop"><button id="browseSd" type="button" class="link">Or put files somewhere yourself</button></p>
+        </section>
+        <div id="catalogSlot"></div>
+        <h2 class="section-title">All games</h2>
+        <section id="grid" class="grid"><p class="muted">Loading…</p></section>
+    </div>
+
+    <div id="gameView" class="hidden">
+        <p id="backTop" class="back"><button id="back" type="button" class="link"><span class="chev" aria-hidden="true"></span>All games</button></p>
+        <section id="gameHead"></section>
+        <section id="gameActions"></section>
+        <div id="gameSlot"></div>
+        <section id="gameNeeds"></section>
+        <p id="otherGames" class="center other-games hidden"><button id="otherGamesLink" type="button" class="link small">Other games</button></p>
+    </div>
+
+    <div id="work">
+        <div id="error" class="banner error hidden"></div>
+        <div id="busy" class="banner hidden"></div>
+        <section id="browser" class="card hidden"></section>
+        <section id="results" class="hidden"></section>
+        <section id="sending" class="card hidden"></section>
+        <section id="summary" class="card hidden"></section>
+    </div>
+
+    <input id="folderInput" type="file" webkitdirectory multiple class="hidden">
+    <input id="filesInput" type="file" multiple class="hidden">
+</main>
+<script>
+'use strict';
+
+const KEY = new URLSearchParams(location.search).get('k') || '';
+const GIB4 = 4 * 1024 * 1024 * 1024;
+const FORBIDDEN = 'PortZone doesn\'t allow changes there.';
+const KINDS = { easy: 'Easy Setup', pc: 'Build on PC', manual: 'Manual' };
+const $ = (id) => document.getElementById(id);
+
+let ports = [];
+let loaded = false;
+let gameId = '';            // the game view's game; '' for the catalog
+let homeId = '';            // the game PortZone opened this page for ("Send files" on its page); '' for none
+let cameFromCatalog = false; // the previous history entry is the catalog
+let offered = [];           // [{path, size, file}] as last sent to PortZone
+let found = null;           // PortZone's answer for `offered`
+let scope = {};             // {port, input} the last drop was limited to
+let chosen = new Set();     // ids of the found items to send
+let sending = null;
+let browse = null;          // the file browser: {path, title, listing, error, messages}
+
+function el(tag, props, children) {
+    const node = document.createElement(tag);
+    if (props)
+        for (const name of Object.keys(props)) {
+            if (name === 'class') node.className = props[name];
+            else if (name === 'text') node.textContent = props[name];
+            else if (name.slice(0, 2) === 'on') node.addEventListener(name.slice(2), props[name]);
+            else if (name in node) node[name] = props[name];
+            else node.setAttribute(name, props[name]);
+        }
+    for (const child of [].concat(children || []))
+        if (child !== null && child !== undefined && child !== false)
+            node.appendChild(typeof child === 'string' ? document.createTextNode(child) : child);
+    return node;
+}
+
+function show(node, visible) { node.classList.toggle('hidden', !visible); }
+
+function formatSize(bytes) {
+    const units = ['bytes', 'KB', 'MB', 'GB', 'TB'];
+    let value = bytes, unit = 0;
+    while (value >= 1024 && unit < units.length - 1) { value /= 1024; unit++; }
+    if (unit === 0) return bytes + (bytes === 1 ? ' byte' : ' bytes');
+    return (value >= 100 ? value.toFixed(0) : value.toFixed(1)) + ' ' + units[unit];
+}
+
+function formatTime(seconds) {
+    if (!isFinite(seconds)) return '';
+    if (seconds < 60) return Math.max(1, Math.round(seconds)) + ' s';
+    if (seconds < 3600) return Math.round(seconds / 60) + ' min';
+    return Math.floor(seconds / 3600) + ' h ' + Math.round((seconds % 3600) / 60) + ' min';
+}
+
+function plural(count, one, many) { return count + ' ' + (count === 1 ? one : many); }
+
+function apiUrl(path, params) {
+    return '/api/' + path + '?' + new URLSearchParams(Object.assign({ k: KEY }, params || {})).toString();
+}
+
+// `forbidden`: what a 403 means for this call; by default, a wrong key.
+async function apiJson(path, params, options, forbidden) {
+    let response;
+    try {
+        response = await fetch(apiUrl(path, params), options);
+    } catch (e) {
+        throw new Error('Can\'t reach PortZone. Check that the Switch is on the same Wi-Fi and the Send files screen is still open.');
+    }
+    let body = null;
+    try { body = await response.json(); } catch (e) { body = null; }
+    if (response.status === 403)
+        throw new Error(forbidden || 'This link is out of date. Open the address PortZone shows on the Switch.');
+    if (!response.ok)
+        throw new Error((body && body.error) || ('PortZone answered ' + response.status + '.'));
+    return body;
+}
+
+function showError(message) {
+    $('error').textContent = message || '';
+    show($('error'), !!message);
+}
+
+function setBusy(message) {
+    $('busy').textContent = message || '';
+    show($('busy'), !!message);
+}
+
+// ---- games
+
+function portById(id) {
+    for (const port of ports) if (port.id === id) return port;
+    return null;
+}
+
+function matchedPorts() {
+    return ports.filter((port) => !port.manualOnly);
+}
+
+function currentGame() {
+    return gameId ? portById(gameId) : null;
+}
+
+function initials(title) {
+    const words = (title || '?').split(/\s+/).filter(Boolean);
+    return ((words[0] || '?')[0] + (words[1] ? words[1][0] : '')).toUpperCase();
+}
+
+function iconOf(port, big) {
+    const box = el('div', { class: 'icon' + (big ? ' big' : '') });
+    const tile = () => {
+        box.textContent = initials(port.title);
+        box.classList.add('tile');
+    };
+    if (port.icon) {
+        const img = el('img', { alt: '' });
+        img.addEventListener('error', tile);
+        img.src = port.icon;
+        box.appendChild(img);
+    } else {
+        tile();
+    }
+    return box;
+}
+
+function byline(port) {
+    const parts = [];
+    if (port.author) parts.push('by ' + port.author);
+    if (port.platform) parts.push(port.platform);
+    return parts.join(' · ');
+}
+
+function kindPill(port) {
+    const kind = KINDS[port.kind] ? port.kind : 'manual';
+    return el('span', { class: 'pill ' + kind, text: KINDS[kind] });
+}
+
+function statusClass(port) {
+    if (port.good) return 'good';
+    return port.installed ? 'bad' : 'muted';
+}
+
+function gameCard(port) {
+    return el('a', { class: 'gamecard', href: '#game=' + encodeURIComponent(port.id) }, [
+        iconOf(port, false),
+        el('div', { class: 'body' }, [
+            el('div', { class: 'title', text: port.title }),
+            byline(port) ? el('div', { class: 'byline', text: byline(port) }) : null,
+            el('div', { class: 'meta' }, [kindPill(port)]),
+            port.status ? el('div', { class: 'status ' + statusClass(port), text: port.status }) : null,
+        ]),
+    ]);
+}
+
+function renderGrid() {
+    const box = $('grid');
+    box.textContent = '';
+    if (!loaded) {
+        box.appendChild(el('p', { class: 'muted', text: 'Loading…' }));
+        return;
+    }
+    if (!ports.length) {
+        box.appendChild(el('p', { class: 'muted', text: 'No games to show.' }));
+        return;
+    }
+    for (const port of ports) box.appendChild(gameCard(port));
+}
+
+// ---- what a game needs
+
+function describeSpec(spec) {
+    const parts = [];
+    if (spec.path.slice(-1) === '/') {
+        parts.push('A folder ', el('code', { text: spec.path }));
+        if (spec.markers && spec.markers.length)
+            parts.push(' with ' + spec.markers.join(', ') + ' inside');
+        else if (spec.match)
+            parts.push(' with ' + spec.match + ' files inside');
+    } else {
+        parts.push(el('code', { text: spec.path }));
+    }
+    if (spec.note) parts.push(' (' + spec.note + ')');
+    return el('li', null, parts);
+}
+
+function needsList(input) {
+    const list = el('ul', { class: 'needs' });
+    const several = input.options.length > 1;
+    input.options.forEach((option, i) => {
+        if (several)
+            list.appendChild(el('li', null, [el('strong', { text: (i ? 'Or ' : '') + (option.label || 'Option ' + (i + 1)) + ':' })]));
+        for (const spec of option.files) list.appendChild(describeSpec(spec));
+    });
+    return list;
+}
+
+function inputState(input) {
+    if (input.met) return el('span', { class: 'state good', text: '✓ On the SD card' });
+    if (input.required) return el('span', { class: 'state bad', text: 'Missing' });
+    return el('span', { class: 'state muted', text: 'Optional' });
+}
+
+function addTarget(port, input) {
+    const handle = (files) => findFiles(files, { port: port.id, input: input.id });
+    const target = el('div', { class: 'target' }, [
+        el('span', { class: 'hint', text: 'Drop files for this here, or' }),
+        el('button', { type: 'button', class: 'small', text: 'Add files', onclick: () => pick(false, handle) }),
+        folderSupported() ? el('button', { type: 'button', class: 'small', text: 'Add a folder', onclick: () => pick(true, handle) }) : null,
+    ]);
+    makeDropTarget(target, handle);
+    return target;
+}
+
+function browseButton(port, primary) {
+    return el('button', {
+        type: 'button', class: primary ? 'primary' : '', text: 'Choose where files go myself', disabled: !!sending,
+        onclick: () => openBrowser(port.dir, port.title),
+    });
+}
+
+function renderGameHead(port) {
+    const box = $('gameHead');
+    box.textContent = '';
+    box.appendChild(el('div', { class: 'card' }, [
+        el('div', { class: 'game-head' }, [
+            iconOf(port, true),
+            el('div', { class: 'body' }, [
+                el('h1', { text: port.title }),
+                byline(port) ? el('div', { class: 'byline', text: byline(port) }) : null,
+                el('div', { class: 'meta' }, [kindPill(port)]),
+                port.status ? el('div', { class: 'status ' + statusClass(port), text: port.status }) : null,
+            ]),
+        ]),
+        port.description ? el('p', { class: 'description', text: port.description }) : null,
+    ]));
+}
+
+function renderGameActions(port) {
+    const box = $('gameActions');
+    box.textContent = '';
+    if (port.manualOnly) {
+        box.appendChild(el('div', { class: 'card' }, [
+            el('p', { text: 'This port doesn\'t say where its files go. Follow its instructions and put them where it asks:' }),
+            el('div', { class: 'row' }, [browseButton(port, true)]),
+        ]));
+        return;
+    }
+    if (port.prepare && port.prepare.where === 'pc') {
+        box.appendChild(el('div', { class: 'card' }, [el('h2', { text: 'How to add it' }), pcSteps(port)]));
+        return;
+    }
+    if (!sending) box.appendChild(gameDrop(port, 'Drop this game\'s files or folders here'));
+    box.appendChild(browseLink(port));
+}
+
+// The game's own drop box: PortZone picks out what the game needs from what is dropped.
+function gameDrop(port, title) {
+    const handle = (files) => findFiles(files, { port: port.id });
+    const drop = el('section', { class: 'drop' }, [
+        el('div', { class: 'big', text: title }),
+        el('div', { class: 'muted small', text: 'PortZone picks out what ' + port.title + ' needs and sends only that.' }),
+        el('div', { class: 'row' }, [
+            folderSupported() ? el('button', { type: 'button', class: 'primary', text: 'Choose a folder', onclick: () => pick(true, handle) }) : null,
+            el('button', { type: 'button', class: folderSupported() ? '' : 'primary', text: 'Choose files', onclick: () => pick(false, handle) }),
+        ]),
+    ]);
+    makeDropTarget(drop, handle);
+    return drop;
+}
+
+function browseLink(port) {
+    return el('p', { class: 'center after-drop' }, [
+        el('button', { type: 'button', class: 'link', text: 'Choose where files go myself', disabled: !!sending, onclick: () => openBrowser(port.dir, port.title) }),
+    ]);
+}
+
+// A game made on a PC first: make it with the tool, extract it, then send it.
+function pcSteps(port) {
+    const prepare = port.prepare;
+    const make = prepare.tool
+        ? [
+            el('a', { class: 'button primary', href: prepare.tool.url, target: '_blank', rel: 'noopener', text: 'Make the game\'s files on your PC with ' + prepare.tool.name }),
+            prepare.summary ? el('p', { class: 'muted small', text: prepare.summary }) : null,
+        ]
+        : [el('p', { text: prepare.summary || 'Make the game\'s files on your PC.' })];
+    return el('ol', { class: 'steps' }, [
+        el('li', null, make),
+        el('li', null, [el('p', { text: 'Extract what it gives you (for example a .zip) on your PC.' })]),
+        el('li', null, [
+            el('p', { text: 'Drop the extracted folder here, or choose where its files go yourself.' }),
+            sending ? null : gameDrop(port, 'Drop the extracted files here'),
+            browseLink(port),
+        ]),
+    ]);
+}
+
+function renderGameNeeds(port) {
+    const box = $('gameNeeds');
+    box.textContent = '';
+    if (port.manualOnly) return;
+    box.appendChild(el('h2', { class: 'section-title', text: 'What it needs' }));
+    if (port.prepare && port.prepare.where !== 'pc') {
+        box.appendChild(el('p', null, [
+            el('strong', { text: 'On the Switch after sending: ' }), port.prepare.summary || '',
+            port.prepare.tool ? el('span', null, [' (', el('a', { href: port.prepare.tool.url, target: '_blank', rel: 'noopener', text: port.prepare.tool.name }), ')']) : null,
+        ]));
+    }
+    const card = el('div', { class: 'card' });
+    for (const input of port.inputs || []) {
+        card.appendChild(el('div', { class: 'input' }, [
+            el('div', { class: 'input-head' }, [el('h3', { text: input.label }), inputState(input)]),
+            el('div', { class: 'small muted label', text: 'What it needs:' }),
+            needsList(input),
+            sending ? null : addTarget(port, input),
+        ]));
+    }
+    box.appendChild(card);
+}
+
+// ---- views
+
+function gameFromHash() {
+    const match = /^#game=(.+)$/.exec(location.hash);
+    if (!match) return '';
+    try { return decodeURIComponent(match[1]); } catch (e) { return ''; }
+}
+
+// Shows what location.hash asks for. `navigated`: the player (or a link) changed it, so Back returns.
+function route(navigated) {
+    const asked = gameFromHash();
+    const next = asked && portById(asked) ? asked : '';
+    if (next !== gameId) {
+        cameFromCatalog = !!next && !gameId && navigated;
+        gameId = next;
+        resetWork();
+        window.scrollTo(0, 0);
+    }
+    renderView();
+}
+
+// Results, the file browser and the summary belong to the view they were made in.
+function resetWork() {
+    if (sending) return;
+    found = null;
+    show($('results'), false);
+    show($('summary'), false);
+    showError('');
+    setBusy('');
+    browse = null;
+    renderBrowser();
+}
+
+function renderView() {
+    const game = currentGame();
+    show($('catalogView'), !game);
+    show($('gameView'), !!game);
+    show($('backTop'), !!game && game.id !== homeId);
+    show($('otherGames'), !!game && game.id === homeId);
+    (game ? $('gameSlot') : $('catalogSlot')).appendChild($('work'));
+    show($('catalogTop'), !sending);
+    document.title = game ? game.title + ' · PortZone' : 'PortZone: add games from your PC';
+    if (game) {
+        renderGameHead(game);
+        renderGameActions(game);
+        renderGameNeeds(game);
+    } else {
+        renderGrid();
+    }
+}
+
+function backToCatalog() {
+    if (cameFromCatalog) {
+        history.back();
+        return;
+    }
+    history.pushState(null, '', location.pathname + location.search);
+    route(false);
+}
+
+async function loadPorts(first) {
+    const data = await apiJson('ports');
+    ports = data.ports || [];
+    loaded = true;
+    homeId = data.focus && portById(data.focus) ? data.focus : '';
+    // Opened for one game: its view is the page's home, with no history entry of the catalog before it.
+    if (first && homeId && !gameFromHash())
+        history.replaceState(null, '', location.pathname + location.search + '#game=' + encodeURIComponent(homeId));
+    route(false);
+}
+
+async function reloadPorts() {
+    try { await loadPorts(false); } catch (e) { renderView(); }
+}
+
+// ---- gathering files
+
+function folderSupported() {
+    const ios = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    return !ios && 'webkitdirectory' in document.createElement('input');
+}
+
+function fileOf(entry) {
+    return new Promise((resolve, reject) => entry.file(resolve, reject));
+}
+
+function readSome(reader) {
+    return new Promise((resolve, reject) => reader.readEntries(resolve, reject));
+}
+
+async function walk(entry, out) {
+    if (entry.isFile) {
+        const file = await fileOf(entry);
+        out.push({ path: entry.fullPath.replace(/^\/+/, ''), size: file.size, file: file });
+    } else if (entry.isDirectory) {
+        const reader = entry.createReader();
+        for (;;) {
+            const batch = await readSome(reader);
+            if (!batch.length) break;
+            for (const child of batch) await walk(child, out);
+        }
+    }
+}
+
+// Entries must be taken from the drop before anything awaits.
+async function gatherDrop(dataTransfer) {
+    const items = Array.from(dataTransfer.items || []).filter((item) => item.kind === 'file');
+    const entries = items.map((item) => (item.webkitGetAsEntry ? item.webkitGetAsEntry() : null));
+    const plainFiles = Array.from(dataTransfer.files || []);
+    if (entries.length && entries.every(Boolean)) {
+        const out = [];
+        for (const entry of entries) await walk(entry, out);
+        return out;
+    }
+    return plainFiles.map((file) => ({ path: file.name, size: file.size, file: file }));
+}
+
+function gatherPicked(fileList) {
+    return Array.from(fileList).map((file) => ({
+        path: file.webkitRelativePath || file.name, size: file.size, file: file,
+    }));
+}
+
+let pickHandler = null;
+
+// Opens the file or folder picker; `handle` gets what the player picks.
+function pick(folder, handle) {
+    if (sending) return;
+    pickHandler = handle;
+    const input = folder ? $('folderInput') : $('filesInput');
+    input.value = '';
+    input.click();
+}
+
+function onPicked(event) {
+    const files = gatherPicked(event.target.files);
+    event.target.value = '';
+    if (files.length && pickHandler) pickHandler(files);
+}
+
+let dragDepth = 0;
+
+function makeDropTarget(node, handle) {
+    node.addEventListener('dragover', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        if (event.dataTransfer) event.dataTransfer.dropEffect = sending ? 'none' : 'copy';
+        node.classList.add('over');
+    });
+    node.addEventListener('dragleave', () => node.classList.remove('over'));
+    node.addEventListener('drop', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        node.classList.remove('over');
+        dragDepth = 0;
+        document.body.classList.remove('dragging');
+        dropped(event.dataTransfer, handle);
+    });
+}
+
+function dropped(dataTransfer, handle) {
+    if (sending) return;
+    setBusy('Reading the files…');
+    gatherDrop(dataTransfer).then((files) => {
+        setBusy('');
+        if (files.length) handle(files);
+        else showError('Nothing to read in what was dropped.');
+    }, () => {
+        setBusy('');
+        showError('The browser could not read what was dropped. Try "Choose files" instead.');
+    });
+}
+
+// A drop anywhere else on the page: every game in the catalog, this game in its view. A game that doesn't say where
+// its files go only takes files through the file browser.
+function droppedOnPage(files) {
+    const game = currentGame();
+    if (game && game.manualOnly) {
+        if (!browse) openBrowser(game.dir, game.title);
+        showError('This game doesn\'t say where its files go. Open the folder they belong in below, then drop them onto that box.');
+        return;
+    }
+    findFiles(files, game ? { port: game.id } : {});
+}
+
+// ---- finding what goes where
+
+async function findFiles(files, limit) {
+    showError('');
+    show($('summary'), false);
+    show($('results'), false);
+    setBusy('Looking at ' + plural(files.length, 'file', 'files') + '…');
+    $('work').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    try {
+        const params = {};
+        if (limit.port) params.port = limit.port;
+        if (limit.input) params.input = limit.input;
+        const body = JSON.stringify({ files: files.map((f) => ({ path: f.path, size: f.size })) });
+        const answer = await apiJson('plan', params, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: body });
+        offered = files;
+        found = answer;
+        scope = limit;
+        chosen = new Set(answer.matches.filter((m) => m.selected).map((m) => m.id));
+        renderFound();
+    } catch (e) {
+        showError(e.message);
+    } finally {
+        setBusy('');
+    }
+}
+
+function itemTitle(match) {
+    return match.inputLabel + (match.option ? ': ' + match.option : '');
+}
+
+function itemDetails(match) {
+    const port = portById(match.port);
+    const dir = port ? port.dir + '/' : '';
+    const parts = [
+        el('div', null, [el('strong', { text: itemTitle(match) })]),
+        el('div', { class: 'small muted', text: plural(match.files.length, 'file', 'files') + ', ' + formatSize(match.bytes) }),
+    ];
+    const badges = [];
+    if (!match.required) badges.push(el('span', { class: 'badge', text: 'Optional' }));
+    if (match.alreadyMet) badges.push(el('span', { class: 'badge met', text: 'Already on the SD card; sending replaces it' }));
+    if (badges.length) parts.push(el('div', null, badges));
+    const dests = el('ul', { class: 'dests' });
+    match.files.slice(0, 5).forEach((f) => dests.appendChild(el('li', { text: dir + f.dest })));
+    if (match.files.length > 5) dests.appendChild(el('li', { text: 'and ' + (match.files.length - 5) + ' more' }));
+    parts.push(el('div', { class: 'small', text: 'Will go to:' }), dests);
+    for (const f of match.files)
+        if (f.size >= GIB4)
+            parts.push(el('div', { class: 'small warn', text: '⚠ ' + offered[f.source].path + ': Over 4 GB: needs an exFAT SD card' }));
+    return el('div', { class: 'body' }, parts);
+}
+
+function checkboxItem(match) {
+    const box = el('input', { type: 'checkbox', checked: chosen.has(match.id) });
+    box.addEventListener('change', () => {
+        if (box.checked) chosen.add(match.id); else chosen.delete(match.id);
+        updateSendButton();
+    });
+    return el('label', { class: 'choice' }, [box, itemDetails(match)]);
+}
+
+function groupItems(group, members) {
+    const name = 'group' + group;
+    const block = el('div', { class: 'group' }, [el('p', { class: 'small muted', text: 'These are different versions of the same thing. Pick one:' })]);
+    const choose = (id) => {
+        for (const m of members) chosen.delete(m.id);
+        if (id >= 0) chosen.add(id);
+        updateSendButton();
+    };
+    for (const match of members) {
+        const radio = el('input', { type: 'radio', name: name, checked: chosen.has(match.id) });
+        radio.addEventListener('change', () => choose(match.id));
+        block.appendChild(el('label', { class: 'choice' }, [radio, itemDetails(match)]));
+    }
+    const none = el('input', { type: 'radio', name: name, checked: !members.some((m) => chosen.has(m.id)) });
+    none.addEventListener('change', () => choose(-1));
+    block.appendChild(el('label', { class: 'choice' }, [none, el('div', { class: 'body' }, [el('strong', { text: 'None' })])]));
+    return block;
+}
+
+function chosenFiles() {
+    const jobs = [];
+    for (const match of found.matches)
+        if (chosen.has(match.id))
+            match.files.forEach((f, index) => jobs.push({ match: match, index: index, spec: f, item: offered[f.source] }));
+    return jobs;
+}
+
+function updateSendButton() {
+    const button = $('sendButton');
+    if (!button) return;
+    const jobs = chosenFiles();
+    const bytes = jobs.reduce((sum, job) => sum + job.spec.size, 0);
+    button.disabled = !jobs.length;
+    button.textContent = jobs.length ? 'Send ' + plural(jobs.length, 'file', 'files') + ' (' + formatSize(bytes) + ')' : 'Nothing picked to send';
+}
+
+function renderNothing(box) {
+    const limitedPort = scope.port ? portById(scope.port) : null;
+    let limitedInput = null;
+    if (limitedPort && scope.input)
+        for (const input of limitedPort.inputs || []) if (input.id === scope.input) limitedInput = input;
+
+    const card = el('div', { class: 'card' });
+    if (limitedInput) {
+        card.appendChild(el('h2', { text: 'None of these files is ' + limitedInput.label }));
+        card.appendChild(el('p', { class: 'muted', text: limitedPort.title + ' looks for:' }));
+        card.appendChild(needsList(limitedInput));
+    } else {
+        card.appendChild(el('h2', { text: 'Nothing here is needed by ' + (limitedPort ? limitedPort.title : 'any game') }));
+        card.appendChild(el('p', { class: 'muted', text: 'Make sure the game files are extracted (not still in a .zip or .7z). This is what ' + (limitedPort ? 'it' : 'each game') + ' looks for:' }));
+        for (const port of limitedPort ? [limitedPort] : matchedPorts()) {
+            if (!limitedPort) card.appendChild(el('h3', { style: 'margin-top: 18px;', text: port.title }));
+            for (const input of port.inputs || []) {
+                card.appendChild(el('p', { class: 'small', style: 'margin: 12px 0 0;' }, [el('strong', { text: input.label }), input.required ? '' : ' (optional)']));
+                card.appendChild(needsList(input));
+            }
+        }
+    }
+    box.appendChild(card);
+}
+
+function renderFound() {
+    const box = $('results');
+    box.textContent = '';
+    show(box, true);
+    const matches = found.matches;
+    if (!matches.length) {
+        renderNothing(box);
+        return;
+    }
+
+    box.appendChild(el('h2', { class: 'section-title', style: 'margin-top: 22px;', text: 'Found' }));
+    const portOrder = [];
+    for (const match of matches) if (portOrder.indexOf(match.port) < 0) portOrder.push(match.port);
+    for (const portId of portOrder) {
+        const own = matches.filter((m) => m.port === portId);
+        const card = el('div', { class: 'card' }, [el('h2', { text: own[0].portTitle })]);
+        const doneGroups = new Set();
+        for (const match of own) {
+            if (match.group < 0) {
+                card.appendChild(checkboxItem(match));
+            } else if (!doneGroups.has(match.group)) {
+                doneGroups.add(match.group);
+                card.appendChild(groupItems(match.group, matches.filter((m) => m.group === match.group)));
+            }
+        }
+        box.appendChild(card);
+    }
+    if (found.unused > 0)
+        box.appendChild(el('p', { class: 'muted', text: (found.unused === 1 ? '1 file isn\'t' : found.unused + ' files aren\'t') + ' needed by any game and won\'t be sent.' }));
+    box.appendChild(el('div', { class: 'row', style: 'margin-top: 16px;' }, [
+        el('button', { id: 'sendButton', type: 'button', class: 'primary', onclick: send }),
+    ]));
+    box.appendChild(el('p', { class: 'small muted', text: 'Keep this page open and the screen on until it finishes.' }));
+    updateSendButton();
+}
+
+// ---- sending
+
+// A job: {label (shown), size, file, url, skip: why it is not sent, or ''}.
+function upload(job, onProgress) {
+    return new Promise((resolve) => {
+        const xhr = new XMLHttpRequest();
+        sending.xhr = xhr;
+        xhr.open('PUT', job.url);
+        xhr.upload.onprogress = (event) => onProgress(event.loaded);
+        xhr.onload = () => {
+            let error = '';
+            try { error = JSON.parse(xhr.responseText).error || ''; } catch (e) { error = ''; }
+            resolve({ status: xhr.status, error: error });
+        };
+        xhr.onerror = () => resolve({ status: 0 });
+        xhr.ontimeout = () => resolve({ status: 0 });
+        xhr.onabort = () => resolve({ aborted: true });
+        xhr.send(job.file);
+    });
+}
+
+function renderSending(state) {
+    const box = $('sending');
+    box.textContent = '';
+    const overall = state.total ? (state.sentBytes + state.currentBytes) / state.total : 1;
+    const current = state.job && state.job.size ? state.currentBytes / state.job.size : 0;
+    const left = state.total - state.sentBytes - state.currentBytes;
+    const parts = [formatSize(state.sentBytes + state.currentBytes) + ' of ' + formatSize(state.total)];
+    if (state.speed > 0) {
+        parts.push(formatSize(state.speed) + '/s');
+        parts.push('about ' + formatTime(left / state.speed) + ' left');
+    }
+    box.appendChild(el('h2', { text: 'Sending ' + (state.position + 1) + ' of ' + state.jobs.length }));
+    box.appendChild(el('div', { class: 'bar' }, [el('div', { style: 'width: ' + (overall * 100).toFixed(1) + '%' })]));
+    box.appendChild(el('p', { class: 'small muted', text: parts.join(' · ') }));
+    if (state.job) {
+        box.appendChild(el('p', { class: 'small', style: 'word-break: break-all; margin-top: 16px;', text: state.job.label }));
+        box.appendChild(el('div', { class: 'bar small' }, [el('div', { style: 'width: ' + (current * 100).toFixed(1) + '%' })]));
+    }
+    box.appendChild(el('div', { class: 'row', style: 'margin-top: 16px;' }, [el('button', { type: 'button', text: 'Cancel', onclick: cancel })]));
+}
+
+function cancel() {
+    if (!sending) return;
+    sending.cancelled = true;
+    if (sending.xhr) sending.xhr.abort();
+}
+
+// Sends `jobs` one at a time with the progress card. Returns {sent, failed, stopMessage, replaced}.
+async function runUploads(jobs) {
+    showError('');
+    sending = { cancelled: false, xhr: null };
+    const state = {
+        jobs: jobs, position: 0, job: null, total: jobs.reduce((sum, job) => sum + job.size, 0),
+        sentBytes: 0, currentBytes: 0, speed: 0, samples: [],
+    };
+    const result = { sent: [], failed: [], stopMessage: '', replaced: false };
+    show($('summary'), false);
+    show($('sending'), true);
+    renderView();
+    renderBrowser();
+    renderSending(state);
+    $('sending').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+    let lastDraw = 0;
+    const progress = (loaded) => {
+        state.currentBytes = loaded;
+        const now = performance.now();
+        const done = state.sentBytes + loaded;
+        state.samples.push([now, done]);
+        while (state.samples.length > 2 && now - state.samples[0][0] > 4000) state.samples.shift();
+        const first = state.samples[0];
+        if (now - first[0] > 500) state.speed = (done - first[1]) / ((now - first[0]) / 1000);
+        if (now - lastDraw > 150) { lastDraw = now; renderSending(state); }
+    };
+
+    for (let i = 0; i < jobs.length; i++) {
+        const job = jobs[i];
+        state.position = i;
+        state.job = job;
+        state.currentBytes = 0;
+        renderSending(state);
+        if (job.skip) {
+            result.failed.push({ path: job.label, why: job.skip });
+            state.total -= job.size;
+            continue;
+        }
+        const answer = await upload(job, progress);
+        sending.xhr = null;
+        if (answer.aborted || sending.cancelled) {
+            result.stopMessage = 'Sending was cancelled.';
+            break;
+        }
+        if (answer.status === 200) {
+            result.sent.push(job);
+            state.sentBytes += job.size;
+        } else if (answer.status === 410) {
+            result.replaced = true;
+            result.stopMessage = 'PortZone\'s list of files changed (another drop, or the screen was reopened). Drop the files again.';
+            break;
+        } else if (answer.status === 0) {
+            result.stopMessage = 'Lost the connection to PortZone. Check that the Switch is still on the Send files screen and on the same Wi-Fi, then try again.';
+            break;
+        } else {
+            const why = answer.status === 403 ? FORBIDDEN : (answer.error || ('PortZone answered ' + answer.status));
+            result.failed.push({ path: job.label, why: why });
+            state.total -= job.size;
+        }
+        state.currentBytes = 0;
+        state.samples = [];
+    }
+
+    sending = null;
+    show($('sending'), false);
+    renderView();
+    renderBrowser();
+    return result;
+}
+
+async function send() {
+    if (sending || !found) return;
+    const plan = found.plan;
+    const picked = chosenFiles();
+    const jobs = picked.map((job) => ({
+        label: job.item.path, size: job.spec.size, file: job.item.file,
+        url: apiUrl('file', { plan: plan, match: job.match.id, file: job.index }),
+        skip: job.item.file.size !== job.spec.size ? 'it isn\'t the size this game expects' : '',
+    }));
+    if (!jobs.length) return;
+    const games = [];
+    for (const job of picked) if (games.indexOf(job.match.port) < 0) games.push(job.match.port);
+    show($('results'), false);
+    const result = await runUploads(jobs);
+    if (!result.replaced) {
+        try { await apiJson('done', { plan: plan }, { method: 'POST' }); } catch (e) { /* the summary below says what happened */ }
+    }
+    found = null;
+    await reloadPorts();
+    renderSummary(result, games);
+}
+
+// `games`: ids of the games the files were for, to say what they still miss.
+function renderSummary(result, games) {
+    const box = $('summary');
+    box.textContent = '';
+    const sent = result.sent, failed = result.failed;
+    const bytes = sent.reduce((sum, job) => sum + job.size, 0);
+    box.appendChild(el('h2', { text: sent.length ? 'Sent ' + plural(sent.length, 'file', 'files') + ' (' + formatSize(bytes) + ')' : 'No files were sent' }));
+    if (result.stopMessage) box.appendChild(el('p', { class: 'bad', text: result.stopMessage }));
+    if (failed.length) {
+        box.appendChild(el('p', { class: 'bad', text: plural(failed.length, 'file', 'files') + ' didn\'t go through:' }));
+        const list = el('ul', { class: 'plain small' });
+        for (const f of failed) list.appendChild(el('li', null, [el('code', { text: f.path }), ': ' + f.why]));
+        box.appendChild(list);
+    }
+    const involved = games.map(portById).filter((port) => port && !port.manualOnly);
+    const missing = [];
+    for (const port of involved)
+        for (const input of port.inputs || [])
+            if (input.required && !input.met) missing.push((involved.length > 1 ? port.title + ': ' : '') + input.label);
+    if (missing.length)
+        box.appendChild(el('p', { class: 'muted', text: 'Still missing: ' + missing.join('; ') }));
+    else if (sent.length && involved.length)
+        box.appendChild(el('p', { class: 'good', text: involved.length === 1 ? involved[0].title + ' has everything it needs.' : 'These games have everything they need.' }));
+    show(box, true);
+    box.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ---- choosing where files go by hand
+
+function joinPath(folder, name) {
+    return folder && name ? folder + '/' + name : folder || name;
+}
+
+function openBrowser(path, title) {
+    if (sending) return;
+    browse = { path: path || '', title: title || '', listing: null, error: '', messages: [] };
+    show($('browser'), true);
+    loadListing(browse.path);
+    $('browser').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function closeBrowser() {
+    browse = null;
+    renderBrowser();
+}
+
+async function loadListing(path) {
+    if (!browse) return;
+    browse.path = path;
+    browse.listing = null;
+    browse.error = '';
+    browse.messages = [];
+    renderBrowser();
+    let listing = null, error = '';
+    try {
+        listing = await apiJson('list', { path: path }, undefined, FORBIDDEN);
+    } catch (e) {
+        error = e.message;
+    }
+    if (!browse || browse.path !== path) return;
+    browse.listing = listing;
+    browse.error = error;
+    renderBrowser();
+}
+
+function crumbs(path) {
+    const parts = path ? path.split('/') : [];
+    const row = el('div', { class: 'crumbs' });
+    const add = (label, target, last) => {
+        if (last || sending) row.appendChild(el('span', { class: last ? 'here' : '', text: label }));
+        else row.appendChild(el('button', { type: 'button', class: 'link', text: label, onclick: () => loadListing(target) }));
+    };
+    add('SD card', '', !parts.length);
+    parts.forEach((part, i) => {
+        row.appendChild(el('span', { class: 'muted', text: '/' }));
+        add(part, parts.slice(0, i + 1).join('/'), i === parts.length - 1);
+    });
+    return row;
+}
+
+function entryList(listing) {
+    const folders = listing.folders || [], files = listing.files || [];
+    if (!folders.length && !files.length) return el('p', { class: 'muted', text: 'Empty folder' });
+    const list = el('div', { class: 'entries' });
+    for (const name of folders)
+        list.appendChild(el('button', { type: 'button', class: 'entry', disabled: !!sending, onclick: () => loadListing(joinPath(browse.path, name)) }, [
+            el('span', { class: 'name folder-name', text: name }),
+            el('span', { class: 'kind', text: 'Folder' }),
+        ]));
+    for (const file of files)
+        list.appendChild(el('div', { class: 'entry' }, [
+            el('span', { class: 'name', text: file.name }),
+            el('span', { class: 'kind', text: formatSize(file.size) }),
+        ]));
+    return list;
+}
+
+function renderBrowser() {
+    const box = $('browser');
+    box.textContent = '';
+    show(box, !!browse);
+    if (!browse) return;
+    const busy = !!sending;
+    const parent = browse.path.split('/').slice(0, -1).join('/');
+    box.appendChild(el('div', { class: 'panel-head' }, [
+        el('h2', { style: 'margin: 0;', text: browse.title ? 'Files for ' + browse.title : 'Put files on the SD card' }),
+        el('button', { type: 'button', class: 'small', text: 'Close', disabled: busy, onclick: closeBrowser }),
+    ]));
+    box.appendChild(crumbs(browse.path));
+    box.appendChild(el('div', { class: 'row' }, [
+        el('button', { type: 'button', class: 'small', text: 'Up', disabled: busy || !browse.path, onclick: () => loadListing(parent) }),
+        el('button', { type: 'button', class: 'small', text: 'New folder', disabled: busy, onclick: newFolder }),
+        el('button', { type: 'button', class: 'small primary', text: 'Upload files here', disabled: busy, onclick: () => pick(false, uploadHere) }),
+        folderSupported() ? el('button', { type: 'button', class: 'small', text: 'Upload a folder here', disabled: busy, onclick: () => pick(true, uploadHere) }) : null,
+    ]));
+    box.appendChild(el('p', { class: 'small muted', text: 'You can also drop files or folders onto this box; folders keep what\'s inside them.' }));
+    for (const message of browse.messages) box.appendChild(el('p', { class: 'bad', text: message }));
+    if (browse.error) {
+        box.appendChild(el('p', { class: 'bad', text: browse.error }));
+    } else if (!browse.listing) {
+        box.appendChild(el('p', { class: 'muted', text: 'Loading…' }));
+    } else if (!browse.listing.exists) {
+        box.appendChild(el('p', { class: 'small' }, [
+            el('code', { text: browse.path || 'SD card' }), ': This folder doesn\'t exist yet; uploading here creates it.',
+        ]));
+    } else {
+        box.appendChild(entryList(browse.listing));
+    }
+}
+
+async function newFolder() {
+    if (!browse || sending) return;
+    const answer = window.prompt('Name of the new folder:');
+    if (answer === null) return;
+    const name = answer.trim();
+    if (!name || /[\/\\:]/.test(name) || name.indexOf('..') >= 0) {
+        browse.messages = ['A folder name can\'t be empty or contain / \\ : or "..".'];
+        renderBrowser();
+        return;
+    }
+    const folder = browse.path;
+    try {
+        await apiJson('mkdir', { path: joinPath(folder, name) }, { method: 'POST' }, FORBIDDEN);
+    } catch (e) {
+        if (browse) {
+            browse.messages = [e.message];
+            renderBrowser();
+        }
+        return;
+    }
+    if (browse && browse.path === folder) loadListing(folder);
+}
+
+// What uploading `files` into the listed folder would collide with; false when the player says no.
+function clashesAccepted(files, listing) {
+    if (!listing || !listing.exists) return true;
+    const folders = new Set((listing.folders || []).map((name) => name.toLowerCase()));
+    const existingFiles = new Set((listing.files || []).map((f) => f.name.toLowerCase()));
+    const tops = new Map(); // lowercase name -> {name, folder}
+    for (const f of files) {
+        const parts = f.path.split('/');
+        const key = parts[0].toLowerCase();
+        const top = tops.get(key) || { name: parts[0], folder: false };
+        if (parts.length > 1) top.folder = true;
+        tops.set(key, top);
+    }
+    let replacing = 0;
+    const merging = [], conflicts = [];
+    tops.forEach((top, key) => {
+        if (top.folder) {
+            if (folders.has(key)) merging.push(top.name);
+            else if (existingFiles.has(key)) conflicts.push(top.name + ' is already here as a file. Rename one of them first.');
+        } else if (existingFiles.has(key)) {
+            replacing++;
+        } else if (folders.has(key)) {
+            conflicts.push(top.name + ' is already here as a folder. Rename one of them first.');
+        }
+    });
+    if (conflicts.length) {
+        browse.messages = conflicts;
+        renderBrowser();
+        return false;
+    }
+    if (merging.length) {
+        const question = merging.length === 1
+            ? 'Add to the existing folder ' + merging[0] + '? Files with the same names inside it are replaced.'
+            : 'Add to the existing folders ' + merging.join(', ') + '? Files with the same names inside them are replaced.';
+        if (!window.confirm(question)) return false;
+    }
+    if (replacing && !window.confirm('Replace ' + plural(replacing, 'existing item', 'existing items') + '?')) return false;
+    return true;
+}
+
+async function uploadHere(files) {
+    if (!browse || sending) return;
+    const folder = browse.path;
+    browse.messages = [];
+    renderBrowser();
+    if (!clashesAccepted(files, browse.listing)) return;
+    const jobs = files.map((f) => ({
+        label: f.path, size: f.size, file: f.file, url: apiUrl('put', { path: joinPath(folder, f.path) }), skip: '',
+    }));
+    const game = gameId;
+    const result = await runUploads(jobs);
+    if (browse && browse.path === folder) await loadListing(folder);
+    await reloadPorts();
+    renderSummary(result, game ? [game] : []);
+}
+
+// ---- page setup
+
+function setup() {
+    if (!folderSupported()) show($('pickFolder'), false);
+    $('pickFolder').addEventListener('click', () => pick(true, droppedOnPage));
+    $('pickFiles').addEventListener('click', () => pick(false, droppedOnPage));
+    $('browseSd').addEventListener('click', () => openBrowser('', ''));
+    $('back').addEventListener('click', backToCatalog);
+    $('otherGamesLink').addEventListener('click', backToCatalog);
+    $('folderInput').addEventListener('change', onPicked);
+    $('filesInput').addEventListener('change', onPicked);
+    makeDropTarget($('browser'), uploadHere);
+    window.addEventListener('hashchange', () => route(true));
+    window.addEventListener('popstate', () => route(true));
+
+    document.addEventListener('dragenter', (event) => {
+        event.preventDefault();
+        dragDepth++;
+        if (!sending) document.body.classList.add('dragging');
+    });
+    document.addEventListener('dragleave', () => {
+        dragDepth = Math.max(0, dragDepth - 1);
+        if (!dragDepth) document.body.classList.remove('dragging');
+    });
+    document.addEventListener('dragover', (event) => {
+        event.preventDefault();
+        if (event.dataTransfer) event.dataTransfer.dropEffect = sending ? 'none' : 'copy';
+    });
+    document.addEventListener('drop', (event) => {
+        event.preventDefault();
+        dragDepth = 0;
+        document.body.classList.remove('dragging');
+        dropped(event.dataTransfer, droppedOnPage);
+    });
+    window.addEventListener('beforeunload', (event) => {
+        if (sending) { event.preventDefault(); event.returnValue = ''; }
+    });
+
+    if (!KEY) {
+        loaded = true;
+        renderView();
+        $('grid').textContent = '';
+        showError('This link is missing its key. Open the address PortZone shows on the Switch.');
+        return;
+    }
+    loadPorts(true).catch((e) => {
+        $('grid').textContent = '';
+        showError(e.message);
+    });
+}
+
+setup();
+</script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JohnUzoka/portzone-nx/main/store/schema/portzone.schema.json",
+  "format": 1,
+  "description": "TriAevum, the Ocarina of Time 3D recompilation, on Switch with gyro aiming, touch controls and in-game updates. Needs your own decrypted cartridge dump.",
+  "icon": "res/switch/icon.jpg",
+  "platform": { "original": "3DS", "runs_on": ["switch"] },
+  "install": {
+    "binary": "sdmc:/switch/oot3dre/oot3d_native_game.nro",
+    "steps": [{ "asset": "-switch.zip", "unzip": "sdmc:/" }]
+  },
+  "launch": {
+    "full_memory": true,
+    "notes": [
+      "A Sphaira forwarder works. Forwarders from the nsp-forwarder website have been reported to close the game.",
+      "Press both sticks in (L3+R3) for settings, the performance overlay and updates."
+    ]
+  },
+  "game_data": {
+    "dir": "sdmc:/switch/oot3dre",
+    "inputs": [
+      {
+        "id": "game",
+        "label": "Ocarina of Time 3D cartridge dump, decrypted: USA Rev 1, or European (original or Rev 1)",
+        "options": [
+          { "label": "Cartridge dump (.3ds)", "files": [{ "path": "*.3ds", "note": "Your decrypted dump" }] },
+          { "label": "Cartridge dump (.cci)", "files": [{ "path": "*.cci", "note": "Your decrypted dump" }] },
+          {
+            "label": "Extracted dump",
+            "files": [
+              { "path": "import/code.bin", "note": "Decompressed code" },
+              { "path": "import/exheader.bin", "note": "ExHeader" },
+              { "path": "import/romfs.bin", "note": "RomFS (IVFC)" }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "topscreen",
+        "label": "Single Screen Experience HUD art, for consoles without internet",
+        "required": false,
+        "options": [
+          {
+            "label": "Downloaded on a PC from GameBanana",
+            "url": "https://gamebanana.com/mods/695893",
+            "files": [{ "path": "singlescreen_322.zip", "note": "The game offers to download it itself when online" }]
+          }
+        ]
+      },
+      {
+        "id": "hd-textures",
+        "label": "HD texture pack (HenrikoMagnifico, 1080p)",
+        "required": false,
+        "options": [
+          {
+            "label": "Shrunk on a PC with shrink_texture_pack.py",
+            "url": "https://www.henrikomagnifico.com/zelda-ocarina-of-time-3d-4k",
+            "files": [{ "path": "textures/", "markers": ["pack.json"], "note": "Turn on in L3+R3, Video, HD textures" }]
+          }
+        ]
+      }
+    ],
+    "prepare": {
+      "where": "switch",
+      "summary": "The first start turns your dump into the game files (about a minute), then asks whether to keep the dump.",
+      "done": ["game/code.bin", "game/exheader.bin", "game/romfs.bin"]
+    },
+    "generated": [
+      { "path": "game/", "note": "Game files made from your dump" },
+      { "path": "config/", "note": "Settings" },
+      { "path": "logs/", "note": "Logs, for bug reports" },
+      { "path": "mods/", "note": "Your RomFS mods, one folder each" }
+    ]
+  },
+  "steps": [
+    "Have your own cartridge dump ready as a .3ds or .cci file (USA Rev 1, or European original or Rev 1). eShop copies (.cia) and other versions do not work.",
+    "Copy the .3ds or .cci file to switch/oot3dre/.",
+    "Start the game with full memory. The first start imports the dump."
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JohnUzoka/portzone-nx/main/store/schema/portzone.schema.json",
+  "format": 1,
+  "description": "Need for Speed: Most Wanted (2005, Xbox 360), statically recompiled with ReXGlue and drawn with Vulkan on NVK: 30 FPS at stock clocks. Needs your own Xbox 360 disc, converted on a PC.",
+  "banner": "extras/banner.png",
+  "platform": { "original": "Xbox 360", "runs_on": ["switch"] },
+  "install": {
+    "binary": "sdmc:/switch/nfsmw-nx/nfsmw-nx.nro"
+  },
+  "launch": {
+    "full_memory": true,
+    "notes": [
+      "A forwarder must be set to a 39-bit address space.",
+      "The first race after installing or updating can stutter for a few seconds while it compiles graphics pipelines; later sessions start smoothly."
+    ]
+  },
+  "game_data": {
+    "dir": "sdmc:/switch/nfsmw-nx",
+    "inputs": [
+      {
+        "id": "game",
+        "label": "Files made by the nfsmw-nx installer from your Xbox 360 disc",
+        "options": [
+          {
+            "label": "nfsmw-nx.zip, extracted",
+            "files": [
+              { "path": "nfsmw-nx.nro", "note": "The game, the build for your disc's edition" },
+              { "path": "nfsmw.toml", "note": "Settings" },
+              { "path": "nfsmw_shaders.nfsp", "note": "The game's shaders, made from your disc" },
+              { "path": "game_root/", "markers": ["default.xex", "NFS/"], "note": "The files of your disc" }
+            ]
+          }
+        ]
+      }
+    ],
+    "prepare": {
+      "where": "pc",
+      "summary": "The installer page reads your disc image (.iso) or extracted disc in the browser, picks your edition's build and makes the shaders from your disc.",
+      "tool": { "name": "nfsmw-nx installer", "url": "https://stevensnd.github.io/nfsmw-nx-installer/" }
+    }
+  },
+  "steps": [
+    "On a PC, open https://stevensnd.github.io/nfsmw-nx-installer/",
+    "Choose your disc image (.iso), or the folder with default.xex, Movies and NFS, and press Create nfsmw-nx.zip.",
+    "Extract nfsmw-nx.zip into switch/ on the SD card, or drop the extracted nfsmw-nx folder on PortZone's upload page. It makes switch/nfsmw-nx/.",
+    "Start nfsmw-nx.nro with full memory."
+  ]
+}
