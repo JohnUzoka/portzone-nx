@@ -9,6 +9,18 @@
   "properties": {
     "$schema": { "type": "string" },
     "format": { "const": 1 },
+    "switch2": {
+      "description": "A separate Switch 2 build (its own release file, folder or .nro): on a Switch 2, each key here replaces the top-level key of the same name. List \"switch2\" in platform.runs_on.",
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "install": { "$ref": "#/properties/install" },
+        "game_data": { "$ref": "#/properties/game_data" },
+        "launch": { "$ref": "#/properties/launch" },
+        "steps": { "$ref": "#/properties/steps" }
+      }
+    },
     "description": {
       "description": "Replaces the store's description. One or two sentences: what the game is and what the player must bring.",
       "type": "string",

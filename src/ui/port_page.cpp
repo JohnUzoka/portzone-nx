@@ -215,9 +215,7 @@ brls::View* PortActivity::createContentView()
     heading->addView(textBlock("by " + p.info.author + "  ·  " + p.info.url.substr(8), 16, mutedColor()));
     auto* tags = new brls::Box(brls::Axis::ROW);
     tags->setMarginTop(6);
-    const char* kind = p.section() == Section::EasySetup ? "Easy Setup" :
-        (p.section() == Section::BuildOnPc ? "Build on PC" : "Manual install");
-    tags->addView(pill(kind, accentColor()));
+    tags->addView(pill(p.section() == Section::Manual ? "Manual install" : sectionName(p.section()), accentColor()));
     if (!p.originalPlatform().empty())
     {
         const std::string& from = p.originalPlatform();
@@ -407,12 +405,6 @@ void PortActivity::fillStatus(brls::Box* box)
                 actions->addView(button("Reinstall " + tag, [this, plan] { install(plan); }));
             else if (state.installed)
                 actions->addView(button("Update to " + tag + size, [this, plan] { install(plan); }, true));
-            else if (p.section() == Section::BuildOnPc)
-            {
-                auto* hint = textBlock("Make the game files on a PC first (see Steps): the zip it makes includes the game.", 18, mutedColor());
-                hint->setMarginTop(10);
-                box->addView(hint);
-            }
             else
                 actions->addView(button("Install " + tag + size, [this, plan] { install(plan); }, true));
         }

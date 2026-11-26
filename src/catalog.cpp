@@ -52,14 +52,19 @@ namespace
         return "https://raw.githubusercontent.com/" + repoPath(port.info.url) + "/HEAD/" + port.info.manifest;
     }
 
-    // `json` (a portzone.json) into the port, or the reason it can't be used.
+    // `json` (a portzone.json) into the port, or the reason it can't be used. On a Switch 2, its "switch2" keys
+    // replace the top-level ones (a separate Switch 2 build); `manifestJson` keeps the file as it is.
     void setManifest(Port& port, const json& document, std::string source)
     {
         port.manifestJson   = document;
         port.manifestSource = std::move(source);
         try
         {
-            port.manifest = parseManifest(document);
+            json effective = document;
+            if (config().console == "switch2" && document.is_object() && document.contains("switch2"))
+                for (const auto& [key, value] : document.at("switch2").items())
+                    effective[key] = value;
+            port.manifest = parseManifest(effective);
         }
         catch (const std::exception& e)
         {
@@ -111,8 +116,20 @@ Section Port::section() const
     if (!manifest)
         return Section::Manual;
     if (manifest->gameData && manifest->gameData->prepare && manifest->gameData->prepare->where == "pc")
-        return Section::BuildOnPc;
+        return manifest->installSteps.empty() ? Section::BuildOnPc : Section::PrepareOnPc;
     return Section::EasySetup;
+}
+
+const char* sectionName(Section section)
+{
+    switch (section)
+    {
+        case Section::EasySetup: return "Easy Setup";
+        case Section::PrepareOnPc: return "Prepare on PC";
+        case Section::BuildOnPc: return "Build on PC";
+        case Section::Manual: break;
+    }
+    return "Manual";
 }
 
 const std::string& Port::description() const
@@ -295,6 +312,16 @@ void Catalog::replace(Port port)
     for (auto& existing : ports)
         if (existing.info.id == port.info.id)
             existing = std::move(port);
+}
+
+void Catalog::reapply()
+{
+    for (auto& port : ports)
+        if (!port.manifestJson.is_null())
+        {
+            port.manifestError.clear();
+            setManifest(port, json(port.manifestJson), std::string(port.manifestSource));
+        }
 }
 
 } // namespace pz

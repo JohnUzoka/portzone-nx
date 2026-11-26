@@ -21,7 +21,9 @@ namespace
     constexpr float GRID_TILE  = 176;
     constexpr float GRID_GAP   = 16;
 
-    const char* FILTER_NAMES[] = { "All", "Easy Setup", "Build on PC", "Manual" };
+    // "All", then every Section in its order.
+    const char* FILTER_NAMES[] = { "All", "Easy Setup", "Prepare on PC", "Build on PC", "Manual" };
+    constexpr int FILTER_COUNT = int(sizeof(FILTER_NAMES) / sizeof(FILTER_NAMES[0]));
     const char* SORT_NAMES[]   = { "Name A-Z", "Name Z-A", "System" };
 
     bool matches(const Port& port, int filter)
@@ -261,7 +263,7 @@ void BrowseView::openFilters()
 void BrowseView::chooseKind()
 {
     std::vector<std::string> names;
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < FILTER_COUNT; i++)
     {
         size_t count = 0;
         for (const auto& port : Catalog::get().ports)
@@ -269,7 +271,7 @@ void BrowseView::chooseKind()
         names.push_back(std::string(FILTER_NAMES[i]) + "  " + std::to_string(count));
     }
     auto* dropdown = new brls::Dropdown("Kind", names, [](int) {}, filter, [this](int chosen) {
-        if (chosen < 0 || chosen > 3)
+        if (chosen < 0 || chosen >= FILTER_COUNT)
             return;
         filter = chosen;
         apply();

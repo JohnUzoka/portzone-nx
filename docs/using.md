@@ -8,12 +8,17 @@ source code...), the order (name A-Z or Z-A, or by system) and cards or grid. **
 choices. The kinds:
 
 - **Easy Setup**: the port has a `portzone.json`. One-button install, a checklist of your files, the folder layout.
-- **Build on PC**: a tool on a PC makes the game's files. PortZone links the tool, shows the steps, checks the result.
+- **Prepare on PC**: PortZone installs the game; a tool on a PC makes its files from your copy. PortZone links the
+  tool, shows the steps, checks the result.
+- **Build on PC**: a tool on a PC makes everything, the game included. Nothing to download in PortZone: it links the
+  tool, takes what the tool made (upload page or SD card) and checks it.
 - **Manual**: no `portzone.json`. Its README and Switch release files; you pick where a file goes.
 
-**Installed** lists what is on the SD card. **Game files** gets your files into place. **About** has the theme,
-updates and sources. **Y** reloads the port list. Ports whose release runs on another console are listed but not
-installed.
+**Installed** lists what is on the SD card. **Game files** gets your files into place. **About** has the theme, the
+console, updates and sources. **Y** reloads the port list.
+
+**Console** (About): Switch or Switch 2. PortZone can't tell them apart, so set it once: games with a separate Switch
+2 build install that build on a Switch 2, and games made for the other console are listed but not installed.
 
 ## Getting your files onto the SD card
 

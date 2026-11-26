@@ -1881,6 +1881,13 @@
       "description": "Horizon, Minecraft: Java Edition rewritten from scratch in Rust, ported to Switch, with splitscreen, Microsoft sign-in and in-game updates. Needs your own Minecraft: Java Edition, prepared on a PC."
     },
     {
+      "id": "horizon-switch2",
+      "url": "https://github.com/TaoEffects/horizon-nx",
+      "title": "Minecraft: Java Edition (Horizon, Switch 2)",
+      "author": "TaoEffects",
+      "description": "Horizon, Minecraft: Java Edition rewritten in Rust, as a native Switch 2 build at 1080p and 120 Hz with Joy-Con 2 mouse controls. Needs your own Minecraft: Java Edition, prepared on a PC."
+    },
+    {
       "id": "hotpursuitnx",
       "url": "https://github.com/PalindromicBreadLoaf/HotPursuitNX",
       "title": "Need for Speed II: SE Need for Speed III: Hot Pursuit",

@@ -32,7 +32,10 @@ std::string parseArgs(int argc, char* argv[])
         else if (!std::strcmp(argv[i], "--drafts") && hasValue)
             c.draftsDir = fs::absolute(argv[++i]);
         else if (!std::strcmp(argv[i], "--console") && hasValue)
-            c.console = argv[++i];
+        {
+            c.console         = argv[++i];
+            c.consoleFromArgs = true;
+        }
         else if (!std::strcmp(argv[i], "--update-repo") && hasValue)
             c.updateRepo = argv[++i];
         else if (!std::strcmp(argv[i], "--self") && hasValue)

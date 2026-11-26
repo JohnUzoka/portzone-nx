@@ -18,7 +18,12 @@ Which of the three a port is comes from this file alone:
 |---|---|---|
 | **Manual** | No `portzone.json` | The player picks one of your release files |
 | **Easy Setup** | A `portzone.json` without a PC step | **Install** for the release files `install.steps` names |
-| **Build on PC** | `game_data.prepare.where: "pc"` | **Install** only if `install.steps` names release files; none when your PC tool makes everything, `.nro` included (leave `steps` out) |
+| **Prepare on PC** | `game_data.prepare.where: "pc"` and `install.steps` | **Install** for your `.nro`; the player makes the game files on a PC |
+| **Build on PC** | `game_data.prepare.where: "pc"`, no `install.steps` | None: your PC tool makes everything, `.nro` included |
+
+A separate Switch 2 build (its own release file, folder or `.nro`) goes in a **`switch2`** block: on a Switch 2, each
+key there (`install`, `game_data`, `launch`, `steps`) replaces the top-level one, and `platform.runs_on` lists both
+consoles. Players set which console they have in PortZone's About tab.
 
 You don't need to ask anyone: once the file is on your default branch, a game's page in PortZone picks it up the next
 time a player opens it, and the store's daily rebuild puts it in every list. Until then, the store may keep a draft for

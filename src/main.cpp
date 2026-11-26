@@ -30,6 +30,8 @@ int main(int argc, char* argv[])
 
     pz::http::init();
     pz::loadSettings();
+    if (!pz::config().consoleFromArgs && !pz::settings().console.empty())
+        pz::config().console = pz::settings().console;
 
     brls::Platform::APP_LOCALE_DEFAULT = brls::LOCALE_EN_US;
     if (!brls::Application::init())

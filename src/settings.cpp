@@ -34,6 +34,8 @@ void loadSettings()
         settings().testBuilds   = json.value("test_builds", std::set<std::string>());
         const std::string sort  = json.value("sort", "name");
         settings().sortOrder    = sort == "name-desc" ? 1 : (sort == "system" ? 2 : 0);
+        const std::string console = json.value("console", "");
+        settings().console      = console == "switch" || console == "switch2" ? console : "";
     }
     catch (const std::exception&)
     {
@@ -49,6 +51,7 @@ void saveSettings()
         { "check_updates", settings().checkUpdates },
         { "test_builds", settings().testBuilds },
         { "sort", settings().sortOrder == 1 ? "name-desc" : (settings().sortOrder == 2 ? "system" : "name") },
+        { "console", settings().console },
     };
     std::ofstream(settingsPath()) << json.dump(2) << "\n";
 }

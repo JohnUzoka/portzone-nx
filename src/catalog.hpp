@@ -11,10 +11,14 @@ namespace pz
 
 enum class Section
 {
-    EasySetup, // portzone.json: install here, conversion (if any) on the Switch
-    BuildOnPc, // portzone.json: a PC tool makes the game files
-    Manual,    // no portzone.json: README and release files
+    EasySetup,   // portzone.json: install here, conversion (if any) on the Switch
+    PrepareOnPc, // portzone.json: the .nro downloads here; a PC tool makes the game files
+    BuildOnPc,   // portzone.json: a PC tool makes everything, the .nro included (no install.steps)
+    Manual,      // no portzone.json: README and release files
 };
+
+// "Easy Setup", "Prepare on PC", "Build on PC", "Manual".
+const char* sectionName(Section section);
 
 struct Port
 {
@@ -70,6 +74,9 @@ class Catalog
 
     // UI thread: replaces one port (from fresher()).
     void replace(Port port);
+
+    // UI thread: reads every port's portzone.json again, after config().console changed (Switch 2 builds).
+    void reapply();
 
     std::vector<Port> ports;
     Source source = Source::Network;

@@ -1,0 +1,49 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JohnUzoka/portzone-nx/main/store/schema/portzone.schema.json",
+  "format": 1,
+  "description": "Horizon, Minecraft: Java Edition rewritten in Rust, as a native Switch 2 build at 1080p and 120 Hz with Joy-Con 2 mouse controls. Needs your own Minecraft: Java Edition, prepared on a PC.",
+  "icon": "docs/media/icon-256.png",
+  "platform": { "original": "PC", "runs_on": ["switch2"] },
+  "install": {
+    "binary": "sdmc:/switch/horizon/horizon.nro",
+    "steps": [{ "asset": ".zip", "unzip": "sdmc:/" }]
+  },
+  "launch": {
+    "full_memory": true,
+    "notes": [
+      "Minus toggles the F3 debug screen; Options, Horizon Settings, Overlay shows the FPS and frame graph.",
+      "Joy-Con 2 mouse mode: the right Joy-Con points (R breaks, ZR places, the right stick picks a block) while the left stick walks."
+    ]
+  },
+  "game_data": {
+    "dir": "sdmc:/switch/horizon",
+    "inputs": [
+      {
+        "id": "game",
+        "label": "Minecraft: Java Edition 26.3 files, prepared by the Horizon Launcher from your own copy",
+        "options": [
+          {
+            "label": "The contents of .local/horizon-client/26.3/",
+            "files": [
+              {
+                "path": "resources/",
+                "markers": ["horizon-resources.json"],
+                "note": "The prepared files, with horizon-resources.json directly inside"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "prepare": {
+      "where": "pc",
+      "summary": "The Horizon Launcher (PC or Mac) prepares the game's files from your own Minecraft: Java Edition 26.3, into .local/horizon-client/26.3/.",
+      "tool": { "name": "Horizon Launcher", "url": "https://playhorizon.dev" }
+    }
+  },
+  "steps": [
+    "On a PC or Mac, prepare your own Minecraft: Java Edition 26.3 with the Horizon Launcher.",
+    "Copy the contents of .local/horizon-client/26.3/ into switch/horizon/resources/, so horizon-resources.json sits directly inside it.",
+    "Start horizon.nro with Title Override: hold R while opening a native Switch 2 title."
+  ]
+}

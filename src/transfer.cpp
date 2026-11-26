@@ -440,6 +440,7 @@ namespace
         {
             const PortState state = portState(port);
             const char* kind      = port.section() == Section::EasySetup ? "easy" :
+                     port.section() == Section::PrepareOnPc             ? "prep" :
                      port.section() == Section::BuildOnPc               ? "pc" :
                                                                           "manual";
             json entry = {{"id", port.info.id}, {"title", port.info.title}, {"author", port.info.author},

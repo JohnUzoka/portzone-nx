@@ -17,8 +17,10 @@ struct Config
     fs::path sdRoot;
     // Optional: <id>/portzone.json files read before each port's repository
     fs::path draftsDir;
-    // The console this build runs on: "switch" (libnx). A PC build can pretend with --console.
+    // The console PortZone installs for: "switch" or "switch2" (a port's Switch 2 build). Set by the player in About
+    // (PortZone can't tell a Switch 2 from a Switch); a PC build's --console wins over that setting.
     std::string console = "switch";
+    bool consoleFromArgs = false;
     // Where PortZone's own releases are, for updating itself.
     std::string updateRepo = "JohnUzoka/portzone-nx";
     // PortZone's own .nro, replaced by an update: argv[0] on the Switch, --self on a PC. Empty: cannot update.

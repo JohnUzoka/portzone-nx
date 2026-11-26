@@ -67,6 +67,28 @@ namespace
         themeRow->addView(button(std::string("Theme: ") + (settings().lightTheme ? "Light" : "Dark"), chooseTheme));
         box->addView(themeRow);
 
+        // PortZone can't tell a Switch 2 from a Switch: the player says which, for ports with a Switch 2 build.
+        box->addView(header("Console"));
+        const auto consoleText = [] { return std::string("This console: ") + (config().console == "switch2" ? "Switch 2" : "Switch"); };
+        auto consoleButton = std::make_shared<brls::Button*>(nullptr);
+        *consoleButton     = button(consoleText(), [consoleButton, consoleText] {
+            config().console   = config().console == "switch2" ? "switch" : "switch2";
+            settings().console = config().console;
+            saveSettings();
+            Catalog::get().reapply();
+            BrowseView::portUpdatesFound(); // every list redraws for the console's builds
+            (*consoleButton)->setText(consoleText());
+        });
+        auto* consoleRow = new brls::Box(brls::Axis::ROW);
+        consoleRow->setMarginTop(8);
+        consoleRow->addView(*consoleButton);
+        box->addView(consoleRow);
+        auto* consoleHint = textBlock("Games with a separate Switch 2 build install that build on a Switch 2; games for the "
+                                      "other console are listed but not installed.",
+            16, mutedColor());
+        consoleHint->setMarginTop(8);
+        box->addView(consoleHint);
+
         box->addView(header("Updates"));
         const update::Status& status = update::current();
         std::string state            = "Not checked yet";

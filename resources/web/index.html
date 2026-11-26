@@ -101,7 +101,7 @@ body.dragging .drop, .drop.over { border-color: var(--accent); background: var(-
     border: 1px solid currentColor;
 }
 .pill.easy { color: var(--accent); }
-.pill.pc { color: var(--warn); }
+.pill.prep, .pill.pc { color: var(--warn); }
 .pill.manual { color: var(--muted); }
 
 .back { margin: 0 0 4px; }
@@ -247,7 +247,7 @@ button.entry:hover { background: var(--hover); }
 const KEY = new URLSearchParams(location.search).get('k') || '';
 const GIB4 = 4 * 1024 * 1024 * 1024;
 const FORBIDDEN = 'PortZone doesn\'t allow changes there.';
-const KINDS = { easy: 'Easy Setup', pc: 'Build on PC', manual: 'Manual' };
+const KINDS = { easy: 'Easy Setup', prep: 'Prepare on PC', pc: 'Build on PC', manual: 'Manual' };
 const $ = (id) => document.getElementById(id);
 
 let ports = [];

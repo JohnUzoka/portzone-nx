@@ -1,8 +1,48 @@
 {
   "$schema": "https://raw.githubusercontent.com/JohnUzoka/portzone-nx/main/store/schema/portzone.schema.json",
   "format": 1,
-  "description": "Need for Speed: Hot Pursuit 2, the PS2 version decompiled and ported natively to Switch, at 720p. Needs your own PS2 disc: the PAL version 1.00 (SLES-50731).",
-  "platform": { "original": "PlayStation 2", "runs_on": ["switch"] },
+  "description": "Need for Speed: Hot Pursuit 2, the PS2 version decompiled and ported natively to Switch, at 720p (1080p on Switch 2). Needs your own PS2 disc: the PAL version 1.00 (SLES-50731).",
+  "switch2": {
+    "install": {
+      "binary": "sdmc:/switch/NFSHP2-Switch2/NFSHP2-Switch2.nro",
+      "steps": [{ "asset": "NFSHP2-Switch2.nro", "copy": "sdmc:/switch/NFSHP2-Switch2" }]
+    },
+    "launch": {
+      "notes": [
+        "Renders at 1080p. Start it from the ounce-hbmenu environment in full application mode.",
+        "The language is chosen at every start.",
+        "config.txt sets frame_limit (60 by default, up to 120) and show_fps."
+      ]
+    },
+    "game_data": {
+      "dir": "sdmc:/switch/NFSHP2-Switch2",
+      "inputs": [
+        {
+          "id": "game",
+          "label": "The NFSHP2 folder's two data files from your PS2 disc, PAL version 1.00 (SLES-50731) only, about 3.1 GB",
+          "options": [
+            {
+              "label": "From the disc, or made by the web installer from your ISO",
+              "files": [
+                { "path": "ZDIR.BIN", "note": "The game's file table" },
+                { "path": "ZZDATA.BIN", "note": "The game's data" }
+              ]
+            }
+          ]
+        }
+      ],
+      "generated": [
+        { "path": "config.txt", "note": "Frame limit and FPS counter, made on first start" },
+        { "path": "Saves/", "note": "Your saves and the graphics pipeline cache" }
+      ]
+    },
+    "steps": [
+      "Copy ZDIR.BIN and ZZDATA.BIN from the NFSHP2 folder of your PAL 1.00 disc to switch/NFSHP2-Switch2/.",
+      "Or, on a PC, give your unmodified ISO to the web installer (https://HDErick.github.io/NFSHP2_Switch_Port/) and choose Switch 2; it makes a zip for the SD card's root.",
+      "Start NFSHP2-Switch2.nro with full memory."
+    ]
+  },
+  "platform": { "original": "PlayStation 2", "runs_on": ["switch", "switch2"] },
   "install": {
     "binary": "sdmc:/switch/NFSHP2-Switch/NFSHP2-Switch.nro",
     "steps": [{ "asset": "NFSHP2-Switch.nro", "copy": "sdmc:/switch/NFSHP2-Switch" }]

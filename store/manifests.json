@@ -7,10 +7,57 @@
         "$schema": "https://raw.githubusercontent.com/JohnUzoka/portzone-nx/main/store/schema/portzone.schema.json",
         "format": 1,
         "description": "Call of Duty: Black Ops II Zombies and Multiplayer (BO2 Requiem), running natively on Switch with split-screen, online play, gyro aiming and a mod loader. Needs your own Black Ops II for PC from Steam.",
+        "switch2": {
+          "install": {
+            "binary": "sdmc:/switch/t6gameSW2/t6gameSW2.nro",
+            "steps": [
+              {
+                "asset": "bo2requiem-Switch2.zip",
+                "unzip": "sdmc:/"
+              }
+            ]
+          },
+          "launch": {
+            "notes": [
+              "t6zm.nro starts Zombies and t6mp.nro Multiplayer directly; t6gameSW2.nro offers both. Start them from hbmenu.",
+              "Only the DLC maps you own are shown. The campaign isn't playable, so its files can stay on the PC."
+            ]
+          },
+          "game_data": {
+            "dir": "sdmc:/switch/t6gameSW2",
+            "inputs": [
+              {
+                "id": "game",
+                "label": "Black Ops II for PC (Steam): the zone and sound folders from the game folder (the one with t6zm.exe), about 14.4 GB without the campaign",
+                "options": [
+                  {
+                    "label": "Copied from your Steam game folder",
+                    "files": [
+                      {
+                        "path": "zone/",
+                        "note": "The game's zones"
+                      },
+                      {
+                        "path": "sound/",
+                        "note": "The game's sound"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "steps": [
+            "Copy the zone and sound folders from your Steam game folder (the one with t6zm.exe) to switch/t6gameSW2/.",
+            "Or, on a PC, use the BO2 Requiem Compressor (https://hderick.github.io/BO2-Requiem-NX/) to shrink them first; choose Switch 2, and it makes a zip for the SD card's root.",
+            "Start t6gameSW2.nro from hbmenu."
+          ]
+        },
         "platform": {
           "original": "PC",
           "runs_on": [
-            "switch"
+            "switch",
+            "switch2"
           ]
         },
         "install": {
@@ -332,6 +379,73 @@
         ]
       }
     },
+    "horizon-switch2": {
+      "source": "store draft",
+      "portzone": {
+        "$schema": "https://raw.githubusercontent.com/JohnUzoka/portzone-nx/main/store/schema/portzone.schema.json",
+        "format": 1,
+        "description": "Horizon, Minecraft: Java Edition rewritten in Rust, as a native Switch 2 build at 1080p and 120 Hz with Joy-Con 2 mouse controls. Needs your own Minecraft: Java Edition, prepared on a PC.",
+        "icon": "docs/media/icon-256.png",
+        "platform": {
+          "original": "PC",
+          "runs_on": [
+            "switch2"
+          ]
+        },
+        "install": {
+          "binary": "sdmc:/switch/horizon/horizon.nro",
+          "steps": [
+            {
+              "asset": ".zip",
+              "unzip": "sdmc:/"
+            }
+          ]
+        },
+        "launch": {
+          "full_memory": true,
+          "notes": [
+            "Minus toggles the F3 debug screen; Options, Horizon Settings, Overlay shows the FPS and frame graph.",
+            "Joy-Con 2 mouse mode: the right Joy-Con points (R breaks, ZR places, the right stick picks a block) while the left stick walks."
+          ]
+        },
+        "game_data": {
+          "dir": "sdmc:/switch/horizon",
+          "inputs": [
+            {
+              "id": "game",
+              "label": "Minecraft: Java Edition 26.3 files, prepared by the Horizon Launcher from your own copy",
+              "options": [
+                {
+                  "label": "The contents of .local/horizon-client/26.3/",
+                  "files": [
+                    {
+                      "path": "resources/",
+                      "markers": [
+                        "horizon-resources.json"
+                      ],
+                      "note": "The prepared files, with horizon-resources.json directly inside"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "prepare": {
+            "where": "pc",
+            "summary": "The Horizon Launcher (PC or Mac) prepares the game's files from your own Minecraft: Java Edition 26.3, into .local/horizon-client/26.3/.",
+            "tool": {
+              "name": "Horizon Launcher",
+              "url": "https://playhorizon.dev"
+            }
+          }
+        },
+        "steps": [
+          "On a PC or Mac, prepare your own Minecraft: Java Edition 26.3 with the Horizon Launcher.",
+          "Copy the contents of .local/horizon-client/26.3/ into switch/horizon/resources/, so horizon-resources.json sits directly inside it.",
+          "Start horizon.nro with Title Override: hold R while opening a native Switch 2 title."
+        ]
+      }
+    },
     "kartpadnx": {
       "source": "store draft",
       "portzone": {
@@ -418,11 +532,69 @@
       "portzone": {
         "$schema": "https://raw.githubusercontent.com/JohnUzoka/portzone-nx/main/store/schema/portzone.schema.json",
         "format": 1,
-        "description": "Need for Speed: Hot Pursuit 2, the PS2 version decompiled and ported natively to Switch, at 720p. Needs your own PS2 disc: the PAL version 1.00 (SLES-50731).",
+        "description": "Need for Speed: Hot Pursuit 2, the PS2 version decompiled and ported natively to Switch, at 720p (1080p on Switch 2). Needs your own PS2 disc: the PAL version 1.00 (SLES-50731).",
+        "switch2": {
+          "install": {
+            "binary": "sdmc:/switch/NFSHP2-Switch2/NFSHP2-Switch2.nro",
+            "steps": [
+              {
+                "asset": "NFSHP2-Switch2.nro",
+                "copy": "sdmc:/switch/NFSHP2-Switch2"
+              }
+            ]
+          },
+          "launch": {
+            "notes": [
+              "Renders at 1080p. Start it from the ounce-hbmenu environment in full application mode.",
+              "The language is chosen at every start.",
+              "config.txt sets frame_limit (60 by default, up to 120) and show_fps."
+            ]
+          },
+          "game_data": {
+            "dir": "sdmc:/switch/NFSHP2-Switch2",
+            "inputs": [
+              {
+                "id": "game",
+                "label": "The NFSHP2 folder's two data files from your PS2 disc, PAL version 1.00 (SLES-50731) only, about 3.1 GB",
+                "options": [
+                  {
+                    "label": "From the disc, or made by the web installer from your ISO",
+                    "files": [
+                      {
+                        "path": "ZDIR.BIN",
+                        "note": "The game's file table"
+                      },
+                      {
+                        "path": "ZZDATA.BIN",
+                        "note": "The game's data"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "generated": [
+              {
+                "path": "config.txt",
+                "note": "Frame limit and FPS counter, made on first start"
+              },
+              {
+                "path": "Saves/",
+                "note": "Your saves and the graphics pipeline cache"
+              }
+            ]
+          },
+          "steps": [
+            "Copy ZDIR.BIN and ZZDATA.BIN from the NFSHP2 folder of your PAL 1.00 disc to switch/NFSHP2-Switch2/.",
+            "Or, on a PC, give your unmodified ISO to the web installer (https://HDErick.github.io/NFSHP2_Switch_Port/) and choose Switch 2; it makes a zip for the SD card's root.",
+            "Start NFSHP2-Switch2.nro with full memory."
+          ]
+        },
         "platform": {
           "original": "PlayStation 2",
           "runs_on": [
-            "switch"
+            "switch",
+            "switch2"
           ]
         },
         "install": {
@@ -563,10 +735,88 @@
         "$schema": "https://raw.githubusercontent.com/JohnUzoka/portzone-nx/main/store/schema/portzone.schema.json",
         "format": 1,
         "description": "Call of Duty: Black Ops (2010) through OpenBLOPS, ported to Switch with Campaign, Zombies and Multiplayer. Needs your own PC copy, its zones converted on a PC.",
+        "switch2": {
+          "install": {
+            "binary": "sdmc:/switch/OpenBLOPS-NX2/OpenBLOPS-NX2.nro",
+            "steps": [
+              {
+                "asset": "OpenBLOPS-NX2.zip",
+                "unzip": "sdmc:/"
+              }
+            ]
+          },
+          "launch": {
+            "notes": [
+              "OpenBLOPS-NX2.nro runs Campaign and Zombies, OpenBLOPS-NX2-MP.nro Multiplayer; each can start the other.",
+              "Buttons go by position: A confirms and B goes back. Motion aiming is in Options, Controls, Gamepad.",
+              "cmdline.txt takes +set overrides."
+            ]
+          },
+          "game_data": {
+            "dir": "sdmc:/switch/OpenBLOPS-NX2",
+            "inputs": [
+              {
+                "id": "game",
+                "label": "Black Ops for PC (retail, with any DLC you want to play), its zones converted by the web installer",
+                "options": [
+                  {
+                    "label": "The web installer's output",
+                    "files": [
+                      {
+                        "path": "main/",
+                        "note": "The game's main folder"
+                      },
+                      {
+                        "path": "zone/",
+                        "note": "The game's zones"
+                      },
+                      {
+                        "path": "kbz/",
+                        "note": "The zones, converted for the Switch"
+                      },
+                      {
+                        "path": "localization.txt",
+                        "note": "The game's language"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "prepare": {
+              "where": "pc",
+              "summary": "The web installer converts every zone (DLC and localised zones too) in the browser; its output's main, zone, kbz and localization.txt go beside the Switch 2 NROs.",
+              "tool": {
+                "name": "OpenBLOPS-NX web installer",
+                "url": "https://hderick.github.io/OpenBLOPS-NX/"
+              }
+            },
+            "generated": [
+              {
+                "path": "config.cfg",
+                "note": "Graphics settings"
+              },
+              {
+                "path": "playername.txt",
+                "note": "Your player name, a random one on first start"
+              },
+              {
+                "path": "kisakblack.log",
+                "note": "A record of each run"
+              }
+            ]
+          },
+          "steps": [
+            "On a PC, open https://hderick.github.io/OpenBLOPS-NX/ and give it main, zone and localization.txt from your Black Ops install.",
+            "Copy main, zone, kbz and localization.txt from what it makes to switch/OpenBLOPS-NX2/ on the SD card, or drop them on PortZone's upload page.",
+            "Start OpenBLOPS-NX2.nro with full memory."
+          ]
+        },
         "platform": {
           "original": "PC",
           "runs_on": [
-            "switch"
+            "switch",
+            "switch2"
           ]
         },
         "install": {

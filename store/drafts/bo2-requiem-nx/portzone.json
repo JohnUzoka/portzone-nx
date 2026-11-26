@@ -2,7 +2,42 @@
   "$schema": "https://raw.githubusercontent.com/JohnUzoka/portzone-nx/main/store/schema/portzone.schema.json",
   "format": 1,
   "description": "Call of Duty: Black Ops II Zombies and Multiplayer (BO2 Requiem), running natively on Switch with split-screen, online play, gyro aiming and a mod loader. Needs your own Black Ops II for PC from Steam.",
-  "platform": { "original": "PC", "runs_on": ["switch"] },
+  "switch2": {
+    "install": {
+      "binary": "sdmc:/switch/t6gameSW2/t6gameSW2.nro",
+      "steps": [{ "asset": "bo2requiem-Switch2.zip", "unzip": "sdmc:/" }]
+    },
+    "launch": {
+      "notes": [
+        "t6zm.nro starts Zombies and t6mp.nro Multiplayer directly; t6gameSW2.nro offers both. Start them from hbmenu.",
+        "Only the DLC maps you own are shown. The campaign isn't playable, so its files can stay on the PC."
+      ]
+    },
+    "game_data": {
+      "dir": "sdmc:/switch/t6gameSW2",
+      "inputs": [
+        {
+          "id": "game",
+          "label": "Black Ops II for PC (Steam): the zone and sound folders from the game folder (the one with t6zm.exe), about 14.4 GB without the campaign",
+          "options": [
+            {
+              "label": "Copied from your Steam game folder",
+              "files": [
+                { "path": "zone/", "note": "The game's zones" },
+                { "path": "sound/", "note": "The game's sound" }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "steps": [
+      "Copy the zone and sound folders from your Steam game folder (the one with t6zm.exe) to switch/t6gameSW2/.",
+      "Or, on a PC, use the BO2 Requiem Compressor (https://hderick.github.io/BO2-Requiem-NX/) to shrink them first; choose Switch 2, and it makes a zip for the SD card's root.",
+      "Start t6gameSW2.nro from hbmenu."
+    ]
+  },
+  "platform": { "original": "PC", "runs_on": ["switch", "switch2"] },
   "install": {
     "binary": "sdmc:/switch/t6game/t6game.nro",
     "steps": [{ "asset": "bo2requiem.zip", "unzip": "sdmc:/" }]

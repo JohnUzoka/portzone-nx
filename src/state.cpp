@@ -34,6 +34,8 @@ std::string stateSummary(const Port& port, const PortState& state)
     {
         if (port.section() == Section::BuildOnPc)
             return "Build on a PC first";
+        if (port.section() == Section::PrepareOnPc && !(state.data && state.data->ready))
+            return "Prepare files on a PC";
         return state.data && state.data->ready ? "Files ready · not installed" : "Not installed";
     }
     if (state.data && !state.data->ready)
@@ -47,7 +49,9 @@ std::string stateShort(const Port& port, const PortState& state)
     {
         if (!port.runsHere())
             return consolesLabel(port.runsOn()) + " only";
-        return port.manifest && port.section() == Section::BuildOnPc ? "Build on PC" : "Not installed";
+        if (port.manifest && port.section() == Section::BuildOnPc)
+            return "Build on PC";
+        return port.manifest && port.section() == Section::PrepareOnPc ? "Prepare on PC" : "Not installed";
     }
     if (state.data && !state.data->ready)
         return "Files missing";
