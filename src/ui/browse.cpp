@@ -69,6 +69,9 @@ BrowseView::BrowseView(bool installedOnly)
     liveViews().insert(this);
     auto* frame = new brls::ScrollingFrame();
     frame->setGrow(1);
+    // Each press moves to the next port and scrolls it into view. borealis' default ("natural") scrolls only while
+    // the button is held, and takes focus back from a port that is not fully on screen yet.
+    frame->setScrollingBehavior(brls::ScrollingBehavior::CENTERED);
     auto* content = new brls::Box(brls::Axis::COLUMN);
     content->setAlignItems(brls::AlignItems::STRETCH);
     content->setPadding(28, 48, 32, 48);
@@ -330,19 +333,25 @@ void BrowseView::fillList()
 {
     // The catalog is already A-Z by title.
     const std::string query = lower(search);
-    std::vector<const Port*> shown;
+    std::vector<const Port*> ports;
     for (const auto& port : Catalog::get().ports)
         if (matches(port, filter) && (systemFilter.empty() || port.originalPlatform() == systemFilter) &&
             (!installedOnly || portState(port).installed) && searched(port, query))
-            shown.push_back(&port);
+            ports.push_back(&port);
     if (settings().sortOrder == 1)
-        std::reverse(shown.begin(), shown.end());
+        std::reverse(ports.begin(), ports.end());
     else if (settings().sortOrder == 2)
-        std::stable_sort(shown.begin(), shown.end(), [](const Port* a, const Port* b) {
+        std::stable_sort(ports.begin(), ports.end(), [](const Port* a, const Port* b) {
             const std::string& x = a->originalPlatform();
             const std::string& y = b->originalPlatform();
             return x.empty() != y.empty() ? y.empty() : lower(x) < lower(y); // ports with no system last
         });
+
+    shown.clear();
+    for (const Port* port : ports)
+        shown.push_back(port->info.id);
+    built = 0;
+    lastRow.clear();
 
     if (shown.empty())
     {
@@ -353,43 +362,72 @@ void BrowseView::fillList()
         list->addView(textRow(message, 20, mutedColor()));
         return;
     }
+    addPage();
+}
 
-    if (!settings().gridView)
-    {
-        for (const Port* port : shown)
-            list->addView(new PortRow(*port));
+void BrowseView::addPage()
+{
+    const bool grid  = settings().gridView;
+    const size_t end = std::min(shown.size(), built + (grid ? GRID_COLUMNS * 8 : 24));
+    std::vector<brls::View*> added;
+
+    if (!grid)
+        for (size_t i = built; i < end; i++)
+        {
+            if (const Port* port = Catalog::get().find(shown[i]))
+            {
+                auto* row = new PortRow(*port);
+                list->addView(row);
+                added.push_back(row);
+            }
+        }
+    else
+        // Rows of tiles; up and down keep to the same column.
+        for (size_t i = built; i < end; i += GRID_COLUMNS)
+        {
+            auto* row = new CulledBox(brls::Axis::ROW);
+            row->setMarginTop(GRID_GAP);
+            std::vector<brls::View*> tiles;
+            for (size_t j = i; j < std::min(end, i + GRID_COLUMNS); j++)
+                if (const Port* port = Catalog::get().find(shown[j]))
+                {
+                    auto* tile = new PortTile(*port, GRID_TILE);
+                    if (!tiles.empty())
+                        tile->setMarginLeft(GRID_GAP);
+                    row->addView(tile);
+                    tiles.push_back(tile);
+                }
+            if (tiles.empty())
+            {
+                delete row;
+                continue;
+            }
+            for (size_t c = 0; c < tiles.size(); c++)
+                if (!lastRow.empty())
+                    tiles[c]->setCustomNavigationRoute(brls::FocusDirection::UP, lastRow[std::min(c, lastRow.size() - 1)]);
+            for (size_t c = 0; c < lastRow.size(); c++)
+                lastRow[c]->setCustomNavigationRoute(brls::FocusDirection::DOWN, tiles[std::min(c, tiles.size() - 1)]);
+            list->addView(row);
+            lastRow = tiles;
+            added.insert(added.end(), tiles.begin(), tiles.end());
+        }
+
+    built = end;
+    if (built == shown.size())
         return;
-    }
-
-    // Rows of tiles; up and down keep to the same column.
-    std::vector<std::vector<PortTile*>> rows;
-    for (size_t i = 0; i < shown.size(); i += GRID_COLUMNS)
-    {
-        auto* row = new brls::Box(brls::Axis::ROW);
-        row->setMarginTop(GRID_GAP);
-        rows.emplace_back();
-        for (size_t j = i; j < std::min(shown.size(), i + GRID_COLUMNS); j++)
-        {
-            auto* tile = new PortTile(*shown[j], GRID_TILE);
-            if (j > i)
-                tile->setMarginLeft(GRID_GAP);
-            row->addView(tile);
-            rows.back().push_back(tile);
-        }
-        list->addView(row);
-    }
-    for (size_t r = 0; r < rows.size(); r++)
-        for (size_t c = 0; c < rows[r].size(); c++)
-        {
-            if (r + 1 < rows.size())
-                rows[r][c]->setCustomNavigationRoute(brls::FocusDirection::DOWN, rows[r + 1][std::min(c, rows[r + 1].size() - 1)]);
-            if (r > 0)
-                rows[r][c]->setCustomNavigationRoute(brls::FocusDirection::UP, rows[r - 1][c]);
-        }
+    // Focus on the last two rows (or three cards) built brings the next page before the end is reached.
+    const size_t near = grid ? GRID_COLUMNS * 2 : 3;
+    for (size_t i = added.size() > near ? added.size() - near : 0; i < added.size(); i++)
+        added[i]->getFocusEvent()->subscribe([this, end, alive = alive](brls::View*) {
+            brls::sync([this, end, alive] {
+                if (*alive && built == end)
+                    addPage();
+            });
+        });
 }
 
 PortRow::PortRow(const Port& port)
-    : brls::Box(brls::Axis::ROW)
+    : CulledBox(brls::Axis::ROW)
     , id(port.info.id)
 {
     setFocusable(true);

@@ -29,6 +29,7 @@ class BrowseView : public brls::Box
     void fillBanner();
     void fillPortUpdates();
     void fillList();
+    void addPage(); // views for the next ports of `shown`
     void openFilters();
     void openSearch();
     void chooseKind();
@@ -45,11 +46,16 @@ class BrowseView : public brls::Box
     brls::Button* searchButton  = nullptr;
     brls::Button* filtersButton = nullptr;
     brls::Box* list             = nullptr;
+    // The ports the filters and search let through, in order. Views are built a page at a time: reaching the last
+    // ones built brings the next page, so a long list starts at once.
+    std::vector<std::string> shown;
+    size_t built = 0;
+    std::vector<brls::View*> lastRow; // grid: the last row built, for moving up and down
     AliveFlag alive             = std::make_shared<bool>(true);
 };
 
 // A port as a wide card: icon, title, author, description, status. Opens the port's page.
-class PortRow : public brls::Box
+class PortRow : public CulledBox
 {
   public:
     explicit PortRow(const Port& port);

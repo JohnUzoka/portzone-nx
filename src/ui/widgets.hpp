@@ -45,6 +45,16 @@ brls::Box* tile(const std::string& title, const std::string& id, float size);
 // A rounded panel.
 brls::Box* card(brls::Axis axis);
 
+// A box that skips drawing itself and everything in it while it is scrolled out of sight. borealis only skips leaf
+// views, so a long list of boxes would otherwise draw every entry each frame.
+class CulledBox : public brls::Box
+{
+  public:
+    using brls::Box::Box;
+    void draw(NVGcontext* vg, float x, float y, float width, float height, brls::Style style,
+        brls::FrameContext* ctx) override;
+};
+
 // A 1x1 focusable view with no highlight: where focus waits while a whole screen is rebuilt.
 brls::Box* focusParking();
 
@@ -55,7 +65,8 @@ void rebuild(brls::Box* box, brls::View* fallbackFocus, const std::function<void
 // Set to false when the owning view is deleted; callbacks from other threads check it.
 using AliveFlag = std::shared_ptr<bool>;
 
-// The initials tile, replaced by the image at `url` once it has downloaded.
+// The initials tile, replaced by the image at `url` once it has downloaded. The download starts the first time the
+// tile is drawn, so a long list only fetches the icons that come on screen.
 brls::Box* remoteIcon(const std::string& url, const std::string& title, const std::string& id, float size, AliveFlag alive);
 
 // The image at `url`, `height` tall; hidden until it has downloaded, and for good if it cannot be.

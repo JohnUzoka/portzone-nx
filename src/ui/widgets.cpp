@@ -1,6 +1,7 @@
 #include "ui/widgets.hpp"
 
 #include <cctype>
+#include <utility>
 
 #include "images.hpp"
 
@@ -179,53 +180,108 @@ brls::Box* pill(const std::string& text, NVGcolor color)
     return outer;
 }
 
-brls::Box* tile(const std::string& title, const std::string& id, float size)
+namespace
 {
-    static const NVGcolor tints[] = { nvgRGB(124, 140, 255), nvgRGB(64, 196, 255), nvgRGB(255, 140, 105),
-        nvgRGB(72, 204, 140), nvgRGB(232, 112, 214), nvgRGB(250, 186, 64), nvgRGB(160, 120, 255), nvgRGB(255, 99, 132) };
-    uint32_t hash = 2166136261u; // FNV-1a: neighbouring ids still land on different tints
-    for (unsigned char c : id)
-        hash = (hash ^ c) * 16777619u;
-    const NVGcolor tint = tints[hash % (sizeof(tints) / sizeof(tints[0]))];
 
-    // First letters of the first two words that start with a letter or digit.
-    std::string initials;
-    bool wordStart = true;
-    for (char c : title)
+    // The initials tile's look, on an existing box.
+    void styleTile(brls::Box* box, const std::string& title, const std::string& id, float size)
     {
-        const bool alnum = std::isalnum(static_cast<unsigned char>(c));
-        if (wordStart && alnum && initials.size() < 2)
-            initials += char(std::toupper(static_cast<unsigned char>(c)));
-        wordStart = !alnum;
+        static const NVGcolor tints[] = { nvgRGB(124, 140, 255), nvgRGB(64, 196, 255), nvgRGB(255, 140, 105),
+            nvgRGB(72, 204, 140), nvgRGB(232, 112, 214), nvgRGB(250, 186, 64), nvgRGB(160, 120, 255), nvgRGB(255, 99, 132) };
+        uint32_t hash = 2166136261u; // FNV-1a: neighbouring ids still land on different tints
+        for (unsigned char c : id)
+            hash = (hash ^ c) * 16777619u;
+        const NVGcolor tint = tints[hash % (sizeof(tints) / sizeof(tints[0]))];
+
+        // First letters of the first two words that start with a letter or digit.
+        std::string initials;
+        bool wordStart = true;
+        for (char c : title)
+        {
+            const bool alnum = std::isalnum(static_cast<unsigned char>(c));
+            if (wordStart && alnum && initials.size() < 2)
+                initials += char(std::toupper(static_cast<unsigned char>(c)));
+            wordStart = !alnum;
+        }
+
+        box->setWidth(size);
+        box->setHeight(size);
+        box->setShrink(0);
+        box->setCornerRadius(size * 0.24f);
+        box->setBackgroundColor(nvgRGBAf(tint.r, tint.g, tint.b, 0.22f));
+        box->setJustifyContent(brls::JustifyContent::CENTER);
+        box->setAlignItems(brls::AlignItems::CENTER);
+        box->addView(label(initials, size * 0.36f, tint));
     }
 
+    // The initials tile until its first draw; then it fetches its image and shows it once it is there.
+    class RemoteIcon : public brls::Box
+    {
+      public:
+        RemoteIcon(std::string url, float size, AliveFlag alive)
+            : brls::Box(brls::Axis::ROW)
+            , url(std::move(url))
+            , size(size)
+            , alive(std::move(alive))
+        {
+        }
+
+        void draw(NVGcontext* vg, float x, float y, float width, float height, brls::Style style,
+            brls::FrameContext* ctx) override
+        {
+            if (!url.empty())
+                fetch(std::exchange(url, {}));
+            brls::Box::draw(vg, x, y, width, height, style, ctx);
+        }
+
+      private:
+        void fetch(const std::string& from)
+        {
+            ui::background<images::Bytes>(alive, [from] { return images::get(from, 1 << 20); },
+                [this, size = size](images::Bytes bytes) {
+                    if (!bytes)
+                        return; // keep the initials
+                    clearViews();
+                    setBackgroundColor(nvgRGBA(0, 0, 0, 0));
+                    auto* image = imageView(bytes, size * 0.24f);
+                    image->setWidth(size);
+                    image->setHeight(size);
+                    addView(image);
+                });
+        }
+
+        std::string url; // emptied once the download has started
+        float size;
+        AliveFlag alive; // the owner's: this view lives as long as it does
+    };
+
+} // namespace
+
+void CulledBox::draw(NVGcontext* vg, float x, float y, float width, float height, brls::Style style,
+    brls::FrameContext* ctx)
+{
+    const float top = getY(), left = getX(), bottom = top + getHeight(), right = left + getWidth();
+    for (brls::Box* bounds = getParent(); bounds; bounds = bounds->getParent())
+    {
+        float boundsTop, boundsRight, boundsBottom, boundsLeft;
+        bounds->getCullingBounds(&boundsTop, &boundsRight, &boundsBottom, &boundsLeft);
+        if (bottom < boundsTop || right < boundsLeft || left > boundsRight || top > boundsBottom)
+            return;
+    }
+    brls::Box::draw(vg, x, y, width, height, style, ctx);
+}
+
+brls::Box* tile(const std::string& title, const std::string& id, float size)
+{
     auto* box = new brls::Box(brls::Axis::ROW);
-    box->setWidth(size);
-    box->setHeight(size);
-    box->setShrink(0);
-    box->setCornerRadius(size * 0.24f);
-    box->setBackgroundColor(nvgRGBAf(tint.r, tint.g, tint.b, 0.22f));
-    box->setJustifyContent(brls::JustifyContent::CENTER);
-    box->setAlignItems(brls::AlignItems::CENTER);
-    box->addView(label(initials, size * 0.36f, tint));
+    styleTile(box, title, id, size);
     return box;
 }
 
 brls::Box* remoteIcon(const std::string& url, const std::string& title, const std::string& id, float size, AliveFlag alive)
 {
-    brls::Box* box = tile(title, id, size);
-    if (url.empty())
-        return box;
-    background<images::Bytes>(alive, [url] { return images::get(url, 1 << 20); }, [box, size](images::Bytes bytes) {
-        if (!bytes)
-            return; // keep the initials
-        box->clearViews();
-        box->setBackgroundColor(nvgRGBA(0, 0, 0, 0));
-        auto* image = imageView(bytes, size * 0.24f);
-        image->setWidth(size);
-        image->setHeight(size);
-        box->addView(image);
-    });
+    auto* box = new RemoteIcon(url, size, std::move(alive));
+    styleTile(box, title, id, size);
     return box;
 }
 
