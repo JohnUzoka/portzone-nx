@@ -1,0 +1,53 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JohnUzoka/portzone-nx/main/store/schema/portzone.schema.json",
+  "format": 1,
+  "description": "Call of Duty: Black Ops (2010) through OpenBLOPS, ported to Switch with Campaign, Zombies and Multiplayer. Needs your own PC copy, its zones converted on a PC.",
+  "platform": { "original": "PC", "runs_on": ["switch"] },
+  "install": {
+    "binary": "sdmc:/switch/OpenBLOPS-NX/OpenBLOPS-NX.nro",
+    "steps": [{ "asset": "OpenBLOPS-NX.zip", "unzip": "sdmc:/" }]
+  },
+  "launch": {
+    "full_memory": true,
+    "notes": [
+      "OpenBLOPS-NX.nro runs Campaign and Zombies, OpenBLOPS-NX-MP.nro Multiplayer; each can start the other.",
+      "Buttons go by position: A confirms and B goes back. Motion aiming is in Options, Controls, Gamepad.",
+      "cmdline.txt takes +set overrides."
+    ]
+  },
+  "game_data": {
+    "dir": "sdmc:/switch/OpenBLOPS-NX",
+    "inputs": [
+      {
+        "id": "game",
+        "label": "Black Ops for PC (retail, with any DLC you want to play), its zones converted by the web installer",
+        "options": [
+          {
+            "label": "The web installer's output",
+            "files": [
+              { "path": "main/", "note": "The game's main folder" },
+              { "path": "zone/", "note": "The game's zones" },
+              { "path": "kbz/", "note": "The zones, converted for the Switch" },
+              { "path": "localization.txt", "note": "The game's language" }
+            ]
+          }
+        ]
+      }
+    ],
+    "prepare": {
+      "where": "pc",
+      "summary": "The web installer converts every zone (DLC and localised zones too) in the browser and makes switch/OpenBLOPS-NX/ with the latest release's NROs, as a zip or straight into a folder.",
+      "tool": { "name": "OpenBLOPS-NX web installer", "url": "https://hderick.github.io/OpenBLOPS-NX/" }
+    },
+    "generated": [
+      { "path": "config.cfg", "note": "Graphics settings" },
+      { "path": "playername.txt", "note": "Your player name, a random one on first start" },
+      { "path": "kisakblack.log", "note": "A record of each run" }
+    ]
+  },
+  "steps": [
+    "On a PC, open https://hderick.github.io/OpenBLOPS-NX/ and give it main, zone and localization.txt from your Black Ops install.",
+    "Copy what it makes to the root of the SD card (it makes switch/OpenBLOPS-NX/), or drop it on PortZone's upload page.",
+    "Start OpenBLOPS-NX.nro with full memory: hold R while starting a game."
+  ]
+}

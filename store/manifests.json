@@ -1,6 +1,65 @@
 {
   "format": 1,
   "manifests": {
+    "bo2-requiem-nx": {
+      "source": "store draft",
+      "portzone": {
+        "$schema": "https://raw.githubusercontent.com/JohnUzoka/portzone-nx/main/store/schema/portzone.schema.json",
+        "format": 1,
+        "description": "Call of Duty: Black Ops II Zombies and Multiplayer (BO2 Requiem), running natively on Switch with split-screen, online play, gyro aiming and a mod loader. Needs your own Black Ops II for PC from Steam.",
+        "platform": {
+          "original": "PC",
+          "runs_on": [
+            "switch"
+          ]
+        },
+        "install": {
+          "binary": "sdmc:/switch/t6game/t6game.nro",
+          "steps": [
+            {
+              "asset": "bo2requiem.zip",
+              "unzip": "sdmc:/"
+            }
+          ]
+        },
+        "launch": {
+          "full_memory": true,
+          "notes": [
+            "t6zm.nro starts Zombies and t6mp.nro Multiplayer directly; t6game.nro offers both.",
+            "Only the DLC maps you own are shown. The campaign isn't playable, so its files can stay on the PC."
+          ]
+        },
+        "game_data": {
+          "dir": "sdmc:/switch/t6game",
+          "inputs": [
+            {
+              "id": "game",
+              "label": "Black Ops II for PC (Steam): the zone and sound folders from the game folder (the one with t6zm.exe), about 14.4 GB without the campaign",
+              "options": [
+                {
+                  "label": "Copied from your Steam game folder",
+                  "files": [
+                    {
+                      "path": "zone/",
+                      "note": "The game's zones"
+                    },
+                    {
+                      "path": "sound/",
+                      "note": "The game's sound"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "steps": [
+          "Copy the zone and sound folders from your Steam game folder (the one with t6zm.exe) to switch/t6game/.",
+          "Or, on a PC, use the BO2 Requiem Compressor (https://hderick.github.io/BO2-Requiem-NX/) to shrink them first (down to 5.5 GB at Maximum, without the campaign); it makes a zip for the SD card's root.",
+          "Start t6game.nro with full memory: a forwarder, or hold R while starting a game."
+        ]
+      }
+    },
     "dxview": {
       "source": "store draft",
       "portzone": {
@@ -354,6 +413,75 @@
         ]
       }
     },
+    "nfshp2_switch_port": {
+      "source": "store draft",
+      "portzone": {
+        "$schema": "https://raw.githubusercontent.com/JohnUzoka/portzone-nx/main/store/schema/portzone.schema.json",
+        "format": 1,
+        "description": "Need for Speed: Hot Pursuit 2, the PS2 version decompiled and ported natively to Switch, at 720p. Needs your own PS2 disc: the PAL version 1.00 (SLES-50731).",
+        "platform": {
+          "original": "PlayStation 2",
+          "runs_on": [
+            "switch"
+          ]
+        },
+        "install": {
+          "binary": "sdmc:/switch/NFSHP2-Switch/NFSHP2-Switch.nro",
+          "steps": [
+            {
+              "asset": "NFSHP2-Switch.nro",
+              "copy": "sdmc:/switch/NFSHP2-Switch"
+            }
+          ]
+        },
+        "launch": {
+          "full_memory": true,
+          "notes": [
+            "The language is chosen at every start.",
+            "config.txt sets frame_limit (30 by default) and show_fps."
+          ]
+        },
+        "game_data": {
+          "dir": "sdmc:/switch/NFSHP2-Switch",
+          "inputs": [
+            {
+              "id": "game",
+              "label": "The NFSHP2 folder's two data files from your PS2 disc, PAL version 1.00 (SLES-50731) only, about 3.1 GB",
+              "options": [
+                {
+                  "label": "From the disc, or made by the web installer from your ISO",
+                  "files": [
+                    {
+                      "path": "ZDIR.BIN",
+                      "note": "The game's file table"
+                    },
+                    {
+                      "path": "ZZDATA.BIN",
+                      "note": "The game's data"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "generated": [
+            {
+              "path": "config.txt",
+              "note": "Frame limit and FPS counter, made on first start"
+            },
+            {
+              "path": "Saves/",
+              "note": "Your saves and the graphics pipeline cache"
+            }
+          ]
+        },
+        "steps": [
+          "Copy ZDIR.BIN and ZZDATA.BIN from the NFSHP2 folder of your PAL 1.00 disc to switch/NFSHP2-Switch/.",
+          "Or, on a PC, give your unmodified ISO to the web installer (https://HDErick.github.io/NFSHP2_Switch_Port/); it checks the version and makes a zip for the SD card's root.",
+          "Start NFSHP2-Switch.nro with full memory."
+        ]
+      }
+    },
     "nfsmw-nx": {
       "source": "store draft",
       "portzone": {
@@ -426,6 +554,96 @@
           "Choose your disc image (.iso), or the folder with default.xex, Movies and NFS, and press Create nfsmw-nx.zip.",
           "Extract nfsmw-nx.zip into switch/ on the SD card, or drop the extracted nfsmw-nx folder on PortZone's upload page. It makes switch/nfsmw-nx/.",
           "Start nfsmw-nx.nro with full memory."
+        ]
+      }
+    },
+    "openblops-nx": {
+      "source": "store draft",
+      "portzone": {
+        "$schema": "https://raw.githubusercontent.com/JohnUzoka/portzone-nx/main/store/schema/portzone.schema.json",
+        "format": 1,
+        "description": "Call of Duty: Black Ops (2010) through OpenBLOPS, ported to Switch with Campaign, Zombies and Multiplayer. Needs your own PC copy, its zones converted on a PC.",
+        "platform": {
+          "original": "PC",
+          "runs_on": [
+            "switch"
+          ]
+        },
+        "install": {
+          "binary": "sdmc:/switch/OpenBLOPS-NX/OpenBLOPS-NX.nro",
+          "steps": [
+            {
+              "asset": "OpenBLOPS-NX.zip",
+              "unzip": "sdmc:/"
+            }
+          ]
+        },
+        "launch": {
+          "full_memory": true,
+          "notes": [
+            "OpenBLOPS-NX.nro runs Campaign and Zombies, OpenBLOPS-NX-MP.nro Multiplayer; each can start the other.",
+            "Buttons go by position: A confirms and B goes back. Motion aiming is in Options, Controls, Gamepad.",
+            "cmdline.txt takes +set overrides."
+          ]
+        },
+        "game_data": {
+          "dir": "sdmc:/switch/OpenBLOPS-NX",
+          "inputs": [
+            {
+              "id": "game",
+              "label": "Black Ops for PC (retail, with any DLC you want to play), its zones converted by the web installer",
+              "options": [
+                {
+                  "label": "The web installer's output",
+                  "files": [
+                    {
+                      "path": "main/",
+                      "note": "The game's main folder"
+                    },
+                    {
+                      "path": "zone/",
+                      "note": "The game's zones"
+                    },
+                    {
+                      "path": "kbz/",
+                      "note": "The zones, converted for the Switch"
+                    },
+                    {
+                      "path": "localization.txt",
+                      "note": "The game's language"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "prepare": {
+            "where": "pc",
+            "summary": "The web installer converts every zone (DLC and localised zones too) in the browser and makes switch/OpenBLOPS-NX/ with the latest release's NROs, as a zip or straight into a folder.",
+            "tool": {
+              "name": "OpenBLOPS-NX web installer",
+              "url": "https://hderick.github.io/OpenBLOPS-NX/"
+            }
+          },
+          "generated": [
+            {
+              "path": "config.cfg",
+              "note": "Graphics settings"
+            },
+            {
+              "path": "playername.txt",
+              "note": "Your player name, a random one on first start"
+            },
+            {
+              "path": "kisakblack.log",
+              "note": "A record of each run"
+            }
+          ]
+        },
+        "steps": [
+          "On a PC, open https://hderick.github.io/OpenBLOPS-NX/ and give it main, zone and localization.txt from your Black Ops install.",
+          "Copy what it makes to the root of the SD card (it makes switch/OpenBLOPS-NX/), or drop it on PortZone's upload page.",
+          "Start OpenBLOPS-NX.nro with full memory: hold R while starting a game."
         ]
       }
     },

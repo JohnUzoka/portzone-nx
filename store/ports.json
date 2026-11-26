@@ -414,12 +414,9 @@
     {
       "id": "bo2-requiem-nx",
       "url": "https://github.com/HDErick/BO2-Requiem-NX",
-      "title": "Call of Duty - Black Ops II",
+      "title": "Call of Duty: Black Ops II",
       "author": "HDErick",
-      "description": "Call of Duty - Black Ops II, the PC version, ported to Switch. Needs your own copy of the PC game; its README says which files.",
-      "platform": {
-        "original": "PC"
-      }
+      "description": "Call of Duty: Black Ops II Zombies and Multiplayer (BO2 Requiem), running natively on Switch with split-screen, online play, gyro aiming and a mod loader. Needs your own Black Ops II for PC from Steam."
     },
     {
       "id": "bombsquad_nx",
@@ -2745,10 +2742,7 @@
       "url": "https://github.com/HDErick/NFSHP2_Switch_Port",
       "title": "Need for Speed: Hot Pursuit 2",
       "author": "HDErick",
-      "description": "Need for Speed: Hot Pursuit 2, the PlayStation 2 version, ported to Switch. Needs your own copy of the PlayStation 2 game; its README says which files.",
-      "platform": {
-        "original": "PlayStation 2"
-      }
+      "description": "Need for Speed: Hot Pursuit 2, the PS2 version decompiled and ported natively to Switch, at 720p. Needs your own PS2 disc: the PAL version 1.00 (SLES-50731)."
     },
     {
       "id": "nfsmostwanted2012-android-switch",
@@ -2930,12 +2924,9 @@
     {
       "id": "openblops-nx",
       "url": "https://github.com/HDErick/OpenBLOPS-NX",
-      "title": "Call of Duty - Black Ops",
+      "title": "Call of Duty: Black Ops",
       "author": "HDErick",
-      "description": "Call of Duty - Black Ops, the PC version, ported to Switch. Needs your own copy of the PC game; its README says which files.",
-      "platform": {
-        "original": "PC"
-      }
+      "description": "Call of Duty: Black Ops (2010) through OpenBLOPS, ported to Switch with Campaign, Zombies and Multiplayer. Needs your own PC copy, its zones converted on a PC."
     },
     {
       "id": "opence-nx",

@@ -31,6 +31,9 @@ Add one object to `ports` in [`store/ports.json`](store/ports.json), keeping the
   `oot3dre`). A port without a `portzone.json` installs to `switch/<repository name>` by default.
 - `url`: the repository whose **releases** hold the Switch build. Exactly `https://github.com/<owner>/<repo>`: no
   `/releases`, no trailing slash, no `.git`.
+- `manifest` (optional): the port's `portzone.json` as a path in its repository, for a repository that makes several
+  games (`"manifest": "portzone/tmodloader.json"`). Each game is its own entry with its own `id`; the same `url` may
+  then appear once per `manifest`.
 - `icon`, `banner` (optional): HTTPS PNG or JPEG, for ports whose `portzone.json` has none (sizes in the guide).
 - `platform` (optional): as in `portzone.json`, for ports without one. The systems are listed in the schema.
 - `description`: one or two sentences, at most 511 characters: `<what it is: the game, and how it was made

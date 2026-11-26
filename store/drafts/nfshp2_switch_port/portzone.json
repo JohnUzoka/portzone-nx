@@ -1,0 +1,44 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JohnUzoka/portzone-nx/main/store/schema/portzone.schema.json",
+  "format": 1,
+  "description": "Need for Speed: Hot Pursuit 2, the PS2 version decompiled and ported natively to Switch, at 720p. Needs your own PS2 disc: the PAL version 1.00 (SLES-50731).",
+  "platform": { "original": "PlayStation 2", "runs_on": ["switch"] },
+  "install": {
+    "binary": "sdmc:/switch/NFSHP2-Switch/NFSHP2-Switch.nro",
+    "steps": [{ "asset": "NFSHP2-Switch.nro", "copy": "sdmc:/switch/NFSHP2-Switch" }]
+  },
+  "launch": {
+    "full_memory": true,
+    "notes": [
+      "The language is chosen at every start.",
+      "config.txt sets frame_limit (30 by default) and show_fps."
+    ]
+  },
+  "game_data": {
+    "dir": "sdmc:/switch/NFSHP2-Switch",
+    "inputs": [
+      {
+        "id": "game",
+        "label": "The NFSHP2 folder's two data files from your PS2 disc, PAL version 1.00 (SLES-50731) only, about 3.1 GB",
+        "options": [
+          {
+            "label": "From the disc, or made by the web installer from your ISO",
+            "files": [
+              { "path": "ZDIR.BIN", "note": "The game's file table" },
+              { "path": "ZZDATA.BIN", "note": "The game's data" }
+            ]
+          }
+        ]
+      }
+    ],
+    "generated": [
+      { "path": "config.txt", "note": "Frame limit and FPS counter, made on first start" },
+      { "path": "Saves/", "note": "Your saves and the graphics pipeline cache" }
+    ]
+  },
+  "steps": [
+    "Copy ZDIR.BIN and ZZDATA.BIN from the NFSHP2 folder of your PAL 1.00 disc to switch/NFSHP2-Switch/.",
+    "Or, on a PC, give your unmodified ISO to the web installer (https://HDErick.github.io/NFSHP2_Switch_Port/); it checks the version and makes a zip for the SD card's root.",
+    "Start NFSHP2-Switch.nro with full memory."
+  ]
+}

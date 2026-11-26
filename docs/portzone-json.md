@@ -12,6 +12,14 @@ turns your port from **Manual** (PortZone shows your README and release files; t
 | Generic description and the owner's avatar | Your description, icon and banner; your system tag in Browse's filter |
 | | Your port in Sphaira's store too (single-file installs) |
 
+Which of the three a port is comes from this file alone:
+
+| Kind | When | Download button |
+|---|---|---|
+| **Manual** | No `portzone.json` | The player picks one of your release files |
+| **Easy Setup** | A `portzone.json` without a PC step | **Install** for the release files `install.steps` names |
+| **Build on PC** | `game_data.prepare.where: "pc"` | **Install** only if `install.steps` names release files; none when your PC tool makes everything, `.nro` included (leave `steps` out) |
+
 You don't need to ask anyone: once the file is on your default branch, a game's page in PortZone picks it up the next
 time a player opens it, and the store's daily rebuild puts it in every list. Until then, the store may keep a draft for
 you in `store/drafts/<id>/portzone.json`; yours replaces it.
@@ -19,7 +27,9 @@ you in `store/drafts/<id>/portzone.json`; yours replaces it.
 ## Where it goes
 
 - One file named exactly `portzone.json`, at the **top** of your repository, on its **default branch**. PortZone reads
-  `https://raw.githubusercontent.com/<owner>/<repo>/HEAD/portzone.json`.
+  `https://raw.githubusercontent.com/<owner>/<repo>/HEAD/portzone.json`. A repository that makes several games (one
+  builder for Terraria and tModLoader) has one file per game; the store's `ports.json` entry for each names its file
+  with `manifest` (`"manifest": "portzone/tmodloader.json"`).
 - Images it names (`icon`, `banner`) are paths in the same repository and branch.
 - Your releases stay as they are: PortZone downloads the release files you name from GitHub Releases.
 
@@ -105,6 +115,7 @@ Real files in this repository's store, each a different kind of port:
 | [`triaevum`](../store/drafts/triaevum/portzone.json) | A cartridge dump or its extracted files, an optional texture pack found by a marker, a file the game can also download itself |
 | [`sa2-nx`](../store/drafts/sa2-nx/portzone.json) | A web installer on a PC (`prepare.where: "pc"` with `tool`), a single `.nro` copied into place |
 | [`nfsmw-nx`](../store/drafts/nfsmw-nx/portzone.json) | A PC installer that builds everything, including the `.nro` (no `install.steps`), a disc folder found by `markers` |
+| [`terraria`](../store/drafts/terraria/portzone.json) | A PC build whose output spans `switch/` and `mono/`: `game_data.dir` is the card's root (`"sdmc:/"`), no `install.steps` |
 
 ## Fields
 
@@ -143,7 +154,10 @@ Real files in this repository's store, each a different kind of port:
 
 ### What the player brings
 
-- **`game_data.dir`**: the game folder. Every path below is relative to it and case-insensitive.
+- **`game_data.dir`**: the game folder. Every path below is relative to it and case-insensitive. When the player's
+  files go in several top-level folders (a PC build that writes `switch/Terraria.nro` and `mono/`), use `"sdmc:/"`,
+  the card's root, and give paths from there (`switch/Terraria.nro`, `mono/`). Players then drop the build's folder,
+  or its `switch` and `mono` folders together, and each part goes where it belongs.
 - **Inputs and options**: an input is something the player brings; it is met when **every** file of **any one** of its
   options is present. Use options for alternatives (`.iso` or `.xiso`; a dump or its extracted files), and
   `"required": false` for extras such as an expansion. An option's `url` is only for files their owner gives away
