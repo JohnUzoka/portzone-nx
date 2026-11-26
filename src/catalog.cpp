@@ -206,7 +206,9 @@ Catalog::Loaded Catalog::fetch()
     {
         try
         {
-            for (const auto& [id, entry] : json::parse(indexText).at("manifests").items())
+            // Named: a temporary in the loop's range would be destroyed before the loop runs.
+            const json index = json::parse(indexText);
+            for (const auto& [id, entry] : index.at("manifests").items())
                 manifests[id] = { entry.at("portzone"),
                     entry.value("source", "") == "store draft" ? FROM_DRAFT : FROM_REPOSITORY };
         }
