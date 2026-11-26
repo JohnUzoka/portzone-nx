@@ -165,11 +165,13 @@ brls::View* HomeActivity::createContentView()
         load();
         return true;
     });
-    // On a PC keyboard, borealis maps no key to Y: the Y key does it.
+#ifndef __SWITCH__
+    // On a PC keyboard, borealis maps no key to Y: the Y key does it (not on a Switch, see BrowseView).
     frame->registerAction(brls::BrlsKeyCombination(brls::BRLS_KBD_KEY_Y), [this](brls::View*) {
         load();
         return true;
     });
+#endif
     return frame;
 }
 

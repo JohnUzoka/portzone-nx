@@ -1883,7 +1883,7 @@
     {
       "id": "horizon-switch2",
       "url": "https://github.com/TaoEffects/horizon-nx",
-      "title": "Minecraft: Java Edition (Horizon, Switch 2)",
+      "title": "Minecraft (Horizon, Switch 2)",
       "author": "TaoEffects",
       "description": "Horizon, Minecraft: Java Edition rewritten in Rust, as a native Switch 2 build at 1080p and 120 Hz with Joy-Con 2 mouse controls. Needs your own Minecraft: Java Edition, prepared on a PC."
     },

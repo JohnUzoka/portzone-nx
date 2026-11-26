@@ -68,11 +68,17 @@ namespace
         return false;
     }
 
-    // An image filling `size`, with rounded corners.
-    brls::Image* imageView(const images::Bytes& bytes, float radius)
+    // An image filling `size`, with rounded corners; nullptr (and a log line naming `url`) when it can't be shown.
+    brls::Image* imageView(const images::Bytes& bytes, float radius, const std::string& url)
     {
         auto* image = new brls::Image();
         image->setImageFromMem(bytes->data(), int(bytes->size()));
+        if (image->getTexture() == 0)
+        {
+            brls::Logger::warning("Could not show the image from {}", url);
+            delete image;
+            return nullptr;
+        }
         image->setScalingType(brls::ImageScalingType::FILL);
         image->setClipsToBounds(true);
         image->setCornerRadius(radius);
@@ -238,12 +244,12 @@ namespace
         void fetch(const std::string& from)
         {
             ui::background<images::Bytes>(alive, [from] { return images::get(from, 1 << 20); },
-                [this, size = size](images::Bytes bytes) {
-                    if (!bytes)
+                [this, from, size = size](images::Bytes bytes) {
+                    auto* image = bytes ? imageView(bytes, size * 0.24f, from) : nullptr;
+                    if (!image)
                         return; // keep the initials
                     clearViews();
                     setBackgroundColor(nvgRGBA(0, 0, 0, 0));
-                    auto* image = imageView(bytes, size * 0.24f);
                     image->setWidth(size);
                     image->setHeight(size);
                     addView(image);
@@ -291,10 +297,10 @@ brls::Box* remoteBanner(const std::string& url, float height, AliveFlag alive)
     box->setVisibility(brls::Visibility::GONE);
     if (url.empty())
         return box;
-    background<images::Bytes>(alive, [url] { return images::get(url, 2 << 20); }, [box, height](images::Bytes bytes) {
-        if (!bytes)
+    background<images::Bytes>(alive, [url] { return images::get(url, 2 << 20); }, [box, height, url](images::Bytes bytes) {
+        auto* image = bytes ? imageView(bytes, 12, url) : nullptr;
+        if (!image)
             return;
-        auto* image = imageView(bytes, 12);
         image->setGrow(1);
         image->setHeight(height);
         box->addView(image);

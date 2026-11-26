@@ -111,19 +111,22 @@ BrowseView::BrowseView(bool installedOnly)
         openFilters();
         return true;
     });
-    // On a PC keyboard, borealis maps no key to X: the X key does it.
-    registerAction(brls::BrlsKeyCombination(brls::BRLS_KBD_KEY_X), [this](brls::View*) {
-        openFilters();
-        return true;
-    });
     registerAction("Search", brls::BUTTON_BACK, [this](brls::View*) {
         openSearch();
+        return true;
+    });
+#ifndef __SWITCH__
+    // On a PC keyboard, borealis maps no key to X: the X key filters, F searches. Not on a Switch, where a USB
+    // keyboard's keys would act twice (Ryujinx also hands the PC's keyboard to the console: X is its B button).
+    registerAction(brls::BrlsKeyCombination(brls::BRLS_KBD_KEY_X), [this](brls::View*) {
+        openFilters();
         return true;
     });
     registerAction(brls::BrlsKeyCombination(brls::BRLS_KBD_KEY_F), [this](brls::View*) {
         openSearch();
         return true;
     });
+#endif
     apply();
 }
 
