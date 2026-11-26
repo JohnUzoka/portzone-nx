@@ -1,0 +1,52 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JohnUzoka/portzone-nx/main/store/schema/portzone.schema.json",
+  "format": 1,
+  "description": "Skate 3 Rust Engine, a Rust and Bevy skating game built from years of Skate 3 reverse-engineering research, ported to Switch with bevy-horizon, with in-game updates. Needs your own Skate 3 Xbox 360 disc, set up by the PC version.",
+  "platform": { "original": "Xbox 360", "runs_on": ["switch"] },
+  "install": {
+    "binary": "sdmc:/switch/skate3rust/skate3rust.nro",
+    "steps": [{ "asset": "skate3rust.nro", "copy": "sdmc:/switch/skate3rust" }]
+  },
+  "launch": {
+    "full_memory": true,
+    "notes": [
+      "The first launch compiles shaders and keeps them in .mesa at the root of the SD card; each map's first launch builds its textures into cache/ (about 250 MB for University).",
+      "Plus opens the menu (graphics, difficulty, maps, character); the pause menu's Updates row installs new versions."
+    ]
+  },
+  "game_data": {
+    "dir": "sdmc:/switch/skate3rust",
+    "inputs": [
+      {
+        "id": "game",
+        "label": "Files the PC version (experimental build 49) set up from your Skate 3 Xbox 360 disc, about 4.6 GB",
+        "options": [
+          {
+            "label": "Copied by switch_export.py, or by hand from the PC version's installation folder",
+            "files": [
+              { "path": "assets/", "note": "The skater, animations and HUD" },
+              { "path": "maps/", "note": "The disc's maps" },
+              { "path": "maps.json", "note": "The map list" },
+              { "path": "settings/", "note": "Settings, without graphics.json" }
+            ]
+          }
+        ]
+      }
+    ],
+    "prepare": {
+      "where": "pc",
+      "summary": "The Windows version sets the game up from your disc image (.iso) or extracted disc; switch_export.py from the Switch release zip then copies its files to the SD card.",
+      "tool": { "name": "Switch guide", "url": "https://github.com/JohnUzoka/skate-3-rust-engine-nx/blob/horizon-port/docs/switch/README.md" }
+    },
+    "generated": [
+      { "path": "cache/", "note": "Textures built for the Switch, one map at a time; safe to delete" },
+      { "path": "log.txt", "note": "A record of each run, including updates" },
+      { "path": "options.txt", "note": "Optional rendering options; a no_update_check line stops the check at start-up" }
+    ]
+  },
+  "steps": [
+    "On a PC, run skate3rust.exe from the Windows release, select your Skate 3 Xbox 360 ISO or default.xex, and let setup finish (it starts University). Then quit.",
+    "Run switch_export.py from the Switch release zip: python switch_export.py \"<PC game folder>\" <SD card>. It copies the game's files to switch/skate3rust/.",
+    "Start skate3rust.nro with full memory: hold R while starting a game."
+  ]
+}

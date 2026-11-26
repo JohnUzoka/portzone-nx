@@ -1283,14 +1283,11 @@
       }
     },
     {
-      "id": "dx-rust-nx",
+      "id": "dxview",
       "url": "https://github.com/JohnUzoka/dx-rust-nx",
-      "title": "Deus EX",
+      "title": "Deus Ex",
       "author": "JohnUzoka",
-      "description": "Deus EX, the PC version, ported to Switch. Needs your own copy of the PC game; its README says which files.",
-      "platform": {
-        "original": "PC"
-      }
+      "description": "Deus Ex on DX RUST, Grissyelda's ground-up rebuild of the game in Rust and Bevy, ported to Switch with bevy-horizon, with in-game updates. Needs your own Deus Ex: Game of the Year Edition for PC."
     },
     {
       "id": "earntodie2_nx",
@@ -1880,14 +1877,11 @@
       }
     },
     {
-      "id": "horizon-nx",
+      "id": "horizon",
       "url": "https://github.com/JohnUzoka/horizon-nx",
-      "title": "Minecraft Rust (JohnUzoka)",
+      "title": "Minecraft: Java Edition (Horizon)",
       "author": "JohnUzoka",
-      "description": "Minecraft Rust (JohnUzoka), the PC version, ported to Switch. Needs your own copy of the PC game; its README says which files.",
-      "platform": {
-        "original": "PC"
-      }
+      "description": "Horizon, Minecraft: Java Edition rewritten from scratch in Rust, ported to Switch, with splitscreen, Microsoft sign-in and in-game updates. Needs your own Minecraft: Java Edition, prepared on a PC."
     },
     {
       "id": "hotpursuitnx",
@@ -3984,14 +3978,11 @@
       }
     },
     {
-      "id": "skate-3-rust-engine",
-      "url": "https://github.com/JohnUzoka/skate-3-rust-engine",
-      "title": "Skate 3",
+      "id": "skate3rust",
+      "url": "https://github.com/JohnUzoka/skate-3-rust-engine-nx",
+      "title": "Skate 3 Rust Engine",
       "author": "JohnUzoka",
-      "description": "Skate 3, the Xbox 360 version, ported to Switch. Needs your own copy of the Xbox 360 game; its README says which files.",
-      "platform": {
-        "original": "Xbox 360"
-      }
+      "description": "Skate 3 Rust Engine, a Rust and Bevy skating game built from years of Skate 3 reverse-engineering research, ported to Switch with bevy-horizon, with in-game updates. Needs your own Skate 3 Xbox 360 disc, set up by the PC version."
     },
     {
       "id": "slither_nx",
@@ -4536,9 +4527,9 @@
     {
       "id": "terrabuilder-nx",
       "url": "https://github.com/JohnUzoka/terrabuilder-nx",
-      "title": "Terraria (+ Mod Loader)",
+      "title": "Terraria (terrabuilder)",
       "author": "JohnUzoka",
-      "description": "Terraria (+ Mod Loader), the PC version, ported to Switch. Needs your own copy of the PC game; its README says which files.",
+      "description": "Terraria, or tModLoader with mods, built into a Switch homebrew on your PC by terrabuilder from your own copy, running on Mono through mono-nx. Needs your own Terraria for PC: GOG's Linux version for vanilla builds.",
       "platform": {
         "original": "PC"
       }

@@ -1,0 +1,52 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JohnUzoka/portzone-nx/main/store/schema/portzone.schema.json",
+  "format": 1,
+  "description": "Horizon, Minecraft: Java Edition rewritten from scratch in Rust, ported to Switch, with splitscreen, Microsoft sign-in and in-game updates. Needs your own Minecraft: Java Edition, prepared on a PC.",
+  "icon": "docs/media/icon-256.png",
+  "platform": { "original": "PC", "runs_on": ["switch"] },
+  "install": {
+    "binary": "sdmc:/switch/horizon/horizon.nro",
+    "steps": [{ "asset": ".zip", "unzip": "sdmc:/" }]
+  },
+  "launch": {
+    "full_memory": true,
+    "notes": [
+      "Graphics, Performance, Switch clocks raises the CPU, GPU and memory clocks; all are off by default and defer to sys-clk."
+    ]
+  },
+  "game_data": {
+    "dir": "sdmc:/switch/horizon",
+    "inputs": [
+      {
+        "id": "game",
+        "label": "Minecraft: Java Edition 26.3 files, prepared by horizon-prepare (its horizon-prepare.json must say \"output_version\": 5)",
+        "options": [
+          {
+            "label": "The preparer's export",
+            "files": [
+              {
+                "path": "resources/",
+                "markers": ["horizon-resources.json"],
+                "note": "The export's contents, with horizon-resources.json directly inside"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "prepare": {
+      "where": "pc",
+      "summary": "horizon-prepare, in every Horizon game Nightly archive (horizon-prepare.exe on Windows), makes the game's files from your own Minecraft: Java Edition 26.3.",
+      "tool": { "name": "Horizon game Nightly", "url": "https://github.com/horizon-rust/horizon/releases/tag/nightly" }
+    },
+    "generated": [
+      { "path": "saves/", "note": "Your worlds" },
+      { "path": "log.txt", "note": "A record of each run" }
+    ]
+  },
+  "steps": [
+    "On a PC, prepare your own Minecraft: Java Edition 26.3 with the latest horizon-prepare. Check that the export's horizon-prepare.json says \"output_version\": 5.",
+    "Copy the export's contents into switch/horizon/resources/, so horizon-resources.json sits directly inside it.",
+    "Start horizon.nro in application mode (a forwarder or title override), not from the Album."
+  ]
+}

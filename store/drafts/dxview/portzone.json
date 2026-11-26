@@ -1,0 +1,48 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JohnUzoka/portzone-nx/main/store/schema/portzone.schema.json",
+  "format": 1,
+  "description": "Deus Ex on DX RUST, Grissyelda's ground-up rebuild of the game in Rust and Bevy, ported to Switch with bevy-horizon, with in-game updates. Needs your own Deus Ex: Game of the Year Edition for PC.",
+  "icon": "switch/icon.jpg",
+  "platform": { "original": "PC", "runs_on": ["switch"] },
+  "install": {
+    "binary": "sdmc:/switch/dxview/dxview.nro",
+    "steps": [{ "asset": ".zip", "unzip": "sdmc:/" }]
+  },
+  "launch": {
+    "full_memory": true,
+    "notes": [
+      "The first launch compiles shaders as it meets them, so the first minutes stutter; later launches load them from the SD card.",
+      "Quitting returns to the HOME menu rather than the Homebrew Menu.",
+      "The game checks GitHub for a newer release a few seconds after it starts and offers it over the menu."
+    ]
+  },
+  "game_data": {
+    "dir": "sdmc:/switch/dxview",
+    "inputs": [
+      {
+        "id": "game",
+        "label": "Deus Ex: Game of the Year Edition for PC, version 1.112fm",
+        "options": [
+          {
+            "label": "Your Deus Ex folder",
+            "files": [
+              {
+                "path": "DeusEx/",
+                "markers": ["System/", "Maps/", "Textures/", "Music/", "Sounds/"],
+                "note": "The folder holding System, Maps, Textures, Music and Sounds"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "generated": [
+      { "path": "log.txt", "note": "A record of each run; include it with bug reports" },
+      { "path": "options.txt", "note": "Optional test switches; a no_update_check line turns the update check off" }
+    ]
+  },
+  "steps": [
+    "Copy your Deus Ex folder (the one holding System, Maps, Textures, Music and Sounds) to switch/dxview/DeusEx/.",
+    "Start dxview.nro with full memory: hold R while starting a game, or use a forwarder."
+  ]
+}
