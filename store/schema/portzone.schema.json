@@ -71,7 +71,10 @@
       "additionalProperties": false,
       "required": ["dir", "inputs"],
       "properties": {
-        "dir": { "description": "Folder every path below is relative to.", "$ref": "#/$defs/sdPath" },
+        "dir": {
+          "description": "Folder every path below is relative to: the port's own folder, or \"sdmc:/\" when the files go in several top-level folders (a PC build that writes switch/ and mono/).",
+          "anyOf": [{ "const": "sdmc:/" }, { "$ref": "#/$defs/sdPath" }]
+        },
         "inputs": {
           "type": "array",
           "minItems": 1,

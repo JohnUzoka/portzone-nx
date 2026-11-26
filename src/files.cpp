@@ -132,6 +132,10 @@ std::string sha256Of(const fs::path& path)
 std::string moveFile(const fs::path& from, const fs::path& to)
 {
     std::error_code ec;
+    // Already where it belongs (a port whose files sit at the card's root finds them in place): taking the old one
+    // away below would delete it. Paths, not fs::equivalent: the SD card's FAT has no inode numbers to compare.
+    if (lower(from.lexically_normal().string()) == lower(to.lexically_normal().string()))
+        return "";
     fs::create_directories(to.parent_path(), ec);
     if (ec)
         return "could not make the folder " + to.parent_path().string();

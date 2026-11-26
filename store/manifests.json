@@ -273,6 +273,87 @@
         ]
       }
     },
+    "kartpadnx": {
+      "source": "store draft",
+      "portzone": {
+        "$schema": "https://raw.githubusercontent.com/JohnUzoka/portzone-nx/main/store/schema/portzone.schema.json",
+        "format": 1,
+        "description": "Mario Kart Wii statically recompiled with WiiCompiled and KartPad, built on your PC from your disc into a launcher that also plays Retro Rewind. Needs your own Mario Kart Wii disc: PAL (RMCP01), first revision.",
+        "platform": {
+          "original": "Wii",
+          "runs_on": [
+            "switch"
+          ]
+        },
+        "install": {
+          "binary": "sdmc:/switch/mkw-launcher.nro"
+        },
+        "launch": {
+          "full_memory": true,
+          "notes": [
+            "Started from the Album it runs in low memory mode.",
+            "L + R3 opens the port menu: CPU boost and controller binds.",
+            "When Retro Rewind updates, build again and copy the new SD card folder; don't update RetroRewind6 on its own."
+          ]
+        },
+        "game_data": {
+          "dir": "sdmc:/switch",
+          "inputs": [
+            {
+              "id": "build",
+              "label": "The SD card folder KartPadNX-Builder made from your Mario Kart Wii disc (PAL RMCP01, revision 0; .iso, .wbfs or .rvz), about 5 GB",
+              "options": [
+                {
+                  "label": "Its switch folder",
+                  "files": [
+                    {
+                      "path": "mkw-launcher.nro",
+                      "note": "The launcher, with the game built in"
+                    },
+                    {
+                      "path": "kartpad/data/",
+                      "markers": [
+                        "sys/",
+                        "files/"
+                      ],
+                      "note": "Your disc's files"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "prepare": {
+            "where": "pc",
+            "summary": "KartPadNX-Builder (Windows 10 or 11, 64-bit; about 15 GB free) reads your disc and builds the launcher with the game in it; the first build takes 30 to 60 minutes.",
+            "tool": {
+              "name": "KartPadNX-Builder",
+              "url": "https://github.com/KawaiiBunga/KartPadNX/releases"
+            }
+          },
+          "generated": [
+            {
+              "path": "kartpad/Config.toml",
+              "note": "Settings"
+            },
+            {
+              "path": "kartpad/mods/",
+              "note": "Mods you add, one folder each; .zip files are unpacked by the launcher"
+            },
+            {
+              "path": "kartpad/kartpad-runtime.log",
+              "note": "A record of each run"
+            }
+          ]
+        },
+        "steps": [
+          "On a Windows PC, download KartPadNX-Builder.zip from the releases page, extract it and run KartPadNX-Builder.exe. Or use the web builder, https://kawaiibunga.github.io/KartPadNX/, which builds on the maintainer's PC.",
+          "Give it your Mario Kart Wii disc image (PAL RMCP01, revision 0). Other regions and revisions are rejected.",
+          "Copy the SD card folder it makes to the root of the SD card, or drop it on PortZone's upload page.",
+          "Hold R while starting a game, then start MKW Launcher."
+        ]
+      }
+    },
     "nfsmw-nx": {
       "source": "store draft",
       "portzone": {
@@ -516,6 +597,153 @@
         ]
       }
     },
+    "terraria": {
+      "source": "store draft",
+      "portzone": {
+        "$schema": "https://raw.githubusercontent.com/JohnUzoka/portzone-nx/main/store/schema/portzone.schema.json",
+        "format": 1,
+        "description": "Terraria, the PC version (FNA, .NET), built into a Switch homebrew on your PC by terrabuilder and run on Mono through mono-nx, ahead-of-time compiled. Needs your own Terraria for PC: GOG's Linux version.",
+        "platform": {
+          "original": "PC",
+          "runs_on": [
+            "switch"
+          ]
+        },
+        "install": {
+          "binary": "sdmc:/switch/Terraria.nro"
+        },
+        "launch": {
+          "full_memory": true,
+          "notes": [
+            "The NRO refuses applet mode (the Album) and says so.",
+            "Holding Plus and Minus together toggles the FPS counter.",
+            "The build's mono/ folder replaces sd:/mono/config.ini: if another mono-nx app uses one, back it up first."
+          ]
+        },
+        "game_data": {
+          "dir": "sdmc:/",
+          "inputs": [
+            {
+              "id": "build",
+              "label": "The vanilla build terrabuilder made from your Terraria (GOG 1.4.5.8 for Linux): Output/Terraria/sdcard",
+              "options": [
+                {
+                  "label": "The sdcard folder's contents",
+                  "files": [
+                    {
+                      "path": "switch/Terraria.nro",
+                      "note": "The game, built from your copy"
+                    },
+                    {
+                      "path": "mono/",
+                      "markers": [
+                        "config.ini",
+                        "etc/"
+                      ],
+                      "note": "Mono's runtime settings and ICU data, read before anything else starts"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "prepare": {
+            "where": "pc",
+            "summary": "terrabuilder (Windows through WSL, or Linux) builds the game from the Terraria folder you give it; the build lands in Output/Terraria/sdcard.",
+            "tool": {
+              "name": "terrabuilder builder",
+              "url": "https://github.com/JohnUzoka/terrabuilder-nx/releases/tag/builder"
+            }
+          },
+          "generated": [
+            {
+              "path": "switch/terraria/",
+              "note": "Your characters, worlds and settings; a new build leaves them alone"
+            }
+          ]
+        },
+        "steps": [
+          "On a PC, download terrabuilder.cmd (Windows) or terrabuilder.sh (Linux) from the builder release into an empty folder and run it.",
+          "Put your Terraria (GOG 1.4.5.8 for Linux: its game folder or the whole GOG install) in the Terraria folder it makes, and choose Terraria (vanilla).",
+          "Copy everything inside Output/Terraria/sdcard to the root of the SD card, or drop the sdcard folder on PortZone's upload page.",
+          "Start Terraria.nro with full memory: hold R while starting a game."
+        ]
+      }
+    },
+    "tmodloader": {
+      "source": "store draft",
+      "portzone": {
+        "$schema": "https://raw.githubusercontent.com/JohnUzoka/portzone-nx/main/store/schema/portzone.schema.json",
+        "format": 1,
+        "description": "tModLoader with your choice of mods, built into a Switch homebrew on your PC by terrabuilder with the mods compiled in, running on Mono through mono-nx. Experimental. Needs your own Terraria for PC (GOG or Steam).",
+        "platform": {
+          "original": "PC",
+          "runs_on": [
+            "switch"
+          ]
+        },
+        "install": {
+          "binary": "sdmc:/switch/tmodloader.nro"
+        },
+        "launch": {
+          "full_memory": true,
+          "notes": [
+            "The NRO and the mods beside it are a matched pair: install the whole build each time, and don't update its mods from the in-game Mod Browser.",
+            "The NRO refuses applet mode (the Album) and says so.",
+            "Plus opens and closes the full-screen map."
+          ]
+        },
+        "game_data": {
+          "dir": "sdmc:/",
+          "inputs": [
+            {
+              "id": "build",
+              "label": "The tModLoader build terrabuilder made from your Terraria (1.4.4.9 or 1.4.5.x Content folder): Output/tModLoader/sdcard",
+              "options": [
+                {
+                  "label": "The sdcard folder's contents",
+                  "files": [
+                    {
+                      "path": "switch/tmodloader.nro",
+                      "note": "tModLoader, built with your mods"
+                    },
+                    {
+                      "path": "switch/tmodloader/",
+                      "markers": [
+                        "Terraria/tModLoader/Mods/"
+                      ],
+                      "note": "The mods built in, and your saves"
+                    },
+                    {
+                      "path": "mono/",
+                      "markers": [
+                        "config.ini",
+                        "etc/"
+                      ],
+                      "note": "Mono's runtime settings and ICU data, read before anything else starts"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "prepare": {
+            "where": "pc",
+            "summary": "terrabuilder (Windows through WSL, or Linux) builds tModLoader and the mods you pick from your Terraria's Content folder; the first build takes about an hour, and lands in Output/tModLoader/sdcard.",
+            "tool": {
+              "name": "terrabuilder builder",
+              "url": "https://github.com/JohnUzoka/terrabuilder-nx/releases/tag/builder"
+            }
+          }
+        },
+        "steps": [
+          "On a PC, download terrabuilder.cmd (Windows) or terrabuilder.sh (Linux) from the builder release into an empty folder and run it.",
+          "Put your Terraria (its Content folder from 1.4.4.9 or 1.4.5.x, GOG or Steam) in the Terraria folder it makes, any .tmod files in Mods, and choose tModLoader.",
+          "Copy everything inside Output/tModLoader/sdcard to the root of the SD card, overwriting what is there, or drop the sdcard folder on PortZone's upload page.",
+          "Start tmodloader.nro with full memory: hold R while starting a game."
+        ]
+      }
+    },
     "triaevum": {
       "source": "store draft",
       "portzone": {
@@ -659,6 +887,94 @@
           "Have your own cartridge dump ready as a .3ds or .cci file (USA Rev 1, or European original or Rev 1). eShop copies (.cia) and other versions do not work.",
           "Copy the .3ds or .cci file to switch/oot3dre/.",
           "Start the game with full memory. The first start imports the dump."
+        ]
+      }
+    },
+    "usm_switch": {
+      "source": "store draft",
+      "portzone": {
+        "$schema": "https://raw.githubusercontent.com/JohnUzoka/portzone-nx/main/store/schema/portzone.schema.json",
+        "format": 1,
+        "description": "Ultimate Spider-Man (2005), the PC version statically recompiled to run natively on Switch, with an overlay for graphics, controls and performance. Needs your own PC copy: USM.exe and its Data folder.",
+        "platform": {
+          "original": "PC",
+          "runs_on": [
+            "switch"
+          ]
+        },
+        "install": {
+          "binary": "sdmc:/switch/usm/usm_switch.nro",
+          "steps": [
+            {
+              "asset": "usm_switch.nro",
+              "copy": "sdmc:/switch/usm"
+            }
+          ]
+        },
+        "launch": {
+          "full_memory": true,
+          "notes": [
+            "Minus, or L+R+Plus, opens the overlay: graphics, controls (swap A/B), performance (FPS cap, clocks) and Save settings to SD.",
+            "720p handheld runs at 30 FPS at stock clocks; 1080p docked needs the overlay's overclock. A resolution change needs Save settings to SD and a restart."
+          ]
+        },
+        "game_data": {
+          "dir": "sdmc:/switch/usm",
+          "inputs": [
+            {
+              "id": "game",
+              "label": "Ultimate Spider-Man for PC: USM.exe and the Data folder from your install",
+              "options": [
+                {
+                  "label": "Copied from your PC install",
+                  "files": [
+                    {
+                      "path": "USM.exe",
+                      "sha256": [
+                        "5d554ef69e8066eed9e327a4fe331992124aee6de16af54bd7ac5c5dcb0488b8"
+                      ],
+                      "note": "The game's program, loaded by the port"
+                    },
+                    {
+                      "path": "Data/",
+                      "markers": [
+                        "packs/",
+                        "Sound/",
+                        "usm_lte.usm"
+                      ],
+                      "note": "The whole Data folder: movies, sound, packs and text"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "generated": [
+            {
+              "path": "save/",
+              "note": "Your saves"
+            },
+            {
+              "path": "settings.ini",
+              "note": "Overlay settings, written by Save settings to SD"
+            },
+            {
+              "path": "resolution.txt",
+              "note": "The resolution, 1280x720 by default"
+            },
+            {
+              "path": "registry.txt",
+              "note": "The game's Windows registry settings"
+            },
+            {
+              "path": "log.txt",
+              "note": "A record of each run"
+            }
+          ]
+        },
+        "steps": [
+          "Copy USM.exe and the whole Data folder from your PC install to switch/usm/.",
+          "Start usm_switch.nro with full memory: hold R while starting a game."
         ]
       }
     }

@@ -202,12 +202,18 @@ void SdSearchActivity::fillResults(brls::Box* box)
         text->setGrow(1);
         text->setShrink(1);
         text->addView(textBlock(match.portTitle + " · " + match.inputLabel, 20));
+        // Where a path below the port's game folder is on the card; a game folder at the root reads as the SD card.
         const std::string gameDir = sdShown(match.gameDir);
+        const auto onCard = [&gameDir](const std::string& below) {
+            if (gameDir.empty())
+                return below.empty() ? std::string("the SD card") : below;
+            return below.empty() ? gameDir : gameDir + "/" + below;
+        };
         std::string detail;
         if (match.files.size() == 1)
         {
             const matcher::Placement& file = match.files.front();
-            detail = sources[file.source].path + " → " + gameDir + "/" + file.dest + " · " + formatSize(match.bytes);
+            detail = sources[file.source].path + " → " + onCard(file.dest) + " · " + formatSize(match.bytes);
         }
         else
         {
@@ -220,7 +226,7 @@ void SdSearchActivity::fillResults(brls::Box* box)
             const std::string fromDir = commonFolder(from);
             const std::string toDir   = commonFolder(to);
             detail = (fromDir.empty() ? "" : fromDir + "/") + " (" + std::to_string(match.files.size()) + " files, " +
-                formatSize(match.bytes) + ") → " + gameDir + (toDir.empty() ? "" : "/" + toDir) + "/";
+                formatSize(match.bytes) + ") → " + onCard(toDir) + (gameDir.empty() && toDir.empty() ? "" : "/");
         }
         text->addView(textBlock(detail, 16, mutedColor()));
         if (match.alreadyMet)

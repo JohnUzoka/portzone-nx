@@ -756,7 +756,8 @@ namespace
         const matcher::Placement& placement = match.files[fileIndex];
         const matcher::Source& source       = s.sources[placement.source];
         const std::string name              = fileName(source.path);
-        const std::string shown = fs::path(sdShown(match.gameDir)).filename().string() + "/" + placement.dest;
+        const std::string folder = fs::path(sdShown(match.gameDir)).filename().string();
+        const std::string shown  = folder.empty() ? placement.dest : folder + "/" + placement.dest;
 
         if (req.length != source.size || (placement.size && *placement.size != req.length))
             return rejectFile(c, 409, name, "wrong size", "wrong size: " + name + " is not the expected file");

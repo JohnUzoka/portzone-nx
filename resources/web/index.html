@@ -821,7 +821,7 @@ function itemTitle(match) {
 
 function itemDetails(match) {
     const port = portById(match.port);
-    const dir = port ? port.dir + '/' : '';
+    const dir = port && port.dir ? port.dir + '/' : '';
     const parts = [
         el('div', null, [el('strong', { text: itemTitle(match) })]),
         el('div', { class: 'small muted', text: plural(match.files.length, 'file', 'files') + ', ' + formatSize(match.bytes) }),

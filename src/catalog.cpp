@@ -49,7 +49,7 @@ namespace
 
     std::string ownManifestUrl(const Port& port)
     {
-        return "https://raw.githubusercontent.com/" + repoPath(port.info.url) + "/HEAD/portzone.json";
+        return "https://raw.githubusercontent.com/" + repoPath(port.info.url) + "/HEAD/" + port.info.manifest;
     }
 
     // `json` (a portzone.json) into the port, or the reason it can't be used.

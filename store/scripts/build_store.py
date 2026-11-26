@@ -54,7 +54,7 @@ def fetch_portzone(port, drafts):
         if draft.exists():
             return json.loads(draft.read_text()), str(draft), True
     repo = port["url"].removeprefix("https://github.com/")
-    url = f"https://raw.githubusercontent.com/{repo}/HEAD/portzone.json"
+    url = f"https://raw.githubusercontent.com/{repo}/HEAD/{port.get('manifest', 'portzone.json')}"
     try:
         with urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "portzone"}),
                                     timeout=30) as response:
@@ -92,7 +92,8 @@ def render_details(port, store):
 
     data = store.get("game_data")
     if data:
-        lines += ["", f"Your files, in {sd_relative(data['dir'])}/"]
+        folder = sd_relative(data["dir"])
+        lines += ["", f"Your files, in {folder}/" if folder else "Your files, on the SD card"]
         for item in data["inputs"]:
             kind = "required" if item.get("required", True) else "optional"
             options = item["options"]
@@ -184,8 +185,9 @@ def main():
 
     ids = [port["id"] for port in index["ports"]]
     errors += [f"{PORTS.name}: id {i!r} is listed twice" for i in sorted({i for i in ids if ids.count(i) > 1})]
-    urls = [port["url"].lower() for port in index["ports"]]
-    errors += [f"{PORTS.name}: {u} is listed twice" for u in sorted({u for u in urls if urls.count(u) > 1})]
+    # A repository may be listed more than once (several games from one build) when each listing names its own file.
+    sources = [(port["url"].lower(), port.get("manifest", "portzone.json")) for port in index["ports"]]
+    errors += [f"{PORTS.name}: {u} is listed twice with {m}" for u, m in sorted({s for s in sources if sources.count(s) > 1})]
 
     # Hundreds of small reads: many at once.
     with ThreadPoolExecutor(max_workers=16) as pool:

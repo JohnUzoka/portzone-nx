@@ -2008,10 +2008,7 @@
       "url": "https://github.com/KawaiiBunga/KartPadNX",
       "title": "Mario Kart Wii",
       "author": "KawaiiBunga",
-      "description": "Mario Kart Wii, the Wii version, ported to Switch. Needs your own copy of the Wii game; its README says which files.",
-      "platform": {
-        "original": "Wii"
-      }
+      "description": "Mario Kart Wii statically recompiled with WiiCompiled and KartPad, built on your PC from your disc into a launcher that also plays Retro Rewind. Needs your own Mario Kart Wii disc: PAL (RMCP01), first revision."
     },
     {
       "id": "katamari-nx",
@@ -4525,14 +4522,11 @@
       }
     },
     {
-      "id": "terrabuilder-nx",
+      "id": "terraria",
       "url": "https://github.com/JohnUzoka/terrabuilder-nx",
-      "title": "Terraria (terrabuilder)",
+      "title": "Terraria",
       "author": "JohnUzoka",
-      "description": "Terraria, or tModLoader with mods, built into a Switch homebrew on your PC by terrabuilder from your own copy, running on Mono through mono-nx. Needs your own Terraria for PC: GOG's Linux version for vanilla builds.",
-      "platform": {
-        "original": "PC"
-      }
+      "description": "Terraria, the PC version (FNA, .NET), built into a Switch homebrew on your PC by terrabuilder and run on Mono through mono-nx, ahead-of-time compiled. Needs your own Terraria for PC: GOG's Linux version."
     },
     {
       "id": "tf2_nx",
@@ -4775,6 +4769,14 @@
       }
     },
     {
+      "id": "tmodloader",
+      "url": "https://github.com/JohnUzoka/terrabuilder-nx",
+      "manifest": "portzone/tmodloader.json",
+      "title": "tModLoader",
+      "author": "JohnUzoka",
+      "description": "tModLoader with your choice of mods, built into a Switch homebrew on your PC by terrabuilder with the mods compiled in, running on Mono through mono-nx. Experimental. Needs your own Terraria for PC (GOG or Steam)."
+    },
+    {
       "id": "torchlight-nx",
       "url": "https://github.com/liartes/torchlight-nx",
       "title": "Torchlight (liartes)",
@@ -4866,10 +4868,7 @@
       "url": "https://github.com/the-deshpande/usm_switch",
       "title": "Ultimate Spider-Man",
       "author": "the-deshpande",
-      "description": "Ultimate Spider-Man, the PC version, ported to Switch. Needs your own copy of the PC game; its README says which files.",
-      "platform": {
-        "original": "PC"
-      }
+      "description": "Ultimate Spider-Man (2005), the PC version statically recompiled to run natively on Switch, with an overlay for graphics, controls and performance. Needs your own PC copy: USM.exe and its Data folder."
     },
     {
       "id": "vcmi_nx",

@@ -248,12 +248,13 @@ brls::View* PortActivity::createContentView()
     {
         if (p.manifest->gameData)
         {
-            content->addView(header("What you need", "Put these in " + sdShown(p.manifest->gameData->dir) + "/"));
+            const std::string folder = sdShown(p.manifest->gameData->dir);
+            content->addView(header("What you need", folder.empty() ? "Put these on the SD card" : "Put these in " + folder + "/"));
             needsBox = new brls::Box(brls::Axis::COLUMN);
             needsBox->setAlignItems(brls::AlignItems::STRETCH);
             content->addView(needsBox);
 
-            content->addView(header("Folder layout", sdShown(p.manifest->gameData->dir) + "/"));
+            content->addView(header("Folder layout", folder.empty() ? "SD card" : folder + "/"));
             layoutBox = new brls::Box(brls::Axis::COLUMN);
             layoutBox->setAlignItems(brls::AlignItems::STRETCH);
             content->addView(layoutBox);
@@ -551,7 +552,7 @@ void PortActivity::fillLayout(brls::Box* box)
     const DataCheck check = checkGameData(data);
     TreeNode root;
 
-    const std::string dir = sdShown(data.dir) + "/";
+    const std::string dir = sdShown(data.dir).empty() ? "" : sdShown(data.dir) + "/";
     const std::string bin = sdShown(p.manifest->binary);
     if (lower(bin).rfind(lower(dir), 0) == 0)
     {

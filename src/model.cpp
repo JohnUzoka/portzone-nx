@@ -197,6 +197,8 @@ std::vector<IndexEntry> parseIndex(const json& root)
         entry.description = str(item, "description");
         entry.icon        = str(item, "icon");
         entry.banner      = str(item, "banner");
+        if (const std::string manifest = str(item, "manifest"); !manifest.empty())
+            entry.manifest = relative(manifest);
         entry.platform    = platform(item);
         if (entry.url.rfind("https://github.com/", 0) != 0)
             throw std::runtime_error(entry.id + ": url must be a GitHub repository");

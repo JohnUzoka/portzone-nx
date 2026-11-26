@@ -1,0 +1,47 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JohnUzoka/portzone-nx/main/store/schema/portzone.schema.json",
+  "format": 1,
+  "description": "tModLoader with your choice of mods, built into a Switch homebrew on your PC by terrabuilder with the mods compiled in, running on Mono through mono-nx. Experimental. Needs your own Terraria for PC (GOG or Steam).",
+  "platform": { "original": "PC", "runs_on": ["switch"] },
+  "install": {
+    "binary": "sdmc:/switch/tmodloader.nro"
+  },
+  "launch": {
+    "full_memory": true,
+    "notes": [
+      "The NRO and the mods beside it are a matched pair: install the whole build each time, and don't update its mods from the in-game Mod Browser.",
+      "The NRO refuses applet mode (the Album) and says so.",
+      "Plus opens and closes the full-screen map."
+    ]
+  },
+  "game_data": {
+    "dir": "sdmc:/",
+    "inputs": [
+      {
+        "id": "build",
+        "label": "The tModLoader build terrabuilder made from your Terraria (1.4.4.9 or 1.4.5.x Content folder): Output/tModLoader/sdcard",
+        "options": [
+          {
+            "label": "The sdcard folder's contents",
+            "files": [
+              { "path": "switch/tmodloader.nro", "note": "tModLoader, built with your mods" },
+              { "path": "switch/tmodloader/", "markers": ["Terraria/tModLoader/Mods/"], "note": "The mods built in, and your saves" },
+              { "path": "mono/", "markers": ["config.ini", "etc/"], "note": "Mono's runtime settings and ICU data, read before anything else starts" }
+            ]
+          }
+        ]
+      }
+    ],
+    "prepare": {
+      "where": "pc",
+      "summary": "terrabuilder (Windows through WSL, or Linux) builds tModLoader and the mods you pick from your Terraria's Content folder; the first build takes about an hour, and lands in Output/tModLoader/sdcard.",
+      "tool": { "name": "terrabuilder builder", "url": "https://github.com/JohnUzoka/terrabuilder-nx/releases/tag/builder" }
+    }
+  },
+  "steps": [
+    "On a PC, download terrabuilder.cmd (Windows) or terrabuilder.sh (Linux) from the builder release into an empty folder and run it.",
+    "Put your Terraria (its Content folder from 1.4.4.9 or 1.4.5.x, GOG or Steam) in the Terraria folder it makes, any .tmod files in Mods, and choose tModLoader.",
+    "Copy everything inside Output/tModLoader/sdcard to the root of the SD card, overwriting what is there, or drop the sdcard folder on PortZone's upload page.",
+    "Start tmodloader.nro with full memory: hold R while starting a game."
+  ]
+}

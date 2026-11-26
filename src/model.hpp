@@ -23,6 +23,7 @@ struct IndexEntry
 {
     std::string id, url, title, author, description;
     std::string icon, banner; // https URLs, used when portzone.json has none
+    std::string manifest = "portzone.json"; // the port's portzone.json, as a path in its repository
     Platform platform;
 };
 

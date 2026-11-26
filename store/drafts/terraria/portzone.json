@@ -1,0 +1,49 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JohnUzoka/portzone-nx/main/store/schema/portzone.schema.json",
+  "format": 1,
+  "description": "Terraria, the PC version (FNA, .NET), built into a Switch homebrew on your PC by terrabuilder and run on Mono through mono-nx, ahead-of-time compiled. Needs your own Terraria for PC: GOG's Linux version.",
+  "platform": { "original": "PC", "runs_on": ["switch"] },
+  "install": {
+    "binary": "sdmc:/switch/Terraria.nro"
+  },
+  "launch": {
+    "full_memory": true,
+    "notes": [
+      "The NRO refuses applet mode (the Album) and says so.",
+      "Holding Plus and Minus together toggles the FPS counter.",
+      "The build's mono/ folder replaces sd:/mono/config.ini: if another mono-nx app uses one, back it up first."
+    ]
+  },
+  "game_data": {
+    "dir": "sdmc:/",
+    "inputs": [
+      {
+        "id": "build",
+        "label": "The vanilla build terrabuilder made from your Terraria (GOG 1.4.5.8 for Linux): Output/Terraria/sdcard",
+        "options": [
+          {
+            "label": "The sdcard folder's contents",
+            "files": [
+              { "path": "switch/Terraria.nro", "note": "The game, built from your copy" },
+              { "path": "mono/", "markers": ["config.ini", "etc/"], "note": "Mono's runtime settings and ICU data, read before anything else starts" }
+            ]
+          }
+        ]
+      }
+    ],
+    "prepare": {
+      "where": "pc",
+      "summary": "terrabuilder (Windows through WSL, or Linux) builds the game from the Terraria folder you give it; the build lands in Output/Terraria/sdcard.",
+      "tool": { "name": "terrabuilder builder", "url": "https://github.com/JohnUzoka/terrabuilder-nx/releases/tag/builder" }
+    },
+    "generated": [
+      { "path": "switch/terraria/", "note": "Your characters, worlds and settings; a new build leaves them alone" }
+    ]
+  },
+  "steps": [
+    "On a PC, download terrabuilder.cmd (Windows) or terrabuilder.sh (Linux) from the builder release into an empty folder and run it.",
+    "Put your Terraria (GOG 1.4.5.8 for Linux: its game folder or the whole GOG install) in the Terraria folder it makes, and choose Terraria (vanilla).",
+    "Copy everything inside Output/Terraria/sdcard to the root of the SD card, or drop the sdcard folder on PortZone's upload page.",
+    "Start Terraria.nro with full memory: hold R while starting a game."
+  ]
+}

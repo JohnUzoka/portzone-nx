@@ -1,0 +1,54 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JohnUzoka/portzone-nx/main/store/schema/portzone.schema.json",
+  "format": 1,
+  "description": "Ultimate Spider-Man (2005), the PC version statically recompiled to run natively on Switch, with an overlay for graphics, controls and performance. Needs your own PC copy: USM.exe and its Data folder.",
+  "platform": { "original": "PC", "runs_on": ["switch"] },
+  "install": {
+    "binary": "sdmc:/switch/usm/usm_switch.nro",
+    "steps": [{ "asset": "usm_switch.nro", "copy": "sdmc:/switch/usm" }]
+  },
+  "launch": {
+    "full_memory": true,
+    "notes": [
+      "Minus, or L+R+Plus, opens the overlay: graphics, controls (swap A/B), performance (FPS cap, clocks) and Save settings to SD.",
+      "720p handheld runs at 30 FPS at stock clocks; 1080p docked needs the overlay's overclock. A resolution change needs Save settings to SD and a restart."
+    ]
+  },
+  "game_data": {
+    "dir": "sdmc:/switch/usm",
+    "inputs": [
+      {
+        "id": "game",
+        "label": "Ultimate Spider-Man for PC: USM.exe and the Data folder from your install",
+        "options": [
+          {
+            "label": "Copied from your PC install",
+            "files": [
+              {
+                "path": "USM.exe",
+                "sha256": ["5d554ef69e8066eed9e327a4fe331992124aee6de16af54bd7ac5c5dcb0488b8"],
+                "note": "The game's program, loaded by the port"
+              },
+              {
+                "path": "Data/",
+                "markers": ["packs/", "Sound/", "usm_lte.usm"],
+                "note": "The whole Data folder: movies, sound, packs and text"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "generated": [
+      { "path": "save/", "note": "Your saves" },
+      { "path": "settings.ini", "note": "Overlay settings, written by Save settings to SD" },
+      { "path": "resolution.txt", "note": "The resolution, 1280x720 by default" },
+      { "path": "registry.txt", "note": "The game's Windows registry settings" },
+      { "path": "log.txt", "note": "A record of each run" }
+    ]
+  },
+  "steps": [
+    "Copy USM.exe and the whole Data folder from your PC install to switch/usm/.",
+    "Start usm_switch.nro with full memory: hold R while starting a game."
+  ]
+}

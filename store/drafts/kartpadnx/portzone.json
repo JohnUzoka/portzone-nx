@@ -1,0 +1,51 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JohnUzoka/portzone-nx/main/store/schema/portzone.schema.json",
+  "format": 1,
+  "description": "Mario Kart Wii statically recompiled with WiiCompiled and KartPad, built on your PC from your disc into a launcher that also plays Retro Rewind. Needs your own Mario Kart Wii disc: PAL (RMCP01), first revision.",
+  "platform": { "original": "Wii", "runs_on": ["switch"] },
+  "install": {
+    "binary": "sdmc:/switch/mkw-launcher.nro"
+  },
+  "launch": {
+    "full_memory": true,
+    "notes": [
+      "Started from the Album it runs in low memory mode.",
+      "L + R3 opens the port menu: CPU boost and controller binds.",
+      "When Retro Rewind updates, build again and copy the new SD card folder; don't update RetroRewind6 on its own."
+    ]
+  },
+  "game_data": {
+    "dir": "sdmc:/switch",
+    "inputs": [
+      {
+        "id": "build",
+        "label": "The SD card folder KartPadNX-Builder made from your Mario Kart Wii disc (PAL RMCP01, revision 0; .iso, .wbfs or .rvz), about 5 GB",
+        "options": [
+          {
+            "label": "Its switch folder",
+            "files": [
+              { "path": "mkw-launcher.nro", "note": "The launcher, with the game built in" },
+              { "path": "kartpad/data/", "markers": ["sys/", "files/"], "note": "Your disc's files" }
+            ]
+          }
+        ]
+      }
+    ],
+    "prepare": {
+      "where": "pc",
+      "summary": "KartPadNX-Builder (Windows 10 or 11, 64-bit; about 15 GB free) reads your disc and builds the launcher with the game in it; the first build takes 30 to 60 minutes.",
+      "tool": { "name": "KartPadNX-Builder", "url": "https://github.com/KawaiiBunga/KartPadNX/releases" }
+    },
+    "generated": [
+      { "path": "kartpad/Config.toml", "note": "Settings" },
+      { "path": "kartpad/mods/", "note": "Mods you add, one folder each; .zip files are unpacked by the launcher" },
+      { "path": "kartpad/kartpad-runtime.log", "note": "A record of each run" }
+    ]
+  },
+  "steps": [
+    "On a Windows PC, download KartPadNX-Builder.zip from the releases page, extract it and run KartPadNX-Builder.exe. Or use the web builder, https://kawaiibunga.github.io/KartPadNX/, which builds on the maintainer's PC.",
+    "Give it your Mario Kart Wii disc image (PAL RMCP01, revision 0). Other regions and revisions are rejected.",
+    "Copy the SD card folder it makes to the root of the SD card, or drop it on PortZone's upload page.",
+    "Hold R while starting a game, then start MKW Launcher."
+  ]
+}

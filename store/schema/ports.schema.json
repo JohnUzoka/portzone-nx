@@ -29,6 +29,11 @@
           "type": "string",
           "pattern": "^https://github\\.com/[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$"
         },
+        "manifest": {
+          "description": "The port's portzone.json in its repository, as a path from the repository root. Default portzone.json. Set it when one repository makes several games (one listing each, each with its own file, like portzone/tmodloader.json).",
+          "type": "string",
+          "pattern": "^(?!/)(?!.*(^|/)\\.\\.(/|$))[^\\\\:*?]+\\.json$"
+        },
         "title": { "type": "string", "minLength": 1, "maxLength": 95 },
         "author": { "type": "string", "minLength": 1, "maxLength": 63 },
         "description": {
