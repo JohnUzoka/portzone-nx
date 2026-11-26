@@ -20,8 +20,9 @@ struct Port
 {
     IndexEntry info;
     std::optional<Manifest> manifest;
-    std::string manifestSource; // where portzone.json came from
-    std::string manifestError;  // a portzone.json that exists but cannot be used
+    nlohmann::json manifestJson; // as read, to tell when the repository's own copy has changed
+    std::string manifestSource;  // where portzone.json came from
+    std::string manifestError;   // a portzone.json that exists but cannot be used
 
     Section section() const;
     const std::string& description() const;
@@ -55,11 +56,20 @@ class Catalog
 
     static Catalog& get();
 
-    // Blocking, any thread: ports.json and every portzone.json.
+    // Blocking, any thread: ports.json and manifests.json (every port's portzone.json, built by the store), from the
+    // same place: the store on GitHub, else the copies saved last time, else the ones built into PortZone.
     static Loaded fetch();
+
+    // Blocking, any thread: the portzone.json at the top of the port's repository now, when it differs from the one
+    // `port` has (the store's index is rebuilt daily). Nothing when it is the same, can't be read, or the port uses
+    // a --drafts file; a Port without a manifest when the repository's copy is gone.
+    static std::optional<Port> fresher(const Port& port);
 
     // UI thread: makes a fetched list the current one.
     void apply(Loaded loaded);
+
+    // UI thread: replaces one port (from fresher()).
+    void replace(Port port);
 
     std::vector<Port> ports;
     Source source = Source::Network;

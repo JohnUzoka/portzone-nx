@@ -12,8 +12,9 @@ turns your port from **Manual** (PortZone shows your README and release files; t
 | Generic description and the owner's avatar | Your description, icon and banner; your system tag in Browse's filter |
 | | Your port in Sphaira's store too (single-file installs) |
 
-You don't need to ask anyone: once the file is on your default branch, PortZone reads it the next time players
-refresh. Until then, the store may keep a draft for you in `store/drafts/<id>/portzone.json`; yours replaces it.
+You don't need to ask anyone: once the file is on your default branch, a game's page in PortZone picks it up the next
+time a player opens it, and the store's daily rebuild puts it in every list. Until then, the store may keep a draft for
+you in `store/drafts/<id>/portzone.json`; yours replaces it.
 
 ## Where it goes
 
@@ -178,11 +179,11 @@ One action per step, in order, starting with a verb ("Copy", "Extract", "Start")
 
 ```sh
 pip install jsonschema
-python3 store/scripts/build_sphaira.py --check --drafts <a folder holding <id>/portzone.json>
+python3 store/scripts/build_store.py --check --drafts <a folder holding <id>/portzone.json>
 ```
 
-run from a clone of this repository, checks it against the schema and your release files. To see it in PortZone on a
-PC before you commit, see [development.md](development.md) (`--drafts`).
+run from a clone of this repository, checks your file against the schema before you commit it. To see it in PortZone
+on a PC, see [development.md](development.md) (`--drafts`).
 
 ## Rules
 

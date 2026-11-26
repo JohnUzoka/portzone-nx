@@ -10,7 +10,7 @@ A port gets into PortZone in up to two parts:
 | `portzone.json` | The top of the port's own repository, default branch | No | One-button install, a checklist of the player's files, automatic file placement. See [docs/portzone-json.md](docs/portzone-json.md). |
 
 Anyone can add the `ports.json` entry. Only the port's own repository can carry `portzone.json`; until it does, a
-draft can wait in `store/drafts/<id>/portzone.json` (the app reads it when the repository has none).
+draft can wait in `store/drafts/<id>/portzone.json` (the store uses it while the repository has none).
 
 ## The `ports.json` entry
 
@@ -58,15 +58,16 @@ folder or version.** If something is not written down anywhere, leave it out and
 
 ```sh
 pip install jsonschema
-python3 store/scripts/build_sphaira.py --check
-# with drafts not yet in their repositories:
-python3 store/scripts/build_sphaira.py --check --drafts store/drafts
+python3 store/scripts/build_store.py --check
 ```
+
+It checks `ports.json`, every port's `portzone.json` and the drafts. `store/manifests.json` and `store/sphaira.json`
+are generated: don't edit them; the store's workflow rebuilds them after your pull request is merged.
 
 ## Pull request checklist
 
 - [ ] `ports.json` entry added, list still sorted by `id`.
-- [ ] `python3 store/scripts/build_sphaira.py --check` passes.
+- [ ] `python3 store/scripts/build_store.py --check` passes.
 - [ ] Every file name, folder and version comes from the port's own docs (link them in the pull request).
 - [ ] The description follows the shape above.
 - [ ] No links to game data.

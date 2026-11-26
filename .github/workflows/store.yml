@@ -1,5 +1,8 @@
-name: sphaira
+name: store
 
+# Rebuilds the store's generated files (manifests.json, sphaira.json) from ports.json, the ports' own portzone.json
+# files and the drafts: on store changes, and once a day so porters' edits reach PortZone and Sphaira without a pull
+# request. Pull requests only check.
 on:
   schedule:
     - cron: "41 5 * * *"
@@ -14,11 +17,11 @@ permissions:
   contents: write
 
 concurrency:
-  group: sphaira
+  group: store
   cancel-in-progress: false
 
 jobs:
-  sphaira:
+  store:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -28,16 +31,16 @@ jobs:
       - run: pip install jsonschema
       - name: Check
         if: github.event_name == 'pull_request'
-        run: python store/scripts/build_sphaira.py --check --drafts store/drafts
+        run: python store/scripts/build_store.py --check
       - name: Build
         if: github.event_name != 'pull_request'
-        run: python store/scripts/build_sphaira.py
-      - name: Commit sphaira.json
+        run: python store/scripts/build_store.py
+      - name: Commit generated files
         if: github.event_name != 'pull_request'
         run: |
-          git add store/sphaira.json
+          git add store/manifests.json store/sphaira.json
           git diff --cached --quiet && exit 0
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "Update sphaira.json"
+          git commit -m "Update the store's generated files"
           git push

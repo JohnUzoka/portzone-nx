@@ -1,12 +1,12 @@
 #include "catalog.hpp"
 
 #include <algorithm>
-#include <atomic>
 #include <fstream>
+#include <map>
 #include <sstream>
-#include <thread>
 
 #include <borealis/core/assets.hpp>
+#include <borealis/core/logger.hpp>
 
 #include "config.hpp"
 #include "http.hpp"
@@ -43,70 +43,65 @@ namespace
 
     bool isUrl(const std::string& s) { return s.rfind("http://", 0) == 0 || s.rfind("https://", 0) == 0; }
 
-    // A store draft (store/drafts/<id>/portzone.json, the file a port's porter has not added to their repository yet)
-    // from beside the port list in use: a URL, a folder, or PortZone's built-in copy.
-    bool readStoreDraft(const std::string& draftsBase, const std::string& id, std::string& text, std::string& source)
+    // Where a port's portzone.json came from, as the About tab shows it.
+    constexpr const char* FROM_REPOSITORY = "the repository (the store's copy)";
+    constexpr const char* FROM_DRAFT      = "the store's draft";
+
+    std::string ownManifestUrl(const Port& port)
     {
-        if (draftsBase.empty())
-            return false;
-        const std::string where = draftsBase + "/" + id + "/portzone.json";
-        if (isUrl(where))
-        {
-            const auto response = http::get(where);
-            if (!response.ok())
-                return false;
-            text = response.body;
-        }
-        else if (!readFile(where, text))
-            return false;
-        source = where + " (store draft)";
-        return true;
+        return "https://raw.githubusercontent.com/" + repoPath(port.info.url) + "/HEAD/portzone.json";
     }
 
-    // portzone.json for one port: a --drafts draft, then the repository, then the store's draft, then the cache.
-    void loadManifest(Port& port, const std::string& draftsBase)
+    // `json` (a portzone.json) into the port, or the reason it can't be used.
+    void setManifest(Port& port, const json& document, std::string source)
     {
-        std::string text;
-        const fs::path cached = cacheDir() / "manifests" / (port.info.id + ".json");
-        const fs::path draft  = config().draftsDir.empty() ? fs::path() : config().draftsDir / port.info.id / "portzone.json";
-
-        if (!draft.empty() && readFile(draft, text))
-            port.manifestSource = draft.string();
-        else
-        {
-            const std::string url = "https://raw.githubusercontent.com/" + repoPath(port.info.url) + "/HEAD/portzone.json";
-            const auto response   = http::get(url);
-            if (response.ok())
-            {
-                text                = response.body;
-                port.manifestSource = url;
-                writeFile(cached, text);
-            }
-            else if (response.error.empty() && response.status == 404)
-            {
-                if (readStoreDraft(draftsBase, port.info.id, text, port.manifestSource))
-                    writeFile(cached, text);
-                else
-                {
-                    std::error_code ec;
-                    fs::remove(cached, ec);
-                    return; // no portzone.json: manual install
-                }
-            }
-            else if (readFile(cached, text))
-                port.manifestSource = cached.string() + " (offline)";
-            else
-                return;
-        }
-
+        port.manifestJson   = document;
+        port.manifestSource = std::move(source);
         try
         {
-            port.manifest = parseManifest(json::parse(text));
+            port.manifest = parseManifest(document);
         }
         catch (const std::exception& e)
         {
+            port.manifest.reset();
             port.manifestError = std::string("portzone.json: ") + e.what();
         }
+    }
+
+    // `location` (a store file's URL, or a local path) for a store file saved as `name`: from GitHub (saved for
+    // offline use), else the copy saved last time, else the one built into PortZone.
+    bool readStoreFile(const std::string& location, const std::string& name, std::string& text, Catalog::Source& source,
+        std::string& error)
+    {
+        if (!isUrl(location))
+        {
+            if (readFile(location, text))
+                return true;
+            error = "Could not read " + location;
+            return false;
+        }
+        const fs::path cached = cacheDir() / name;
+        const auto response   = http::get(location);
+        if (response.ok())
+        {
+            text   = response.body;
+            source = Catalog::Source::Network;
+            writeFile(cached, text);
+            return true;
+        }
+        if (readFile(cached, text))
+        {
+            source = Catalog::Source::Cache;
+            return true;
+        }
+        if (readFile(std::string(BRLS_ASSET("")) + name, text))
+        {
+            source = Catalog::Source::BuiltIn;
+            return true;
+        }
+        error = "Could not load " + location + ": " +
+            (response.error.empty() ? "HTTP " + std::to_string(response.status) : response.error);
+        return false;
     }
 
 } // namespace
@@ -185,38 +180,10 @@ const Port* Catalog::find(const std::string& id) const
 Catalog::Loaded Catalog::fetch()
 {
     const std::string& url = config().indexUrl;
-    const fs::path cached  = cacheDir() / "ports.json";
     Loaded result;
     std::string text;
-
-    std::string draftsBase; // store/drafts beside the port list used
-    if (isUrl(url))
-    {
-        const auto response = http::get(url);
-        if (response.ok())
-        {
-            text = response.body;
-            writeFile(cached, text);
-        }
-        else if (readFile(cached, text))
-            result.source = Source::Cache;
-        else if (readFile(BRLS_ASSET("ports.json"), text))
-            result.source = Source::BuiltIn;
-        else
-        {
-            result.error = "Could not load the port list from " + url + ": " +
-                (response.error.empty() ? "HTTP " + std::to_string(response.status) : response.error);
-            return result;
-        }
-        draftsBase = result.source == Source::BuiltIn ? std::string(BRLS_ASSET("drafts")) : url.substr(0, url.rfind('/')) + "/drafts";
-    }
-    else if (!readFile(url, text))
-    {
-        result.error = "Could not read " + url;
+    if (!readStoreFile(url, "ports.json", text, result.source, result.error))
         return result;
-    }
-    else
-        draftsBase = (fs::absolute(url).parent_path() / "drafts").string();
 
     std::vector<IndexEntry> entries;
     try
@@ -229,29 +196,103 @@ Catalog::Loaded Catalog::fetch()
         return result;
     }
 
-    // Two at a time: a homebrew started from the Album gets only two network sessions.
+    // Every port's portzone.json in one file beside ports.json; without it every port is a manual install.
+    std::map<std::string, std::pair<json, std::string>> manifests; // id -> (portzone.json, where it came from)
+    std::string indexText, indexError;
+    Source indexSource = result.source;
+    const std::string indexLocation = isUrl(url) ? url.substr(0, url.rfind('/') + 1) + "manifests.json" :
+                                                   (fs::absolute(url).parent_path() / "manifests.json").string();
+    if (readStoreFile(indexLocation, "manifests.json", indexText, indexSource, indexError))
+    {
+        try
+        {
+            for (const auto& [id, entry] : json::parse(indexText).at("manifests").items())
+                manifests[id] = { entry.at("portzone"),
+                    entry.value("source", "") == "store draft" ? FROM_DRAFT : FROM_REPOSITORY };
+        }
+        catch (const std::exception& e)
+        {
+            brls::Logger::error("manifests.json: {}", e.what());
+        }
+    }
+    else
+        brls::Logger::error("{}", indexError);
+
     std::vector<Port>& loaded = result.ports;
     loaded.resize(entries.size());
     for (size_t i = 0; i < entries.size(); i++)
-        loaded[i].info = entries[i];
-    std::atomic<size_t> next { 0 };
-    std::vector<std::thread> workers;
-    for (int w = 0; w < 2; w++)
-        workers.emplace_back([&] {
-            for (size_t i = next++; i < loaded.size(); i = next++)
-                loadManifest(loaded[i], draftsBase);
-        });
-    for (auto& worker : workers)
-        worker.join();
+    {
+        Port& port = loaded[i];
+        port.info  = entries[i];
+        const fs::path draft =
+            config().draftsDir.empty() ? fs::path() : config().draftsDir / port.info.id / "portzone.json";
+        std::string draftText;
+        if (!draft.empty() && readFile(draft, draftText))
+        {
+            try
+            {
+                setManifest(port, json::parse(draftText), draft.string());
+            }
+            catch (const std::exception& e)
+            {
+                port.manifestError = std::string("portzone.json: ") + e.what();
+            }
+        }
+        else if (const auto found = manifests.find(port.info.id); found != manifests.end())
+            setManifest(port, found->second.first, found->second.second);
+    }
 
     std::sort(loaded.begin(), loaded.end(), [](const Port& a, const Port& b) { return lower(a.info.title) < lower(b.info.title); });
     return result;
+}
+
+std::optional<Port> Catalog::fresher(const Port& port)
+{
+    if (!config().draftsDir.empty() && fs::exists(config().draftsDir / port.info.id / "portzone.json"))
+        return std::nullopt;
+    const std::string url = ownManifestUrl(port);
+    const auto response   = http::get(url);
+    Port updated          = port;
+    if (response.error.empty() && response.status == 404)
+    {
+        // The repository has none: a store draft stays; a portzone.json the repository removed goes.
+        if (!port.manifest || port.manifestSource != FROM_REPOSITORY)
+            return std::nullopt;
+        updated.manifest.reset();
+        updated.manifestJson = nullptr;
+        updated.manifestSource.clear();
+        return updated;
+    }
+    if (!response.ok())
+        return std::nullopt;
+    json document;
+    try
+    {
+        document = json::parse(response.body);
+    }
+    catch (const std::exception& e)
+    {
+        updated.manifestError = std::string("portzone.json: ") + e.what();
+        return updated;
+    }
+    if (document == port.manifestJson)
+        return std::nullopt;
+    updated.manifestError.clear();
+    setManifest(updated, document, url);
+    return updated;
 }
 
 void Catalog::apply(Loaded loaded)
 {
     ports  = std::move(loaded.ports);
     source = loaded.source;
+}
+
+void Catalog::replace(Port port)
+{
+    for (auto& existing : ports)
+        if (existing.info.id == port.info.id)
+            existing = std::move(port);
 }
 
 } // namespace pz

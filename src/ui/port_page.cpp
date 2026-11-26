@@ -319,6 +319,17 @@ void PortActivity::onContentAvailable()
 
     if (auto running = jobFor(id); running && !running->finished)
         watch(running);
+
+    // The store's copy of portzone.json is up to a day old: a newer one in the repository rebuilds this page.
+    background<std::shared_ptr<std::optional<Port>>>(alive,
+        [copy = p] { return std::make_shared<std::optional<Port>>(Catalog::fresher(copy)); },
+        [this, id = id](std::shared_ptr<std::optional<Port>> fresh) {
+            if (!*fresh || (job && !job->finished))
+                return;
+            Catalog::get().replace(std::move(**fresh));
+            brls::Application::popActivity(brls::TransitionAnimation::NONE,
+                [id] { brls::Application::pushActivity(new PortActivity(id), brls::TransitionAnimation::NONE); });
+        });
 }
 
 void PortActivity::refresh()

@@ -67,10 +67,8 @@ if (PLATFORM_SWITCH)
         # No --titleid: homebrew does not need one, and Ryujinx refuses an .nro whose NACP has one it does not know.
         COMMAND ${NX_NACPTOOL_EXE} --create "PortZone" "${PROJECT_AUTHOR}" "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_ALTER}" ${PROJECT_NAME}.nacp
         COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_RESOURCES} ${CMAKE_BINARY_DIR}/resources
-        # The port list and store drafts as they were at build time: used while the store can't be reached.
-        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/store/ports.json ${CMAKE_BINARY_DIR}/resources/ports.json
-        COMMAND ${CMAKE_COMMAND} -E rm -rf ${CMAKE_BINARY_DIR}/resources/drafts
-        COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/store/drafts ${CMAKE_BINARY_DIR}/resources/drafts
+        # The port list and every port's portzone.json as they were at build time: used while the store can't be reached.
+        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/store/ports.json ${CMAKE_CURRENT_SOURCE_DIR}/store/manifests.json ${CMAKE_BINARY_DIR}/resources/
         COMMAND ${NX_ELF2NRO_EXE} ${PROJECT_NAME}.elf ${PROJECT_NAME}.nro --icon=${PROJECT_ICON} --nacp=${PROJECT_NAME}.nacp --romfsdir=${CMAKE_BINARY_DIR}/resources)
 else ()
     find_package(CURL REQUIRED)
@@ -80,9 +78,7 @@ else ()
     add_custom_target(${PROJECT_NAME}.data
         COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_RESOURCES} ${CMAKE_CURRENT_BINARY_DIR}/resources
         COMMAND ${CMAKE_COMMAND} -E copy ${BOREALIS_DIR}/resources/font/switch_font.ttf ${BOREALIS_DIR}/resources/font/switch_icons.ttf ${CMAKE_CURRENT_BINARY_DIR}/resources/font/
-        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/store/ports.json ${CMAKE_CURRENT_BINARY_DIR}/resources/ports.json
-        COMMAND ${CMAKE_COMMAND} -E rm -rf ${CMAKE_CURRENT_BINARY_DIR}/resources/drafts
-        COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/store/drafts ${CMAKE_CURRENT_BINARY_DIR}/resources/drafts)
+        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/store/ports.json ${CMAKE_CURRENT_SOURCE_DIR}/store/manifests.json ${CMAKE_CURRENT_BINARY_DIR}/resources/)
     if (NOT USE_LIBROMFS)
         add_dependencies(${PROJECT_NAME} ${PROJECT_NAME}.data)
     endif ()

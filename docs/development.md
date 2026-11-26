@@ -32,14 +32,15 @@ WSLg; when WSLg's compositor crashes, the app crashes with it):
 scripts/run-desktop.sh
 ```
 
-Both read `store/ports.json` and `store/drafts/`, with `./sdmc` standing in for the SD card. Keyboard: arrows move,
-Enter is A, Escape is B, X and Y are themselves. Options:
+Both read `store/ports.json` and `store/manifests.json` (run `store/scripts/build_store.py` after changing a draft),
+with `./sdmc` standing in for the SD card. Keyboard: arrows move, Enter is A, Escape is B, X and Y are themselves.
+Options:
 
 | | |
 |---|---|
 | `--index URL\|FILE` | `ports.json` to read (default: the store on GitHub) |
 | `--sd FOLDER` | the SD card (default `./sdmc`; `sdmc:/` on a Switch) |
-| `--drafts FOLDER` | `<id>/portzone.json` files read before each port's repository |
+| `--drafts FOLDER` | `<id>/portzone.json` files used instead of the store's, to try one before committing it |
 | `--console switch\|switch2` | the console to act as, for testing `runs_on` (PC builds only) |
 | `--update-repo OWNER/REPO`, `--self FILE.nro` | where PortZone's own updates come from, and the file they replace |
 
@@ -59,28 +60,31 @@ No server: the store is static files in `store/`, and every build is downloaded 
 store/ports.json                   every listed port (added by pull request, see CONTRIBUTING.md)
 store/schema/ports.schema.json     one ports.json entry
 store/schema/portzone.schema.json  a port's own portzone.json (guide: docs/portzone-json.md)
-store/sphaira.json                 generated for Sphaira; do not edit
-store/scripts/build_sphaira.py     checks ports.json, writes sphaira.json
 store/drafts/<id>/portzone.json    portzone.json files waiting for their porter
+store/manifests.json               generated: every port's portzone.json; do not edit
+store/sphaira.json                 generated for Sphaira; do not edit
+store/scripts/build_store.py       checks the store, writes the two generated files
 ```
 
-- **PortZone** reads `store/ports.json`, then each port's `portzone.json` from the top of its repository
-  (`raw.githubusercontent.com/<owner>/<repo>/HEAD/portzone.json`); when the repository has none, the store's draft
-  (`store/drafts/<id>/portzone.json` beside the `ports.json` it read, or its built-in copy). A port with neither is
-  installed by hand from its release files, with its README beside it. Release lists come from the GitHub API when a
-  port's page opens, and at start for the ports PortZone installed.
+- **PortZone** reads `store/ports.json` and `store/manifests.json` at start: two requests, whatever the number of
+  ports. `manifests.json` holds each port's `portzone.json` from the top of its repository, else the store's draft.
+  Opening a game's page re-reads that port's own `portzone.json`
+  (`raw.githubusercontent.com/<owner>/<repo>/HEAD/portzone.json`) and rebuilds the page if it changed. A port with
+  none is installed by hand from its release files, with its README beside it. Release lists come from the GitHub API
+  when a port's page opens, and at start for the ports PortZone installed.
 - **Sphaira** reads `store/sphaira.json` as a store source:
-  `https://raw.githubusercontent.com/JohnUzoka/portzone-nx/main/store/sphaira.json`. Only ports with a `portzone.json`
-  and a release are in it. `.github/workflows/sphaira.yml` rebuilds it on store changes and once a day, so porters'
-  edits reach Sphaira without a pull request; pull requests run `build_sphaira.py --check`.
+  `https://raw.githubusercontent.com/JohnUzoka/portzone-nx/main/store/sphaira.json`. Only ports whose own repository
+  has a `portzone.json` with a release are in it.
+- `.github/workflows/store.yml` rebuilds both generated files on store changes and once a day, so porters' edits
+  reach every list without a pull request; pull requests run `build_store.py --check`.
 
 ## On the SD card
 
-It is one `.nro`: everything it needs is in its romfs, including copies of `store/ports.json` and `store/drafts/` from
-build time (used while the store can't be reached) and the upload page (`resources/web/index.html`). It writes to
-`sdmc:/config/portzone/` (`settings.json`; `cache/` with the port list, `portzone.json` files and icons/banners for
-offline use; `installed/`, one record per port PortZone installed; `tmp/`), to the folders ports install into, and,
-when the player sends or moves game files, to the ports' game folders.
+It is one `.nro`: everything it needs is in its romfs, including copies of `store/ports.json` and
+`store/manifests.json` from build time (used while the store can't be reached) and the upload page
+(`resources/web/index.html`). It writes to `sdmc:/config/portzone/` (`settings.json`; `cache/` with the store files
+and icons/banners for offline use; `installed/`, one record per port PortZone installed; `tmp/`), to the folders
+ports install into, and, when the player sends or moves game files, to the ports' game folders.
 
 ## Code
 

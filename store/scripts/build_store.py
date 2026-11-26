@@ -1,14 +1,18 @@
 #!/usr/bin/env python3
-"""Check ports.json and build sphaira.json from it.
+"""Check ports.json and build the store's generated files from it.
 
 For each port, the port's own portzone.json is read from the top of its
-repository's default branch. Ports that have one with a release go into
-sphaira.json, Sphaira's store format; the rest are left out, since Sphaira
-would guess where they install.
+repository's default branch, else the store's draft (drafts/<id>/portzone.json).
 
-  build_sphaira.py                 check, then write sphaira.json
-  build_sphaira.py --check         check only (pull requests)
-  build_sphaira.py --drafts DIR    read DIR/<id>/portzone.json before the repository's
+  manifests.json  every port's portzone.json, so PortZone reads one file at start
+                  instead of one per port
+  sphaira.json    Sphaira's store format: ports whose own repository has a
+                  portzone.json with a release Sphaira can install (no drafts)
+
+  build_store.py                 check, then write both
+  build_store.py --check         check only (pull requests)
+  build_store.py --drafts DIR    read DIR/<id>/portzone.json before the repository's
+                                 (to check a portzone.json before committing it)
 
 Only raw.githubusercontent.com is read: no GitHub API, no rate limit.
 """
@@ -18,6 +22,7 @@ import json
 import sys
 import urllib.error
 import urllib.request
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 import jsonschema
@@ -26,6 +31,8 @@ from referencing import Registry, Resource
 ROOT = Path(__file__).resolve().parent.parent
 PORTS = ROOT / "ports.json"
 SPHAIRA = ROOT / "sphaira.json"
+MANIFESTS = ROOT / "manifests.json"
+DRAFTS = ROOT / "drafts"
 PORTS_SCHEMA = ROOT / "schema" / "ports.schema.json"
 PORTZONE_SCHEMA = ROOT / "schema" / "portzone.schema.json"
 
@@ -41,21 +48,31 @@ def schema_errors(schema_path, document, where):
 
 
 def fetch_portzone(port, drafts):
-    """The port's portzone.json, or None when it has none."""
+    """(portzone.json or None, where it came from, whether it is the port's own)."""
     if drafts:
         draft = drafts / port["id"] / "portzone.json"
         if draft.exists():
-            return json.loads(draft.read_text()), str(draft)
+            return json.loads(draft.read_text()), str(draft), True
     repo = port["url"].removeprefix("https://github.com/")
     url = f"https://raw.githubusercontent.com/{repo}/HEAD/portzone.json"
     try:
         with urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "portzone"}),
                                     timeout=30) as response:
-            return json.load(response), url
+            return json.load(response), url, True
     except urllib.error.HTTPError as e:
-        if e.code == 404:
-            return None, url
-        raise
+        if e.code != 404:
+            raise
+    draft = DRAFTS / port["id"] / "portzone.json"
+    if draft.exists():
+        return json.loads(draft.read_text()), f"drafts/{port['id']}/portzone.json", False
+    return None, url, False
+
+
+def fetch(port, drafts):
+    try:
+        return fetch_portzone(port, drafts)
+    except (OSError, json.JSONDecodeError) as e:
+        return e, None, False
 
 
 def sd_relative(path):
@@ -145,9 +162,17 @@ def sphaira_entry(port, store, install):
     return entry
 
 
+def write_if_changed(path, document):
+    text = json.dumps(document, indent=2, ensure_ascii=False) + "\n"
+    if not path.exists() or path.read_text() != text:
+        path.write_text(text)
+        return True
+    return False
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--check", action="store_true", help="check only; do not write sphaira.json")
+    parser.add_argument("--check", action="store_true", help="check only; write nothing")
     parser.add_argument("--drafts", type=Path, help="folder of <id>/portzone.json read before the repositories")
     args = parser.parse_args()
 
@@ -162,19 +187,24 @@ def main():
     urls = [port["url"].lower() for port in index["ports"]]
     errors += [f"{PORTS.name}: {u} is listed twice" for u in sorted({u for u in urls if urls.count(u) > 1})]
 
-    packages = []
-    for port in index["ports"]:
-        try:
-            store, source = fetch_portzone(port, args.drafts)
-        except (OSError, json.JSONDecodeError) as e:
-            errors.append(f"{port['id']}: portzone.json could not be read: {e}")
+    # Hundreds of small reads: many at once.
+    with ThreadPoolExecutor(max_workers=16) as pool:
+        fetched = list(pool.map(lambda port: fetch(port, args.drafts), index["ports"]))
+
+    packages, manifests = [], {}
+    for port, (store, source, own) in zip(index["ports"], fetched):
+        if isinstance(store, Exception):
+            errors.append(f"{port['id']}: portzone.json could not be read: {store}")
             continue
         if store is None:
-            print(f"{port['id']}: no portzone.json, manual install only")
             continue
         found = schema_errors(PORTZONE_SCHEMA, store, source)
         if found:
             errors += found
+            continue
+        manifests[port["id"]] = {"source": "repository" if own else "store draft", "portzone": store}
+        print(f"{port['id']}: {source}")
+        if not own:
             continue
         platform = store.get("platform", port.get("platform", {}))
         if "switch" not in platform.get("runs_on", ["switch"]):
@@ -185,16 +215,16 @@ def main():
             print(f"{port['id']}: install steps Sphaira cannot follow (none, several, or a renamed/non-.nro copy); not in sphaira.json")
             continue
         packages.append(sphaira_entry(port, store, install))
-        print(f"{port['id']}: {source}")
+    print(f"{len(manifests)} of {len(index['ports'])} ports have a portzone.json; the rest are manual installs")
 
     for error in errors:
         print(f"::error::{error}")
     if errors or args.check:
         return 1 if errors else 0
 
-    text = json.dumps({"packages": packages}, indent=2, ensure_ascii=False) + "\n"
-    if not SPHAIRA.exists() or SPHAIRA.read_text() != text:
-        SPHAIRA.write_text(text)
+    if write_if_changed(MANIFESTS, {"format": 1, "manifests": dict(sorted(manifests.items()))}):
+        print(f"wrote {MANIFESTS.name}: {len(manifests)} ports")
+    if write_if_changed(SPHAIRA, {"packages": packages}):
         print(f"wrote {SPHAIRA.name}: {len(packages)} of {len(index['ports'])} ports")
     return 0
 
