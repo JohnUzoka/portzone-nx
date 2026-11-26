@@ -2,8 +2,10 @@
 
 ## Browse, Installed, Game files
 
-**Browse** lists every port, as cards or a grid of icons. **Filter and view** (or **X**) chooses the kind of port, the
-system the game came from (PC, 3DS, Xbox 360, source code...) and cards or grid. The kinds:
+**Browse** lists every port, as cards or a grid of icons. **Search** (or **−**) finds games by name, author or
+system. **Filter and view** (or **X**) chooses the kind of port, the system the game came from (PC, 3DS, Xbox 360,
+source code...), the order (name A-Z or Z-A, or by system) and cards or grid. **Installed** has the same search and
+choices. The kinds:
 
 - **Easy Setup**: the port has a `portzone.json`. One-button install, a checklist of your files, the folder layout.
 - **Build on PC**: a tool on a PC makes the game's files. PortZone links the tool, shows the steps, checks the result.
@@ -22,7 +24,8 @@ sort files yourself. From the Game files tab, or from a game's page for just tha
   (`http://<switch address>:8080/?k=<key>`). Phone or PC and Switch must be on the same network; no internet needed.
   Drop files or whole folders, even a folder of many games: the browser sends only names and sizes, PortZone answers
   with what it found and where it goes, and only those files are uploaded. Each is checked (size, and SHA-256 when the
-  port lists one) before it's put in place. For a Build on PC game the page starts with the tool's link.
+  port lists one) before it's put in place. For a Build on PC game the page starts with the tool's link. The page's
+  list of games can be searched and sorted too.
 - **Find on SD card**: copied files somewhere on the card yourself (with a card reader, FTP, MTP)? PortZone searches
   the card (not the system's or CFW's folders, its own data, or the ports' folders) and moves what you pick into
   place. A folder that came over whole is removed once empty; the folder a single file came from stays.

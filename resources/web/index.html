@@ -68,6 +68,16 @@ body.dragging .drop, .drop.over { border-color: var(--accent); background: var(-
 .banner.error { border-color: var(--bad); color: var(--bad); }
 
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+.toolbar { margin: 0 0 18px; }
+.toolbar input, .toolbar select {
+    font: inherit; color: var(--text); background: var(--raised); border: 1px solid var(--line); border-radius: 10px;
+    min-height: 48px; padding: 10px 14px;
+}
+.toolbar input { flex: 1 1 240px; min-width: 0; -webkit-appearance: none; appearance: none; }
+.toolbar select { flex: 0 1 auto; }
+.toolbar input:focus, .toolbar select:focus { outline: none; border-color: var(--accent); }
+.toolbar input::placeholder { color: var(--muted); }
+.no-match { margin: 6px 0 0; }
 .gamecard {
     display: flex; gap: 14px; align-items: flex-start; padding: 14px; color: var(--text); text-decoration: none;
     background: var(--card); border: 1px solid var(--line); border-radius: 14px; min-width: 0;
@@ -197,7 +207,16 @@ button.entry:hover { background: var(--hover); }
             <p class="center after-drop"><button id="browseSd" type="button" class="link">Or put files somewhere yourself</button></p>
         </section>
         <div id="catalogSlot"></div>
-        <h2 class="section-title">All games</h2>
+        <h2 id="gridTitle" class="section-title">All games</h2>
+        <div class="row toolbar">
+            <input id="search" type="search" placeholder="Search games" aria-label="Search games" autocomplete="off" autocapitalize="off" spellcheck="false">
+            <select id="sort" aria-label="Sort games">
+                <option value="az">Sort: A–Z</option>
+                <option value="za">Sort: Z–A</option>
+                <option value="system">Sort: System</option>
+            </select>
+        </div>
+        <p id="noMatch" class="muted no-match hidden"><span id="noMatchText"></span> <button id="clearSearch" type="button" class="link">Clear search</button></p>
         <section id="grid" class="grid"><p class="muted">Loading…</p></section>
     </div>
 
@@ -235,6 +254,11 @@ let ports = [];
 let loaded = false;
 let gameId = '';            // the game view's game; '' for the catalog
 let homeId = '';            // the game PortZone opened this page for ("Send files" on its page); '' for none
+let search = '';            // the catalog's search text, kept while a game is open
+let sortOrder = 'az';       // 'az', 'za' or 'system'
+let cards = [];             // the catalog's cards: [{port, node, text, title, platform}], built once per `ports`
+let cardsFor = null;        // the `ports` array `cards` was built from
+let sortedFor = '';         // the order the cards are in the grid
 let cameFromCatalog = false; // the previous history entry is the catalog
 let offered = [];           // [{path, size, file}] as last sent to PortZone
 let found = null;           // PortZone's answer for `offered`
@@ -377,16 +401,56 @@ function gameCard(port) {
 
 function renderGrid() {
     const box = $('grid');
-    box.textContent = '';
     if (!loaded) {
+        box.textContent = '';
         box.appendChild(el('p', { class: 'muted', text: 'Loading…' }));
         return;
     }
-    if (!ports.length) {
-        box.appendChild(el('p', { class: 'muted', text: 'No games to show.' }));
-        return;
+    if (cardsFor !== ports) {
+        cardsFor = ports;
+        sortedFor = '';
+        cards = ports.map((port) => ({
+            port: port,
+            node: gameCard(port),
+            text: [port.title, port.author, port.platform, port.description].join('\n').toLowerCase(),
+            title: port.title || '',
+            platform: port.platform || '',
+        }));
+        box.textContent = '';
+        if (!cards.length) box.appendChild(el('p', { class: 'muted', text: 'No games to show.' }));
     }
-    for (const port of ports) box.appendChild(gameCard(port));
+    arrangeGrid();
+}
+
+function byTitle(a, b) {
+    return a.title.localeCompare(b.title, undefined, { sensitivity: 'base' });
+}
+
+// Puts the cards in `sortOrder` (only when it changed) and shows those matching `search`.
+function arrangeGrid() {
+    const box = $('grid');
+    if (cards.length && sortedFor !== sortOrder) {
+        const sorted = cards.slice();
+        if (sortOrder === 'za') sorted.sort((a, b) => byTitle(b, a));
+        else if (sortOrder === 'system')
+            sorted.sort((a, b) => (!a.platform - !b.platform) ||
+                a.platform.localeCompare(b.platform, undefined, { sensitivity: 'base' }) || byTitle(a, b));
+        else sorted.sort(byTitle);
+        const fragment = document.createDocumentFragment();
+        for (const card of sorted) fragment.appendChild(card.node);
+        box.appendChild(fragment);
+        sortedFor = sortOrder;
+    }
+    const query = search.trim().toLowerCase();
+    let shown = 0;
+    for (const card of cards) {
+        const match = !query || card.text.indexOf(query) >= 0;
+        if (match) shown++;
+        if (card.node.classList.contains('hidden') === match) card.node.classList.toggle('hidden', !match);
+    }
+    $('gridTitle').textContent = 'All games · ' + (query ? shown + ' of ' + cards.length : cards.length);
+    $('noMatchText').textContent = 'No games match “' + search.trim() + '”.';
+    show($('noMatch'), !!query && !shown && cards.length > 0);
 }
 
 // ---- what a game needs
@@ -1241,6 +1305,27 @@ function setup() {
     $('browseSd').addEventListener('click', () => openBrowser('', ''));
     $('back').addEventListener('click', backToCatalog);
     $('otherGamesLink').addEventListener('click', backToCatalog);
+    search = $('search').value; // a browser may restore these on reload
+    sortOrder = $('sort').value;
+    let searchTimer = 0;
+    $('search').addEventListener('input', () => {
+        clearTimeout(searchTimer);
+        searchTimer = setTimeout(() => {
+            search = $('search').value;
+            arrangeGrid();
+        }, 120);
+    });
+    $('sort').addEventListener('change', () => {
+        sortOrder = $('sort').value;
+        arrangeGrid();
+    });
+    $('clearSearch').addEventListener('click', () => {
+        clearTimeout(searchTimer);
+        $('search').value = '';
+        search = '';
+        arrangeGrid();
+        $('search').focus();
+    });
     $('folderInput').addEventListener('change', onPicked);
     $('filesInput').addEventListener('change', onPicked);
     makeDropTarget($('browser'), uploadHere);

@@ -32,6 +32,8 @@ void loadSettings()
         settings().gridView   = json.value("view", "cards") == "grid";
         settings().checkUpdates = json.value("check_updates", true);
         settings().testBuilds   = json.value("test_builds", std::set<std::string>());
+        const std::string sort  = json.value("sort", "name");
+        settings().sortOrder    = sort == "name-desc" ? 1 : (sort == "system" ? 2 : 0);
     }
     catch (const std::exception&)
     {
@@ -46,6 +48,7 @@ void saveSettings()
         { "view", settings().gridView ? "grid" : "cards" },
         { "check_updates", settings().checkUpdates },
         { "test_builds", settings().testBuilds },
+        { "sort", settings().sortOrder == 1 ? "name-desc" : (settings().sortOrder == 2 ? "system" : "name") },
     };
     std::ofstream(settingsPath()) << json.dump(2) << "\n";
 }

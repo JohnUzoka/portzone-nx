@@ -22,10 +22,28 @@ namespace
     constexpr float GRID_GAP   = 16;
 
     const char* FILTER_NAMES[] = { "All", "Easy Setup", "Build on PC", "Manual" };
+    const char* SORT_NAMES[]   = { "Name A-Z", "Name Z-A", "System" };
 
     bool matches(const Port& port, int filter)
     {
         return filter == 0 || port.section() == Section(filter - 1);
+    }
+
+    // `query` is already lower case.
+    bool searched(const Port& port, const std::string& query)
+    {
+        if (query.empty())
+            return true;
+        for (const std::string* field : { &port.info.title, &port.info.author, &port.info.id })
+            if (lower(*field).find(query) != std::string::npos)
+                return true;
+        return lower(port.originalPlatform()).find(query) != std::string::npos;
+    }
+
+    std::string trimmed(const std::string& text)
+    {
+        const auto first = text.find_first_not_of(" \t\r\n");
+        return first == std::string::npos ? "" : text.substr(first, text.find_last_not_of(" \t\r\n") - first + 1);
     }
 
     void openPort(const std::string& id)
@@ -69,6 +87,9 @@ BrowseView::BrowseView(bool installedOnly)
     summary->setGrow(1);
     summary->setShrink(1);
     toolbar->addView(summary);
+    searchButton = button("Search", [this] { openSearch(); });
+    searchButton->setCornerRadius(20);
+    toolbar->addView(searchButton);
     filtersButton = button("Filter and view", [this] { openFilters(); });
     filtersButton->setMarginRight(0);
     filtersButton->setCornerRadius(20);
@@ -88,6 +109,14 @@ BrowseView::BrowseView(bool installedOnly)
     // On a PC keyboard, borealis maps no key to X: the X key does it.
     registerAction(brls::BrlsKeyCombination(brls::BRLS_KBD_KEY_X), [this](brls::View*) {
         openFilters();
+        return true;
+    });
+    registerAction("Search", brls::BUTTON_BACK, [this](brls::View*) {
+        openSearch();
+        return true;
+    });
+    registerAction(brls::BrlsKeyCombination(brls::BRLS_KBD_KEY_F), [this](brls::View*) {
+        openSearch();
         return true;
     });
     apply();
@@ -177,18 +206,29 @@ void BrowseView::apply()
     if (filter != 0)
         text = installedOnly ? text + "  ·  " + FILTER_NAMES[filter] : FILTER_NAMES[filter];
     text += systemFilter.empty() ? "  ·  every system" : "  ·  from " + systemFilter;
-    text += settings().gridView ? "  ·  grid" : "  ·  cards";
+    text += std::string("  ·  ") + SORT_NAMES[settings().sortOrder];
     summary->setText(text);
+    searchButton->setText(search.empty() ? "Search" : "\"" + search + "\"");
+    searchButton->setStyle(search.empty() ? &brls::BUTTONSTYLE_BORDERED : &brls::BUTTONSTYLE_PRIMARY);
     filtersButton->setStyle(filter != 0 || !systemFilter.empty() ? &brls::BUTTONSTYLE_PRIMARY : &brls::BUTTONSTYLE_BORDERED);
     rebuild(list, filtersButton, [this](brls::Box*) { fillList(); });
 }
 
+void BrowseView::openSearch()
+{
+    brls::Application::getImeManager()->openForText([this](std::string text) {
+        search = trimmed(text);
+        apply();
+    }, "Search games", "A name, author or system; empty shows everything", 40, search);
+}
+
 void BrowseView::openFilters()
 {
-    const bool filtered = filter != 0 || !systemFilter.empty();
+    const bool filtered = filter != 0 || !systemFilter.empty() || !search.empty();
     std::vector<std::string> items = {
         std::string("Kind: ") + FILTER_NAMES[filter],
         "System: " + (systemFilter.empty() ? std::string("All") : systemFilter),
+        std::string("Sort: ") + SORT_NAMES[settings().sortOrder],
         std::string("View: ") + (settings().gridView ? "Grid" : "Cards"),
     };
     if (filtered)
@@ -201,11 +241,14 @@ void BrowseView::openFilters()
         else if (chosen == 1)
             chooseSystem();
         else if (chosen == 2)
-            chooseView();
+            chooseSort();
         else if (chosen == 3)
+            chooseView();
+        else if (chosen == 4)
         {
             filter = 0;
             systemFilter.clear();
+            search.clear();
             apply();
         }
     });
@@ -257,6 +300,19 @@ void BrowseView::chooseSystem()
     brls::Application::pushActivity(new brls::Activity(dropdown));
 }
 
+void BrowseView::chooseSort()
+{
+    auto* dropdown = new brls::Dropdown("Sort", { SORT_NAMES[0], SORT_NAMES[1], SORT_NAMES[2] }, [](int) {},
+        settings().sortOrder, [this](int chosen) {
+            if (chosen < 0 || chosen > 2)
+                return;
+            settings().sortOrder = chosen;
+            saveSettings();
+            apply();
+        });
+    brls::Application::pushActivity(new brls::Activity(dropdown));
+}
+
 void BrowseView::chooseView()
 {
     auto* dropdown = new brls::Dropdown("View", { "Cards", "Grid" }, [](int) {}, settings().gridView ? 1 : 0,
@@ -272,16 +328,29 @@ void BrowseView::chooseView()
 
 void BrowseView::fillList()
 {
+    // The catalog is already A-Z by title.
+    const std::string query = lower(search);
     std::vector<const Port*> shown;
     for (const auto& port : Catalog::get().ports)
         if (matches(port, filter) && (systemFilter.empty() || port.originalPlatform() == systemFilter) &&
-            (!installedOnly || portState(port).installed))
+            (!installedOnly || portState(port).installed) && searched(port, query))
             shown.push_back(&port);
+    if (settings().sortOrder == 1)
+        std::reverse(shown.begin(), shown.end());
+    else if (settings().sortOrder == 2)
+        std::stable_sort(shown.begin(), shown.end(), [](const Port* a, const Port* b) {
+            const std::string& x = a->originalPlatform();
+            const std::string& y = b->originalPlatform();
+            return x.empty() != y.empty() ? y.empty() : lower(x) < lower(y); // ports with no system last
+        });
 
     if (shown.empty())
     {
-        list->addView(textRow(installedOnly ? "Nothing installed yet. Install a port from Browse." : "No ports match.", 20,
-            mutedColor()));
+        std::string message = installedOnly && query.empty() && filter == 0 && systemFilter.empty() ?
+            "Nothing installed yet. Install a port from Browse." : "No ports match.";
+        if (!search.empty())
+            message = "No ports match \"" + search + "\". Press - to search again.";
+        list->addView(textRow(message, 20, mutedColor()));
         return;
     }
 

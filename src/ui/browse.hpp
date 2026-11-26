@@ -30,15 +30,19 @@ class BrowseView : public brls::Box
     void fillPortUpdates();
     void fillList();
     void openFilters();
+    void openSearch();
     void chooseKind();
     void chooseSystem();
+    void chooseSort();
     void chooseView();
 
     bool installedOnly;
     int filter = 0;           // 0 all, then 1 + Section
     std::string systemFilter; // "" for every system
+    std::string search;       // "" shows every port
     brls::Box* banner           = nullptr; // "PortZone vX is available", installed games with updates
     brls::Label* summary        = nullptr;
+    brls::Button* searchButton  = nullptr;
     brls::Button* filtersButton = nullptr;
     brls::Box* list             = nullptr;
     AliveFlag alive             = std::make_shared<bool>(true);
