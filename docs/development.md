@@ -109,7 +109,7 @@ src/transfer.*     the upload server behind Send from phone or PC (HTTP API in t
 src/ui/            borealis screens
 library/borealis   xfangfang/borealis (UI)
 third_party/       nlohmann/json, miniz, PicoSHA2
-resources/         logo, fonts, icons, CA bundle for the Switch, web/ (the upload page)
+resources/         logo, fonts, icons, CA bundle for the Switch, i18n/ (app text), web/ (the upload page)
 ```
 
 - `resources/icon/portzone.svg` is the logo; `icon.png` (app header) and `icon.jpg` (homebrew menu, 256x256 JPEG) are
@@ -119,5 +119,11 @@ resources/         logo, fonts, icons, CA bundle for the Switch, web/ (the uploa
   there replaced them.
 - On a PC, the console-style fallback fonts come from borealis' own copy at build time; they are not part of
   PortZone's resources, and the Switch build uses the system's.
+- App text is in `resources/i18n/<language>/portzone.json` (`"portzone/browse/search"_i18n`, or
+  `brls::getStr(key, args...)` with `{0}`-style placeholders), English in `en-US/`; `hints.json` and `scroll.json`
+  translate borealis' own footer. A missing key falls back to English. `src/languages.cpp` picks the language before
+  borealis starts (the console's, mapped to a translation: `es-419` to `es`, `zh-CN` to `zh-Hans`; or the choice in
+  About). The upload page carries its own dictionary for the same languages and follows the browser.
+  Adding a language: a folder of the three files, and an entry in `languages()`.
 - `std::filesystem::copy_file` can't copy on the Switch, and Horizon's rename doesn't replace a file: use `moveFile` in
   `files.hpp`.

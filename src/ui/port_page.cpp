@@ -11,6 +11,8 @@
 #include "ui/sdsearch_page.hpp"
 #include "ui/transfer_page.hpp"
 
+using namespace brls::literals;
+
 namespace pz::ui
 {
 
@@ -212,14 +214,16 @@ brls::View* PortActivity::createContentView()
     heading->setGrow(1);
     heading->setShrink(1);
     heading->addView(textBlock(p.info.title, 30));
-    heading->addView(textBlock("by " + p.info.author + "  ·  " + p.info.url.substr(8), 16, mutedColor()));
+    heading->addView(textBlock(brls::getStr("portzone/port/by_url", p.info.author, p.info.url.substr(8)), 16, mutedColor()));
     auto* tags = new brls::Box(brls::Axis::ROW);
     tags->setMarginTop(6);
-    tags->addView(pill(p.section() == Section::Manual ? "Manual install" : sectionName(p.section()), accentColor()));
+    tags->addView(pill(p.section() == Section::Manual ? "portzone/port/manual_install"_i18n : sectionName(p.section()), accentColor()));
     if (!p.originalPlatform().empty())
     {
         const std::string& from = p.originalPlatform();
-        auto* system            = pill(from == "Source" ? "Built from source code" : "From " + from, mutedColor());
+        auto* system            = pill(from == "Source" ? "portzone/port/built_from_source"_i18n :
+                                                          brls::getStr("portzone/port/from_system", from),
+            mutedColor());
         system->setMarginLeft(8);
         tags->addView(system);
     }
@@ -247,41 +251,42 @@ brls::View* PortActivity::createContentView()
         if (p.manifest->gameData)
         {
             const std::string folder = sdShown(p.manifest->gameData->dir);
-            content->addView(header("What you need", folder.empty() ? "Put these on the SD card" : "Put these in " + folder + "/"));
+            content->addView(header("portzone/port/what_you_need"_i18n,
+                folder.empty() ? "portzone/port/put_on_sd"_i18n : brls::getStr("portzone/port/put_in", folder)));
             needsBox = new brls::Box(brls::Axis::COLUMN);
             needsBox->setAlignItems(brls::AlignItems::STRETCH);
             content->addView(needsBox);
 
-            content->addView(header("Folder layout", folder.empty() ? "SD card" : folder + "/"));
+            content->addView(header("portzone/port/folder_layout"_i18n, folder.empty() ? "portzone/port/sd_card"_i18n : folder + "/"));
             layoutBox = new brls::Box(brls::Axis::COLUMN);
             layoutBox->setAlignItems(brls::AlignItems::STRETCH);
             content->addView(layoutBox);
         }
 
-        content->addView(header("Steps"));
+        content->addView(header("portzone/port/steps"_i18n));
         int n = 1;
         for (const auto& step : p.manifest->steps)
             content->addView(textRow(std::to_string(n++) + ".  " + step));
 
         std::vector<std::string> notes;
         if (p.manifest->fullMemory)
-            notes.push_back("Start it with full memory: hold R while starting a game, or use a forwarder. Not from the Album.");
+            notes.push_back("portzone/port/full_memory"_i18n);
         notes.insert(notes.end(), p.manifest->launchNotes.begin(), p.manifest->launchNotes.end());
         if (!notes.empty())
         {
-            content->addView(header("Launching"));
+            content->addView(header("portzone/port/launching"_i18n));
             for (const auto& note : notes)
                 content->addView(textRow("•  " + note));
         }
     }
     else
     {
-        content->addView(header("Release files", "Pick one to download and extract"));
+        content->addView(header("portzone/port/release_files"_i18n, "portzone/port/release_files_hint"_i18n));
         releaseBox = new brls::Box(brls::Axis::COLUMN);
         releaseBox->setAlignItems(brls::AlignItems::STRETCH);
         content->addView(releaseBox);
 
-        content->addView(header("README", "From the port's repository. Follow it for where your game files go."));
+        content->addView(header("portzone/port/readme"_i18n, "portzone/port/readme_hint"_i18n));
         readmeBox = new brls::Box(brls::Axis::COLUMN);
         readmeBox->setAlignItems(brls::AlignItems::STRETCH);
         content->addView(readmeBox);
@@ -350,16 +355,16 @@ void PortActivity::fillStatus(brls::Box* box)
     const auto* releaseSet = releases ? &releases->releases : nullptr;
 
     if (!p.manifestError.empty())
-        box->addView(textBlock(p.manifestError + ". Showing the README instead.", 18, badColor()));
+        box->addView(textBlock(brls::getStr("portzone/port/manifest_error", p.manifestError), 18, badColor()));
 
     auto* stateRow = new brls::Box(brls::Axis::ROW);
     stateRow->setAlignItems(brls::AlignItems::CENTER);
     stateRow->addView(pill(stateSummary(p, state), stateColor(stateGood(p, state), state.installed)));
     std::string installedBy;
     if (state.record)
-        installedBy = "PortZone installed " + state.record->tag;
+        installedBy = brls::getStr("portzone/port/installed_by", state.record->tag);
     else if (state.installed && p.manifest)
-        installedBy = "Installed outside PortZone";
+        installedBy = "portzone/port/installed_outside"_i18n;
     if (!installedBy.empty())
     {
         auto* note = label(installedBy, 16, mutedColor());
@@ -370,8 +375,8 @@ void PortActivity::fillStatus(brls::Box* box)
 
     if (!p.runsHere())
     {
-        auto* hint = textBlock("This port's release runs on " + consolesLabel(p.runsOn()) +
-                ". This copy of PortZone is for the " + consolesLabel({ config().console }) + ", so it does not install it.",
+        auto* hint = textBlock(brls::getStr("portzone/port/other_console", consolesLabel(p.runsOn()),
+                                   consolesLabel({ config().console })),
             18, mutedColor());
         hint->setMarginTop(10);
         box->addView(hint);
@@ -382,7 +387,7 @@ void PortActivity::fillStatus(brls::Box* box)
     actions->setAlignItems(brls::AlignItems::CENTER);
 
     if (busy)
-        actions->addView(button("Cancel download", [this] {
+        actions->addView(button("portzone/port/cancel_download"_i18n, [this] {
             if (job)
                 job->cancel = true;
         }));
@@ -390,7 +395,7 @@ void PortActivity::fillStatus(brls::Box* box)
     {
         const Manifest& manifest = *p.manifest;
         if (!releases)
-            actions->addView(label("Checking GitHub for releases...", 18, mutedColor()));
+            actions->addView(label("portzone/common/checking_releases"_i18n, 18, mutedColor()));
         else if (!releases->error.empty())
             actions->addView(label(releases->error, 18, badColor()));
         else if (auto picked = github::pickRelease(*releaseSet, assetSuffixes(manifest), testBuilds()))
@@ -400,20 +405,20 @@ void PortActivity::fillStatus(brls::Box* box)
             uint64_t bytes         = 0;
             for (const auto& asset : picked->assets)
                 bytes += asset.size;
-            const std::string size = "  (" + formatSize(bytes) + ")";
+            const std::string size = formatSize(bytes);
             if (state.record && state.record->tag == tag)
-                actions->addView(button("Reinstall " + tag, [this, plan] { install(plan); }));
+                actions->addView(button(brls::getStr("portzone/port/reinstall", tag), [this, plan] { install(plan); }));
             else if (state.installed)
-                actions->addView(button("Update to " + tag + size, [this, plan] { install(plan); }, true));
+                actions->addView(button(brls::getStr("portzone/common/update_to_size", tag, size), [this, plan] { install(plan); }, true));
             else
-                actions->addView(button("Install " + tag + size, [this, plan] { install(plan); }, true));
+                actions->addView(button(brls::getStr("portzone/port/install_size", tag, size), [this, plan] { install(plan); }, true));
         }
         else
         {
-            std::vector<std::string> names;
+            std::string names;
             for (const auto& suffix : assetSuffixes(manifest))
-                names.push_back("\"" + suffix + "\"");
-            actions->addView(label("No release has files ending in " + join(names, " and ") + ".", 18, badColor()));
+                names = names.empty() ? "\"" + suffix + "\"" : brls::getStr("portzone/common/list_and", names, "\"" + suffix + "\"");
+            actions->addView(label(brls::getStr("portzone/port/no_release_files", names), 18, badColor()));
         }
     }
     else if (p.runsHere() && !p.manifest && state.record && releases && releases->error.empty())
@@ -422,7 +427,7 @@ void PortActivity::fillStatus(brls::Box* box)
             for (const auto& asset : latest->assets)
                 if (asset.name == state.record->asset)
                 {
-                    actions->addView(button("Update to " + latest->tag,
+                    actions->addView(button(brls::getStr("portzone/common/update_to", latest->tag),
                         [this, plan = manualPlan(id, *latest, asset, state.record->target)] { install(plan); }, true));
                 }
     }
@@ -431,7 +436,7 @@ void PortActivity::fillStatus(brls::Box* box)
     const bool hasPrereleases = releaseSet && std::any_of(releaseSet->begin(), releaseSet->end(),
                                                   [](const github::Release& r) { return r.prerelease; });
     if (hasPrereleases && p.runsHere() && !busy && !(p.manifest && p.manifest->prerelease))
-        actions->addView(button(std::string("Test builds: ") + (testBuilds() ? "On" : "Off"), [this] {
+        actions->addView(button(brls::getStr("portzone/port/test_builds", testBuilds() ? "portzone/common/on"_i18n : "portzone/common/off"_i18n), [this] {
             auto& chosen = settings().testBuilds;
             if (!chosen.erase(id))
                 chosen.insert(id);
@@ -439,12 +444,12 @@ void PortActivity::fillStatus(brls::Box* box)
             refresh();
         }));
     if (state.record && !busy)
-        actions->addView(button("Remove", [this] { confirmRemove(); }));
+        actions->addView(button("portzone/port/remove"_i18n, [this] { confirmRemove(); }));
     if (p.manifest && p.manifest->gameData && !busy)
-        actions->addView(button("Check files again", [this] { refresh(); }));
+        actions->addView(button("portzone/port/check_files_again"_i18n, [this] { refresh(); }));
     // Without game data PortZone can't tell where files go; the upload page lets the player put them where the README says.
     if (!(p.manifest && p.manifest->gameData))
-        actions->addView(button("Send files from phone or PC",
+        actions->addView(button("portzone/port/send_files"_i18n,
             [this] { brls::Application::pushActivity(new TransferActivity(id)); }));
     if (!actions->getChildren().empty())
         box->addView(actions);
@@ -470,10 +475,11 @@ void PortActivity::fillNeeds(brls::Box* box)
 
     for (const auto& input : check.inputs)
     {
-        std::string state = input.met ? "Ready" : (input.input->required ? "Missing" : "Optional");
+        std::string state = input.met ? "portzone/port/ready"_i18n :
+                                        (input.input->required ? "portzone/port/missing"_i18n : "portzone/port/optional"_i18n);
         NVGcolor color    = input.met ? goodColor() : (input.input->required ? badColor() : mutedColor());
         if (input.metOption < 0 && input.met)
-            state = "Converted";
+            state = "portzone/port/converted"_i18n;
 
         auto* row = new brls::Box(brls::Axis::ROW);
         row->setFocusable(true);
@@ -491,7 +497,7 @@ void PortActivity::fillNeeds(brls::Box* box)
 
         const bool several = input.options.size() > 1;
         if (several)
-            box->addView(textRow("Any one of:", 17, mutedColor(), INDENT));
+            box->addView(textRow("portzone/port/any_one_of"_i18n, 17, mutedColor(), INDENT));
         for (const auto& option : input.options)
         {
             std::string text = (several ? option.option->label + ":  " : "") + filesText(*option.option);
@@ -504,35 +510,35 @@ void PortActivity::fillNeeds(brls::Box* box)
                     details.push_back(file.detail);
             }
             if (option.met)
-                details.push_back("found");
+                details.push_back("portzone/port/found"_i18n);
             else if (found > 0)
-                details.push_back(std::to_string(found) + " of " + std::to_string(option.files.size()) + " found");
+                details.push_back(brls::getStr("portzone/port/found_count", found, option.files.size()));
             if (!details.empty())
                 text += "  (" + join(details, ", ") + ")";
             box->addView(textRow("•  " + text, 18, option.met ? goodColor() : textColor(), INDENT));
             if (!option.option->url.empty())
-                box->addView(textRow("Get it free: " + option.option->url, 16, mutedColor(), INDENT * 2));
+                box->addView(textRow(brls::getStr("portzone/port/get_free", option.option->url), 16, mutedColor(), INDENT * 2));
         }
     }
 
     if (data.prepare)
     {
         const Prepare& prep = *data.prepare;
-        std::string text    = prep.where == "pc" ? "On a PC" : "On the Switch";
+        std::string text    = prep.where == "pc" ? "portzone/port/on_pc"_i18n : "portzone/port/on_switch"_i18n;
         if (!prep.toolName.empty())
-            text += ", with " + prep.toolName + " (" + prep.toolUrl + ")";
+            text = brls::getStr("portzone/port/with_tool", text, prep.toolName, prep.toolUrl);
         box->addView(textRow(text + ": " + prep.summary, 18, textColor()));
         if (check.converted)
-            box->addView(textRow("Already done: " + join(prep.done, ", ") + " found.", 18, goodColor(), INDENT));
+            box->addView(textRow(brls::getStr("portzone/port/already_done", join(prep.done, ", ")), 18, goodColor(), INDENT));
     }
 
     if (!data.inputs.empty())
     {
         auto* actions = new brls::Box(brls::Axis::ROW);
         actions->setMarginTop(14);
-        actions->addView(button("Send from phone or PC",
+        actions->addView(button("portzone/common/send_from_phone"_i18n,
             [this] { brls::Application::pushActivity(new TransferActivity(id)); }, true));
-        actions->addView(button("Find on SD card", [this] { brls::Application::pushActivity(new SdSearchActivity(id)); }));
+        actions->addView(button("portzone/common/find_on_sd"_i18n, [this] { brls::Application::pushActivity(new SdSearchActivity(id)); }));
         box->addView(actions);
     }
 }
@@ -550,7 +556,8 @@ void PortActivity::fillLayout(brls::Box* box)
     {
         std::error_code ec;
         const bool installed = fs::exists(sdPath(p.manifest->binary), ec);
-        insert(root, bin.substr(dir.size()), "The game", installed ? "Installed" : "Not installed",
+        insert(root, bin.substr(dir.size()), "portzone/port/the_game"_i18n,
+            installed ? "portzone/state/installed"_i18n : "portzone/state/not_installed"_i18n,
             installed ? goodColor() : badColor());
     }
 
@@ -563,7 +570,7 @@ void PortActivity::fillLayout(brls::Box* box)
             if (!file.spec->match.empty())
                 note = file.spec->match + "  " + note;
             if (input.options.size() > 1 && input.metOption < 0)
-                note += " (or another option above)";
+                note = brls::getStr("portzone/port/or_another", note);
             std::string state;
             NVGcolor color;
             if (file.found)
@@ -572,22 +579,23 @@ void PortActivity::fillLayout(brls::Box* box)
                 const bool matchedName = file.spec->path.find_first_of("*?") != std::string::npos;
                 if (matchedName && !file.detail.empty())
                     note += ": " + file.detail;
-                state = file.detail.empty() || matchedName ? "Found" : "Found · " + file.detail;
+                state = file.detail.empty() || matchedName ? "portzone/port/found_state"_i18n :
+                                                             brls::getStr("portzone/port/found_detail", file.detail);
                 color = goodColor();
             }
             else if (input.met)
             {
-                state = "Not needed now";
+                state = "portzone/port/not_needed"_i18n;
                 color = mutedColor();
             }
             else if (!input.input->required)
             {
-                state = "Optional";
+                state = "portzone/port/optional"_i18n;
                 color = mutedColor();
             }
             else
             {
-                state = file.detail.empty() ? "Missing" : file.detail;
+                state = file.detail.empty() ? "portzone/port/missing"_i18n : file.detail;
                 color = badColor();
             }
             insert(root, file.spec->path, note, state, color);
@@ -597,13 +605,15 @@ void PortActivity::fillLayout(brls::Box* box)
     for (const auto& generated : data.generated)
     {
         const bool here = present(data, generated.path);
-        insert(root, generated.path, generated.note, here ? "Present" : "Made by the game", mutedColor());
+        insert(root, generated.path, generated.note, here ? "portzone/port/present"_i18n : "portzone/port/made_by_game"_i18n,
+            mutedColor());
     }
     if (data.prepare)
         for (const auto& done : data.prepare->done)
         {
             const bool here = present(data, done);
-            insert(root, done, "Made from your files", here ? "Present" : "Made on first start", here ? goodColor() : mutedColor());
+            insert(root, done, "portzone/port/made_from_files"_i18n,
+                here ? "portzone/port/present"_i18n : "portzone/port/made_on_start"_i18n, here ? goodColor() : mutedColor());
         }
 
     render(root, 0, box);
@@ -613,7 +623,7 @@ void PortActivity::fillReleaseFiles(brls::Box* box)
 {
     if (!releases)
     {
-        box->addView(textRow("Checking GitHub for releases...", 18, mutedColor()));
+        box->addView(textRow("portzone/common/checking_releases"_i18n, 18, mutedColor()));
         return;
     }
     if (!releases->error.empty())
@@ -624,13 +634,13 @@ void PortActivity::fillReleaseFiles(brls::Box* box)
     const github::Release* release = github::latest(releases->releases, testBuilds());
     if (!release)
     {
-        box->addView(textRow("This repository has no releases.", 18, mutedColor()));
+        box->addView(textRow("portzone/port/no_releases"_i18n, 18, mutedColor()));
         return;
     }
 
-    box->addView(textRow(release->tag + (release->name.empty() || release->name == release->tag ? "" : "  ·  " + release->name) +
-            (release->prerelease ? "  (prerelease)" : ""),
-        19));
+    const std::string title =
+        release->tag + (release->name.empty() || release->name == release->tag ? "" : "  ·  " + release->name);
+    box->addView(textRow(release->prerelease ? brls::getStr("portzone/port/prerelease", title) : title, 19));
 
     // A release for many systems: only the files that look like Switch builds.
     bool anySwitch = false;
@@ -658,13 +668,13 @@ void PortActivity::fillReleaseFiles(brls::Box* box)
         if (!busy && port().runsHere())
         {
             const github::Release chosen = *release;
-            row->addView(button("Install", [this, chosen, asset] {
+            row->addView(button("portzone/port/install"_i18n, [this, chosen, asset] {
                 const std::string base                 = port().defaultFolder();
                 const std::vector<std::string> targets = { base, "sdmc:/switch", "sdmc:/" };
                 // Install once the dropdown has closed, so the page can rebuild without the dropdown's focus.
                 auto* dropdown = new brls::Dropdown(
-                    "Where should " + asset.name + " go?",
-                    { sdShown(base) + "/  (suggested)", "switch/", "The SD card's root" },
+                    brls::getStr("portzone/port/where_go", asset.name),
+                    { brls::getStr("portzone/port/suggested", sdShown(base)), "switch/", "portzone/port/sd_root"_i18n },
                     [](int) {}, 0,
                     [this, chosen, asset, targets](int selected) {
                         if (selected >= 0 && selected < int(targets.size()))
@@ -676,10 +686,9 @@ void PortActivity::fillReleaseFiles(brls::Box* box)
         box->addView(row);
     }
     if (assets.empty())
-        box->addView(textRow("This release has no .nro or .zip file.", 18, mutedColor()));
+        box->addView(textRow("portzone/port/no_nro"_i18n, 18, mutedColor()));
     if (other)
-        box->addView(textRow(std::to_string(other) + " other file" + (other == 1 ? "" : "s") +
-                " for other systems not shown. A zip with a switch/ folder inside always extracts to the SD card's root.",
+        box->addView(textRow(brls::getStr(other == 1 ? "portzone/port/other_files_one" : "portzone/port/other_files_other", other),
             16, mutedColor()));
 }
 
@@ -687,12 +696,12 @@ void PortActivity::fillReadme(brls::Box* box)
 {
     if (!readme)
     {
-        box->addView(textRow("Loading the README...", 18, mutedColor()));
+        box->addView(textRow("portzone/port/loading_readme"_i18n, 18, mutedColor()));
         return;
     }
     if (!readme->error.empty())
     {
-        box->addView(textRow("Could not load the README: " + readme->error, 18, badColor()));
+        box->addView(textRow(brls::getStr("portzone/port/readme_error", readme->error), 18, badColor()));
         return;
     }
     for (const auto& block : parseMarkdown(readme->text))
@@ -728,15 +737,14 @@ void PortActivity::install(InstallPlan plan)
     if (auto started = startInstall(std::move(plan)))
         watch(started);
     else
-        brls::Application::notify("Already working on this port.");
+        brls::Application::notify("portzone/port/already_working"_i18n);
 }
 
 void PortActivity::confirmRemove()
 {
-    auto* dialog = new brls::Dialog("Remove " + port().info.title +
-        "? Only the files PortZone installed are deleted; your game files and saves stay.");
-    dialog->addButton("Cancel", [] {});
-    dialog->addButton("Remove", [this] {
+    auto* dialog = new brls::Dialog(brls::getStr("portzone/port/remove_confirm", port().info.title));
+    dialog->addButton("portzone/common/cancel"_i18n, [] {});
+    dialog->addButton("portzone/port/remove"_i18n, [this] {
         if (auto started = startRemove(id))
             watch(started);
     });
@@ -763,7 +771,7 @@ void PortActivity::poll(std::shared_ptr<Job> watched)
             return;
         }
         if (progress)
-            progress->setText(watched->stage() + "  " + std::to_string(int(watched->fraction * 100)) + "%");
+            progress->setText(brls::getStr("portzone/common/progress", watched->stage(), int(watched->fraction * 100)));
         poll(watched);
     });
 }

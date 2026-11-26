@@ -8,6 +8,8 @@
 #define PORTZONE_VERSION "dev"
 #endif
 
+using namespace brls::literals;
+
 namespace pz::ui
 {
 
@@ -33,7 +35,7 @@ brls::View* UpdateActivity::createContentView()
     text->setGrow(1);
     text->setShrink(1);
     text->addView(textBlock("PortZone " PORTZONE_VERSION, 28));
-    text->addView(textBlock("Updates come from github.com/" + config().updateRepo + "/releases.", 16, mutedColor()));
+    text->addView(textBlock(brls::getStr("portzone/update/source", config().updateRepo), 16, mutedColor()));
     intro->addView(text);
     content->addView(intro);
 
@@ -49,7 +51,7 @@ brls::View* UpdateActivity::createContentView()
     auto* scroll = new brls::ScrollingFrame();
     scroll->setContentView(content);
     auto* frame = new brls::AppletFrame(scroll);
-    frame->setTitle("PortZone updates");
+    frame->setTitle("portzone/update/title"_i18n);
     return frame;
 }
 
@@ -95,42 +97,40 @@ void UpdateActivity::fillStatus(brls::Box* box)
     actions->setMarginTop(14);
 
     if (checking)
-        box->addView(pill("Checking GitHub...", mutedColor()));
+        box->addView(pill("portzone/update/checking"_i18n, mutedColor()));
     else if (updated)
     {
-        box->addView(pill("Updated to " + status.tag, goodColor()));
-        box->addView(textBlock("The new PortZone starts the next time you open it.", 18, mutedColor()));
-        actions->addView(button("Restart now", [] { update::restart(); }, true));
+        box->addView(pill(brls::getStr("portzone/update/updated_to", status.tag), goodColor()));
+        box->addView(textBlock("portzone/update/starts_next"_i18n, 18, mutedColor()));
+        actions->addView(button("portzone/update/restart"_i18n, [] { update::restart(); }, true));
     }
     else if (busy)
     {
-        box->addView(pill("Updating to " + status.tag, accentColor()));
-        actions->addView(button("Cancel", [this] {
+        box->addView(pill(brls::getStr("portzone/update/updating_to", status.tag), accentColor()));
+        actions->addView(button("portzone/common/cancel"_i18n, [this] {
             if (job)
                 job->cancel = true;
         }));
     }
     else if (!status.error.empty())
     {
-        box->addView(pill("Could not check for updates", badColor()));
+        box->addView(pill("portzone/update/could_not_check"_i18n, badColor()));
         box->addView(textBlock(status.error, 18, mutedColor()));
     }
     else if (status.available)
     {
-        box->addView(pill(status.tag + " is available", goodColor()));
+        box->addView(pill(brls::getStr("portzone/common/is_available", status.tag), goodColor()));
         if (update::canInstall())
-            actions->addView(button("Update to " + status.tag + "  (" + formatSize(status.asset.size) + ")",
+            actions->addView(button(brls::getStr("portzone/common/update_to_size", status.tag, formatSize(status.asset.size)),
                 [this] { startUpdate(); }, true));
         else
-            box->addView(textBlock("This copy cannot replace itself (it is not the Switch build started from the SD card). "
-                                   "Get " + status.asset.name + " from the releases page.",
-                18, mutedColor()));
+            box->addView(textBlock(brls::getStr("portzone/update/cannot_replace", status.asset.name), 18, mutedColor()));
     }
     else if (status.checked)
-        box->addView(pill("PortZone is up to date", goodColor()));
+        box->addView(pill("portzone/update/up_to_date"_i18n, goodColor()));
 
     if (!checking && !busy && !updated)
-        actions->addView(button("Check again", [this] { check(); }));
+        actions->addView(button("portzone/update/check_again"_i18n, [this] { check(); }));
     if (!actions->getChildren().empty())
         box->addView(actions);
     else
@@ -153,7 +153,8 @@ void UpdateActivity::fillNotes(brls::Box* box)
     const update::Status& status = update::current();
     if (status.tag.empty() || status.notes.empty())
         return;
-    box->addView(header(status.available ? "What's new in " + status.tag : "About " + status.tag));
+    box->addView(header(status.available ? brls::getStr("portzone/update/whats_new", status.tag) :
+                                           brls::getStr("portzone/update/about_tag", status.tag)));
     for (const auto& block : parseMarkdown(status.notes))
     {
         if (block.kind == TextBlock::Kind::Heading)
@@ -187,7 +188,7 @@ void UpdateActivity::poll(std::shared_ptr<Job> watched)
             return;
         }
         if (progress)
-            progress->setText(watched->stage() + "  " + std::to_string(int(watched->fraction * 100)) + "%");
+            progress->setText(brls::getStr("portzone/common/progress", watched->stage(), int(watched->fraction * 100)));
         poll(watched);
     });
 }

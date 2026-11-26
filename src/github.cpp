@@ -4,6 +4,7 @@
 #include <map>
 #include <mutex>
 
+#include <borealis/core/i18n.hpp>
 #include <json.hpp>
 
 #include "config.hpp"
@@ -28,20 +29,19 @@ namespace
         if ((response.status == 403 || response.status == 429) && remaining != response.headers.end() &&
             remaining->second == "0")
         {
-            std::string when;
             const auto reset = response.headers.find("x-ratelimit-reset");
             if (reset != response.headers.end())
             {
                 const std::time_t at = std::time_t(std::stoll(reset->second));
                 char text[16];
                 std::strftime(text, sizeof(text), "%H:%M", std::localtime(&at));
-                when = std::string(" Try again after ") + text + ".";
+                return brls::getStr("portzone/errors/rate_limit_until", text);
             }
-            return "GitHub allows 60 requests an hour from your network, and they are used up." + when;
+            return brls::getStr("portzone/errors/rate_limit");
         }
         if (response.status == 404)
-            return "The repository or its releases were not found.";
-        return "GitHub answered HTTP " + std::to_string(response.status) + ".";
+            return brls::getStr("portzone/errors/not_found");
+        return brls::getStr("portzone/errors/github_http", response.status);
     }
 
     const std::vector<std::string> API_HEADERS = { "Accept: application/vnd.github+json", "X-GitHub-Api-Version: 2022-11-28" };
@@ -93,7 +93,7 @@ Releases fetchReleases(const std::string& repoUrl, bool fresh)
     }
     catch (const std::exception& e)
     {
-        result.error = std::string("Unexpected answer from GitHub: ") + e.what();
+        result.error = brls::getStr("portzone/errors/unexpected_answer", e.what());
         return result;
     }
 

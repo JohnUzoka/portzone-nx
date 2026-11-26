@@ -17,8 +17,8 @@ enum class Section
     Manual,      // no portzone.json: README and release files
 };
 
-// "Easy Setup", "Prepare on PC", "Build on PC", "Manual".
-const char* sectionName(Section section);
+// "Easy Setup", "Prepare on PC", "Build on PC", "Manual", in the player's language.
+std::string sectionName(Section section);
 
 struct Port
 {

@@ -6,6 +6,7 @@
 #include <set>
 #include <sstream>
 
+#include <borealis/core/i18n.hpp>
 #include <json.hpp>
 #include <miniz.h>
 #include <picosha2.h>
@@ -19,6 +20,7 @@ namespace pz
 {
 
 using nlohmann::json;
+using namespace brls::literals;
 
 namespace
 {
@@ -97,7 +99,7 @@ namespace
     {
         mz_zip_archive zip {};
         if (!mz_zip_reader_init_file(&zip, zipPath.string().c_str(), 0))
-            return step.asset.name + " is not a readable zip.";
+            return brls::getStr("portzone/jobs/not_zip", step.asset.name);
 
         const mz_uint count = mz_zip_reader_get_num_files(&zip);
         std::vector<std::string> names;
@@ -152,9 +154,9 @@ namespace
             const fs::path out         = config().sdRoot / relative;
             std::error_code ec;
             fs::create_directories(out.parent_path(), ec);
-            job.setStage("Extracting " + rest);
+            job.setStage(brls::getStr("portzone/jobs/extracting", rest));
             if (!mz_zip_reader_extract_to_file(&zip, i, out.string().c_str(), 0))
-                error = "Could not extract " + rest + ".";
+                error = brls::getStr("portzone/jobs/could_not_extract", rest);
             else
             {
                 files.push_back(relative);
@@ -164,8 +166,8 @@ namespace
         }
         mz_zip_reader_end(&zip);
         if (error.empty() && extracted == 0)
-            error = step.from.empty() ? step.asset.name + " has nothing to install." :
-                                        step.asset.name + " has no folder " + step.from + ".";
+            error = step.from.empty() ? brls::getStr("portzone/jobs/nothing_to_install", step.asset.name) :
+                                        brls::getStr("portzone/jobs/no_folder", step.asset.name, step.from);
         return error;
     }
 
@@ -176,7 +178,7 @@ namespace
         const std::string fileName = step.name.empty() ? step.asset.name : step.name;
         const std::string relative = folder.empty() ? fileName : folder + "/" + fileName;
         if (const std::string error = moveFile(download, config().sdRoot / relative); !error.empty())
-            return "Could not write " + relative + ": " + error;
+            return brls::getStr("portzone/jobs/could_not_write", relative, error);
         files.push_back(relative);
         return "";
     }
@@ -203,25 +205,25 @@ namespace
             downloads.push_back(tmp / (plan.id + "." + std::to_string(i) + ".download"));
             const auto response = http::download(asset.url, downloads.back(), [&](uint64_t done, uint64_t) {
                 job.fraction = 0.8f * float(before + done) / float(std::max<uint64_t>(total, 1));
-                job.setStage("Downloading " + asset.name + ": " + formatSize(done) + " of " + formatSize(asset.size));
+                job.setStage(brls::getStr("portzone/jobs/downloading", asset.name, formatSize(done), formatSize(asset.size)));
                 return !job.cancel.load();
             });
             if (!response.ok())
             {
                 cleanUp();
-                job.fail(response.error == "cancelled" ? "Cancelled." :
-                    "Downloading " + asset.name + " failed: " +
-                        (response.error.empty() ? "HTTP " + std::to_string(response.status) : response.error));
+                job.fail(response.error == "cancelled" ? "portzone/jobs/cancelled"_i18n :
+                    brls::getStr("portzone/jobs/download_failed", asset.name,
+                        response.error.empty() ? "HTTP " + std::to_string(response.status) : response.error));
                 return;
             }
             before += asset.size;
             if (!asset.sha256.empty())
             {
-                job.setStage("Checking " + asset.name);
+                job.setStage(brls::getStr("portzone/jobs/checking", asset.name));
                 if (sha256Of(downloads.back(), job) != lower(asset.sha256))
                 {
                     cleanUp();
-                    job.fail(asset.name + " does not match GitHub's checksum. Nothing was installed.");
+                    job.fail(brls::getStr("portzone/jobs/checksum", asset.name));
                     return;
                 }
             }
@@ -233,7 +235,7 @@ namespace
             const PlanStep& step = plan.steps[i];
             const float start    = 0.85f + 0.15f * float(i) / float(plan.steps.size());
             const float end      = 0.85f + 0.15f * float(i + 1) / float(plan.steps.size());
-            job.setStage((step.unzip ? "Extracting " : "Copying ") + step.asset.name);
+            job.setStage(brls::getStr(step.unzip ? "portzone/jobs/extracting" : "portzone/jobs/copying", step.asset.name));
             const std::string error = step.unzip ? extract(downloads[i], step, job, start, end, files) :
                                                    copyFile(downloads[i], step, files);
             if (!error.empty())
@@ -264,7 +266,7 @@ namespace
 
         saveRecord({ plan.id, plan.tag, plan.steps.front().asset.name, plan.steps.front().dest, unique });
         job.fraction = 1;
-        job.setStage("Installed " + plan.tag);
+        job.setStage(brls::getStr("portzone/jobs/installed", plan.tag));
     }
 
     void runRemove(const std::string& id, Job& job)
@@ -272,10 +274,10 @@ namespace
         const auto record = loadRecord(id);
         if (!record)
         {
-            job.fail("PortZone has no record of installing this port.");
+            job.fail("portzone/jobs/no_record"_i18n);
             return;
         }
-        job.setStage("Removing");
+        job.setStage("portzone/jobs/removing"_i18n);
         for (size_t i = 0; i < record->files.size(); i++)
         {
             if (safeRelative(record->files[i]))
@@ -284,7 +286,7 @@ namespace
         }
         std::error_code ec;
         fs::remove(recordPath(id), ec);
-        job.setStage("Removed");
+        job.setStage("portzone/jobs/removed"_i18n);
     }
 
     void runSelfUpdate(const github::Asset& asset, const std::string& tag, Job& job)
@@ -292,7 +294,7 @@ namespace
         const fs::path self = config().selfPath;
         if (self.empty())
         {
-            job.fail("This copy of PortZone does not know where its .nro is, so it cannot replace it.");
+            job.fail("portzone/jobs/self_unknown"_i18n);
             return;
         }
         // Next to the old .nro, so the swap is a rename on the same card.
@@ -302,20 +304,21 @@ namespace
 
         const auto response = http::download(asset.url, fresh, [&](uint64_t done, uint64_t total) {
             job.fraction = 0.9f * float(done) / float(std::max<uint64_t>(total, 1));
-            job.setStage("Downloading PortZone " + tag + ": " + formatSize(done) + " of " + formatSize(total));
+            job.setStage(brls::getStr("portzone/jobs/downloading_portzone", tag, formatSize(done), formatSize(total)));
             return !job.cancel.load();
         });
         if (!response.ok())
         {
             fs::remove(fresh, ec);
-            job.fail(response.error == "cancelled" ? "Cancelled." :
-                "The download failed: " + (response.error.empty() ? "HTTP " + std::to_string(response.status) : response.error));
+            job.fail(response.error == "cancelled" ? "portzone/jobs/cancelled"_i18n :
+                brls::getStr("portzone/jobs/self_download_failed",
+                    response.error.empty() ? "HTTP " + std::to_string(response.status) : response.error));
             return;
         }
         if (!asset.sha256.empty() && sha256Of(fresh, job) != lower(asset.sha256))
         {
             fs::remove(fresh, ec);
-            job.fail("The download does not match GitHub's checksum. PortZone was not changed.");
+            job.fail("portzone/jobs/self_checksum"_i18n);
             return;
         }
 
@@ -325,7 +328,7 @@ namespace
         if (ec)
         {
             fs::remove(fresh, ec);
-            job.fail("Could not move the old PortZone aside: " + ec.message());
+            job.fail(brls::getStr("portzone/jobs/move_aside", ec.message()));
             return;
         }
         fs::rename(fresh, self, ec);
@@ -334,12 +337,12 @@ namespace
             std::error_code ignored;
             fs::rename(old, self, ignored);
             fs::remove(fresh, ignored);
-            job.fail("Could not put the new PortZone in place: " + ec.message());
+            job.fail(brls::getStr("portzone/jobs/put_in_place", ec.message()));
             return;
         }
         fs::remove(old, ec);
         job.fraction = 1;
-        job.setStage("Updated to " + tag);
+        job.setStage(brls::getStr("portzone/jobs/updated_to", tag));
     }
 
 } // namespace

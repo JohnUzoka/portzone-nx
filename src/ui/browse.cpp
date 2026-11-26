@@ -11,6 +11,8 @@
 #include "ui/update_page.hpp"
 #include "update.hpp"
 
+using namespace brls::literals;
+
 namespace pz::ui
 {
 
@@ -21,10 +23,16 @@ namespace
     constexpr float GRID_TILE  = 176;
     constexpr float GRID_GAP   = 16;
 
-    // "All", then every Section in its order.
-    const char* FILTER_NAMES[] = { "All", "Easy Setup", "Prepare on PC", "Build on PC", "Manual" };
-    constexpr int FILTER_COUNT = int(sizeof(FILTER_NAMES) / sizeof(FILTER_NAMES[0]));
-    const char* SORT_NAMES[]   = { "Name A-Z", "Name Z-A", "System" };
+    // "All", then every Section in its order. Functions: the translations are loaded after static initialisation.
+    constexpr int FILTER_COUNT = 5;
+    std::string filterName(int filter) { return filter == 0 ? "portzone/browse/all"_i18n : sectionName(Section(filter - 1)); }
+
+    std::string sortName(int order)
+    {
+        if (order == 1)
+            return "portzone/browse/sort_name_za"_i18n;
+        return order == 2 ? "portzone/browse/sort_system"_i18n : "portzone/browse/sort_name_az"_i18n;
+    }
 
     bool matches(const Port& port, int filter)
     {
@@ -104,10 +112,10 @@ BrowseView::BrowseView(bool installedOnly)
     summary->setGrow(1);
     summary->setShrink(1);
     toolbar->addView(summary);
-    searchButton = button("Search", [this] { openSearch(); });
+    searchButton = button("portzone/browse/search"_i18n, [this] { openSearch(); });
     searchButton->setCornerRadius(20);
     toolbar->addView(searchButton);
-    filtersButton = button("Filter and view", [this] { openFilters(); });
+    filtersButton = button("portzone/browse/filter_and_view"_i18n, [this] { openFilters(); });
     filtersButton->setMarginRight(0);
     filtersButton->setCornerRadius(20);
     toolbar->addView(filtersButton);
@@ -119,11 +127,11 @@ BrowseView::BrowseView(bool installedOnly)
 
     frame->setContentView(content);
     addView(frame);
-    registerAction("Filter", brls::BUTTON_X, [this](brls::View*) {
+    registerAction("portzone/browse/filter"_i18n, brls::BUTTON_X, [this](brls::View*) {
         openFilters();
         return true;
     });
-    registerAction("Search", brls::BUTTON_BACK, [this](brls::View*) {
+    registerAction("portzone/browse/search"_i18n, brls::BUTTON_BACK, [this](brls::View*) {
         openSearch();
         return true;
     });
@@ -162,11 +170,11 @@ void BrowseView::fillBanner()
     auto* text = new brls::Box(brls::Axis::COLUMN);
     text->setGrow(1);
     text->setShrink(1);
-    text->addView(textBlock("PortZone " + status.tag + " is available", 20));
-    text->addView(textBlock("You have " PORTZONE_VERSION ". See what's new, and update in one step.", 16, mutedColor()));
+    text->addView(textBlock(brls::getStr("portzone/browse/portzone_available", status.tag), 20));
+    text->addView(textBlock(brls::getStr("portzone/browse/you_have", PORTZONE_VERSION), 16, mutedColor()));
     row->addView(text);
-    row->addView(button("See update", [] { brls::Application::pushActivity(new UpdateActivity()); }, true));
-    auto* later = button("Later", [this] {
+    row->addView(button("portzone/common/see_update"_i18n, [] { brls::Application::pushActivity(new UpdateActivity()); }, true));
+    auto* later = button("portzone/browse/later"_i18n, [this] {
         update::current().dismissed = true;
         rebuild(banner, filtersButton, [this](brls::Box*) { fillPortUpdates(); });
     });
@@ -190,11 +198,11 @@ void BrowseView::fillPortUpdates()
     std::string list;
     for (const auto& name : names)
         list += (list.empty() ? "" : "  ·  ") + name;
-    row->addView(textBlock(names.size() == 1 ? "1 installed game has an update" :
-                                               std::to_string(names.size()) + " installed games have updates",
+    row->addView(textBlock(brls::getStr(names.size() == 1 ? "portzone/browse/updates_one" : "portzone/browse/updates_other",
+                               names.size()),
         20));
     row->addView(textBlock(list, 16, accentColor()));
-    row->addView(textBlock(installedOnly ? "Open a game to update it." : "They're marked below and in Installed. Open a game to update it.",
+    row->addView(textBlock(installedOnly ? "portzone/browse/open_to_update"_i18n : "portzone/browse/marked_below"_i18n,
         16, mutedColor()));
     banner->addView(row);
 }
@@ -228,13 +236,14 @@ void BrowseView::willAppear(bool resetState)
 
 void BrowseView::apply()
 {
-    std::string text = installedOnly ? "Installed" : "All ports";
+    std::string text = installedOnly ? "portzone/browse/installed"_i18n : "portzone/browse/all_ports"_i18n;
     if (filter != 0)
-        text = installedOnly ? text + "  ·  " + FILTER_NAMES[filter] : FILTER_NAMES[filter];
-    text += systemFilter.empty() ? "  ·  every system" : "  ·  from " + systemFilter;
-    text += std::string("  ·  ") + SORT_NAMES[settings().sortOrder];
+        text = installedOnly ? text + "  ·  " + filterName(filter) : filterName(filter);
+    text += "  ·  " + (systemFilter.empty() ? "portzone/browse/every_system"_i18n :
+                                              brls::getStr("portzone/browse/from_system", systemFilter));
+    text += "  ·  " + sortName(settings().sortOrder);
     summary->setText(text);
-    searchButton->setText(search.empty() ? "Search" : "\"" + search + "\"");
+    searchButton->setText(search.empty() ? "portzone/browse/search"_i18n : brls::getStr("portzone/browse/search_quoted", search));
     searchButton->setStyle(search.empty() ? &brls::BUTTONSTYLE_BORDERED : &brls::BUTTONSTYLE_PRIMARY);
     filtersButton->setStyle(filter != 0 || !systemFilter.empty() ? &brls::BUTTONSTYLE_PRIMARY : &brls::BUTTONSTYLE_BORDERED);
     rebuild(list, filtersButton, [this](brls::Box*) { fillList(); });
@@ -245,23 +254,24 @@ void BrowseView::openSearch()
     brls::Application::getImeManager()->openForText([this](std::string text) {
         search = trimmed(text);
         apply();
-    }, "Search games", "A name, author or system; empty shows everything", 40, search);
+    }, "portzone/browse/search_title"_i18n, "portzone/browse/search_hint"_i18n, 40, search);
 }
 
 void BrowseView::openFilters()
 {
     const bool filtered = filter != 0 || !systemFilter.empty() || !search.empty();
     std::vector<std::string> items = {
-        std::string("Kind: ") + FILTER_NAMES[filter],
-        "System: " + (systemFilter.empty() ? std::string("All") : systemFilter),
-        std::string("Sort: ") + SORT_NAMES[settings().sortOrder],
-        std::string("View: ") + (settings().gridView ? "Grid" : "Cards"),
+        brls::getStr("portzone/browse/menu_kind", filterName(filter)),
+        brls::getStr("portzone/browse/menu_system", systemFilter.empty() ? "portzone/browse/all"_i18n : systemFilter),
+        brls::getStr("portzone/browse/menu_sort", sortName(settings().sortOrder)),
+        brls::getStr("portzone/browse/menu_view",
+            settings().gridView ? "portzone/browse/view_grid"_i18n : "portzone/browse/view_cards"_i18n),
     };
     if (filtered)
-        items.push_back("Show everything");
+        items.push_back("portzone/browse/show_everything"_i18n);
 
     // Each choice opens its own list once this one has closed.
-    auto* menu = new brls::Dropdown("Filter and view", items, [](int) {}, 0, [this](int chosen) {
+    auto* menu = new brls::Dropdown("portzone/browse/filter_and_view"_i18n, items, [](int) {}, 0, [this](int chosen) {
         if (chosen == 0)
             chooseKind();
         else if (chosen == 1)
@@ -289,9 +299,9 @@ void BrowseView::chooseKind()
         size_t count = 0;
         for (const auto& port : Catalog::get().ports)
             count += matches(port, i);
-        names.push_back(std::string(FILTER_NAMES[i]) + "  " + std::to_string(count));
+        names.push_back(filterName(i) + "  " + std::to_string(count));
     }
-    auto* dropdown = new brls::Dropdown("Kind", names, [](int) {}, filter, [this](int chosen) {
+    auto* dropdown = new brls::Dropdown("portzone/browse/kind"_i18n, names, [](int) {}, filter, [this](int chosen) {
         if (chosen < 0 || chosen >= FILTER_COUNT)
             return;
         filter = chosen;
@@ -308,7 +318,7 @@ void BrowseView::chooseSystem()
         if (!port.originalPlatform().empty())
             counts[port.originalPlatform()]++;
     std::vector<std::string> systems { "" };
-    std::vector<std::string> names { "All systems  " + std::to_string(Catalog::get().ports.size()) };
+    std::vector<std::string> names { "portzone/browse/all_systems"_i18n + "  " + std::to_string(Catalog::get().ports.size()) };
     int selected = 0;
     for (const auto& [system, count] : counts)
     {
@@ -317,7 +327,7 @@ void BrowseView::chooseSystem()
         systems.push_back(system);
         names.push_back(system + "  " + std::to_string(count));
     }
-    auto* dropdown = new brls::Dropdown("System", names, [](int) {}, selected, [this, systems](int chosen) {
+    auto* dropdown = new brls::Dropdown("portzone/browse/system"_i18n, names, [](int) {}, selected, [this, systems](int chosen) {
         if (chosen < 0 || chosen >= int(systems.size()))
             return;
         systemFilter = systems[size_t(chosen)];
@@ -328,7 +338,7 @@ void BrowseView::chooseSystem()
 
 void BrowseView::chooseSort()
 {
-    auto* dropdown = new brls::Dropdown("Sort", { SORT_NAMES[0], SORT_NAMES[1], SORT_NAMES[2] }, [](int) {},
+    auto* dropdown = new brls::Dropdown("portzone/browse/sort"_i18n, { sortName(0), sortName(1), sortName(2) }, [](int) {},
         settings().sortOrder, [this](int chosen) {
             if (chosen < 0 || chosen > 2)
                 return;
@@ -341,7 +351,8 @@ void BrowseView::chooseSort()
 
 void BrowseView::chooseView()
 {
-    auto* dropdown = new brls::Dropdown("View", { "Cards", "Grid" }, [](int) {}, settings().gridView ? 1 : 0,
+    auto* dropdown = new brls::Dropdown("portzone/browse/view"_i18n,
+        { "portzone/browse/view_cards"_i18n, "portzone/browse/view_grid"_i18n }, [](int) {}, settings().gridView ? 1 : 0,
         [this](int chosen) {
             if (chosen < 0 || chosen > 1)
                 return;
@@ -387,9 +398,9 @@ void BrowseView::fillList()
     if (shown.empty())
     {
         std::string message = installedOnly && search.empty() && filter == 0 && systemFilter.empty() ?
-            "Nothing installed yet. Install a port from Browse." : "No ports match.";
+            "portzone/browse/nothing_installed"_i18n : "portzone/browse/no_match"_i18n;
         if (!search.empty())
-            message = "No ports match \"" + search + "\". Press - to search again.";
+            message = brls::getStr("portzone/browse/no_match_search", search);
         list->addView(textRow(message, 20, mutedColor()));
         return;
     }
@@ -515,7 +526,8 @@ PortRow::PortRow(const Port& port)
     text->setMarginRight(16);
     text->addView(textBlock(port.info.title, 24));
     const std::string& system = port.originalPlatform();
-    text->addView(textBlock("by " + port.info.author + (system.empty() ? "" : "  ·  " + system), 15, mutedColor()));
+    text->addView(textBlock(brls::getStr("portzone/browse/by", port.info.author) + (system.empty() ? "" : "  ·  " + system),
+        15, mutedColor()));
     auto* description = textBlock(port.description(), 17, mutedColor());
     description->setMarginTop(4);
     text->addView(description);
@@ -538,7 +550,7 @@ void PortRow::showState(const Port& port, const PortState& state)
 {
     statusSlot->clearViews();
     if (const std::string tag = portupdates::pending(port.info.id); !tag.empty())
-        statusSlot->addView(pill("Update: " + tag, accentColor()));
+        statusSlot->addView(pill(brls::getStr("portzone/browse/update_tag", tag), accentColor()));
     else
         statusSlot->addView(pill(stateSummary(port, state), stateColor(stateGood(port, state), state.installed)));
 }
@@ -586,7 +598,7 @@ void PortTile::showState(const Port& port, const PortState& state)
 {
     if (const std::string tag = portupdates::pending(port.info.id); !tag.empty())
     {
-        status->setText("Update: " + tag);
+        status->setText(brls::getStr("portzone/browse/update_tag", tag));
         status->setTextColor(accentColor());
         return;
     }

@@ -6,6 +6,7 @@
 #include <sstream>
 
 #include <borealis/core/assets.hpp>
+#include <borealis/core/i18n.hpp>
 #include <borealis/core/logger.hpp>
 
 #include "config.hpp"
@@ -15,6 +16,7 @@ namespace pz
 {
 
 using nlohmann::json;
+using namespace brls::literals;
 
 namespace
 {
@@ -43,9 +45,10 @@ namespace
 
     bool isUrl(const std::string& s) { return s.rfind("http://", 0) == 0 || s.rfind("https://", 0) == 0; }
 
-    // Where a port's portzone.json came from, as the About tab shows it.
-    constexpr const char* FROM_REPOSITORY = "the repository (the store's copy)";
-    constexpr const char* FROM_DRAFT      = "the store's draft";
+    // Where a port's portzone.json came from, as the About tab shows it. Translations are loaded once at start, so
+    // the text stays the same for comparing.
+    std::string fromRepository() { return "portzone/home/from_repository"_i18n; }
+    std::string fromDraft() { return "portzone/home/from_draft"_i18n; }
 
     std::string ownManifestUrl(const Port& port)
     {
@@ -82,7 +85,7 @@ namespace
         {
             if (readFile(location, text))
                 return true;
-            error = "Could not read " + location;
+            error = brls::getStr("portzone/errors/could_not_read", location);
             return false;
         }
         const fs::path cached = cacheDir() / name;
@@ -104,8 +107,8 @@ namespace
             source = Catalog::Source::BuiltIn;
             return true;
         }
-        error = "Could not load " + location + ": " +
-            (response.error.empty() ? "HTTP " + std::to_string(response.status) : response.error);
+        error = brls::getStr("portzone/errors/could_not_load", location,
+            response.error.empty() ? "HTTP " + std::to_string(response.status) : response.error);
         return false;
     }
 
@@ -120,16 +123,16 @@ Section Port::section() const
     return Section::EasySetup;
 }
 
-const char* sectionName(Section section)
+std::string sectionName(Section section)
 {
     switch (section)
     {
-        case Section::EasySetup: return "Easy Setup";
-        case Section::PrepareOnPc: return "Prepare on PC";
-        case Section::BuildOnPc: return "Build on PC";
+        case Section::EasySetup: return "portzone/kinds/easy_setup"_i18n;
+        case Section::PrepareOnPc: return "portzone/kinds/prepare_on_pc"_i18n;
+        case Section::BuildOnPc: return "portzone/kinds/build_on_pc"_i18n;
         case Section::Manual: break;
     }
-    return "Manual";
+    return "portzone/kinds/manual"_i18n;
 }
 
 const std::string& Port::description() const
@@ -209,7 +212,7 @@ Catalog::Loaded Catalog::fetch()
     }
     catch (const std::exception& e)
     {
-        result.error = std::string("The port list is not valid: ") + e.what();
+        result.error = brls::getStr("portzone/errors/invalid_list", e.what());
         return result;
     }
 
@@ -227,7 +230,7 @@ Catalog::Loaded Catalog::fetch()
             const json index = json::parse(indexText);
             for (const auto& [id, entry] : index.at("manifests").items())
                 manifests[id] = { entry.at("portzone"),
-                    entry.value("source", "") == "store draft" ? FROM_DRAFT : FROM_REPOSITORY };
+                    entry.value("source", "") == "store draft" ? fromDraft() : fromRepository() };
         }
         catch (const std::exception& e)
         {
@@ -275,7 +278,7 @@ std::optional<Port> Catalog::fresher(const Port& port)
     if (response.error.empty() && response.status == 404)
     {
         // The repository has none: a store draft stays; a portzone.json the repository removed goes.
-        if (!port.manifest || port.manifestSource != FROM_REPOSITORY)
+        if (!port.manifest || port.manifestSource != fromRepository())
             return std::nullopt;
         updated.manifest.reset();
         updated.manifestJson = nullptr;

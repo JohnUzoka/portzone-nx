@@ -4,6 +4,8 @@
 #include <set>
 #include <system_error>
 
+#include <borealis/core/i18n.hpp>
+
 #include "files.hpp"
 
 namespace pz::gamefiles
@@ -132,7 +134,7 @@ std::shared_ptr<Job> startMove(std::vector<matcher::Source> sources, std::vector
         std::vector<std::pair<std::string, std::string>> emptied; // SD-relative folder, the top to stop at
         for (const auto& match : chosen)
         {
-            job.setStage("Moving " + match.inputLabel);
+            job.setStage(brls::getStr("portzone/jobs/moving", match.inputLabel));
             const std::string top = match.files.size() > 1 ? commonFolder(sources, match) : "";
             for (const auto& file : match.files)
             {
@@ -146,7 +148,7 @@ std::shared_ptr<Job> startMove(std::vector<matcher::Source> sources, std::vector
                 std::error_code ec;
                 if (!fs::is_regular_file(from, ec))
                 {
-                    problems.push_back(source.path + " is gone");
+                    problems.push_back(brls::getStr("portzone/jobs/gone", source.path));
                     continue;
                 }
                 if (!file.sha256.empty() && fs::file_size(from, ec) <= HASH_LIMIT)
@@ -154,13 +156,13 @@ std::shared_ptr<Job> startMove(std::vector<matcher::Source> sources, std::vector
                     const std::string hash = sha256Of(from);
                     if (std::find(file.sha256.begin(), file.sha256.end(), hash) == file.sha256.end())
                     {
-                        problems.push_back(source.path + " is not a known version");
+                        problems.push_back(brls::getStr("portzone/jobs/unknown_version", source.path));
                         continue;
                     }
                 }
                 if (const std::string error = moveFile(from, to); !error.empty())
                 {
-                    problems.push_back("Could not move " + source.path + ": " + error);
+                    problems.push_back(brls::getStr("portzone/jobs/could_not_move", source.path, error));
                     continue;
                 }
                 if (const size_t slash = source.path.rfind('/'); !top.empty() && slash != std::string::npos)
@@ -174,11 +176,12 @@ std::shared_ptr<Job> startMove(std::vector<matcher::Source> sources, std::vector
             removeEmpty(it->first, it->second);
 
         job.fraction = 1;
-        job.setStage("Moved " + std::to_string(moved) + (moved == 1 ? " file" : " files") + " into place");
+        job.setStage(brls::getStr(moved == 1 ? "portzone/jobs/moved_one" : "portzone/jobs/moved_other", moved));
         if (job.cancel)
-            job.fail("Stopped after " + std::to_string(moved) + " files");
+            job.fail(brls::getStr(moved == 1 ? "portzone/jobs/stopped_one" : "portzone/jobs/stopped_other", moved));
         else if (!problems.empty())
-            job.fail(problems.front() + (problems.size() > 1 ? " (and " + std::to_string(problems.size() - 1) + " more)" : ""));
+            job.fail(problems.size() > 1 ? brls::getStr("portzone/jobs/and_more", problems.front(), problems.size() - 1) :
+                                           problems.front());
     });
 }
 

@@ -36,6 +36,7 @@ void loadSettings()
         settings().sortOrder    = sort == "name-desc" ? 1 : (sort == "system" ? 2 : 0);
         const std::string console = json.value("console", "");
         settings().console      = console == "switch" || console == "switch2" ? console : "";
+        settings().language     = json.value("language", "");
     }
     catch (const std::exception&)
     {
@@ -52,6 +53,7 @@ void saveSettings()
         { "test_builds", settings().testBuilds },
         { "sort", settings().sortOrder == 1 ? "name-desc" : (settings().sortOrder == 2 ? "system" : "name") },
         { "console", settings().console },
+        { "language", settings().language },
     };
     std::ofstream(settingsPath()) << json.dump(2) << "\n";
 }

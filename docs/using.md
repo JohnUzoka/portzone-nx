@@ -15,10 +15,14 @@ choices. The kinds:
 - **Manual**: no `portzone.json`. Its README and Switch release files; you pick where a file goes.
 
 **Installed** lists what is on the SD card. **Game files** gets your files into place. **About** has the theme, the
-console, updates and sources. **Y** reloads the port list.
+console, the language, updates and sources. **Y** reloads the port list.
 
 **Console** (About): Switch or Switch 2. PortZone can't tell them apart, so set it once: games with a separate Switch
 2 build install that build on a Switch 2, and games made for the other console are listed but not installed.
+
+**Language**: PortZone follows the console's language (English, Spanish, French, German, Italian, Portuguese (Brazil),
+Japanese, Simplified Chinese; any other shows English). **Language** in About overrides it from the next start. Game
+titles and descriptions stay as their porters wrote them. The upload page follows the browser's language.
 
 ## Getting your files onto the SD card
 

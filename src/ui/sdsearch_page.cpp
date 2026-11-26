@@ -4,6 +4,8 @@
 #include "gamefiles.hpp"
 #include "ui/transfer_page.hpp"
 
+using namespace brls::literals;
+
 namespace pz::ui
 {
 
@@ -53,8 +55,8 @@ brls::View* SdSearchActivity::createContentView()
     intro = card(brls::Axis::COLUMN);
     intro->setFocusable(true);
     intro->setHideHighlightBackground(true);
-    intro->addView(textBlock("PortZone looks through the SD card for files the ports need.", 20));
-    intro->addView(textBlock("Files you choose are moved (not copied) into each port's folder.", 18, mutedColor()));
+    intro->addView(textBlock("portzone/sdsearch/intro"_i18n, 20));
+    intro->addView(textBlock("portzone/sdsearch/intro_hint"_i18n, 18, mutedColor()));
     content->addView(intro);
 
     resultsBox = new brls::Box(brls::Axis::COLUMN);
@@ -69,7 +71,7 @@ brls::View* SdSearchActivity::createContentView()
     auto* scroll = new brls::ScrollingFrame();
     scroll->setContentView(content);
     auto* frame       = new brls::AppletFrame(scroll);
-    std::string title = "Find on SD card";
+    std::string title = "portzone/common/find_on_sd"_i18n;
     if (!focusPort.empty())
         if (const Port* port = Catalog::get().find(focusPort))
             title = port->info.title + " · " + title;
@@ -129,7 +131,7 @@ void SdSearchActivity::pollSearch()
         if (!*alive || !searching || cancel != watched)
             return;
         if (progress)
-            progress->setText("Searching the SD card… " + std::to_string(seen->load()) + " files looked at");
+            progress->setText(brls::getStr("portzone/sdsearch/searching", seen->load()));
         pollSearch();
     });
 }
@@ -146,12 +148,11 @@ void SdSearchActivity::fillResults(brls::Box* box)
 {
     if (searching)
     {
-        progress = label("Searching the SD card… " + std::to_string(seen->load()) + " files looked at", 20,
-            accentColor());
+        progress = label(brls::getStr("portzone/sdsearch/searching", seen->load()), 20, accentColor());
         box->addView(progress);
         auto* actions = new brls::Box(brls::Axis::ROW);
         actions->setMarginTop(14);
-        actions->addView(button("Cancel", [this] {
+        actions->addView(button("portzone/common/cancel"_i18n, [this] {
             *cancel   = true;
             searching = false;
             refresh();
@@ -170,21 +171,20 @@ void SdSearchActivity::fillResults(brls::Box* box)
             progress->setText(error.empty() ? job->stage() : error);
         }
         else
-            progress->setText(job->stage() + "  " + std::to_string(int(job->fraction * 100)) + "%");
+            progress->setText(brls::getStr("portzone/common/progress", job->stage(), int(job->fraction * 100)));
         box->addView(progress);
         return;
     }
 
     if (plan.matches.empty())
     {
-        box->addView(textBlock(cancel && *cancel ? "Search cancelled." : "No game files found outside the ports' folders.",
+        box->addView(textBlock(cancel && *cancel ? "portzone/sdsearch/cancelled"_i18n : "portzone/sdsearch/none_found"_i18n,
             20));
-        box->addView(textBlock("System folders, PortZone's data and the ports' own folders are not searched.", 18,
-            mutedColor()));
+        box->addView(textBlock("portzone/sdsearch/not_searched"_i18n, 18, mutedColor()));
         return;
     }
 
-    box->addView(textBlock("Choose what to move. Moved files leave their old folder.", 18, mutedColor()));
+    box->addView(textBlock("portzone/sdsearch/choose"_i18n, 18, mutedColor()));
     for (size_t i = 0; i < plan.matches.size(); i++)
     {
         const matcher::Match& match = plan.matches[i];
@@ -206,7 +206,7 @@ void SdSearchActivity::fillResults(brls::Box* box)
         const std::string gameDir = sdShown(match.gameDir);
         const auto onCard = [&gameDir](const std::string& below) {
             if (gameDir.empty())
-                return below.empty() ? std::string("the SD card") : below;
+                return below.empty() ? "portzone/sdsearch/the_sd_card"_i18n : below;
             return below.empty() ? gameDir : gameDir + "/" + below;
         };
         std::string detail;
@@ -225,12 +225,12 @@ void SdSearchActivity::fillResults(brls::Box* box)
             }
             const std::string fromDir = commonFolder(from);
             const std::string toDir   = commonFolder(to);
-            detail = (fromDir.empty() ? "" : fromDir + "/") + " (" + std::to_string(match.files.size()) + " files, " +
-                formatSize(match.bytes) + ") → " + onCard(toDir) + (gameDir.empty() && toDir.empty() ? "" : "/");
+            detail = brls::getStr("portzone/sdsearch/many_files", fromDir.empty() ? "" : fromDir + "/", match.files.size(),
+                formatSize(match.bytes), onCard(toDir) + (gameDir.empty() && toDir.empty() ? "" : "/"));
         }
         text->addView(textBlock(detail, 16, mutedColor()));
         if (match.alreadyMet)
-            text->addView(textBlock("Already in place; moving replaces it", 16, accentColor()));
+            text->addView(textBlock("portzone/sdsearch/already_in_place"_i18n, 16, accentColor()));
         row->addView(text);
 
         row->registerClickAction([this, i](brls::View*) {
@@ -249,7 +249,7 @@ void SdSearchActivity::fillActions(brls::Box* box)
     actions->setAlignItems(brls::AlignItems::CENTER);
 
     if (job && job->finished)
-        actions->addView(button("Search again", [this] { search(); }, true));
+        actions->addView(button("portzone/common/search_again"_i18n, [this] { search(); }, true));
     else if (!searching && !job)
     {
         size_t count   = 0;
@@ -261,12 +261,12 @@ void SdSearchActivity::fillActions(brls::Box* box)
                 bytes += plan.matches[i].bytes;
             }
         if (count > 0)
-            actions->addView(button("Move " + std::to_string(count) + " selected (" + formatSize(bytes) + ")",
+            actions->addView(button(brls::getStr("portzone/sdsearch/move_selected", count, formatSize(bytes)),
                 [this] { move(); }, true));
         if (plan.matches.empty())
-            actions->addView(button("Send from phone or PC instead",
+            actions->addView(button("portzone/sdsearch/send_instead"_i18n,
                 [this] { brls::Application::pushActivity(new TransferActivity(focusPort)); }, true));
-        actions->addView(button("Search again", [this] { search(); }));
+        actions->addView(button("portzone/common/search_again"_i18n, [this] { search(); }));
     }
 
     if (!actions->getChildren().empty())
@@ -316,7 +316,7 @@ void SdSearchActivity::pollMove(std::shared_ptr<Job> watched)
             return;
         }
         if (progress)
-            progress->setText(watched->stage() + "  " + std::to_string(int(watched->fraction * 100)) + "%");
+            progress->setText(brls::getStr("portzone/common/progress", watched->stage(), int(watched->fraction * 100)));
         pollMove(watched);
     });
 }

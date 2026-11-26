@@ -7,6 +7,7 @@
 
 #include "config.hpp"
 #include "http.hpp"
+#include "languages.hpp"
 #include "settings.hpp"
 #include "ui/home.hpp"
 
@@ -33,7 +34,10 @@ int main(int argc, char* argv[])
     if (!pz::config().consoleFromArgs && !pz::settings().console.empty())
         pz::config().console = pz::settings().console;
 
-    brls::Platform::APP_LOCALE_DEFAULT = brls::LOCALE_EN_US;
+    // borealis loads the translations once, at start: the console's language (variants mapped to the translation
+    // PortZone has), or the player's choice in About.
+    brls::Platform::APP_LOCALE_DEFAULT = pz::appLanguage(pz::settings().language);
+    brls::Logger::info("Language: {} (console: {})", brls::Platform::APP_LOCALE_DEFAULT, pz::systemLanguage());
     if (!brls::Application::init())
     {
         brls::Logger::error("Unable to init borealis");

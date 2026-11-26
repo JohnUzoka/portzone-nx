@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark">
-<title>PortZone: add games from your PC</title>
+<title data-t="title">PortZone: add games from your PC</title>
 <style>
 :root {
     --bg: #11141d; --card: #1f2434; --line: #343b50; --text: #eceff6; --muted: #929bb4;
@@ -193,40 +193,40 @@ button.entry:hover { background: var(--hover); }
 <body>
 <main>
     <div id="catalogView">
-        <h1>Add games from your PC</h1>
-        <p class="muted lead">Drop the game files you own here. PortZone works out what each game needs and sends just those files to the right place on the Switch's SD card.</p>
+        <h1 data-t="heading">Add games from your PC</h1>
+        <p class="muted lead" data-t="lead">Drop the game files you own here. PortZone works out what each game needs and sends just those files to the right place on the Switch's SD card.</p>
         <section id="catalogTop">
             <section class="drop">
-                <div class="big">Drop game files or folders here</div>
-                <div class="muted small">PortZone looks at the names and sizes, finds what each game needs and sends only that.</div>
+                <div class="big" data-t="dropBig">Drop game files or folders here</div>
+                <div class="muted small" data-t="dropHint">PortZone looks at the names and sizes, finds what each game needs and sends only that.</div>
                 <div class="row">
-                    <button id="pickFolder" type="button" class="primary">Choose a folder</button>
-                    <button id="pickFiles" type="button">Choose files</button>
+                    <button id="pickFolder" type="button" class="primary" data-t="chooseFolder">Choose a folder</button>
+                    <button id="pickFiles" type="button" data-t="chooseFiles">Choose files</button>
                 </div>
             </section>
-            <p class="center after-drop"><button id="browseSd" type="button" class="link">Or put files somewhere yourself</button></p>
+            <p class="center after-drop"><button id="browseSd" type="button" class="link" data-t="browseSd">Or put files somewhere yourself</button></p>
         </section>
         <div id="catalogSlot"></div>
-        <h2 id="gridTitle" class="section-title">All games</h2>
+        <h2 id="gridTitle" class="section-title" data-t="allGames">All games</h2>
         <div class="row toolbar">
-            <input id="search" type="search" placeholder="Search games" aria-label="Search games" autocomplete="off" autocapitalize="off" spellcheck="false">
-            <select id="sort" aria-label="Sort games">
-                <option value="az">Sort: A–Z</option>
-                <option value="za">Sort: Z–A</option>
-                <option value="system">Sort: System</option>
+            <input id="search" type="search" placeholder="Search games" aria-label="Search games" data-t-placeholder="searchGames" data-t-label="searchGames" autocomplete="off" autocapitalize="off" spellcheck="false">
+            <select id="sort" aria-label="Sort games" data-t-label="sortGames">
+                <option value="az" data-t="sortAz">Sort: A–Z</option>
+                <option value="za" data-t="sortZa">Sort: Z–A</option>
+                <option value="system" data-t="sortSystem">Sort: System</option>
             </select>
         </div>
-        <p id="noMatch" class="muted no-match hidden"><span id="noMatchText"></span> <button id="clearSearch" type="button" class="link">Clear search</button></p>
-        <section id="grid" class="grid"><p class="muted">Loading…</p></section>
+        <p id="noMatch" class="muted no-match hidden"><span id="noMatchText"></span> <button id="clearSearch" type="button" class="link" data-t="clearSearch">Clear search</button></p>
+        <section id="grid" class="grid"><p class="muted" data-t="loading">Loading…</p></section>
     </div>
 
     <div id="gameView" class="hidden">
-        <p id="backTop" class="back"><button id="back" type="button" class="link"><span class="chev" aria-hidden="true"></span>All games</button></p>
+        <p id="backTop" class="back"><button id="back" type="button" class="link"><span class="chev" aria-hidden="true"></span><span data-t="allGames">All games</span></button></p>
         <section id="gameHead"></section>
         <section id="gameActions"></section>
         <div id="gameSlot"></div>
         <section id="gameNeeds"></section>
-        <p id="otherGames" class="center other-games hidden"><button id="otherGamesLink" type="button" class="link small">Other games</button></p>
+        <p id="otherGames" class="center other-games hidden"><button id="otherGamesLink" type="button" class="link small" data-t="otherGames">Other games</button></p>
     </div>
 
     <div id="work">
@@ -244,10 +244,1292 @@ button.entry:hover { background: var(--hover); }
 <script>
 'use strict';
 
+// ---- languages
+
+// The page's own strings. A language without a key falls back to English.
+const STRINGS = {
+    en: {
+        title: 'PortZone: add games from your PC',
+        heading: 'Add games from your PC',
+        lead: 'Drop the game files you own here. PortZone works out what each game needs and sends just those files to the right place on the Switch\'s SD card.',
+        dropBig: 'Drop game files or folders here',
+        dropHint: 'PortZone looks at the names and sizes, finds what each game needs and sends only that.',
+        chooseFolder: 'Choose a folder',
+        chooseFiles: 'Choose files',
+        browseSd: 'Or put files somewhere yourself',
+        allGames: 'All games',
+        allGamesCount: 'All games · {0}',
+        allGamesShown: 'All games · {0} of {1}',
+        searchGames: 'Search games',
+        sortGames: 'Sort games',
+        sortAz: 'Sort: A–Z',
+        sortZa: 'Sort: Z–A',
+        sortSystem: 'Sort: System',
+        clearSearch: 'Clear search',
+        noMatch: 'No games match “{0}”.',
+        loading: 'Loading…',
+        noGames: 'No games to show.',
+        otherGames: 'Other games',
+        gameTitle: '{0} · PortZone',
+        kindEasy: 'Easy Setup',
+        kindPrep: 'Prepare on PC',
+        kindPc: 'Build on PC',
+        kindManual: 'Manual',
+        by: 'by {0}',
+        bytes_one: '{0} byte',
+        bytes_other: '{0} bytes',
+        seconds: '{0} s',
+        minutes: '{0} min',
+        hoursMinutes: '{0} h {1} min',
+        files_one: '{0} file',
+        files_other: '{0} files',
+        listSep: ', ',
+        missingSep: '; ',
+        pair: '{0}: {1}',
+        paren: ' ({0})',
+        cantReach: 'Can\'t reach PortZone. Check that the Switch is on the same Wi-Fi and the Send game files screen is still open.',
+        outOfDate: 'This link is out of date. Open the address PortZone shows on the Switch.',
+        noKey: 'This link is missing its key. Open the address PortZone shows on the Switch.',
+        answered: 'PortZone answered {0}.',
+        answeredShort: 'PortZone answered {0}',
+        forbidden: 'PortZone doesn\'t allow changes there.',
+        specFolder: 'A folder {0}',
+        specFolderMarkers: 'A folder {0} with {1} inside',
+        specFolderMatch: 'A folder {0} with {1} files inside',
+        option: '{0}:',
+        optionOr: 'Or {0}:',
+        optionNumber: 'Option {0}',
+        onSd: '✓ On the SD card',
+        missing: 'Missing',
+        optional: 'Optional',
+        optionalParen: ' (optional)',
+        dropForThis: 'Drop files for this here, or',
+        addFiles: 'Add files',
+        addFolder: 'Add a folder',
+        chooseMyself: 'Choose where files go myself',
+        noWhere: 'This port doesn\'t say where its files go. Follow its instructions and put them where it asks:',
+        howToAdd: 'How to add it',
+        dropGame: 'Drop this game\'s files or folders here',
+        picksOut: 'PortZone picks out what {0} needs and sends only that.',
+        makeWith: 'Make the game\'s files on your PC with {0}',
+        makeOnPc: 'Make the game\'s files on your PC.',
+        extract: 'Extract what it gives you (for example a .zip) on your PC.',
+        dropExtractedHint: 'Drop the extracted folder here, or choose where its files go yourself.',
+        dropExtracted: 'Drop the extracted files here',
+        whatItNeeds: 'What it needs',
+        whatItNeedsColon: 'What it needs:',
+        afterSending: 'On the Switch after sending: ',
+        reading: 'Reading the files…',
+        nothingDropped: 'Nothing to read in what was dropped.',
+        dropUnreadable: 'The browser could not read what was dropped. Try "Choose files" instead.',
+        manualDrop: 'This game doesn\'t say where its files go. Open the folder they belong in below, then drop them onto that box.',
+        lookingAt: 'Looking at {0}…',
+        filesAndSize: '{0}, {1}',
+        alreadyMet: 'Already on the SD card; sending replaces it',
+        andMore: 'and {0} more',
+        willGoTo: 'Will go to:',
+        over4gb: '⚠ {0}: Over 4 GB: needs an exFAT SD card',
+        pickOne: 'These are different versions of the same thing. Pick one:',
+        none: 'None',
+        sendFiles: 'Send {0} ({1})',
+        nothingPicked: 'Nothing picked to send',
+        noneOfThese: 'None of these files is {0}',
+        looksFor: '{0} looks for:',
+        notNeededBy: 'Nothing here is needed by {0}',
+        notNeededByAny: 'Nothing here is needed by any game',
+        extractedOne: 'Make sure the game files are extracted (not still in a .zip or .7z). This is what it looks for:',
+        extractedEach: 'Make sure the game files are extracted (not still in a .zip or .7z). This is what each game looks for:',
+        found: 'Found',
+        unused_one: '{0} file isn\'t needed by any game and won\'t be sent.',
+        unused_other: '{0} files aren\'t needed by any game and won\'t be sent.',
+        keepOpen: 'Keep this page open and the screen on until it finishes.',
+        progressOf: '{0} of {1}',
+        perSecond: '{0}/s',
+        timeLeft: 'about {0} left',
+        sendingOf: 'Sending {0} of {1}',
+        cancel: 'Cancel',
+        cancelled: 'Sending was cancelled.',
+        listChanged: 'PortZone\'s list of files changed (another drop, or the screen was reopened). Drop the files again.',
+        lostConnection: 'Lost the connection to PortZone. Check that the Switch is still on the Send game files screen and on the same Wi-Fi, then try again.',
+        wrongSize: 'it isn\'t the size this game expects',
+        sent: 'Sent {0} ({1})',
+        noneSent: 'No files were sent',
+        notThrough: '{0} didn\'t go through:',
+        stillMissing: 'Still missing: {0}',
+        hasEverything: '{0} has everything it needs.',
+        allHaveEverything: 'These games have everything they need.',
+        sdCard: 'SD card',
+        emptyFolder: 'Empty folder',
+        folder: 'Folder',
+        filesFor: 'Files for {0}',
+        putOnSd: 'Put files on the SD card',
+        close: 'Close',
+        up: 'Up',
+        newFolder: 'New folder',
+        uploadHere: 'Upload files here',
+        uploadFolderHere: 'Upload a folder here',
+        browserHint: 'You can also drop files or folders onto this box; folders keep what\'s inside them.',
+        notYet: '{0}: This folder doesn\'t exist yet; uploading here creates it.',
+        folderPrompt: 'Name of the new folder:',
+        badFolderName: 'A folder name can\'t be empty or contain / \\ : or "..".',
+        clashFile: '{0} is already here as a file. Rename one of them first.',
+        clashFolder: '{0} is already here as a folder. Rename one of them first.',
+        mergeOne: 'Add to the existing folder {0}? Files with the same names inside it are replaced.',
+        mergeMany: 'Add to the existing folders {0}? Files with the same names inside them are replaced.',
+        replace_one: 'Replace {0} existing item?',
+        replace_other: 'Replace {0} existing items?',
+    },
+    es: {
+        title: 'PortZone: añade juegos desde tu PC',
+        heading: 'Añade juegos desde tu PC',
+        lead: 'Suelta aquí los archivos de los juegos que tienes. PortZone averigua qué necesita cada juego y envía solo esos archivos al lugar correcto de la tarjeta SD de la Switch.',
+        dropBig: 'Suelta aquí archivos o carpetas de juegos',
+        dropHint: 'PortZone mira los nombres y tamaños, averigua qué necesita cada juego y envía solo eso.',
+        chooseFolder: 'Elegir una carpeta',
+        chooseFiles: 'Elegir archivos',
+        browseSd: 'O coloca tú los archivos donde quieras',
+        allGames: 'Todos los juegos',
+        allGamesCount: 'Todos los juegos · {0}',
+        allGamesShown: 'Todos los juegos · {0} de {1}',
+        searchGames: 'Buscar juegos',
+        sortGames: 'Ordenar juegos',
+        sortAz: 'Orden: A–Z',
+        sortZa: 'Orden: Z–A',
+        sortSystem: 'Orden: sistema',
+        clearSearch: 'Borrar búsqueda',
+        noMatch: 'Ningún juego coincide con «{0}».',
+        loading: 'Cargando…',
+        noGames: 'No hay juegos que mostrar.',
+        otherGames: 'Otros juegos',
+        kindEasy: 'Fácil',
+        kindPrep: 'Preparar en PC',
+        kindPc: 'Compilar en PC',
+        kindManual: 'Manual',
+        by: 'de {0}',
+        files_one: '{0} archivo',
+        files_other: '{0} archivos',
+        cantReach: 'No se puede conectar con PortZone. Comprueba que la Switch está en la misma red Wi-Fi y que la pantalla Enviar archivos del juego sigue abierta.',
+        outOfDate: 'Este enlace está caducado. Abre la dirección que muestra PortZone en la Switch.',
+        noKey: 'A este enlace le falta la clave. Abre la dirección que muestra PortZone en la Switch.',
+        answered: 'PortZone respondió {0}.',
+        answeredShort: 'PortZone respondió {0}',
+        forbidden: 'PortZone no permite cambios ahí.',
+        specFolder: 'Una carpeta {0}',
+        specFolderMarkers: 'Una carpeta {0} con {1} dentro',
+        specFolderMatch: 'Una carpeta {0} con archivos {1} dentro',
+        optionOr: 'O {0}:',
+        optionNumber: 'Opción {0}',
+        onSd: '✓ En la tarjeta SD',
+        missing: 'Falta',
+        optional: 'Opcional',
+        optionalParen: ' (opcional)',
+        dropForThis: 'Suelta aquí los archivos para esto, o',
+        addFiles: 'Añadir archivos',
+        addFolder: 'Añadir una carpeta',
+        chooseMyself: 'Elegir yo dónde van los archivos',
+        noWhere: 'Este port no indica dónde van sus archivos. Sigue sus instrucciones y colócalos donde pida:',
+        howToAdd: 'Cómo añadirlo',
+        dropGame: 'Suelta aquí los archivos o carpetas de este juego',
+        picksOut: 'PortZone elige lo que necesita {0} y envía solo eso.',
+        makeWith: 'Crea los archivos del juego en tu PC con {0}',
+        makeOnPc: 'Crea los archivos del juego en tu PC.',
+        extract: 'Descomprime en tu PC lo que te dé (por ejemplo, un .zip).',
+        dropExtractedHint: 'Suelta aquí la carpeta descomprimida o elige tú dónde van sus archivos.',
+        dropExtracted: 'Suelta aquí los archivos descomprimidos',
+        whatItNeeds: 'Lo que necesita',
+        whatItNeedsColon: 'Lo que necesita:',
+        afterSending: 'En la Switch, después de enviar: ',
+        reading: 'Leyendo los archivos…',
+        nothingDropped: 'No hay nada que leer en lo que has soltado.',
+        dropUnreadable: 'El navegador no pudo leer lo que has soltado. Prueba con «Elegir archivos».',
+        manualDrop: 'Este juego no indica dónde van sus archivos. Abre abajo la carpeta a la que pertenecen y suéltalos en ese recuadro.',
+        lookingAt: 'Revisando {0}…',
+        alreadyMet: 'Ya está en la tarjeta SD; al enviarlo se reemplaza',
+        andMore: 'y {0} más',
+        willGoTo: 'Irá a:',
+        over4gb: '⚠ {0}: más de 4 GB: necesita una tarjeta SD exFAT',
+        pickOne: 'Son versiones distintas de lo mismo. Elige una:',
+        none: 'Ninguna',
+        sendFiles: 'Enviar {0} ({1})',
+        nothingPicked: 'No has elegido nada para enviar',
+        noneOfThese: 'Ninguno de estos archivos es {0}',
+        looksFor: '{0} busca:',
+        notNeededBy: 'Nada de esto lo necesita {0}',
+        notNeededByAny: 'Nada de esto lo necesita ningún juego',
+        extractedOne: 'Asegúrate de que los archivos del juego estén descomprimidos (no dentro de un .zip o .7z). Esto es lo que busca:',
+        extractedEach: 'Asegúrate de que los archivos del juego estén descomprimidos (no dentro de un .zip o .7z). Esto es lo que busca cada juego:',
+        found: 'Encontrado',
+        unused_one: '{0} archivo no lo necesita ningún juego y no se enviará.',
+        unused_other: '{0} archivos no los necesita ningún juego y no se enviarán.',
+        keepOpen: 'Mantén esta página abierta y la pantalla encendida hasta que termine.',
+        progressOf: '{0} de {1}',
+        timeLeft: 'quedan unos {0}',
+        sendingOf: 'Enviando {0} de {1}',
+        cancel: 'Cancelar',
+        cancelled: 'Se canceló el envío.',
+        listChanged: 'La lista de archivos de PortZone cambió (soltaste otros archivos o se volvió a abrir la pantalla). Suelta los archivos de nuevo.',
+        lostConnection: 'Se perdió la conexión con PortZone. Comprueba que la Switch sigue en la pantalla Enviar archivos del juego y en la misma red Wi-Fi, y vuelve a intentarlo.',
+        wrongSize: 'no tiene el tamaño que espera este juego',
+        sent: 'Enviado: {0} ({1})',
+        noneSent: 'No se envió ningún archivo',
+        notThrough: 'No se enviaron ({0}):',
+        stillMissing: 'Aún falta: {0}',
+        hasEverything: '{0} ya tiene todo lo que necesita.',
+        allHaveEverything: 'Estos juegos ya tienen todo lo que necesitan.',
+        sdCard: 'Tarjeta SD',
+        emptyFolder: 'Carpeta vacía',
+        folder: 'Carpeta',
+        filesFor: 'Archivos para {0}',
+        putOnSd: 'Poner archivos en la tarjeta SD',
+        close: 'Cerrar',
+        up: 'Subir',
+        newFolder: 'Nueva carpeta',
+        uploadHere: 'Subir archivos aquí',
+        uploadFolderHere: 'Subir una carpeta aquí',
+        browserHint: 'También puedes soltar archivos o carpetas en este recuadro; las carpetas conservan su contenido.',
+        notYet: '{0}: esta carpeta aún no existe; se creará al subir algo aquí.',
+        folderPrompt: 'Nombre de la nueva carpeta:',
+        badFolderName: 'El nombre de una carpeta no puede estar vacío ni contener / \\ : o "..".',
+        clashFile: '{0} ya existe aquí como archivo. Cambia antes el nombre de uno de los dos.',
+        clashFolder: '{0} ya existe aquí como carpeta. Cambia antes el nombre de uno de los dos.',
+        mergeOne: '¿Añadir a la carpeta existente {0}? Los archivos con el mismo nombre dentro se reemplazarán.',
+        mergeMany: '¿Añadir a las carpetas existentes {0}? Los archivos con el mismo nombre dentro se reemplazarán.',
+        replace_one: '¿Reemplazar {0} elemento existente?',
+        replace_other: '¿Reemplazar {0} elementos existentes?',
+    },
+    fr: {
+        title: 'PortZone : ajoutez des jeux depuis votre PC',
+        heading: 'Ajoutez des jeux depuis votre PC',
+        lead: 'Déposez ici les fichiers des jeux que vous possédez. PortZone détermine ce dont chaque jeu a besoin et envoie uniquement ces fichiers au bon endroit sur la carte SD de la Switch.',
+        dropBig: 'Déposez ici des fichiers ou dossiers de jeux',
+        dropHint: 'PortZone examine les noms et les tailles, trouve ce dont chaque jeu a besoin et n\'envoie que cela.',
+        chooseFolder: 'Choisir un dossier',
+        chooseFiles: 'Choisir des fichiers',
+        browseSd: 'Ou placez les fichiers vous-même',
+        allGames: 'Tous les jeux',
+        allGamesCount: 'Tous les jeux · {0}',
+        allGamesShown: 'Tous les jeux · {0} sur {1}',
+        searchGames: 'Rechercher des jeux',
+        sortGames: 'Trier les jeux',
+        sortAz: 'Tri : A–Z',
+        sortZa: 'Tri : Z–A',
+        sortSystem: 'Tri : système',
+        clearSearch: 'Effacer la recherche',
+        noMatch: 'Aucun jeu ne correspond à « {0} ».',
+        loading: 'Chargement…',
+        noGames: 'Aucun jeu à afficher.',
+        otherGames: 'Autres jeux',
+        kindEasy: 'Facile',
+        kindPrep: 'Préparer sur PC',
+        kindPc: 'Compiler sur PC',
+        kindManual: 'Manuel',
+        by: 'par {0}',
+        bytes_one: '{0} octet',
+        bytes_other: '{0} octets',
+        files_one: '{0} fichier',
+        files_other: '{0} fichiers',
+        pair: '{0} : {1}',
+        cantReach: 'Impossible de joindre PortZone. Vérifiez que la Switch est sur le même Wi-Fi et que l\'écran Envoyer des fichiers du jeu est toujours ouvert.',
+        outOfDate: 'Ce lien n\'est plus valable. Ouvrez l\'adresse que PortZone affiche sur la Switch.',
+        noKey: 'Il manque la clé dans ce lien. Ouvrez l\'adresse que PortZone affiche sur la Switch.',
+        answered: 'PortZone a répondu {0}.',
+        answeredShort: 'PortZone a répondu {0}',
+        forbidden: 'PortZone n\'autorise pas de modifications à cet endroit.',
+        specFolder: 'Un dossier {0}',
+        specFolderMarkers: 'Un dossier {0} contenant {1}',
+        specFolderMatch: 'Un dossier {0} contenant des fichiers {1}',
+        option: '{0} :',
+        optionOr: 'Ou {0} :',
+        optionNumber: 'Option {0}',
+        onSd: '✓ Sur la carte SD',
+        missing: 'Manquant',
+        optional: 'Facultatif',
+        optionalParen: ' (facultatif)',
+        dropForThis: 'Déposez les fichiers correspondants ici, ou',
+        addFiles: 'Ajouter des fichiers',
+        addFolder: 'Ajouter un dossier',
+        chooseMyself: 'Choisir moi-même où vont les fichiers',
+        noWhere: 'Ce portage n\'indique pas où vont ses fichiers. Suivez ses instructions et placez-les là où il le demande :',
+        howToAdd: 'Comment l\'ajouter',
+        dropGame: 'Déposez ici les fichiers ou dossiers de ce jeu',
+        picksOut: 'PortZone repère ce dont {0} a besoin et n\'envoie que cela.',
+        makeWith: 'Créez les fichiers du jeu sur votre PC avec {0}',
+        makeOnPc: 'Créez les fichiers du jeu sur votre PC.',
+        extract: 'Extrayez sur votre PC ce que vous obtenez (par exemple un .zip).',
+        dropExtractedHint: 'Déposez ici le dossier extrait, ou choisissez vous-même où vont ses fichiers.',
+        dropExtracted: 'Déposez ici les fichiers extraits',
+        whatItNeeds: 'Ce qu\'il faut',
+        whatItNeedsColon: 'Ce qu\'il faut :',
+        afterSending: 'Sur la Switch après l\'envoi : ',
+        reading: 'Lecture des fichiers…',
+        nothingDropped: 'Rien à lire dans ce qui a été déposé.',
+        dropUnreadable: 'Le navigateur n\'a pas pu lire ce qui a été déposé. Essayez plutôt « Choisir des fichiers ».',
+        manualDrop: 'Ce jeu n\'indique pas où vont ses fichiers. Ouvrez ci-dessous le dossier où ils doivent aller, puis déposez-les dans ce cadre.',
+        lookingAt: 'Analyse de {0}…',
+        alreadyMet: 'Déjà sur la carte SD ; l\'envoi le remplace',
+        andMore: 'et {0} de plus',
+        willGoTo: 'Destination :',
+        over4gb: '⚠ {0} : plus de 4 GB : nécessite une carte SD en exFAT',
+        pickOne: 'Ce sont différentes versions de la même chose. Choisissez-en une :',
+        none: 'Aucune',
+        sendFiles: 'Envoyer {0} ({1})',
+        nothingPicked: 'Rien de sélectionné à envoyer',
+        noneOfThese: 'Aucun de ces fichiers n\'est {0}',
+        looksFor: '{0} recherche :',
+        notNeededBy: 'Rien ici n\'est utile à {0}',
+        notNeededByAny: 'Rien ici n\'est utile à aucun jeu',
+        extractedOne: 'Vérifiez que les fichiers du jeu sont extraits (et plus dans un .zip ou un .7z). Voici ce qu\'il recherche :',
+        extractedEach: 'Vérifiez que les fichiers du jeu sont extraits (et plus dans un .zip ou un .7z). Voici ce que recherche chaque jeu :',
+        found: 'Trouvé',
+        unused_one: '{0} fichier n\'est utile à aucun jeu et ne sera pas envoyé.',
+        unused_other: '{0} fichiers ne sont utiles à aucun jeu et ne seront pas envoyés.',
+        keepOpen: 'Gardez cette page ouverte et l\'écran allumé jusqu\'à la fin.',
+        progressOf: '{0} sur {1}',
+        timeLeft: 'encore environ {0}',
+        sendingOf: 'Envoi {0} sur {1}',
+        cancel: 'Annuler',
+        cancelled: 'L\'envoi a été annulé.',
+        listChanged: 'La liste de fichiers de PortZone a changé (un autre dépôt, ou l\'écran a été rouvert). Déposez à nouveau les fichiers.',
+        lostConnection: 'Connexion à PortZone perdue. Vérifiez que la Switch est toujours sur l\'écran Envoyer des fichiers du jeu et sur le même Wi-Fi, puis réessayez.',
+        wrongSize: 'sa taille ne correspond pas à celle attendue par ce jeu',
+        sent: 'Envoyé : {0} ({1})',
+        noneSent: 'Aucun fichier n\'a été envoyé',
+        notThrough: 'Échec de l\'envoi ({0}) :',
+        stillMissing: 'Il manque encore : {0}',
+        missingSep: ' ; ',
+        hasEverything: '{0} a tout ce qu\'il lui faut.',
+        allHaveEverything: 'Ces jeux ont tout ce qu\'il leur faut.',
+        sdCard: 'Carte SD',
+        emptyFolder: 'Dossier vide',
+        folder: 'Dossier',
+        filesFor: 'Fichiers pour {0}',
+        putOnSd: 'Placer des fichiers sur la carte SD',
+        close: 'Fermer',
+        up: 'Remonter',
+        newFolder: 'Nouveau dossier',
+        uploadHere: 'Envoyer des fichiers ici',
+        uploadFolderHere: 'Envoyer un dossier ici',
+        browserHint: 'Vous pouvez aussi déposer des fichiers ou dossiers dans ce cadre ; les dossiers gardent leur contenu.',
+        notYet: '{0} : ce dossier n\'existe pas encore ; il sera créé lors de l\'envoi.',
+        folderPrompt: 'Nom du nouveau dossier :',
+        badFolderName: 'Un nom de dossier ne peut pas être vide ni contenir / \\ : ou « .. ».',
+        clashFile: '{0} existe déjà ici comme fichier. Renommez d\'abord l\'un des deux.',
+        clashFolder: '{0} existe déjà ici comme dossier. Renommez d\'abord l\'un des deux.',
+        mergeOne: 'Ajouter au dossier existant {0} ? Les fichiers du même nom qu\'il contient seront remplacés.',
+        mergeMany: 'Ajouter aux dossiers existants {0} ? Les fichiers du même nom qu\'ils contiennent seront remplacés.',
+        replace_one: 'Remplacer {0} élément existant ?',
+        replace_other: 'Remplacer {0} éléments existants ?',
+    },
+    de: {
+        title: 'PortZone: Spiele vom PC hinzufügen',
+        heading: 'Spiele vom PC hinzufügen',
+        lead: 'Zieh die Spieldateien, die du besitzt, hierher. PortZone ermittelt, was jedes Spiel braucht, und schickt genau diese Dateien an die richtige Stelle auf der SD-Karte der Switch.',
+        dropBig: 'Spieldateien oder -ordner hier ablegen',
+        dropHint: 'PortZone prüft Namen und Größen, findet, was jedes Spiel braucht, und sendet nur das.',
+        chooseFolder: 'Ordner auswählen',
+        chooseFiles: 'Dateien auswählen',
+        browseSd: 'Oder Dateien selbst ablegen',
+        allGames: 'Alle Spiele',
+        allGamesCount: 'Alle Spiele · {0}',
+        allGamesShown: 'Alle Spiele · {0} von {1}',
+        searchGames: 'Spiele suchen',
+        sortGames: 'Spiele sortieren',
+        sortAz: 'Sortierung: A–Z',
+        sortZa: 'Sortierung: Z–A',
+        sortSystem: 'Sortierung: System',
+        clearSearch: 'Suche löschen',
+        noMatch: 'Keine Spiele passen zu „{0}“.',
+        loading: 'Wird geladen…',
+        noGames: 'Keine Spiele vorhanden.',
+        otherGames: 'Andere Spiele',
+        kindEasy: 'Einfach',
+        kindPrep: 'Am PC vorbereiten',
+        kindPc: 'Am PC kompilieren',
+        kindManual: 'Manuell',
+        by: 'von {0}',
+        bytes_one: '{0} Byte',
+        bytes_other: '{0} Byte',
+        files_one: '{0} Datei',
+        files_other: '{0} Dateien',
+        cantReach: 'PortZone ist nicht erreichbar. Prüfe, ob die Switch im selben WLAN ist und der Bildschirm „Spieldateien senden“ noch offen ist.',
+        outOfDate: 'Dieser Link ist veraltet. Öffne die Adresse, die PortZone auf der Switch anzeigt.',
+        noKey: 'Diesem Link fehlt der Schlüssel. Öffne die Adresse, die PortZone auf der Switch anzeigt.',
+        answered: 'PortZone antwortete mit {0}.',
+        answeredShort: 'PortZone antwortete mit {0}',
+        forbidden: 'PortZone erlaubt dort keine Änderungen.',
+        specFolder: 'Ein Ordner {0}',
+        specFolderMarkers: 'Ein Ordner {0} mit {1} darin',
+        specFolderMatch: 'Ein Ordner {0} mit {1}-Dateien darin',
+        optionOr: 'Oder {0}:',
+        optionNumber: 'Option {0}',
+        onSd: '✓ Auf der SD-Karte',
+        missing: 'Fehlt',
+        optional: 'Optional',
+        optionalParen: ' (optional)',
+        dropForThis: 'Dateien dafür hier ablegen oder',
+        addFiles: 'Dateien hinzufügen',
+        addFolder: 'Ordner hinzufügen',
+        chooseMyself: 'Selbst wählen, wohin die Dateien kommen',
+        noWhere: 'Dieser Port gibt nicht an, wohin seine Dateien gehören. Folge seiner Anleitung und leg sie dort ab, wo er es verlangt:',
+        howToAdd: 'So fügst du es hinzu',
+        dropGame: 'Dateien oder Ordner dieses Spiels hier ablegen',
+        picksOut: 'PortZone sucht heraus, was {0} braucht, und sendet nur das.',
+        makeWith: 'Erstelle die Spieldateien auf deinem PC mit {0}',
+        makeOnPc: 'Erstelle die Spieldateien auf deinem PC.',
+        extract: 'Entpacke auf deinem PC, was du erhältst (zum Beispiel eine .zip).',
+        dropExtractedHint: 'Leg den entpackten Ordner hier ab oder wähle selbst, wohin seine Dateien kommen.',
+        dropExtracted: 'Entpackte Dateien hier ablegen',
+        whatItNeeds: 'Was es braucht',
+        whatItNeedsColon: 'Was es braucht:',
+        afterSending: 'Auf der Switch nach dem Senden: ',
+        reading: 'Dateien werden gelesen…',
+        nothingDropped: 'Im Abgelegten gibt es nichts zu lesen.',
+        dropUnreadable: 'Der Browser konnte das Abgelegte nicht lesen. Versuch es stattdessen mit „Dateien auswählen“.',
+        manualDrop: 'Dieses Spiel gibt nicht an, wohin seine Dateien gehören. Öffne unten den Ordner, in den sie gehören, und leg sie in diesem Feld ab.',
+        lookingAt: 'Prüfe {0}…',
+        alreadyMet: 'Schon auf der SD-Karte; Senden ersetzt es',
+        andMore: 'und {0} weitere',
+        willGoTo: 'Ziel:',
+        over4gb: '⚠ {0}: Über 4 GB: braucht eine SD-Karte mit exFAT',
+        pickOne: 'Das sind verschiedene Versionen desselben. Wähle eine:',
+        none: 'Keine',
+        sendFiles: '{0} senden ({1})',
+        nothingPicked: 'Nichts zum Senden ausgewählt',
+        noneOfThese: 'Keine dieser Dateien ist {0}',
+        looksFor: '{0} sucht nach:',
+        notNeededBy: 'Nichts hiervon braucht {0}',
+        notNeededByAny: 'Nichts hiervon braucht ein Spiel',
+        extractedOne: 'Achte darauf, dass die Spieldateien entpackt sind (nicht mehr in einer .zip oder .7z). Danach sucht es:',
+        extractedEach: 'Achte darauf, dass die Spieldateien entpackt sind (nicht mehr in einer .zip oder .7z). Danach sucht jedes Spiel:',
+        found: 'Gefunden',
+        unused_one: '{0} Datei braucht kein Spiel, sie wird nicht gesendet.',
+        unused_other: '{0} Dateien braucht kein Spiel, sie werden nicht gesendet.',
+        keepOpen: 'Lass diese Seite geöffnet und den Bildschirm an, bis alles fertig ist.',
+        progressOf: '{0} von {1}',
+        timeLeft: 'noch etwa {0}',
+        sendingOf: 'Sende {0} von {1}',
+        cancel: 'Abbrechen',
+        cancelled: 'Das Senden wurde abgebrochen.',
+        listChanged: 'Die Dateiliste von PortZone hat sich geändert (neu abgelegt oder der Bildschirm wurde neu geöffnet). Leg die Dateien erneut ab.',
+        lostConnection: 'Die Verbindung zu PortZone ist abgebrochen. Prüfe, ob die Switch noch im Bildschirm „Spieldateien senden“ und im selben WLAN ist, und versuch es erneut.',
+        wrongSize: 'sie hat nicht die Größe, die dieses Spiel erwartet',
+        sent: '{0} gesendet ({1})',
+        noneSent: 'Es wurden keine Dateien gesendet',
+        notThrough: '{0} nicht übertragen:',
+        stillMissing: 'Fehlt noch: {0}',
+        hasEverything: '{0} hat alles, was es braucht.',
+        allHaveEverything: 'Diese Spiele haben alles, was sie brauchen.',
+        sdCard: 'SD-Karte',
+        emptyFolder: 'Leerer Ordner',
+        folder: 'Ordner',
+        filesFor: 'Dateien für {0}',
+        putOnSd: 'Dateien auf die SD-Karte legen',
+        close: 'Schließen',
+        up: 'Nach oben',
+        newFolder: 'Neuer Ordner',
+        uploadHere: 'Dateien hierher hochladen',
+        uploadFolderHere: 'Ordner hierher hochladen',
+        browserHint: 'Du kannst Dateien oder Ordner auch in dieses Feld ziehen; Ordner behalten ihren Inhalt.',
+        notYet: '{0}: Dieser Ordner existiert noch nicht; beim Hochladen wird er angelegt.',
+        folderPrompt: 'Name des neuen Ordners:',
+        badFolderName: 'Ein Ordnername darf nicht leer sein und kein / \\ : oder „..“ enthalten.',
+        clashFile: '{0} gibt es hier schon als Datei. Benenne zuerst eins davon um.',
+        clashFolder: '{0} gibt es hier schon als Ordner. Benenne zuerst eins davon um.',
+        mergeOne: 'Zum vorhandenen Ordner {0} hinzufügen? Gleichnamige Dateien darin werden ersetzt.',
+        mergeMany: 'Zu den vorhandenen Ordnern {0} hinzufügen? Gleichnamige Dateien darin werden ersetzt.',
+        replace_one: '{0} vorhandenes Element ersetzen?',
+        replace_other: '{0} vorhandene Elemente ersetzen?',
+    },
+    it: {
+        title: 'PortZone: aggiungi giochi dal PC',
+        heading: 'Aggiungi giochi dal PC',
+        lead: 'Trascina qui i file dei giochi che possiedi. PortZone capisce cosa serve a ogni gioco e invia solo quei file nel posto giusto sulla scheda SD della Switch.',
+        dropBig: 'Trascina qui file o cartelle dei giochi',
+        dropHint: 'PortZone guarda nomi e dimensioni, trova cosa serve a ogni gioco e invia solo quello.',
+        chooseFolder: 'Scegli una cartella',
+        chooseFiles: 'Scegli i file',
+        browseSd: 'Oppure metti tu i file dove vuoi',
+        allGames: 'Tutti i giochi',
+        allGamesCount: 'Tutti i giochi · {0}',
+        allGamesShown: 'Tutti i giochi · {0} di {1}',
+        searchGames: 'Cerca giochi',
+        sortGames: 'Ordina giochi',
+        sortAz: 'Ordine: A–Z',
+        sortZa: 'Ordine: Z–A',
+        sortSystem: 'Ordine: sistema',
+        clearSearch: 'Cancella ricerca',
+        noMatch: 'Nessun gioco corrisponde a «{0}».',
+        loading: 'Caricamento…',
+        noGames: 'Nessun gioco da mostrare.',
+        otherGames: 'Altri giochi',
+        kindEasy: 'Facile',
+        kindPrep: 'Prepara su PC',
+        kindPc: 'Compila su PC',
+        kindManual: 'Manuale',
+        by: 'di {0}',
+        bytes_other: '{0} byte',
+        files_other: '{0} file',
+        cantReach: 'Impossibile raggiungere PortZone. Controlla che la Switch sia sulla stessa rete Wi-Fi e che la schermata Invia file di gioco sia ancora aperta.',
+        outOfDate: 'Questo link non è più valido. Apri l\'indirizzo che PortZone mostra sulla Switch.',
+        noKey: 'In questo link manca la chiave. Apri l\'indirizzo che PortZone mostra sulla Switch.',
+        answered: 'PortZone ha risposto {0}.',
+        answeredShort: 'PortZone ha risposto {0}',
+        forbidden: 'PortZone non consente modifiche lì.',
+        specFolder: 'Una cartella {0}',
+        specFolderMarkers: 'Una cartella {0} con dentro {1}',
+        specFolderMatch: 'Una cartella {0} con dentro file {1}',
+        optionOr: 'Oppure {0}:',
+        optionNumber: 'Opzione {0}',
+        onSd: '✓ Sulla scheda SD',
+        missing: 'Mancante',
+        optional: 'Facoltativo',
+        optionalParen: ' (facoltativo)',
+        dropForThis: 'Trascina qui i file per questo, oppure',
+        addFiles: 'Aggiungi file',
+        addFolder: 'Aggiungi una cartella',
+        chooseMyself: 'Scegli tu dove vanno i file',
+        noWhere: 'Questo port non indica dove vanno i suoi file. Segui le sue istruzioni e mettili dove richiesto:',
+        howToAdd: 'Come aggiungerlo',
+        dropGame: 'Trascina qui i file o le cartelle di questo gioco',
+        picksOut: 'PortZone seleziona ciò che serve a {0} e invia solo quello.',
+        makeWith: 'Crea i file del gioco sul tuo PC con {0}',
+        makeOnPc: 'Crea i file del gioco sul tuo PC.',
+        extract: 'Estrai sul PC quello che ottieni (per esempio un .zip).',
+        dropExtractedHint: 'Trascina qui la cartella estratta, oppure scegli tu dove vanno i suoi file.',
+        dropExtracted: 'Trascina qui i file estratti',
+        whatItNeeds: 'Cosa serve',
+        whatItNeedsColon: 'Cosa serve:',
+        afterSending: 'Sulla Switch dopo l\'invio: ',
+        reading: 'Lettura dei file…',
+        nothingDropped: 'Non c\'è niente da leggere in ciò che hai trascinato.',
+        dropUnreadable: 'Il browser non è riuscito a leggere ciò che hai trascinato. Prova invece con «Scegli i file».',
+        manualDrop: 'Questo gioco non indica dove vanno i suoi file. Apri qui sotto la cartella in cui vanno, poi trascinali in quel riquadro.',
+        lookingAt: 'Analisi di {0}…',
+        alreadyMet: 'Già sulla scheda SD; inviandolo lo sostituisci',
+        andMore: 'e altri {0}',
+        willGoTo: 'Destinazione:',
+        over4gb: '⚠ {0}: oltre 4 GB: serve una scheda SD exFAT',
+        pickOne: 'Sono versioni diverse della stessa cosa. Scegline una:',
+        none: 'Nessuna',
+        sendFiles: 'Invia {0} ({1})',
+        nothingPicked: 'Niente selezionato da inviare',
+        noneOfThese: 'Nessuno di questi file è {0}',
+        looksFor: '{0} cerca:',
+        notNeededBy: 'Niente qui serve a {0}',
+        notNeededByAny: 'Niente qui serve ad alcun gioco',
+        extractedOne: 'Assicurati che i file del gioco siano estratti (non ancora in un .zip o .7z). Ecco cosa cerca:',
+        extractedEach: 'Assicurati che i file del gioco siano estratti (non ancora in un .zip o .7z). Ecco cosa cerca ogni gioco:',
+        found: 'Trovato',
+        unused_one: '{0} file non serve a nessun gioco e non verrà inviato.',
+        unused_other: '{0} file non servono a nessun gioco e non verranno inviati.',
+        keepOpen: 'Tieni aperta questa pagina e lo schermo acceso finché non finisce.',
+        progressOf: '{0} di {1}',
+        timeLeft: 'circa {0} rimanenti',
+        sendingOf: 'Invio {0} di {1}',
+        cancel: 'Annulla',
+        cancelled: 'Invio annullato.',
+        listChanged: 'L\'elenco dei file di PortZone è cambiato (un altro trascinamento, o la schermata è stata riaperta). Trascina di nuovo i file.',
+        lostConnection: 'Connessione con PortZone persa. Controlla che la Switch sia ancora nella schermata Invia file di gioco e sulla stessa rete Wi-Fi, poi riprova.',
+        wrongSize: 'non ha la dimensione che questo gioco si aspetta',
+        sent: 'Invio completato: {0} ({1})',
+        noneSent: 'Nessun file inviato',
+        notThrough: 'Non inviati ({0}):',
+        stillMissing: 'Manca ancora: {0}',
+        hasEverything: '{0} ha tutto ciò che gli serve.',
+        allHaveEverything: 'Questi giochi hanno tutto ciò che serve.',
+        sdCard: 'Scheda SD',
+        emptyFolder: 'Cartella vuota',
+        folder: 'Cartella',
+        filesFor: 'File per {0}',
+        putOnSd: 'Metti file sulla scheda SD',
+        close: 'Chiudi',
+        up: 'Su',
+        newFolder: 'Nuova cartella',
+        uploadHere: 'Carica file qui',
+        uploadFolderHere: 'Carica una cartella qui',
+        browserHint: 'Puoi anche trascinare file o cartelle in questo riquadro; le cartelle mantengono il loro contenuto.',
+        notYet: '{0}: questa cartella non esiste ancora; caricando qui verrà creata.',
+        folderPrompt: 'Nome della nuova cartella:',
+        badFolderName: 'Il nome di una cartella non può essere vuoto né contenere / \\ : o "..".',
+        clashFile: '{0} è già qui come file. Rinomina prima uno dei due.',
+        clashFolder: '{0} è già qui come cartella. Rinomina prima uno dei due.',
+        mergeOne: 'Aggiungere alla cartella esistente {0}? I file con lo stesso nome al suo interno verranno sostituiti.',
+        mergeMany: 'Aggiungere alle cartelle esistenti {0}? I file con lo stesso nome al loro interno verranno sostituiti.',
+        replace_one: 'Sostituire {0} elemento esistente?',
+        replace_other: 'Sostituire {0} elementi esistenti?',
+    },
+    'pt-BR': {
+        title: 'PortZone: adicione jogos pelo PC',
+        heading: 'Adicione jogos pelo PC',
+        lead: 'Solte aqui os arquivos dos jogos que você tem. O PortZone descobre o que cada jogo precisa e envia só esses arquivos para o lugar certo no cartão SD do Switch.',
+        dropBig: 'Solte aqui arquivos ou pastas de jogos',
+        dropHint: 'O PortZone olha os nomes e tamanhos, descobre o que cada jogo precisa e envia só isso.',
+        chooseFolder: 'Escolher uma pasta',
+        chooseFiles: 'Escolher arquivos',
+        browseSd: 'Ou coloque você mesmo os arquivos onde quiser',
+        allGames: 'Todos os jogos',
+        allGamesCount: 'Todos os jogos · {0}',
+        allGamesShown: 'Todos os jogos · {0} de {1}',
+        searchGames: 'Buscar jogos',
+        sortGames: 'Ordenar jogos',
+        sortAz: 'Ordem: A–Z',
+        sortZa: 'Ordem: Z–A',
+        sortSystem: 'Ordem: sistema',
+        clearSearch: 'Limpar busca',
+        noMatch: 'Nenhum jogo corresponde a “{0}”.',
+        loading: 'Carregando…',
+        noGames: 'Nenhum jogo para mostrar.',
+        otherGames: 'Outros jogos',
+        kindEasy: 'Instalação fácil',
+        kindPrep: 'Preparar no PC',
+        kindPc: 'Compilar no PC',
+        kindManual: 'Manual',
+        by: 'por {0}',
+        files_one: '{0} arquivo',
+        files_other: '{0} arquivos',
+        cantReach: 'Não foi possível conectar ao PortZone. Verifique se o Switch está na mesma rede Wi-Fi e se a tela Enviar arquivos do jogo continua aberta.',
+        outOfDate: 'Este link está desatualizado. Abra o endereço que o PortZone mostra no Switch.',
+        noKey: 'Falta a chave neste link. Abra o endereço que o PortZone mostra no Switch.',
+        answered: 'O PortZone respondeu {0}.',
+        answeredShort: 'O PortZone respondeu {0}',
+        forbidden: 'O PortZone não permite alterações aí.',
+        specFolder: 'Uma pasta {0}',
+        specFolderMarkers: 'Uma pasta {0} com {1} dentro',
+        specFolderMatch: 'Uma pasta {0} com arquivos {1} dentro',
+        optionOr: 'Ou {0}:',
+        optionNumber: 'Opção {0}',
+        onSd: '✓ No cartão SD',
+        missing: 'Faltando',
+        optional: 'Opcional',
+        optionalParen: ' (opcional)',
+        dropForThis: 'Solte aqui os arquivos para isto, ou',
+        addFiles: 'Adicionar arquivos',
+        addFolder: 'Adicionar uma pasta',
+        chooseMyself: 'Escolher eu mesmo onde ficam os arquivos',
+        noWhere: 'Este port não diz onde ficam seus arquivos. Siga as instruções dele e coloque-os onde ele pede:',
+        howToAdd: 'Como adicionar',
+        dropGame: 'Solte aqui os arquivos ou pastas deste jogo',
+        picksOut: 'O PortZone separa o que {0} precisa e envia só isso.',
+        makeWith: 'Crie os arquivos do jogo no seu PC com {0}',
+        makeOnPc: 'Crie os arquivos do jogo no seu PC.',
+        extract: 'Extraia no seu PC o que ele gerar (por exemplo, um .zip).',
+        dropExtractedHint: 'Solte aqui a pasta extraída, ou escolha você mesmo onde ficam os arquivos.',
+        dropExtracted: 'Solte aqui os arquivos extraídos',
+        whatItNeeds: 'Do que ele precisa',
+        whatItNeedsColon: 'Do que ele precisa:',
+        afterSending: 'No Switch, depois de enviar: ',
+        reading: 'Lendo os arquivos…',
+        nothingDropped: 'Não há nada para ler no que foi solto.',
+        dropUnreadable: 'O navegador não conseguiu ler o que foi solto. Tente “Escolher arquivos”.',
+        manualDrop: 'Este jogo não diz onde ficam seus arquivos. Abra abaixo a pasta onde eles devem ficar e solte-os nessa caixa.',
+        lookingAt: 'Analisando {0}…',
+        alreadyMet: 'Já está no cartão SD; enviar substitui',
+        andMore: 'e mais {0}',
+        willGoTo: 'Vai para:',
+        over4gb: '⚠ {0}: mais de 4 GB: precisa de um cartão SD exFAT',
+        pickOne: 'Estas são versões diferentes da mesma coisa. Escolha uma:',
+        none: 'Nenhuma',
+        sendFiles: 'Enviar {0} ({1})',
+        nothingPicked: 'Nada escolhido para enviar',
+        noneOfThese: 'Nenhum destes arquivos é {0}',
+        looksFor: '{0} procura:',
+        notNeededBy: 'Nada aqui é necessário para {0}',
+        notNeededByAny: 'Nada aqui é necessário para nenhum jogo',
+        extractedOne: 'Verifique se os arquivos do jogo estão extraídos (e não ainda em um .zip ou .7z). Isto é o que ele procura:',
+        extractedEach: 'Verifique se os arquivos do jogo estão extraídos (e não ainda em um .zip ou .7z). Isto é o que cada jogo procura:',
+        found: 'Encontrado',
+        unused_one: '{0} arquivo não é necessário para nenhum jogo e não será enviado.',
+        unused_other: '{0} arquivos não são necessários para nenhum jogo e não serão enviados.',
+        keepOpen: 'Mantenha esta página aberta e a tela ligada até terminar.',
+        progressOf: '{0} de {1}',
+        timeLeft: 'cerca de {0} restantes',
+        sendingOf: 'Enviando {0} de {1}',
+        cancel: 'Cancelar',
+        cancelled: 'O envio foi cancelado.',
+        listChanged: 'A lista de arquivos do PortZone mudou (outros arquivos foram soltos, ou a tela foi reaberta). Solte os arquivos de novo.',
+        lostConnection: 'A conexão com o PortZone caiu. Verifique se o Switch continua na tela Enviar arquivos do jogo e na mesma rede Wi-Fi, e tente de novo.',
+        wrongSize: 'não tem o tamanho que este jogo espera',
+        sent: 'Enviado: {0} ({1})',
+        noneSent: 'Nenhum arquivo foi enviado',
+        notThrough: 'Não enviados ({0}):',
+        stillMissing: 'Ainda falta: {0}',
+        hasEverything: '{0} tem tudo o que precisa.',
+        allHaveEverything: 'Estes jogos têm tudo o que precisam.',
+        sdCard: 'Cartão SD',
+        emptyFolder: 'Pasta vazia',
+        folder: 'Pasta',
+        filesFor: 'Arquivos para {0}',
+        putOnSd: 'Colocar arquivos no cartão SD',
+        close: 'Fechar',
+        up: 'Subir',
+        newFolder: 'Nova pasta',
+        uploadHere: 'Enviar arquivos para cá',
+        uploadFolderHere: 'Enviar uma pasta para cá',
+        browserHint: 'Você também pode soltar arquivos ou pastas nesta caixa; as pastas mantêm o que há dentro.',
+        notYet: '{0}: esta pasta ainda não existe; enviar algo para cá a cria.',
+        folderPrompt: 'Nome da nova pasta:',
+        badFolderName: 'O nome da pasta não pode ficar vazio nem conter / \\ : ou "..".',
+        clashFile: '{0} já existe aqui como arquivo. Renomeie um deles antes.',
+        clashFolder: '{0} já existe aqui como pasta. Renomeie um deles antes.',
+        mergeOne: 'Adicionar à pasta existente {0}? Arquivos com o mesmo nome dentro dela serão substituídos.',
+        mergeMany: 'Adicionar às pastas existentes {0}? Arquivos com o mesmo nome dentro delas serão substituídos.',
+        replace_one: 'Substituir {0} item existente?',
+        replace_other: 'Substituir {0} itens existentes?',
+    },
+    ja: {
+        title: 'PortZone：PCからゲームを追加',
+        heading: 'PCからゲームを追加',
+        lead: 'お持ちのゲームのファイルをここにドロップしてください。PortZoneが各ゲームに必要なものを見つけ、そのファイルだけをSwitchのSDカードの正しい場所へ送ります。',
+        dropBig: 'ゲームのファイルやフォルダをここにドロップ',
+        dropHint: 'PortZoneが名前とサイズから各ゲームに必要なものを見つけ、それだけを送ります。',
+        chooseFolder: 'フォルダを選択',
+        chooseFiles: 'ファイルを選択',
+        browseSd: 'または自分で好きな場所に置く',
+        allGames: 'すべてのゲーム',
+        allGamesCount: 'すべてのゲーム · {0}',
+        allGamesShown: 'すべてのゲーム · {0} / {1}',
+        searchGames: 'ゲームを検索',
+        sortGames: 'ゲームの並び替え',
+        sortAz: '並び順：A–Z',
+        sortZa: '並び順：Z–A',
+        sortSystem: '並び順：機種',
+        clearSearch: '検索をクリア',
+        noMatch: '「{0}」に一致するゲームはありません。',
+        loading: '読み込み中…',
+        noGames: '表示するゲームがありません。',
+        otherGames: 'ほかのゲーム',
+        kindEasy: 'かんたん設定',
+        kindPrep: 'PCで準備',
+        kindPc: 'PCでビルド',
+        kindManual: '手動',
+        by: '作者：{0}',
+        bytes_one: '{0} バイト',
+        bytes_other: '{0} バイト',
+        seconds: '{0}秒',
+        minutes: '{0}分',
+        hoursMinutes: '{0}時間{1}分',
+        files_one: 'ファイル{0}個',
+        files_other: 'ファイル{0}個',
+        listSep: '、',
+        missingSep: '／',
+        pair: '{0}：{1}',
+        paren: '（{0}）',
+        cantReach: 'PortZoneに接続できません。Switchが同じWi-Fiにつながっていて、「ゲームファイルを送る」画面が開いたままか確認してください。',
+        outOfDate: 'このリンクは古くなっています。PortZoneがSwitchに表示しているアドレスを開いてください。',
+        noKey: 'このリンクにはキーがありません。PortZoneがSwitchに表示しているアドレスを開いてください。',
+        answered: 'PortZoneがエラー{0}を返しました。',
+        answeredShort: 'PortZoneがエラー{0}を返しました',
+        forbidden: 'PortZoneではその場所を変更できません。',
+        specFolder: 'フォルダ {0}',
+        specFolderMarkers: '{1} が入ったフォルダ {0}',
+        specFolderMatch: '{1} ファイルが入ったフォルダ {0}',
+        option: '{0}：',
+        optionOr: 'または {0}：',
+        optionNumber: '選択肢 {0}',
+        onSd: '✓ SDカードにあります',
+        missing: '不足',
+        optional: '任意',
+        optionalParen: '（任意）',
+        dropForThis: 'ここにファイルをドロップ、または',
+        addFiles: 'ファイルを追加',
+        addFolder: 'フォルダを追加',
+        chooseMyself: '置き場所を自分で選ぶ',
+        noWhere: 'このポートはファイルの置き場所を指定していません。説明に従って、指示された場所に置いてください：',
+        howToAdd: '追加のしかた',
+        dropGame: 'このゲームのファイルやフォルダをここにドロップ',
+        picksOut: 'PortZoneが{0}に必要なものだけを選んで送ります。',
+        makeWith: '{0}でゲームのファイルをPC上に作成',
+        makeOnPc: 'PCでゲームのファイルを作成します。',
+        extract: 'できたもの（.zipなど）をPCで展開します。',
+        dropExtractedHint: '展開したフォルダをここにドロップするか、ファイルの置き場所を自分で選びます。',
+        dropExtracted: '展開したファイルをここにドロップ',
+        whatItNeeds: '必要なもの',
+        whatItNeedsColon: '必要なもの：',
+        afterSending: '送信後にSwitchで：',
+        reading: 'ファイルを読み込み中…',
+        nothingDropped: 'ドロップされたものに読み込めるファイルがありません。',
+        dropUnreadable: 'ブラウザがドロップされたものを読み込めませんでした。代わりに「ファイルを選択」を使ってください。',
+        manualDrop: 'このゲームはファイルの置き場所を指定していません。下で置き場所のフォルダを開き、そのボックスにドロップしてください。',
+        lookingAt: '{0}を確認中…',
+        filesAndSize: '{0}、{1}',
+        alreadyMet: 'SDカードにあります。送信すると置き換えます',
+        andMore: 'ほか{0}個',
+        willGoTo: '送り先：',
+        over4gb: '⚠ {0}：4 GBを超えています。exFATのSDカードが必要です',
+        pickOne: '同じもののバージョン違いです。1つ選んでください：',
+        none: 'なし',
+        sendFiles: '{0}を送信（{1}）',
+        nothingPicked: '送信するものが選ばれていません',
+        noneOfThese: 'どのファイルも「{0}」ではありません',
+        looksFor: '{0}が探しているもの：',
+        notNeededBy: '{0}に必要なものはありません',
+        notNeededByAny: 'どのゲームにも必要なものはありません',
+        extractedOne: 'ゲームのファイルが展開済みか（.zipや.7zのままでないか）確認してください。このゲームが探しているもの：',
+        extractedEach: 'ゲームのファイルが展開済みか（.zipや.7zのままでないか）確認してください。各ゲームが探しているもの：',
+        found: '見つかったもの',
+        unused_one: '{0}個のファイルはどのゲームにも不要なため、送信されません。',
+        unused_other: '{0}個のファイルはどのゲームにも不要なため、送信されません。',
+        keepOpen: '完了するまで、このページを開いたまま画面をつけておいてください。',
+        progressOf: '{0} / {1}',
+        perSecond: '{0}/秒',
+        timeLeft: '残り約{0}',
+        sendingOf: '送信中 {0} / {1}',
+        cancel: 'キャンセル',
+        cancelled: '送信をキャンセルしました。',
+        listChanged: 'PortZoneのファイル一覧が変わりました（別のファイルがドロップされたか、画面が開き直されました）。もう一度ファイルをドロップしてください。',
+        lostConnection: 'PortZoneとの接続が切れました。Switchが「ゲームファイルを送る」画面のままで、同じWi-Fiにつながっているか確認して、もう一度お試しください。',
+        wrongSize: 'このゲームが想定するサイズではありません',
+        sent: '{0}を送信しました（{1}）',
+        noneSent: 'ファイルは送信されませんでした',
+        notThrough: '{0}を送信できませんでした：',
+        stillMissing: 'まだ足りないもの：{0}',
+        hasEverything: '{0}に必要なものはすべてそろいました。',
+        allHaveEverything: 'これらのゲームに必要なものはすべてそろいました。',
+        sdCard: 'SDカード',
+        emptyFolder: '空のフォルダ',
+        folder: 'フォルダ',
+        filesFor: '{0}のファイル',
+        putOnSd: 'SDカードにファイルを置く',
+        close: '閉じる',
+        up: '上へ',
+        newFolder: '新しいフォルダ',
+        uploadHere: 'ここにファイルをアップロード',
+        uploadFolderHere: 'ここにフォルダをアップロード',
+        browserHint: 'このボックスにファイルやフォルダをドロップすることもできます。フォルダは中身ごと送られます。',
+        notYet: '{0}：このフォルダはまだありません。ここにアップロードすると作成されます。',
+        folderPrompt: '新しいフォルダの名前：',
+        badFolderName: 'フォルダ名は空にできず、/ \\ : や「..」も使えません。',
+        clashFile: '{0} はファイルとしてすでにあります。先にどちらかの名前を変えてください。',
+        clashFolder: '{0} はフォルダとしてすでにあります。先にどちらかの名前を変えてください。',
+        mergeOne: '既存のフォルダ {0} に追加しますか？中にある同じ名前のファイルは置き換えられます。',
+        mergeMany: '既存のフォルダ {0} に追加しますか？中にある同じ名前のファイルは置き換えられます。',
+        replace_one: '既存の項目{0}個を置き換えますか？',
+        replace_other: '既存の項目{0}個を置き換えますか？',
+    },
+    'zh-Hans': {
+        title: 'PortZone：从电脑添加游戏',
+        heading: '从电脑添加游戏',
+        lead: '把你拥有的游戏文件拖到这里。PortZone 会判断每个游戏需要什么，只把这些文件发送到 Switch SD 卡上的正确位置。',
+        dropBig: '把游戏文件或文件夹拖到这里',
+        dropHint: 'PortZone 会查看文件名和大小，找出每个游戏需要的内容，只发送这些。',
+        chooseFolder: '选择文件夹',
+        chooseFiles: '选择文件',
+        browseSd: '或者自己放置文件',
+        allGames: '全部游戏',
+        allGamesCount: '全部游戏 · {0}',
+        allGamesShown: '全部游戏 · {0} / {1}',
+        searchGames: '搜索游戏',
+        sortGames: '游戏排序',
+        sortAz: '排序：A–Z',
+        sortZa: '排序：Z–A',
+        sortSystem: '排序：平台',
+        clearSearch: '清除搜索',
+        noMatch: '没有与“{0}”匹配的游戏。',
+        loading: '正在加载…',
+        noGames: '没有可显示的游戏。',
+        otherGames: '其他游戏',
+        kindEasy: '简易设置',
+        kindPrep: '在电脑上准备',
+        kindPc: '在电脑上构建',
+        kindManual: '手动',
+        by: '作者：{0}',
+        bytes_one: '{0} 字节',
+        bytes_other: '{0} 字节',
+        seconds: '{0} 秒',
+        minutes: '{0} 分钟',
+        hoursMinutes: '{0} 小时 {1} 分钟',
+        files_one: '{0} 个文件',
+        files_other: '{0} 个文件',
+        listSep: '、',
+        missingSep: '；',
+        pair: '{0}：{1}',
+        paren: '（{0}）',
+        cantReach: '无法连接 PortZone。请确认 Switch 连接的是同一个 Wi-Fi，并且“发送游戏文件”界面仍然开着。',
+        outOfDate: '此链接已过期。请打开 PortZone 在 Switch 上显示的地址。',
+        noKey: '此链接缺少密钥。请打开 PortZone 在 Switch 上显示的地址。',
+        answered: 'PortZone 返回了 {0}。',
+        answeredShort: 'PortZone 返回了 {0}',
+        forbidden: 'PortZone 不允许在那里进行更改。',
+        specFolder: '文件夹 {0}',
+        specFolderMarkers: '包含 {1} 的文件夹 {0}',
+        specFolderMatch: '包含 {1} 文件的文件夹 {0}',
+        option: '{0}：',
+        optionOr: '或 {0}：',
+        optionNumber: '选项 {0}',
+        onSd: '✓ 已在 SD 卡上',
+        missing: '缺少',
+        optional: '可选',
+        optionalParen: '（可选）',
+        dropForThis: '把对应的文件拖到这里，或',
+        addFiles: '添加文件',
+        addFolder: '添加文件夹',
+        chooseMyself: '自己选择文件放在哪里',
+        noWhere: '这个移植没有说明文件放在哪里。请按照它的说明，把文件放到它要求的位置：',
+        howToAdd: '添加方法',
+        dropGame: '把这个游戏的文件或文件夹拖到这里',
+        picksOut: 'PortZone 会挑出 {0} 需要的内容，只发送这些。',
+        makeWith: '用 {0} 在电脑上生成游戏文件',
+        makeOnPc: '在电脑上生成游戏文件。',
+        extract: '在电脑上解压得到的内容（例如 .zip）。',
+        dropExtractedHint: '把解压后的文件夹拖到这里，或自己选择文件放在哪里。',
+        dropExtracted: '把解压后的文件拖到这里',
+        whatItNeeds: '所需内容',
+        whatItNeedsColon: '所需内容：',
+        afterSending: '发送后在 Switch 上：',
+        reading: '正在读取文件…',
+        nothingDropped: '拖入的内容中没有可读取的文件。',
+        dropUnreadable: '浏览器无法读取拖入的内容。请改用“选择文件”。',
+        manualDrop: '这个游戏没有说明文件放在哪里。请在下方打开它们所属的文件夹，再把文件拖到那个框里。',
+        lookingAt: '正在查看 {0}…',
+        filesAndSize: '{0}，{1}',
+        alreadyMet: '已在 SD 卡上；发送会替换它',
+        andMore: '还有 {0} 个',
+        willGoTo: '将放到：',
+        over4gb: '⚠ {0}：超过 4 GB：需要 exFAT 格式的 SD 卡',
+        pickOne: '这些是同一内容的不同版本。请选择一个：',
+        none: '都不要',
+        sendFiles: '发送 {0}（{1}）',
+        nothingPicked: '没有选择要发送的内容',
+        noneOfThese: '这些文件都不是 {0}',
+        looksFor: '{0} 查找的是：',
+        notNeededBy: '这里没有 {0} 需要的内容',
+        notNeededByAny: '这里没有任何游戏需要的内容',
+        extractedOne: '请确认游戏文件已解压（不是还在 .zip 或 .7z 里）。它查找的是：',
+        extractedEach: '请确认游戏文件已解压（不是还在 .zip 或 .7z 里）。每个游戏查找的是：',
+        found: '找到的内容',
+        unused_one: '{0} 个文件不被任何游戏需要，不会发送。',
+        unused_other: '{0} 个文件不被任何游戏需要，不会发送。',
+        keepOpen: '完成之前，请保持此页面打开、屏幕常亮。',
+        progressOf: '{0} / {1}',
+        perSecond: '{0}/秒',
+        timeLeft: '大约还剩 {0}',
+        sendingOf: '正在发送 {0} / {1}',
+        cancel: '取消',
+        cancelled: '已取消发送。',
+        listChanged: 'PortZone 的文件列表已更改（又拖入了文件，或界面被重新打开）。请重新拖入文件。',
+        lostConnection: '与 PortZone 的连接已断开。请确认 Switch 仍在“发送游戏文件”界面并连接同一个 Wi-Fi，然后重试。',
+        wrongSize: '大小与这个游戏预期的不符',
+        sent: '已发送 {0}（{1}）',
+        noneSent: '没有发送任何文件',
+        notThrough: '{0} 未能发送：',
+        stillMissing: '仍然缺少：{0}',
+        hasEverything: '{0} 需要的内容已全部就绪。',
+        allHaveEverything: '这些游戏需要的内容已全部就绪。',
+        sdCard: 'SD 卡',
+        emptyFolder: '空文件夹',
+        folder: '文件夹',
+        filesFor: '{0} 的文件',
+        putOnSd: '把文件放到 SD 卡上',
+        close: '关闭',
+        up: '上一级',
+        newFolder: '新建文件夹',
+        uploadHere: '上传文件到这里',
+        uploadFolderHere: '上传文件夹到这里',
+        browserHint: '也可以把文件或文件夹拖到这个框里；文件夹会保留里面的内容。',
+        notYet: '{0}：此文件夹还不存在；上传到这里时会创建它。',
+        folderPrompt: '新文件夹的名称：',
+        badFolderName: '文件夹名称不能为空，也不能包含 / \\ : 或“..”。',
+        clashFile: '这里已有名为 {0} 的文件。请先重命名其中一个。',
+        clashFolder: '这里已有名为 {0} 的文件夹。请先重命名其中一个。',
+        mergeOne: '要添加到现有文件夹 {0} 吗？其中同名的文件会被替换。',
+        mergeMany: '要添加到现有文件夹 {0} 吗？其中同名的文件会被替换。',
+        replace_one: '要替换 {0} 个现有项目吗？',
+        replace_other: '要替换 {0} 个现有项目吗？',
+    },
+};
+
+// What the Switch's server says (src/transfer.cpp), by its exact English text; {0} stands for a name or path.
+// Anything not listed is shown as the server sent it.
+const SERVER_TEXT = {
+    es: {
+        'Content-Length is required.': 'Se necesita Content-Length.',
+        'Too many files at once.': 'Demasiados archivos a la vez.',
+        'The file list could not be read.': 'No se pudo leer la lista de archivos.',
+        'Unknown port {0}.': 'Port desconocido: {0}.',
+        'PortZone could not write to the SD card.': 'PortZone no pudo escribir en la tarjeta SD.',
+        'PortZone could not write {0}. Is the SD card full?': 'PortZone no pudo escribir {0}. ¿Está llena la tarjeta SD?',
+        'not a known version of {0}': 'no es una versión conocida de {0}',
+        'PortZone could not make the folder {0}.': 'PortZone no pudo crear la carpeta {0}.',
+        'PortZone could not replace {0}.': 'PortZone no pudo reemplazar {0}.',
+        'PortZone could not write {0}.': 'PortZone no pudo escribir {0}.',
+        'plan, match and file are required.': 'Se necesitan plan, match y file.',
+        'The list of files changed. Drop the files again.': 'La lista de archivos cambió. Suelta los archivos de nuevo.',
+        'No such file.': 'No existe ese archivo.',
+        'wrong size: {0} is not the expected file': 'tamaño incorrecto: {0} no es el archivo esperado',
+        'PortZone doesn\'t allow changes there.': 'PortZone no permite cambios ahí.',
+        'Could not make the folder {0}.': 'No se pudo crear la carpeta {0}.',
+        'A folder is already called {0}.': 'Ya hay una carpeta llamada {0}.',
+        'Only GET here.': 'Aquí solo se admite GET.',
+        'Not found.': 'No encontrado.',
+        'Open the address PortZone shows, with its key.': 'Abre la dirección que muestra PortZone, con su clave.',
+        'Bad Request': 'Solicitud incorrecta',
+        'Forbidden': 'Prohibido',
+        'Not Found': 'No encontrado',
+        'Method Not Allowed': 'Método no permitido',
+        'Conflict': 'Conflicto',
+        'Gone': 'Ya no existe',
+        'Length Required': 'Falta la longitud',
+        'Payload Too Large': 'Contenido demasiado grande',
+        'Request Header Fields Too Large': 'Cabeceras de la solicitud demasiado grandes',
+        'Internal Server Error': 'Error interno del servidor',
+    },
+    fr: {
+        'Content-Length is required.': 'Content-Length est requis.',
+        'Too many files at once.': 'Trop de fichiers à la fois.',
+        'The file list could not be read.': 'Impossible de lire la liste des fichiers.',
+        'Unknown port {0}.': 'Portage inconnu : {0}.',
+        'PortZone could not write to the SD card.': 'PortZone n\'a pas pu écrire sur la carte SD.',
+        'PortZone could not write {0}. Is the SD card full?': 'PortZone n\'a pas pu écrire {0}. La carte SD est-elle pleine ?',
+        'not a known version of {0}': 'pas une version connue de {0}',
+        'PortZone could not make the folder {0}.': 'PortZone n\'a pas pu créer le dossier {0}.',
+        'PortZone could not replace {0}.': 'PortZone n\'a pas pu remplacer {0}.',
+        'PortZone could not write {0}.': 'PortZone n\'a pas pu écrire {0}.',
+        'plan, match and file are required.': 'plan, match et file sont requis.',
+        'The list of files changed. Drop the files again.': 'La liste des fichiers a changé. Déposez à nouveau les fichiers.',
+        'No such file.': 'Fichier introuvable.',
+        'wrong size: {0} is not the expected file': 'taille incorrecte : {0} n\'est pas le fichier attendu',
+        'PortZone doesn\'t allow changes there.': 'PortZone n\'autorise pas de modifications à cet endroit.',
+        'Could not make the folder {0}.': 'Impossible de créer le dossier {0}.',
+        'A folder is already called {0}.': 'Un dossier s\'appelle déjà {0}.',
+        'Only GET here.': 'Seul GET est accepté ici.',
+        'Not found.': 'Introuvable.',
+        'Open the address PortZone shows, with its key.': 'Ouvrez l\'adresse affichée par PortZone, avec sa clé.',
+        'Bad Request': 'Requête incorrecte',
+        'Forbidden': 'Interdit',
+        'Not Found': 'Introuvable',
+        'Method Not Allowed': 'Méthode non autorisée',
+        'Conflict': 'Conflit',
+        'Gone': 'N\'existe plus',
+        'Length Required': 'Longueur requise',
+        'Payload Too Large': 'Contenu trop volumineux',
+        'Request Header Fields Too Large': 'En-têtes de requête trop volumineux',
+        'Internal Server Error': 'Erreur interne du serveur',
+    },
+    de: {
+        'Content-Length is required.': 'Content-Length wird benötigt.',
+        'Too many files at once.': 'Zu viele Dateien auf einmal.',
+        'The file list could not be read.': 'Die Dateiliste konnte nicht gelesen werden.',
+        'Unknown port {0}.': 'Unbekannter Port {0}.',
+        'PortZone could not write to the SD card.': 'PortZone konnte nicht auf die SD-Karte schreiben.',
+        'PortZone could not write {0}. Is the SD card full?': 'PortZone konnte {0} nicht schreiben. Ist die SD-Karte voll?',
+        'not a known version of {0}': 'keine bekannte Version von {0}',
+        'PortZone could not make the folder {0}.': 'PortZone konnte den Ordner {0} nicht anlegen.',
+        'PortZone could not replace {0}.': 'PortZone konnte {0} nicht ersetzen.',
+        'PortZone could not write {0}.': 'PortZone konnte {0} nicht schreiben.',
+        'plan, match and file are required.': 'plan, match und file werden benötigt.',
+        'The list of files changed. Drop the files again.': 'Die Dateiliste hat sich geändert. Leg die Dateien erneut ab.',
+        'No such file.': 'Diese Datei gibt es nicht.',
+        'wrong size: {0} is not the expected file': 'falsche Größe: {0} ist nicht die erwartete Datei',
+        'PortZone doesn\'t allow changes there.': 'PortZone erlaubt dort keine Änderungen.',
+        'Could not make the folder {0}.': 'Der Ordner {0} konnte nicht angelegt werden.',
+        'A folder is already called {0}.': 'Es gibt schon einen Ordner namens {0}.',
+        'Only GET here.': 'Hier nur GET.',
+        'Not found.': 'Nicht gefunden.',
+        'Open the address PortZone shows, with its key.': 'Öffne die Adresse, die PortZone anzeigt, mit ihrem Schlüssel.',
+        'Bad Request': 'Ungültige Anfrage',
+        'Forbidden': 'Verboten',
+        'Not Found': 'Nicht gefunden',
+        'Method Not Allowed': 'Methode nicht erlaubt',
+        'Conflict': 'Konflikt',
+        'Gone': 'Nicht mehr vorhanden',
+        'Length Required': 'Länge erforderlich',
+        'Payload Too Large': 'Daten zu groß',
+        'Request Header Fields Too Large': 'Anfrage-Header zu groß',
+        'Internal Server Error': 'Interner Serverfehler',
+    },
+    it: {
+        'Content-Length is required.': 'Serve Content-Length.',
+        'Too many files at once.': 'Troppi file in una volta.',
+        'The file list could not be read.': 'Impossibile leggere l\'elenco dei file.',
+        'Unknown port {0}.': 'Port sconosciuto: {0}.',
+        'PortZone could not write to the SD card.': 'PortZone non è riuscito a scrivere sulla scheda SD.',
+        'PortZone could not write {0}. Is the SD card full?': 'PortZone non è riuscito a scrivere {0}. La scheda SD è piena?',
+        'not a known version of {0}': 'non è una versione nota di {0}',
+        'PortZone could not make the folder {0}.': 'PortZone non è riuscito a creare la cartella {0}.',
+        'PortZone could not replace {0}.': 'PortZone non è riuscito a sostituire {0}.',
+        'PortZone could not write {0}.': 'PortZone non è riuscito a scrivere {0}.',
+        'plan, match and file are required.': 'Servono plan, match e file.',
+        'The list of files changed. Drop the files again.': 'L\'elenco dei file è cambiato. Trascina di nuovo i file.',
+        'No such file.': 'File inesistente.',
+        'wrong size: {0} is not the expected file': 'dimensione errata: {0} non è il file previsto',
+        'PortZone doesn\'t allow changes there.': 'PortZone non consente modifiche lì.',
+        'Could not make the folder {0}.': 'Impossibile creare la cartella {0}.',
+        'A folder is already called {0}.': 'Esiste già una cartella chiamata {0}.',
+        'Only GET here.': 'Qui solo GET.',
+        'Not found.': 'Non trovato.',
+        'Open the address PortZone shows, with its key.': 'Apri l\'indirizzo che mostra PortZone, con la sua chiave.',
+        'Bad Request': 'Richiesta non valida',
+        'Forbidden': 'Accesso negato',
+        'Not Found': 'Non trovato',
+        'Method Not Allowed': 'Metodo non consentito',
+        'Conflict': 'Conflitto',
+        'Gone': 'Non più disponibile',
+        'Length Required': 'Lunghezza richiesta',
+        'Payload Too Large': 'Contenuto troppo grande',
+        'Request Header Fields Too Large': 'Intestazioni della richiesta troppo grandi',
+        'Internal Server Error': 'Errore interno del server',
+    },
+    'pt-BR': {
+        'Content-Length is required.': 'Content-Length é obrigatório.',
+        'Too many files at once.': 'Arquivos demais de uma vez.',
+        'The file list could not be read.': 'Não foi possível ler a lista de arquivos.',
+        'Unknown port {0}.': 'Port desconhecido: {0}.',
+        'PortZone could not write to the SD card.': 'O PortZone não conseguiu gravar no cartão SD.',
+        'PortZone could not write {0}. Is the SD card full?': 'O PortZone não conseguiu gravar {0}. O cartão SD está cheio?',
+        'not a known version of {0}': 'não é uma versão conhecida de {0}',
+        'PortZone could not make the folder {0}.': 'O PortZone não conseguiu criar a pasta {0}.',
+        'PortZone could not replace {0}.': 'O PortZone não conseguiu substituir {0}.',
+        'PortZone could not write {0}.': 'O PortZone não conseguiu gravar {0}.',
+        'plan, match and file are required.': 'plan, match e file são obrigatórios.',
+        'The list of files changed. Drop the files again.': 'A lista de arquivos mudou. Solte os arquivos de novo.',
+        'No such file.': 'Arquivo inexistente.',
+        'wrong size: {0} is not the expected file': 'tamanho errado: {0} não é o arquivo esperado',
+        'PortZone doesn\'t allow changes there.': 'O PortZone não permite alterações aí.',
+        'Could not make the folder {0}.': 'Não foi possível criar a pasta {0}.',
+        'A folder is already called {0}.': 'Já existe uma pasta chamada {0}.',
+        'Only GET here.': 'Aqui só GET.',
+        'Not found.': 'Não encontrado.',
+        'Open the address PortZone shows, with its key.': 'Abra o endereço que o PortZone mostra, com a chave.',
+        'Bad Request': 'Requisição inválida',
+        'Forbidden': 'Proibido',
+        'Not Found': 'Não encontrado',
+        'Method Not Allowed': 'Método não permitido',
+        'Conflict': 'Conflito',
+        'Gone': 'Não existe mais',
+        'Length Required': 'Tamanho obrigatório',
+        'Payload Too Large': 'Conteúdo grande demais',
+        'Request Header Fields Too Large': 'Cabeçalhos da requisição grandes demais',
+        'Internal Server Error': 'Erro interno do servidor',
+    },
+    ja: {
+        'Content-Length is required.': 'Content-Lengthが必要です。',
+        'Too many files at once.': '一度に送るファイルが多すぎます。',
+        'The file list could not be read.': 'ファイル一覧を読み込めませんでした。',
+        'Unknown port {0}.': '不明なポートです：{0}。',
+        'PortZone could not write to the SD card.': 'PortZoneがSDカードに書き込めませんでした。',
+        'PortZone could not write {0}. Is the SD card full?': 'PortZoneが{0}を書き込めませんでした。SDカードがいっぱいではありませんか？',
+        'not a known version of {0}': '{0}の既知のバージョンではありません',
+        'PortZone could not make the folder {0}.': 'PortZoneがフォルダ {0} を作成できませんでした。',
+        'PortZone could not replace {0}.': 'PortZoneが{0}を置き換えられませんでした。',
+        'PortZone could not write {0}.': 'PortZoneが{0}を書き込めませんでした。',
+        'plan, match and file are required.': 'plan、match、fileが必要です。',
+        'The list of files changed. Drop the files again.': 'ファイル一覧が変わりました。もう一度ファイルをドロップしてください。',
+        'No such file.': 'そのファイルはありません。',
+        'wrong size: {0} is not the expected file': 'サイズが違います：{0}は想定されたファイルではありません',
+        'PortZone doesn\'t allow changes there.': 'PortZoneではその場所を変更できません。',
+        'Could not make the folder {0}.': 'フォルダ {0} を作成できませんでした。',
+        'A folder is already called {0}.': '{0} という名前のフォルダがすでにあります。',
+        'Only GET here.': 'ここではGETのみ使えます。',
+        'Not found.': '見つかりません。',
+        'Open the address PortZone shows, with its key.': 'PortZoneに表示されているアドレスを、キーを含めて開いてください。',
+        'Bad Request': '不正なリクエスト',
+        'Forbidden': 'アクセスできません',
+        'Not Found': '見つかりません',
+        'Method Not Allowed': '許可されていないメソッド',
+        'Conflict': '競合',
+        'Gone': 'すでに存在しません',
+        'Length Required': '長さの指定が必要です',
+        'Payload Too Large': 'データが大きすぎます',
+        'Request Header Fields Too Large': 'リクエストヘッダーが大きすぎます',
+        'Internal Server Error': '内部サーバーエラー',
+    },
+    'zh-Hans': {
+        'Content-Length is required.': '需要 Content-Length。',
+        'Too many files at once.': '一次的文件太多。',
+        'The file list could not be read.': '无法读取文件列表。',
+        'Unknown port {0}.': '未知的移植：{0}。',
+        'PortZone could not write to the SD card.': 'PortZone 无法写入 SD 卡。',
+        'PortZone could not write {0}. Is the SD card full?': 'PortZone 无法写入 {0}。SD 卡是否已满？',
+        'not a known version of {0}': '不是 {0} 的已知版本',
+        'PortZone could not make the folder {0}.': 'PortZone 无法创建文件夹 {0}。',
+        'PortZone could not replace {0}.': 'PortZone 无法替换 {0}。',
+        'PortZone could not write {0}.': 'PortZone 无法写入 {0}。',
+        'plan, match and file are required.': '需要 plan、match 和 file。',
+        'The list of files changed. Drop the files again.': '文件列表已更改。请重新拖入文件。',
+        'No such file.': '没有这个文件。',
+        'wrong size: {0} is not the expected file': '大小不对：{0} 不是预期的文件',
+        'PortZone doesn\'t allow changes there.': 'PortZone 不允许在那里进行更改。',
+        'Could not make the folder {0}.': '无法创建文件夹 {0}。',
+        'A folder is already called {0}.': '已有名为 {0} 的文件夹。',
+        'Only GET here.': '这里只支持 GET。',
+        'Not found.': '未找到。',
+        'Open the address PortZone shows, with its key.': '请打开 PortZone 显示的地址（包含密钥）。',
+        'Bad Request': '错误的请求',
+        'Forbidden': '禁止访问',
+        'Not Found': '未找到',
+        'Method Not Allowed': '不允许的方法',
+        'Conflict': '冲突',
+        'Gone': '已不存在',
+        'Length Required': '需要长度',
+        'Payload Too Large': '内容过大',
+        'Request Header Fields Too Large': '请求头过大',
+        'Internal Server Error': '服务器内部错误',
+    },
+};
+
+// The browser's first preferred language PortZone has, by full tag, then by base language; English otherwise.
+function pickLanguage() {
+    const languages = Object.keys(STRINGS);
+    const wanted = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ''];
+    for (const tag of wanted) {
+        const lower = String(tag).toLowerCase();
+        const exact = languages.find((language) => language.toLowerCase() === lower);
+        if (exact) return exact;
+        const base = lower.split('-')[0];
+        if (base === 'pt') return 'pt-BR';
+        if (base === 'zh') return 'zh-Hans';
+        if (STRINGS[base]) return base;
+    }
+    return 'en';
+}
+
+const LANGUAGE = pickLanguage();
+
+function phrase(key) {
+    const own = STRINGS[LANGUAGE];
+    return key in own ? own[key] : STRINGS.en[key];
+}
+
+function fill(text, args) {
+    return text.replace(/\{(\d+)\}/g, (all, index) => (index < args.length ? String(args[index]) : all));
+}
+
+function t(key, ...args) { return fill(phrase(key), args); }
+
+// `key` + '_one' for 1, `key` + '_other' otherwise, with the count as {0}.
+function tCount(key, count) { return t(key + (count === 1 ? '_one' : '_other'), count); }
+
+// The text of `key` as strings and nodes, for placeholders that are elements.
+function tNodes(key, ...args) {
+    return phrase(key).split(/\{(\d+)\}/).map((piece, i) => (i % 2 ? args[piece] : piece)).filter((piece) => piece !== '');
+}
+
+// The server's English `text` in the page's language, when it is one SERVER_TEXT knows.
+function fromServer(text) {
+    const table = SERVER_TEXT[LANGUAGE];
+    if (!text || !table) return text;
+    if (Object.prototype.hasOwnProperty.call(table, text)) return table[text];
+    for (const english of Object.keys(table)) {
+        if (english.indexOf('{0}') < 0) continue;
+        const [before, after] = english.split('{0}');
+        if (text.length > before.length + after.length && text.startsWith(before) && text.endsWith(after))
+            return fill(table[english], [text.slice(before.length, text.length - after.length)]);
+    }
+    return text;
+}
+
+// The page's static text: elements marked data-t (text), data-t-label (aria-label), data-t-placeholder.
+function translatePage() {
+    document.documentElement.lang = LANGUAGE;
+    for (const node of document.querySelectorAll('[data-t]')) node.textContent = t(node.dataset.t);
+    for (const node of document.querySelectorAll('[data-t-label]')) node.setAttribute('aria-label', t(node.dataset.tLabel));
+    for (const node of document.querySelectorAll('[data-t-placeholder]')) node.placeholder = t(node.dataset.tPlaceholder);
+}
+
 const KEY = new URLSearchParams(location.search).get('k') || '';
 const GIB4 = 4 * 1024 * 1024 * 1024;
-const FORBIDDEN = 'PortZone doesn\'t allow changes there.';
-const KINDS = { easy: 'Easy Setup', prep: 'Prepare on PC', pc: 'Build on PC', manual: 'Manual' };
+const FORBIDDEN = t('forbidden');
+const KINDS = { easy: t('kindEasy'), prep: t('kindPrep'), pc: t('kindPc'), manual: t('kindManual') };
 const $ = (id) => document.getElementById(id);
 
 let ports = [];
@@ -289,18 +1571,16 @@ function formatSize(bytes) {
     const units = ['bytes', 'KB', 'MB', 'GB', 'TB'];
     let value = bytes, unit = 0;
     while (value >= 1024 && unit < units.length - 1) { value /= 1024; unit++; }
-    if (unit === 0) return bytes + (bytes === 1 ? ' byte' : ' bytes');
+    if (unit === 0) return tCount('bytes', bytes);
     return (value >= 100 ? value.toFixed(0) : value.toFixed(1)) + ' ' + units[unit];
 }
 
 function formatTime(seconds) {
     if (!isFinite(seconds)) return '';
-    if (seconds < 60) return Math.max(1, Math.round(seconds)) + ' s';
-    if (seconds < 3600) return Math.round(seconds / 60) + ' min';
-    return Math.floor(seconds / 3600) + ' h ' + Math.round((seconds % 3600) / 60) + ' min';
+    if (seconds < 60) return t('seconds', Math.max(1, Math.round(seconds)));
+    if (seconds < 3600) return t('minutes', Math.round(seconds / 60));
+    return t('hoursMinutes', Math.floor(seconds / 3600), Math.round((seconds % 3600) / 60));
 }
-
-function plural(count, one, many) { return count + ' ' + (count === 1 ? one : many); }
 
 function apiUrl(path, params) {
     return '/api/' + path + '?' + new URLSearchParams(Object.assign({ k: KEY }, params || {})).toString();
@@ -312,14 +1592,14 @@ async function apiJson(path, params, options, forbidden) {
     try {
         response = await fetch(apiUrl(path, params), options);
     } catch (e) {
-        throw new Error('Can\'t reach PortZone. Check that the Switch is on the same Wi-Fi and the Send files screen is still open.');
+        throw new Error(t('cantReach'));
     }
     let body = null;
     try { body = await response.json(); } catch (e) { body = null; }
     if (response.status === 403)
-        throw new Error(forbidden || 'This link is out of date. Open the address PortZone shows on the Switch.');
+        throw new Error(forbidden || t('outOfDate'));
     if (!response.ok)
-        throw new Error((body && body.error) || ('PortZone answered ' + response.status + '.'));
+        throw new Error(fromServer(body && body.error) || t('answered', response.status));
     return body;
 }
 
@@ -372,7 +1652,7 @@ function iconOf(port, big) {
 
 function byline(port) {
     const parts = [];
-    if (port.author) parts.push('by ' + port.author);
+    if (port.author) parts.push(t('by', port.author));
     if (port.platform) parts.push(port.platform);
     return parts.join(' · ');
 }
@@ -403,7 +1683,7 @@ function renderGrid() {
     const box = $('grid');
     if (!loaded) {
         box.textContent = '';
-        box.appendChild(el('p', { class: 'muted', text: 'Loading…' }));
+        box.appendChild(el('p', { class: 'muted', text: t('loading') }));
         return;
     }
     if (cardsFor !== ports) {
@@ -417,7 +1697,7 @@ function renderGrid() {
             platform: port.platform || '',
         }));
         box.textContent = '';
-        if (!cards.length) box.appendChild(el('p', { class: 'muted', text: 'No games to show.' }));
+        if (!cards.length) box.appendChild(el('p', { class: 'muted', text: t('noGames') }));
     }
     arrangeGrid();
 }
@@ -448,8 +1728,8 @@ function arrangeGrid() {
         if (match) shown++;
         if (card.node.classList.contains('hidden') === match) card.node.classList.toggle('hidden', !match);
     }
-    $('gridTitle').textContent = 'All games · ' + (query ? shown + ' of ' + cards.length : cards.length);
-    $('noMatchText').textContent = 'No games match “' + search.trim() + '”.';
+    $('gridTitle').textContent = query ? t('allGamesShown', shown, cards.length) : t('allGamesCount', cards.length);
+    $('noMatchText').textContent = t('noMatch', search.trim());
     show($('noMatch'), !!query && !shown && cards.length > 0);
 }
 
@@ -458,15 +1738,17 @@ function arrangeGrid() {
 function describeSpec(spec) {
     const parts = [];
     if (spec.path.slice(-1) === '/') {
-        parts.push('A folder ', el('code', { text: spec.path }));
+        const folder = el('code', { text: spec.path });
         if (spec.markers && spec.markers.length)
-            parts.push(' with ' + spec.markers.join(', ') + ' inside');
+            parts.push(...tNodes('specFolderMarkers', folder, spec.markers.join(t('listSep'))));
         else if (spec.match)
-            parts.push(' with ' + spec.match + ' files inside');
+            parts.push(...tNodes('specFolderMatch', folder, spec.match));
+        else
+            parts.push(...tNodes('specFolder', folder));
     } else {
         parts.push(el('code', { text: spec.path }));
     }
-    if (spec.note) parts.push(' (' + spec.note + ')');
+    if (spec.note) parts.push(t('paren', spec.note));
     return el('li', null, parts);
 }
 
@@ -475,24 +1757,24 @@ function needsList(input) {
     const several = input.options.length > 1;
     input.options.forEach((option, i) => {
         if (several)
-            list.appendChild(el('li', null, [el('strong', { text: (i ? 'Or ' : '') + (option.label || 'Option ' + (i + 1)) + ':' })]));
+            list.appendChild(el('li', null, [el('strong', { text: t(i ? 'optionOr' : 'option', option.label || t('optionNumber', i + 1)) })]));
         for (const spec of option.files) list.appendChild(describeSpec(spec));
     });
     return list;
 }
 
 function inputState(input) {
-    if (input.met) return el('span', { class: 'state good', text: '✓ On the SD card' });
-    if (input.required) return el('span', { class: 'state bad', text: 'Missing' });
-    return el('span', { class: 'state muted', text: 'Optional' });
+    if (input.met) return el('span', { class: 'state good', text: t('onSd') });
+    if (input.required) return el('span', { class: 'state bad', text: t('missing') });
+    return el('span', { class: 'state muted', text: t('optional') });
 }
 
 function addTarget(port, input) {
     const handle = (files) => findFiles(files, { port: port.id, input: input.id });
     const target = el('div', { class: 'target' }, [
-        el('span', { class: 'hint', text: 'Drop files for this here, or' }),
-        el('button', { type: 'button', class: 'small', text: 'Add files', onclick: () => pick(false, handle) }),
-        folderSupported() ? el('button', { type: 'button', class: 'small', text: 'Add a folder', onclick: () => pick(true, handle) }) : null,
+        el('span', { class: 'hint', text: t('dropForThis') }),
+        el('button', { type: 'button', class: 'small', text: t('addFiles'), onclick: () => pick(false, handle) }),
+        folderSupported() ? el('button', { type: 'button', class: 'small', text: t('addFolder'), onclick: () => pick(true, handle) }) : null,
     ]);
     makeDropTarget(target, handle);
     return target;
@@ -500,7 +1782,7 @@ function addTarget(port, input) {
 
 function browseButton(port, primary) {
     return el('button', {
-        type: 'button', class: primary ? 'primary' : '', text: 'Choose where files go myself', disabled: !!sending,
+        type: 'button', class: primary ? 'primary' : '', text: t('chooseMyself'), disabled: !!sending,
         onclick: () => openBrowser(port.dir, port.title),
     });
 }
@@ -527,16 +1809,16 @@ function renderGameActions(port) {
     box.textContent = '';
     if (port.manualOnly) {
         box.appendChild(el('div', { class: 'card' }, [
-            el('p', { text: 'This port doesn\'t say where its files go. Follow its instructions and put them where it asks:' }),
+            el('p', { text: t('noWhere') }),
             el('div', { class: 'row' }, [browseButton(port, true)]),
         ]));
         return;
     }
     if (port.prepare && port.prepare.where === 'pc') {
-        box.appendChild(el('div', { class: 'card' }, [el('h2', { text: 'How to add it' }), pcSteps(port)]));
+        box.appendChild(el('div', { class: 'card' }, [el('h2', { text: t('howToAdd') }), pcSteps(port)]));
         return;
     }
-    if (!sending) box.appendChild(gameDrop(port, 'Drop this game\'s files or folders here'));
+    if (!sending) box.appendChild(gameDrop(port, t('dropGame')));
     box.appendChild(browseLink(port));
 }
 
@@ -545,10 +1827,10 @@ function gameDrop(port, title) {
     const handle = (files) => findFiles(files, { port: port.id });
     const drop = el('section', { class: 'drop' }, [
         el('div', { class: 'big', text: title }),
-        el('div', { class: 'muted small', text: 'PortZone picks out what ' + port.title + ' needs and sends only that.' }),
+        el('div', { class: 'muted small', text: t('picksOut', port.title) }),
         el('div', { class: 'row' }, [
-            folderSupported() ? el('button', { type: 'button', class: 'primary', text: 'Choose a folder', onclick: () => pick(true, handle) }) : null,
-            el('button', { type: 'button', class: folderSupported() ? '' : 'primary', text: 'Choose files', onclick: () => pick(false, handle) }),
+            folderSupported() ? el('button', { type: 'button', class: 'primary', text: t('chooseFolder'), onclick: () => pick(true, handle) }) : null,
+            el('button', { type: 'button', class: folderSupported() ? '' : 'primary', text: t('chooseFiles'), onclick: () => pick(false, handle) }),
         ]),
     ]);
     makeDropTarget(drop, handle);
@@ -557,7 +1839,7 @@ function gameDrop(port, title) {
 
 function browseLink(port) {
     return el('p', { class: 'center after-drop' }, [
-        el('button', { type: 'button', class: 'link', text: 'Choose where files go myself', disabled: !!sending, onclick: () => openBrowser(port.dir, port.title) }),
+        el('button', { type: 'button', class: 'link', text: t('chooseMyself'), disabled: !!sending, onclick: () => openBrowser(port.dir, port.title) }),
     ]);
 }
 
@@ -566,16 +1848,16 @@ function pcSteps(port) {
     const prepare = port.prepare;
     const make = prepare.tool
         ? [
-            el('a', { class: 'button primary', href: prepare.tool.url, target: '_blank', rel: 'noopener', text: 'Make the game\'s files on your PC with ' + prepare.tool.name }),
+            el('a', { class: 'button primary', href: prepare.tool.url, target: '_blank', rel: 'noopener', text: t('makeWith', prepare.tool.name) }),
             prepare.summary ? el('p', { class: 'muted small', text: prepare.summary }) : null,
         ]
-        : [el('p', { text: prepare.summary || 'Make the game\'s files on your PC.' })];
+        : [el('p', { text: prepare.summary || t('makeOnPc') })];
     return el('ol', { class: 'steps' }, [
         el('li', null, make),
-        el('li', null, [el('p', { text: 'Extract what it gives you (for example a .zip) on your PC.' })]),
+        el('li', null, [el('p', { text: t('extract') })]),
         el('li', null, [
-            el('p', { text: 'Drop the extracted folder here, or choose where its files go yourself.' }),
-            sending ? null : gameDrop(port, 'Drop the extracted files here'),
+            el('p', { text: t('dropExtractedHint') }),
+            sending ? null : gameDrop(port, t('dropExtracted')),
             browseLink(port),
         ]),
     ]);
@@ -585,18 +1867,18 @@ function renderGameNeeds(port) {
     const box = $('gameNeeds');
     box.textContent = '';
     if (port.manualOnly) return;
-    box.appendChild(el('h2', { class: 'section-title', text: 'What it needs' }));
+    box.appendChild(el('h2', { class: 'section-title', text: t('whatItNeeds') }));
     if (port.prepare && port.prepare.where !== 'pc') {
         box.appendChild(el('p', null, [
-            el('strong', { text: 'On the Switch after sending: ' }), port.prepare.summary || '',
-            port.prepare.tool ? el('span', null, [' (', el('a', { href: port.prepare.tool.url, target: '_blank', rel: 'noopener', text: port.prepare.tool.name }), ')']) : null,
+            el('strong', { text: t('afterSending') }), port.prepare.summary || '',
+            port.prepare.tool ? el('span', null, tNodes('paren', el('a', { href: port.prepare.tool.url, target: '_blank', rel: 'noopener', text: port.prepare.tool.name }))) : null,
         ]));
     }
     const card = el('div', { class: 'card' });
     for (const input of port.inputs || []) {
         card.appendChild(el('div', { class: 'input' }, [
             el('div', { class: 'input-head' }, [el('h3', { text: input.label }), inputState(input)]),
-            el('div', { class: 'small muted label', text: 'What it needs:' }),
+            el('div', { class: 'small muted label', text: t('whatItNeedsColon') }),
             needsList(input),
             sending ? null : addTarget(port, input),
         ]));
@@ -645,7 +1927,7 @@ function renderView() {
     show($('otherGames'), !!game && game.id === homeId);
     (game ? $('gameSlot') : $('catalogSlot')).appendChild($('work'));
     show($('catalogTop'), !sending);
-    document.title = game ? game.title + ' · PortZone' : 'PortZone: add games from your PC';
+    document.title = game ? t('gameTitle', game.title) : t('title');
     if (game) {
         renderGameHead(game);
         renderGameActions(game);
@@ -766,14 +2048,14 @@ function makeDropTarget(node, handle) {
 
 function dropped(dataTransfer, handle) {
     if (sending) return;
-    setBusy('Reading the files…');
+    setBusy(t('reading'));
     gatherDrop(dataTransfer).then((files) => {
         setBusy('');
         if (files.length) handle(files);
-        else showError('Nothing to read in what was dropped.');
+        else showError(t('nothingDropped'));
     }, () => {
         setBusy('');
-        showError('The browser could not read what was dropped. Try "Choose files" instead.');
+        showError(t('dropUnreadable'));
     });
 }
 
@@ -783,7 +2065,7 @@ function droppedOnPage(files) {
     const game = currentGame();
     if (game && game.manualOnly) {
         if (!browse) openBrowser(game.dir, game.title);
-        showError('This game doesn\'t say where its files go. Open the folder they belong in below, then drop them onto that box.');
+        showError(t('manualDrop'));
         return;
     }
     findFiles(files, game ? { port: game.id } : {});
@@ -795,7 +2077,7 @@ async function findFiles(files, limit) {
     showError('');
     show($('summary'), false);
     show($('results'), false);
-    setBusy('Looking at ' + plural(files.length, 'file', 'files') + '…');
+    setBusy(t('lookingAt', tCount('files', files.length)));
     $('work').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     try {
         const params = {};
@@ -816,7 +2098,7 @@ async function findFiles(files, limit) {
 }
 
 function itemTitle(match) {
-    return match.inputLabel + (match.option ? ': ' + match.option : '');
+    return match.option ? t('pair', match.inputLabel, match.option) : match.inputLabel;
 }
 
 function itemDetails(match) {
@@ -824,19 +2106,19 @@ function itemDetails(match) {
     const dir = port && port.dir ? port.dir + '/' : '';
     const parts = [
         el('div', null, [el('strong', { text: itemTitle(match) })]),
-        el('div', { class: 'small muted', text: plural(match.files.length, 'file', 'files') + ', ' + formatSize(match.bytes) }),
+        el('div', { class: 'small muted', text: t('filesAndSize', tCount('files', match.files.length), formatSize(match.bytes)) }),
     ];
     const badges = [];
-    if (!match.required) badges.push(el('span', { class: 'badge', text: 'Optional' }));
-    if (match.alreadyMet) badges.push(el('span', { class: 'badge met', text: 'Already on the SD card; sending replaces it' }));
+    if (!match.required) badges.push(el('span', { class: 'badge', text: t('optional') }));
+    if (match.alreadyMet) badges.push(el('span', { class: 'badge met', text: t('alreadyMet') }));
     if (badges.length) parts.push(el('div', null, badges));
     const dests = el('ul', { class: 'dests' });
     match.files.slice(0, 5).forEach((f) => dests.appendChild(el('li', { text: dir + f.dest })));
-    if (match.files.length > 5) dests.appendChild(el('li', { text: 'and ' + (match.files.length - 5) + ' more' }));
-    parts.push(el('div', { class: 'small', text: 'Will go to:' }), dests);
+    if (match.files.length > 5) dests.appendChild(el('li', { text: t('andMore', match.files.length - 5) }));
+    parts.push(el('div', { class: 'small', text: t('willGoTo') }), dests);
     for (const f of match.files)
         if (f.size >= GIB4)
-            parts.push(el('div', { class: 'small warn', text: '⚠ ' + offered[f.source].path + ': Over 4 GB: needs an exFAT SD card' }));
+            parts.push(el('div', { class: 'small warn', text: t('over4gb', offered[f.source].path) }));
     return el('div', { class: 'body' }, parts);
 }
 
@@ -851,7 +2133,7 @@ function checkboxItem(match) {
 
 function groupItems(group, members) {
     const name = 'group' + group;
-    const block = el('div', { class: 'group' }, [el('p', { class: 'small muted', text: 'These are different versions of the same thing. Pick one:' })]);
+    const block = el('div', { class: 'group' }, [el('p', { class: 'small muted', text: t('pickOne') })]);
     const choose = (id) => {
         for (const m of members) chosen.delete(m.id);
         if (id >= 0) chosen.add(id);
@@ -864,7 +2146,7 @@ function groupItems(group, members) {
     }
     const none = el('input', { type: 'radio', name: name, checked: !members.some((m) => chosen.has(m.id)) });
     none.addEventListener('change', () => choose(-1));
-    block.appendChild(el('label', { class: 'choice' }, [none, el('div', { class: 'body' }, [el('strong', { text: 'None' })])]));
+    block.appendChild(el('label', { class: 'choice' }, [none, el('div', { class: 'body' }, [el('strong', { text: t('none') })])]));
     return block;
 }
 
@@ -882,7 +2164,7 @@ function updateSendButton() {
     const jobs = chosenFiles();
     const bytes = jobs.reduce((sum, job) => sum + job.spec.size, 0);
     button.disabled = !jobs.length;
-    button.textContent = jobs.length ? 'Send ' + plural(jobs.length, 'file', 'files') + ' (' + formatSize(bytes) + ')' : 'Nothing picked to send';
+    button.textContent = jobs.length ? t('sendFiles', tCount('files', jobs.length), formatSize(bytes)) : t('nothingPicked');
 }
 
 function renderNothing(box) {
@@ -893,16 +2175,16 @@ function renderNothing(box) {
 
     const card = el('div', { class: 'card' });
     if (limitedInput) {
-        card.appendChild(el('h2', { text: 'None of these files is ' + limitedInput.label }));
-        card.appendChild(el('p', { class: 'muted', text: limitedPort.title + ' looks for:' }));
+        card.appendChild(el('h2', { text: t('noneOfThese', limitedInput.label) }));
+        card.appendChild(el('p', { class: 'muted', text: t('looksFor', limitedPort.title) }));
         card.appendChild(needsList(limitedInput));
     } else {
-        card.appendChild(el('h2', { text: 'Nothing here is needed by ' + (limitedPort ? limitedPort.title : 'any game') }));
-        card.appendChild(el('p', { class: 'muted', text: 'Make sure the game files are extracted (not still in a .zip or .7z). This is what ' + (limitedPort ? 'it' : 'each game') + ' looks for:' }));
+        card.appendChild(el('h2', { text: limitedPort ? t('notNeededBy', limitedPort.title) : t('notNeededByAny') }));
+        card.appendChild(el('p', { class: 'muted', text: t(limitedPort ? 'extractedOne' : 'extractedEach') }));
         for (const port of limitedPort ? [limitedPort] : matchedPorts()) {
             if (!limitedPort) card.appendChild(el('h3', { style: 'margin-top: 18px;', text: port.title }));
             for (const input of port.inputs || []) {
-                card.appendChild(el('p', { class: 'small', style: 'margin: 12px 0 0;' }, [el('strong', { text: input.label }), input.required ? '' : ' (optional)']));
+                card.appendChild(el('p', { class: 'small', style: 'margin: 12px 0 0;' }, [el('strong', { text: input.label }), input.required ? '' : t('optionalParen')]));
                 card.appendChild(needsList(input));
             }
         }
@@ -920,7 +2202,7 @@ function renderFound() {
         return;
     }
 
-    box.appendChild(el('h2', { class: 'section-title', style: 'margin-top: 22px;', text: 'Found' }));
+    box.appendChild(el('h2', { class: 'section-title', style: 'margin-top: 22px;', text: t('found') }));
     const portOrder = [];
     for (const match of matches) if (portOrder.indexOf(match.port) < 0) portOrder.push(match.port);
     for (const portId of portOrder) {
@@ -938,11 +2220,11 @@ function renderFound() {
         box.appendChild(card);
     }
     if (found.unused > 0)
-        box.appendChild(el('p', { class: 'muted', text: (found.unused === 1 ? '1 file isn\'t' : found.unused + ' files aren\'t') + ' needed by any game and won\'t be sent.' }));
+        box.appendChild(el('p', { class: 'muted', text: tCount('unused', found.unused) }));
     box.appendChild(el('div', { class: 'row', style: 'margin-top: 16px;' }, [
         el('button', { id: 'sendButton', type: 'button', class: 'primary', onclick: send }),
     ]));
-    box.appendChild(el('p', { class: 'small muted', text: 'Keep this page open and the screen on until it finishes.' }));
+    box.appendChild(el('p', { class: 'small muted', text: t('keepOpen') }));
     updateSendButton();
 }
 
@@ -973,19 +2255,19 @@ function renderSending(state) {
     const overall = state.total ? (state.sentBytes + state.currentBytes) / state.total : 1;
     const current = state.job && state.job.size ? state.currentBytes / state.job.size : 0;
     const left = state.total - state.sentBytes - state.currentBytes;
-    const parts = [formatSize(state.sentBytes + state.currentBytes) + ' of ' + formatSize(state.total)];
+    const parts = [t('progressOf', formatSize(state.sentBytes + state.currentBytes), formatSize(state.total))];
     if (state.speed > 0) {
-        parts.push(formatSize(state.speed) + '/s');
-        parts.push('about ' + formatTime(left / state.speed) + ' left');
+        parts.push(t('perSecond', formatSize(state.speed)));
+        parts.push(t('timeLeft', formatTime(left / state.speed)));
     }
-    box.appendChild(el('h2', { text: 'Sending ' + (state.position + 1) + ' of ' + state.jobs.length }));
+    box.appendChild(el('h2', { text: t('sendingOf', state.position + 1, state.jobs.length) }));
     box.appendChild(el('div', { class: 'bar' }, [el('div', { style: 'width: ' + (overall * 100).toFixed(1) + '%' })]));
     box.appendChild(el('p', { class: 'small muted', text: parts.join(' · ') }));
     if (state.job) {
         box.appendChild(el('p', { class: 'small', style: 'word-break: break-all; margin-top: 16px;', text: state.job.label }));
         box.appendChild(el('div', { class: 'bar small' }, [el('div', { style: 'width: ' + (current * 100).toFixed(1) + '%' })]));
     }
-    box.appendChild(el('div', { class: 'row', style: 'margin-top: 16px;' }, [el('button', { type: 'button', text: 'Cancel', onclick: cancel })]));
+    box.appendChild(el('div', { class: 'row', style: 'margin-top: 16px;' }, [el('button', { type: 'button', text: t('cancel'), onclick: cancel })]));
 }
 
 function cancel() {
@@ -1036,7 +2318,7 @@ async function runUploads(jobs) {
         const answer = await upload(job, progress);
         sending.xhr = null;
         if (answer.aborted || sending.cancelled) {
-            result.stopMessage = 'Sending was cancelled.';
+            result.stopMessage = t('cancelled');
             break;
         }
         if (answer.status === 200) {
@@ -1044,13 +2326,13 @@ async function runUploads(jobs) {
             state.sentBytes += job.size;
         } else if (answer.status === 410) {
             result.replaced = true;
-            result.stopMessage = 'PortZone\'s list of files changed (another drop, or the screen was reopened). Drop the files again.';
+            result.stopMessage = t('listChanged');
             break;
         } else if (answer.status === 0) {
-            result.stopMessage = 'Lost the connection to PortZone. Check that the Switch is still on the Send files screen and on the same Wi-Fi, then try again.';
+            result.stopMessage = t('lostConnection');
             break;
         } else {
-            const why = answer.status === 403 ? FORBIDDEN : (answer.error || ('PortZone answered ' + answer.status));
+            const why = answer.status === 403 ? FORBIDDEN : (fromServer(answer.error) || t('answeredShort', answer.status));
             result.failed.push({ path: job.label, why: why });
             state.total -= job.size;
         }
@@ -1072,7 +2354,7 @@ async function send() {
     const jobs = picked.map((job) => ({
         label: job.item.path, size: job.spec.size, file: job.item.file,
         url: apiUrl('file', { plan: plan, match: job.match.id, file: job.index }),
-        skip: job.item.file.size !== job.spec.size ? 'it isn\'t the size this game expects' : '',
+        skip: job.item.file.size !== job.spec.size ? t('wrongSize') : '',
     }));
     if (!jobs.length) return;
     const games = [];
@@ -1093,23 +2375,23 @@ function renderSummary(result, games) {
     box.textContent = '';
     const sent = result.sent, failed = result.failed;
     const bytes = sent.reduce((sum, job) => sum + job.size, 0);
-    box.appendChild(el('h2', { text: sent.length ? 'Sent ' + plural(sent.length, 'file', 'files') + ' (' + formatSize(bytes) + ')' : 'No files were sent' }));
+    box.appendChild(el('h2', { text: sent.length ? t('sent', tCount('files', sent.length), formatSize(bytes)) : t('noneSent') }));
     if (result.stopMessage) box.appendChild(el('p', { class: 'bad', text: result.stopMessage }));
     if (failed.length) {
-        box.appendChild(el('p', { class: 'bad', text: plural(failed.length, 'file', 'files') + ' didn\'t go through:' }));
+        box.appendChild(el('p', { class: 'bad', text: t('notThrough', tCount('files', failed.length)) }));
         const list = el('ul', { class: 'plain small' });
-        for (const f of failed) list.appendChild(el('li', null, [el('code', { text: f.path }), ': ' + f.why]));
+        for (const f of failed) list.appendChild(el('li', null, tNodes('pair', el('code', { text: f.path }), f.why)));
         box.appendChild(list);
     }
     const involved = games.map(portById).filter((port) => port && !port.manualOnly);
     const missing = [];
     for (const port of involved)
         for (const input of port.inputs || [])
-            if (input.required && !input.met) missing.push((involved.length > 1 ? port.title + ': ' : '') + input.label);
+            if (input.required && !input.met) missing.push(involved.length > 1 ? t('pair', port.title, input.label) : input.label);
     if (missing.length)
-        box.appendChild(el('p', { class: 'muted', text: 'Still missing: ' + missing.join('; ') }));
+        box.appendChild(el('p', { class: 'muted', text: t('stillMissing', missing.join(t('missingSep'))) }));
     else if (sent.length && involved.length)
-        box.appendChild(el('p', { class: 'good', text: involved.length === 1 ? involved[0].title + ' has everything it needs.' : 'These games have everything they need.' }));
+        box.appendChild(el('p', { class: 'good', text: involved.length === 1 ? t('hasEverything', involved[0].title) : t('allHaveEverything') }));
     show(box, true);
     box.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
@@ -1159,7 +2441,7 @@ function crumbs(path) {
         if (last || sending) row.appendChild(el('span', { class: last ? 'here' : '', text: label }));
         else row.appendChild(el('button', { type: 'button', class: 'link', text: label, onclick: () => loadListing(target) }));
     };
-    add('SD card', '', !parts.length);
+    add(t('sdCard'), '', !parts.length);
     parts.forEach((part, i) => {
         row.appendChild(el('span', { class: 'muted', text: '/' }));
         add(part, parts.slice(0, i + 1).join('/'), i === parts.length - 1);
@@ -1169,12 +2451,12 @@ function crumbs(path) {
 
 function entryList(listing) {
     const folders = listing.folders || [], files = listing.files || [];
-    if (!folders.length && !files.length) return el('p', { class: 'muted', text: 'Empty folder' });
+    if (!folders.length && !files.length) return el('p', { class: 'muted', text: t('emptyFolder') });
     const list = el('div', { class: 'entries' });
     for (const name of folders)
         list.appendChild(el('button', { type: 'button', class: 'entry', disabled: !!sending, onclick: () => loadListing(joinPath(browse.path, name)) }, [
             el('span', { class: 'name folder-name', text: name }),
-            el('span', { class: 'kind', text: 'Folder' }),
+            el('span', { class: 'kind', text: t('folder') }),
         ]));
     for (const file of files)
         list.appendChild(el('div', { class: 'entry' }, [
@@ -1192,26 +2474,24 @@ function renderBrowser() {
     const busy = !!sending;
     const parent = browse.path.split('/').slice(0, -1).join('/');
     box.appendChild(el('div', { class: 'panel-head' }, [
-        el('h2', { style: 'margin: 0;', text: browse.title ? 'Files for ' + browse.title : 'Put files on the SD card' }),
-        el('button', { type: 'button', class: 'small', text: 'Close', disabled: busy, onclick: closeBrowser }),
+        el('h2', { style: 'margin: 0;', text: browse.title ? t('filesFor', browse.title) : t('putOnSd') }),
+        el('button', { type: 'button', class: 'small', text: t('close'), disabled: busy, onclick: closeBrowser }),
     ]));
     box.appendChild(crumbs(browse.path));
     box.appendChild(el('div', { class: 'row' }, [
-        el('button', { type: 'button', class: 'small', text: 'Up', disabled: busy || !browse.path, onclick: () => loadListing(parent) }),
-        el('button', { type: 'button', class: 'small', text: 'New folder', disabled: busy, onclick: newFolder }),
-        el('button', { type: 'button', class: 'small primary', text: 'Upload files here', disabled: busy, onclick: () => pick(false, uploadHere) }),
-        folderSupported() ? el('button', { type: 'button', class: 'small', text: 'Upload a folder here', disabled: busy, onclick: () => pick(true, uploadHere) }) : null,
+        el('button', { type: 'button', class: 'small', text: t('up'), disabled: busy || !browse.path, onclick: () => loadListing(parent) }),
+        el('button', { type: 'button', class: 'small', text: t('newFolder'), disabled: busy, onclick: newFolder }),
+        el('button', { type: 'button', class: 'small primary', text: t('uploadHere'), disabled: busy, onclick: () => pick(false, uploadHere) }),
+        folderSupported() ? el('button', { type: 'button', class: 'small', text: t('uploadFolderHere'), disabled: busy, onclick: () => pick(true, uploadHere) }) : null,
     ]));
-    box.appendChild(el('p', { class: 'small muted', text: 'You can also drop files or folders onto this box; folders keep what\'s inside them.' }));
+    box.appendChild(el('p', { class: 'small muted', text: t('browserHint') }));
     for (const message of browse.messages) box.appendChild(el('p', { class: 'bad', text: message }));
     if (browse.error) {
         box.appendChild(el('p', { class: 'bad', text: browse.error }));
     } else if (!browse.listing) {
-        box.appendChild(el('p', { class: 'muted', text: 'Loading…' }));
+        box.appendChild(el('p', { class: 'muted', text: t('loading') }));
     } else if (!browse.listing.exists) {
-        box.appendChild(el('p', { class: 'small' }, [
-            el('code', { text: browse.path || 'SD card' }), ': This folder doesn\'t exist yet; uploading here creates it.',
-        ]));
+        box.appendChild(el('p', { class: 'small' }, tNodes('notYet', el('code', { text: browse.path || t('sdCard') }))));
     } else {
         box.appendChild(entryList(browse.listing));
     }
@@ -1219,11 +2499,11 @@ function renderBrowser() {
 
 async function newFolder() {
     if (!browse || sending) return;
-    const answer = window.prompt('Name of the new folder:');
+    const answer = window.prompt(t('folderPrompt'));
     if (answer === null) return;
     const name = answer.trim();
     if (!name || /[\/\\:]/.test(name) || name.indexOf('..') >= 0) {
-        browse.messages = ['A folder name can\'t be empty or contain / \\ : or "..".'];
+        browse.messages = [t('badFolderName')];
         renderBrowser();
         return;
     }
@@ -1258,11 +2538,11 @@ function clashesAccepted(files, listing) {
     tops.forEach((top, key) => {
         if (top.folder) {
             if (folders.has(key)) merging.push(top.name);
-            else if (existingFiles.has(key)) conflicts.push(top.name + ' is already here as a file. Rename one of them first.');
+            else if (existingFiles.has(key)) conflicts.push(t('clashFile', top.name));
         } else if (existingFiles.has(key)) {
             replacing++;
         } else if (folders.has(key)) {
-            conflicts.push(top.name + ' is already here as a folder. Rename one of them first.');
+            conflicts.push(t('clashFolder', top.name));
         }
     });
     if (conflicts.length) {
@@ -1272,11 +2552,11 @@ function clashesAccepted(files, listing) {
     }
     if (merging.length) {
         const question = merging.length === 1
-            ? 'Add to the existing folder ' + merging[0] + '? Files with the same names inside it are replaced.'
-            : 'Add to the existing folders ' + merging.join(', ') + '? Files with the same names inside them are replaced.';
+            ? t('mergeOne', merging[0])
+            : t('mergeMany', merging.join(t('listSep')));
         if (!window.confirm(question)) return false;
     }
-    if (replacing && !window.confirm('Replace ' + plural(replacing, 'existing item', 'existing items') + '?')) return false;
+    if (replacing && !window.confirm(tCount('replace', replacing))) return false;
     return true;
 }
 
@@ -1359,7 +2639,7 @@ function setup() {
         loaded = true;
         renderView();
         $('grid').textContent = '';
-        showError('This link is missing its key. Open the address PortZone shows on the Switch.');
+        showError(t('noKey'));
         return;
     }
     loadPorts(true).catch((e) => {
@@ -1368,6 +2648,7 @@ function setup() {
     });
 }
 
+translatePage();
 setup();
 </script>
 </body>

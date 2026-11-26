@@ -1,5 +1,9 @@
 #include "state.hpp"
 
+#include <borealis/core/i18n.hpp>
+
+using namespace brls::literals;
+
 namespace pz
 {
 
@@ -46,20 +50,21 @@ bool stateGood(const Port& port, const PortState& state)
 std::string stateSummary(const Port& port, const PortState& state)
 {
     if (!state.installed && !port.runsHere())
-        return "For " + consolesLabel(port.runsOn()) + " only";
+        return brls::getStr("portzone/state/for_only", consolesLabel(port.runsOn()));
     if (!port.manifest)
-        return state.installed ? "Installed " + state.record->tag : "Not installed";
+        return state.installed ? brls::getStr("portzone/state/installed_tag", state.record->tag) :
+                                 "portzone/state/not_installed"_i18n;
     if (!state.installed)
     {
         if (port.section() == Section::BuildOnPc)
-            return "Build on a PC first";
+            return "portzone/state/build_first"_i18n;
         if (port.section() == Section::PrepareOnPc && !(state.data && state.data->ready))
-            return "Prepare files on a PC";
-        return state.data && state.data->ready ? "Files ready · not installed" : "Not installed";
+            return "portzone/state/prepare_files"_i18n;
+        return state.data && state.data->ready ? "portzone/state/files_ready"_i18n : "portzone/state/not_installed"_i18n;
     }
     if (state.data && !state.data->ready)
-        return "Installed · your files are missing";
-    return "Ready to play";
+        return "portzone/state/files_missing_long"_i18n;
+    return "portzone/state/ready_to_play"_i18n;
 }
 
 std::string stateShort(const Port& port, const PortState& state)
@@ -67,14 +72,15 @@ std::string stateShort(const Port& port, const PortState& state)
     if (!state.installed)
     {
         if (!port.runsHere())
-            return consolesLabel(port.runsOn()) + " only";
+            return brls::getStr("portzone/state/only", consolesLabel(port.runsOn()));
         if (port.manifest && port.section() == Section::BuildOnPc)
-            return "Build on PC";
-        return port.manifest && port.section() == Section::PrepareOnPc ? "Prepare on PC" : "Not installed";
+            return "portzone/state/build_on_pc"_i18n;
+        return port.manifest && port.section() == Section::PrepareOnPc ? "portzone/state/prepare_on_pc"_i18n :
+                                                                         "portzone/state/not_installed"_i18n;
     }
     if (state.data && !state.data->ready)
-        return "Files missing";
-    return port.manifest ? "Ready" : "Installed";
+        return "portzone/state/files_missing"_i18n;
+    return port.manifest ? "portzone/state/ready"_i18n : "portzone/state/installed"_i18n;
 }
 
 std::string consolesLabel(const std::vector<std::string>& consoles)
@@ -82,9 +88,11 @@ std::string consolesLabel(const std::vector<std::string>& consoles)
     std::string text;
     for (size_t i = 0; i < consoles.size(); i++)
     {
-        if (i > 0)
-            text += i + 1 == consoles.size() ? " and " : ", ";
-        text += consoles[i] == "switch2" ? "Switch 2" : (consoles[i] == "switch" ? "Switch" : consoles[i]);
+        const std::string name = consoles[i] == "switch2" ? "Switch 2" : (consoles[i] == "switch" ? "Switch" : consoles[i]);
+        if (i == 0)
+            text = name;
+        else
+            text = brls::getStr(i + 1 == consoles.size() ? "portzone/common/list_and" : "portzone/common/list_comma", text, name);
     }
     return text;
 }

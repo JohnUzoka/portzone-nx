@@ -6,6 +6,8 @@
 #include "config.hpp"
 #include "transfer.hpp"
 
+using namespace brls::literals;
+
 namespace pz::ui
 {
 
@@ -30,17 +32,15 @@ brls::View* TransferActivity::createContentView()
     intro = card(brls::Axis::COLUMN);
     intro->setFocusable(true);
     intro->setHideHighlightBackground(true);
-    intro->addView(textBlock("1. Connect your phone or PC to the same Wi-Fi as the Switch.", 20));
-    intro->addView(textBlock("2. Open this address in its browser:", 20));
+    intro->addView(textBlock("portzone/transfer/step_wifi"_i18n, 20));
+    intro->addView(textBlock("portzone/transfer/step_open"_i18n, 20));
     auto* addressRow = new brls::Box(brls::Axis::ROW);
     addressRow->setMarginTop(10);
     addressRow->setMarginBottom(10);
-    address = label("Starting...", 34, accentColor());
+    address = label("portzone/transfer/starting"_i18n, 34, accentColor());
     addressRow->addView(address);
     intro->addView(addressRow);
-    intro->addView(textBlock("Drop the game's files or folders on the page; PortZone works out what goes where. "
-                             "Keep this screen open while sending.",
-        18, mutedColor()));
+    intro->addView(textBlock("portzone/transfer/drop_hint"_i18n, 18, mutedColor()));
     content->addView(intro);
 
     statusBox = new brls::Box(brls::Axis::COLUMN);
@@ -51,7 +51,7 @@ brls::View* TransferActivity::createContentView()
     auto* scroll = new brls::ScrollingFrame();
     scroll->setContentView(content);
     auto* frame       = new brls::AppletFrame(scroll);
-    std::string title = "Send game files";
+    std::string title = "portzone/transfer/title"_i18n;
     if (!focusPort.empty())
         if (const Port* port = Catalog::get().find(focusPort))
             title = port->info.title + " · " + title;
@@ -76,14 +76,15 @@ void TransferActivity::refresh()
 {
     const transfer::Status status = transfer::status();
     shown                         = status.generation;
-    address->setText(status.running ? status.address : (status.error.empty() ? "Starting..." : "Not available"));
+    address->setText(status.running ? status.address :
+                                      (status.error.empty() ? "portzone/transfer/starting"_i18n : "portzone/transfer/not_available"_i18n));
     rebuild(statusBox, intro, [this, &status](brls::Box* box) {
         if (!status.error.empty())
         {
             box->addView(textBlock(status.error, 20, badColor()));
             auto* actions = new brls::Box(brls::Axis::ROW);
             actions->setMarginTop(14);
-            actions->addView(button("Try again", [this] { start(); }, true));
+            actions->addView(button("portzone/common/try_again"_i18n, [this] { start(); }, true));
             box->addView(actions);
             return;
         }
@@ -102,15 +103,14 @@ void TransferActivity::fillStatus(brls::Box* box)
     }
     if (!status.currentFile.empty())
     {
-        std::string line = status.currentFile + " · " + formatSize(status.currentDone) + " of " +
-            formatSize(status.currentTotal);
+        std::string line = status.currentFile + " · " +
+            brls::getStr("portzone/transfer/size_of", formatSize(status.currentDone), formatSize(status.currentTotal));
         if (status.bytesPerSecond > 0)
             line += " · " + formatSize(uint64_t(status.bytesPerSecond)) + "/s";
         box->addView(textRow(line, 20));
     }
     if (status.filesTotal > 0)
-        box->addView(textRow(std::to_string(status.filesDone) + " of " + std::to_string(status.filesTotal) +
-                " files",
+        box->addView(textRow(brls::getStr("portzone/transfer/files_of", status.filesDone, status.filesTotal),
             18, mutedColor()));
     const size_t count = std::min<size_t>(status.log.size(), 12);
     for (size_t i = 0; i < count; i++)

@@ -94,7 +94,7 @@ Status check()
         status.available = compareVersions(release.tag, PORTZONE_VERSION) > 0;
         return status;
     }
-    status.error = "No PortZone release has a .nro yet.";
+    status.error = brls::getStr("portzone/update/no_nro");
     return status;
 }
 

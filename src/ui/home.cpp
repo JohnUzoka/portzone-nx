@@ -1,6 +1,7 @@
 #include "ui/home.hpp"
 
 #include "config.hpp"
+#include "languages.hpp"
 #include "port_updates.hpp"
 #include "settings.hpp"
 #include "ui/browse.hpp"
@@ -8,6 +9,8 @@
 #include "ui/transfer_page.hpp"
 #include "ui/update_page.hpp"
 #include "update.hpp"
+
+using namespace brls::literals;
 
 namespace pz::ui
 {
@@ -69,26 +72,23 @@ namespace
         auto* box = new brls::Box(brls::Axis::COLUMN);
         box->setAlignItems(brls::AlignItems::STRETCH);
         box->setPadding(32, 48, 32, 48);
-        box->addView(header("Add game files"));
-        box->addView(textBlock("PortZone finds which files each port needs and puts them in the right folder. "
-                               "You never have to sort them.",
-            20, mutedColor()));
+        box->addView(header("portzone/home/add_game_files"_i18n));
+        box->addView(textBlock("portzone/home/game_files_intro"_i18n, 20, mutedColor()));
 
         auto* sendRow = new brls::Box(brls::Axis::ROW);
         sendRow->setMarginTop(16);
-        sendRow->addView(button("Send from phone or PC",
+        sendRow->addView(button("portzone/common/send_from_phone"_i18n,
             [] { brls::Application::pushActivity(new TransferActivity("")); }, true));
         box->addView(sendRow);
-        auto* sendHint = textBlock("Drop the game's files or folders in a browser on the same Wi-Fi.", 18, mutedColor());
+        auto* sendHint = textBlock("portzone/home/send_hint"_i18n, 18, mutedColor());
         sendHint->setMarginTop(8);
         box->addView(sendHint);
 
         auto* findRow = new brls::Box(brls::Axis::ROW);
         findRow->setMarginTop(16);
-        findRow->addView(button("Find on SD card", [] { brls::Application::pushActivity(new SdSearchActivity("")); }));
+        findRow->addView(button("portzone/common/find_on_sd"_i18n, [] { brls::Application::pushActivity(new SdSearchActivity("")); }));
         box->addView(findRow);
-        auto* findHint = textBlock("Already copied files somewhere on the SD card? PortZone moves them into place.", 18,
-            mutedColor());
+        auto* findHint = textBlock("portzone/home/find_hint"_i18n, 18, mutedColor());
         findHint->setMarginTop(8);
         box->addView(findHint);
         frame->setContentView(box);
@@ -104,17 +104,19 @@ namespace
         box->setPadding(32, 48, 32, 48);
         // Not focusable, so moving into the tab lands on the Theme button.
         box->addView(textBlock("PortZone " PORTZONE_VERSION, 28));
-        box->addView(textBlock("A manager for GitHub game projects that use your own game files. PortZone never downloads game data.", 20, mutedColor()));
+        box->addView(textBlock("portzone/home/about_intro"_i18n, 20, mutedColor()));
 
-        box->addView(header("Appearance"));
+        box->addView(header("portzone/home/appearance"_i18n));
         auto* themeRow = new brls::Box(brls::Axis::ROW);
         themeRow->setMarginTop(8);
-        themeRow->addView(button(std::string("Theme: ") + (settings().lightTheme ? "Light" : "Dark"), chooseTheme));
+        themeRow->addView(button(brls::getStr("portzone/home/theme_button",
+                                     settings().lightTheme ? "portzone/home/light"_i18n : "portzone/home/dark"_i18n),
+            chooseTheme));
         box->addView(themeRow);
 
         // PortZone can't tell a Switch 2 from a Switch: the player says which, for ports with a Switch 2 build.
-        box->addView(header("Console"));
-        const auto consoleText = [] { return std::string("This console: ") + (config().console == "switch2" ? "Switch 2" : "Switch"); };
+        box->addView(header("portzone/home/console"_i18n));
+        const auto consoleText = [] { return brls::getStr("portzone/home/this_console", config().console == "switch2" ? "Switch 2" : "Switch"); };
         auto consoleButton = std::make_shared<brls::Button*>(nullptr);
         *consoleButton     = button(consoleText(), [consoleButton, consoleText] {
             config().console   = config().console == "switch2" ? "switch" : "switch2";
@@ -128,64 +130,112 @@ namespace
         consoleRow->setMarginTop(8);
         consoleRow->addView(*consoleButton);
         box->addView(consoleRow);
-        auto* consoleHint = textBlock("Games with a separate Switch 2 build install that build on a Switch 2; games for the "
-                                      "other console are listed but not installed.",
-            16, mutedColor());
+        auto* consoleHint = textBlock("portzone/home/console_hint"_i18n, 16, mutedColor());
         consoleHint->setMarginTop(8);
         box->addView(consoleHint);
 
-        box->addView(header("Updates"));
+        // borealis loads the text once at start, so a new choice shows from the next start.
+        box->addView(header("portzone/home/language_header"_i18n));
+        // "Console's language (Deutsch)": the language PortZone would pick from the console itself.
+        const auto automatic = [] {
+            std::string name = "English";
+            for (const Language& language : languages())
+                if (appLanguage("") == language.code)
+                    name = language.name;
+            return brls::getStr("portzone/home/language_auto", name);
+        };
+        const auto languageText = [automatic] {
+            std::string name = automatic();
+            for (const Language& language : languages())
+                if (settings().language == language.code)
+                    name = language.name;
+            return brls::getStr("portzone/home/language_button", name);
+        };
+        auto languageButton = std::make_shared<brls::Button*>(nullptr);
+        *languageButton     = button(languageText(), [languageButton, languageText, automatic] {
+            // The console's language first, then each language by its own name.
+            std::vector<std::string> names { automatic() };
+            int selected = 0;
+            for (size_t i = 0; i < languages().size(); i++)
+            {
+                names.push_back(languages()[i].name);
+                if (settings().language == languages()[i].code)
+                    selected = int(i) + 1;
+            }
+            auto* dropdown = new brls::Dropdown("portzone/home/language_header"_i18n, names, [](int) {}, selected,
+                [languageButton, languageText](int chosen) {
+                    if (chosen < 0 || chosen > int(languages().size()))
+                        return;
+                    settings().language = chosen == 0 ? "" : languages()[size_t(chosen) - 1].code;
+                    saveSettings();
+                    (*languageButton)->setText(languageText());
+                });
+            brls::Application::pushActivity(new brls::Activity(dropdown));
+        });
+        auto* languageRow = new brls::Box(brls::Axis::ROW);
+        languageRow->setMarginTop(8);
+        languageRow->addView(*languageButton);
+        box->addView(languageRow);
+        auto* languageHint = textBlock("portzone/home/language_hint"_i18n, 16, mutedColor());
+        languageHint->setMarginTop(8);
+        box->addView(languageHint);
+
+        box->addView(header("portzone/home/updates"_i18n));
         const update::Status& status = update::current();
-        std::string state            = "Not checked yet";
+        std::string state            = "portzone/home/not_checked"_i18n;
         if (status.available)
-            state = status.tag + " is available";
+            state = brls::getStr("portzone/common/is_available", status.tag);
         else if (!status.error.empty())
-            state = "Could not check: " + status.error;
+            state = brls::getStr("portzone/home/could_not_check", status.error);
         else if (status.checked)
-            state = "Up to date";
-        box->addView(textRow("PortZone " PORTZONE_VERSION ": " + state, 18, status.available ? goodColor() : mutedColor()));
+            state = "portzone/home/up_to_date"_i18n;
+        box->addView(textRow(brls::getStr("portzone/home/version_state", PORTZONE_VERSION, state), 18,
+            status.available ? goodColor() : mutedColor()));
         auto* updateRow = new brls::Box(brls::Axis::ROW);
         updateRow->setMarginTop(8);
-        updateRow->addView(button(status.available ? "See update" : "Check for updates",
+        updateRow->addView(button(status.available ? "portzone/common/see_update"_i18n : "portzone/home/check_for_updates"_i18n,
             [] { brls::Application::pushActivity(new UpdateActivity()); }, status.available));
+        const auto atStartText = [] {
+            return brls::getStr("portzone/home/check_at_start", settings().checkUpdates ? "portzone/common/on"_i18n : "portzone/common/off"_i18n);
+        };
         auto self     = std::make_shared<brls::Button*>(nullptr);
-        auto* atStart = button(std::string("Check at start: ") + (settings().checkUpdates ? "On" : "Off"), [self] {
+        auto* atStart = button(atStartText(), [self, atStartText] {
             settings().checkUpdates = !settings().checkUpdates;
             saveSettings();
-            (*self)->setText(std::string("Check at start: ") + (settings().checkUpdates ? "On" : "Off"));
+            (*self)->setText(atStartText());
         });
         *self = atStart;
         updateRow->addView(atStart);
         box->addView(updateRow);
-        auto* atStartHint = textBlock("At start PortZone also checks the games it installed; ones with a new release show "
-                                      "in Installed and on their cards.",
-            16, mutedColor());
+        auto* atStartHint = textBlock("portzone/home/at_start_hint"_i18n, 16, mutedColor());
         atStartHint->setMarginTop(8);
         box->addView(atStartHint);
 
-        box->addView(header("Sources", "Press Y on any tab to reload"));
-        std::string list = "Port list: " + config().indexUrl;
+        box->addView(header("portzone/home/sources"_i18n, "portzone/home/sources_hint"_i18n));
+        const char* listKey = "portzone/home/port_list";
         if (Catalog::get().source == Catalog::Source::Cache)
-            list += " (offline: last downloaded copy)";
+            listKey = "portzone/home/port_list_cache";
         else if (Catalog::get().source == Catalog::Source::BuiltIn)
-            list += " (offline: the list built into PortZone)";
-        box->addView(textRow(list));
-        box->addView(textRow("SD card: " + config().sdRoot.string()));
+            listKey = "portzone/home/port_list_builtin";
+        box->addView(textRow(brls::getStr(listKey, config().indexUrl)));
+        box->addView(textRow(brls::getStr("portzone/home/sd_card", config().sdRoot.string())));
         if (!config().draftsDir.empty())
-            box->addView(textRow("Draft portzone.json files: " + config().draftsDir.string()));
+            box->addView(textRow(brls::getStr("portzone/home/drafts", config().draftsDir.string())));
         // Only the ports with something to say: a portzone.json, or one that couldn't be used. A row for each of the
         // hundreds of others would make this tab slow to open and long to scroll.
         size_t withManifest = 0;
         for (const auto& port : Catalog::get().ports)
             withManifest += port.manifest ? 1 : 0;
-        box->addView(header("Ports", std::to_string(withManifest) + " of " + std::to_string(Catalog::get().ports.size()) +
-                                         " have a portzone.json; the rest are manual installs"));
+        box->addView(header("portzone/home/ports"_i18n,
+            brls::getStr("portzone/home/ports_summary", withManifest, Catalog::get().ports.size())));
         for (const auto& port : Catalog::get().ports)
         {
             if (!port.manifest && port.manifestError.empty())
                 continue;
-            const std::string source = port.manifest ? "portzone.json from " + port.manifestSource : port.manifestError;
-            box->addView(textRow(port.info.title + ": " + source, 18, port.manifestError.empty() ? mutedColor() : badColor()));
+            const std::string source =
+                port.manifest ? brls::getStr("portzone/home/manifest_from", port.manifestSource) : port.manifestError;
+            box->addView(textRow(brls::getStr("portzone/home/port_line", port.info.title, source), 18,
+                port.manifestError.empty() ? mutedColor() : badColor()));
         }
         frame->setContentView(box);
         return frame;
@@ -216,7 +266,7 @@ brls::View* HomeActivity::createContentView()
     frame = new brls::AppletFrame(content);
     frame->setTitle("PortZone");
     frame->setIcon(BRLS_ASSET("icon/icon.png"));
-    frame->registerAction("Refresh", brls::BUTTON_Y, [this](brls::View*) {
+    frame->registerAction("portzone/home/refresh"_i18n, brls::BUTTON_Y, [this](brls::View*) {
         load();
         return true;
     });
@@ -249,7 +299,7 @@ void HomeActivity::load()
         box->setJustifyContent(brls::JustifyContent::CENTER);
         box->setAlignItems(brls::AlignItems::CENTER);
         box->addView(new brls::ProgressSpinner());
-        box->addView(label("Loading ports...", 20, mutedColor()));
+        box->addView(label("portzone/home/loading"_i18n, 20, mutedColor()));
     });
     // The port list, and (unless turned off) whether a newer PortZone is out: two requests, one wait.
     struct Startup
@@ -292,7 +342,7 @@ void HomeActivity::showError(const std::string& error)
         auto* text = label(error, 20, badColor());
         text->setMarginBottom(24);
         box->addView(text);
-        auto* retry = button("Try again", [this] { load(); }, true);
+        auto* retry = button("portzone/common/try_again"_i18n, [this] { load(); }, true);
         box->addView(retry);
         brls::Application::giveFocus(retry);
     });
@@ -309,12 +359,13 @@ void HomeActivity::showCatalog(int tab)
         const auto lazy = [this](int slot, std::function<brls::View*()> make) {
             return [cache = tabCache, slot, make = std::move(make)] { return new LazyTab(cache, slot, make); };
         };
-        tabs->addTab("Browse", lazy(0, [] { return new BrowseView(false); }));
-        tabs->addTab("Installed", lazy(1, [] { return new BrowseView(true); }));
-        tabs->addTab("Game files", lazy(2, [] { return gameFilesTab(); }));
+        tabs->addTab("portzone/home/tab_browse"_i18n, lazy(0, [] { return new BrowseView(false); }));
+        tabs->addTab("portzone/home/tab_installed"_i18n, lazy(1, [] { return new BrowseView(true); }));
+        tabs->addTab("portzone/home/tab_game_files"_i18n, lazy(2, [] { return gameFilesTab(); }));
         tabs->addSeparator();
         // Not kept: it shows the update check's result, which arrives after start.
-        tabs->addTab("About", [this] { return new LazyTab(nullptr, 0, [this] { return aboutTab([this] { chooseTheme(); }); }); });
+        tabs->addTab("portzone/home/tab_about"_i18n,
+            [this] { return new LazyTab(nullptr, 0, [this] { return aboutTab([this] { chooseTheme(); }); }); });
         box->addView(tabs);
         tabs->focusTab(tab);
     });
@@ -344,14 +395,15 @@ void HomeActivity::markInstalledTab()
         return;
     const size_t updates = portupdates::count();
     if (brls::SidebarItem* installed = sidebar->getItem(1))
-        installed->setLabel(updates ? "Installed (" + std::to_string(updates) + ")" : "Installed");
+        installed->setLabel(updates ? brls::getStr("portzone/home/tab_installed_count", updates) : "portzone/home/tab_installed"_i18n);
 }
 
 void HomeActivity::chooseTheme()
 {
     // Applied once the dropdown has closed, so the whole screen can be rebuilt in the new colours.
     auto* dropdown = new brls::Dropdown(
-        "Theme", { "Dark", "Light" }, [](int) {}, settings().lightTheme ? 1 : 0,
+        "portzone/home/theme"_i18n, { "portzone/home/dark"_i18n, "portzone/home/light"_i18n }, [](int) {},
+        settings().lightTheme ? 1 : 0,
         [this](int selected) {
             if (selected < 0 || (selected == 1) == settings().lightTheme)
                 return;

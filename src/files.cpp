@@ -3,6 +3,7 @@
 #include <cstdio>
 #include <fstream>
 
+#include <borealis/core/i18n.hpp>
 #include <picosha2.h>
 
 namespace pz
@@ -73,14 +74,14 @@ namespace
             for (const auto& marker : spec.markers)
                 if (!findPath(*found, marker))
                 {
-                    check.detail = "no " + marker + " inside";
+                    check.detail = brls::getStr("portzone/jobs/no_inside", marker);
                     return check;
                 }
             if (!spec.match.empty())
             {
                 const size_t count = countMatches(*found, spec.match);
                 check.found        = count > 0;
-                check.detail       = count == 1 ? "1 file" : std::to_string(count) + " files";
+                check.detail       = brls::getStr(count == 1 ? "portzone/common/files_one" : "portzone/common/files_other", count);
             }
             else
                 check.found = !spec.markers.empty() || folderHasFiles(*found);
@@ -92,7 +93,7 @@ namespace
         const uint64_t size = fs::file_size(*found, ec);
         if (spec.size && size != *spec.size)
         {
-            check.detail = "wrong size: " + formatSize(size);
+            check.detail = brls::getStr("portzone/jobs/wrong_size", formatSize(size));
             return check;
         }
         if (!spec.sha256.empty() && size <= HASH_LIMIT)
@@ -103,7 +104,7 @@ namespace
                 known |= lower(accepted) == hash;
             if (!known)
             {
-                check.detail = "not a known version";
+                check.detail = brls::getStr("portzone/jobs/not_known_version");
                 return check;
             }
         }
@@ -138,10 +139,10 @@ std::string moveFile(const fs::path& from, const fs::path& to)
         return "";
     fs::create_directories(to.parent_path(), ec);
     if (ec)
-        return "could not make the folder " + to.parent_path().string();
+        return brls::getStr("portzone/jobs/could_not_make_folder", to.parent_path().string());
     // Horizon's rename doesn't replace a file: take the old one away first.
     if (fs::exists(to, ec) && !fs::remove(to, ec))
-        return "could not replace " + to.string();
+        return brls::getStr("portzone/jobs/could_not_replace", to.string());
     fs::rename(from, to, ec);
     if (!ec)
         return "";
@@ -167,7 +168,7 @@ std::string moveFile(const fs::path& from, const fs::path& to)
     if (!ok)
     {
         fs::remove(to, ec);
-        return "could not write " + to.string();
+        return brls::getStr("portzone/jobs/could_not_write_file", to.string());
     }
     fs::remove(from, ec);
     return "";

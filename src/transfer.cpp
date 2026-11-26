@@ -21,6 +21,7 @@
 
 #include <borealis/core/application.hpp>
 #include <borealis/core/assets.hpp>
+#include <borealis/core/i18n.hpp>
 #include <borealis/core/logger.hpp>
 #include <json.hpp>
 #include <picosha2.h>
@@ -44,6 +45,7 @@ namespace pz::transfer
 {
 
 using nlohmann::json;
+using namespace brls::literals;
 using Clock = std::chrono::steady_clock;
 
 namespace
@@ -58,7 +60,6 @@ namespace
     constexpr size_t LOG_LINES        = 50;
     constexpr auto IDLE_LIMIT         = std::chrono::seconds(30);
     constexpr int POLL_MS             = 200;
-    constexpr const char* NO_NETWORK  = "Connect the Switch to a Wi-Fi network first (the same one as your phone or PC).";
     constexpr const char* KEY_LETTERS = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; // 32: no I, O, 0, 1
 
     struct Server
@@ -539,7 +540,7 @@ namespace
         if (!portId.empty() && ports.empty())
             return respondError(c, 400, "Unknown port " + portId + ".");
 
-        update([&](Status& status) { status.phase = "Planning (" + std::to_string(sources.size()) + " files offered)"; });
+        update([&](Status& status) { status.phase = brls::getStr("portzone/transfer/planning", sources.size()); });
         matcher::Plan plan = matcher::plan(sources, ports, param(req, "input"));
 
         s.sources = std::move(sources);
@@ -573,8 +574,8 @@ namespace
             status.filesDone = 0;
             status.bytesDone = 0;
             recount(status);
-            status.phase = "Plan: " + std::to_string(selected) + (selected == 1 ? " item, " : " items, ") +
-                           formatSize(status.bytesTotal);
+            status.phase = brls::getStr(selected == 1 ? "portzone/transfer/plan_one" : "portzone/transfer/plan_other", selected,
+                formatSize(status.bytesTotal));
         });
         respondJson(c, 200, {{"plan", s.planNumber}, {"unused", plan.unused}, {"matches", matches}});
     }
@@ -607,7 +608,7 @@ namespace
             status.currentFile.clear();
             status.currentDone = status.currentTotal = 0;
             status.bytesPerSecond                    = 0;
-            addLog(status, "Rejected " + name + ": " + why);
+            addLog(status, brls::getStr("portzone/transfer/rejected", name, why));
         });
         respondError(c, code, message);
     }
@@ -623,14 +624,14 @@ namespace
         FILE* out = std::fopen(part.string().c_str(), "wb");
         if (!out)
         {
-            rejectFile(c, 500, name, "could not write", "PortZone could not write to the SD card.");
+            rejectFile(c, 500, name, "portzone/transfer/could_not_write"_i18n, "PortZone could not write to the SD card.");
             return false;
         }
         std::vector<char> writeBuffer(WRITE_BUFFER);
         std::setvbuf(out, writeBuffer.data(), _IOFBF, writeBuffer.size());
 
         update([&](Status& status) {
-            status.phase        = "Receiving " + name;
+            status.phase        = brls::getStr("portzone/transfer/receiving", name);
             status.currentFile  = name;
             status.currentDone  = 0;
             status.currentTotal = req.length;
@@ -684,7 +685,7 @@ namespace
             fs::remove(part, ec);
             if (writeFailed || !closed)
             {
-                rejectFile(c, 500, name, "could not write (SD card full?)",
+                rejectFile(c, 500, name, "portzone/transfer/sd_full"_i18n,
                     "PortZone could not write " + name + ". Is the SD card full?");
                 return false;
             }
@@ -693,8 +694,8 @@ namespace
                 status.currentFile.clear();
                 status.currentDone = status.currentTotal = 0;
                 status.bytesPerSecond                    = 0;
-                status.phase = s.stopping ? "Stopped" : "Waiting for a browser";
-                addLog(status, "Stopped receiving " + name);
+                status.phase = s.stopping ? "portzone/transfer/stopped"_i18n : "portzone/transfer/waiting"_i18n;
+                addLog(status, brls::getStr("portzone/transfer/stopped_receiving", name));
             });
             return false;
         }
@@ -706,7 +707,7 @@ namespace
             if (std::find(sha256.begin(), sha256.end(), hash) == sha256.end())
             {
                 fs::remove(part, ec);
-                rejectFile(c, 409, name, "not a known version", "not a known version of " + name);
+                rejectFile(c, 409, name, "portzone/transfer/unknown_version"_i18n, "not a known version of " + name);
                 return false;
             }
         }
@@ -736,7 +737,7 @@ namespace
             status.currentFile.clear();
             status.currentDone = status.currentTotal = 0;
             status.bytesPerSecond                    = 0;
-            addLog(status, "Received " + name + " \u2192 " + shown);
+            addLog(status, brls::getStr("portzone/transfer/received", name, shown));
         });
         respondJson(c, 200, {{"ok", true}});
     }
@@ -763,7 +764,7 @@ namespace
         const std::string shown  = folder.empty() ? placement.dest : folder + "/" + placement.dest;
 
         if (req.length != source.size || (placement.size && *placement.size != req.length))
-            return rejectFile(c, 409, name, "wrong size", "wrong size: " + name + " is not the expected file");
+            return rejectFile(c, 409, name, "portzone/transfer/wrong_size"_i18n, "wrong size: " + name + " is not the expected file");
         if (!receiveFile(c, req, name, placement.sha256))
             return;
 
@@ -859,7 +860,7 @@ namespace
         fs::create_directories(dir, ec);
         if (!fs::is_directory(dir, ec))
             return respondError(c, 409, "Could not make the folder " + joined(parts) + ".");
-        update([&](Status& status) { addLog(status, "Made the folder " + joined(parts)); });
+        update([&](Status& status) { addLog(status, brls::getStr("portzone/transfer/made_folder", joined(parts))); });
         respondJson(c, 200, {{"ok", true}});
     }
 
@@ -884,9 +885,11 @@ namespace
         update([&](Status& status) {
             status.filesTotal = status.filesDone;
             status.bytesTotal = status.bytesDone;
-            status.phase      = "Done: " + std::to_string(status.filesDone) + (status.filesDone == 1 ? " file" : " files");
+            status.phase      = brls::getStr(status.filesDone == 1 ? "portzone/transfer/done_one" : "portzone/transfer/done_other",
+                status.filesDone);
             if (s.failed > 0)
-                status.phase += ", " + std::to_string(s.failed) + (s.failed == 1 ? " error" : " errors");
+                status.phase = brls::getStr(s.failed == 1 ? "portzone/transfer/errors_one" : "portzone/transfer/errors_other",
+                    status.phase, s.failed);
             addLog(status, status.phase);
         });
         respondJson(c, 200, {{"ok", true}});
@@ -1008,12 +1011,12 @@ bool start(std::vector<Port> ports, std::string focusPort)
 
     const std::string ip = brls::Application::getPlatform()->getIpAddress();
     if (ip.empty() || ip == "-" || ip == "0.0.0.0")
-        return fail(NO_NETWORK);
+        return fail("portzone/transfer/no_network"_i18n);
 
     int port   = 0;
     s.listenFd = listenSocket(port);
     if (s.listenFd < 0)
-        return fail("No free network port (8080 to 8089) to receive files on.");
+        return fail("portzone/transfer/no_port"_i18n);
 
     update([&](Status& status) {
         const unsigned generation = status.generation;
@@ -1021,7 +1024,7 @@ bool start(std::vector<Port> ports, std::string focusPort)
         status.generation         = generation;
         status.running            = true;
         status.address            = "http://" + ip + ":" + std::to_string(port) + "/?k=" + s.key;
-        status.phase              = "Waiting for a browser";
+        status.phase              = "portzone/transfer/waiting"_i18n;
     });
     s.stopping = false;
     s.thread   = std::thread(serve);
