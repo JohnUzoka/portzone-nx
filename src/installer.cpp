@@ -3,12 +3,17 @@
 #include <algorithm>
 #include <chrono>
 #include <deque>
+#include <future>
 #include <fstream>
 #include <map>
 #include <set>
 #include <sstream>
 
 #include <borealis/core/i18n.hpp>
+#include <borealis/core/thread.hpp>
+#ifdef __SWITCH__
+#include <switch.h>
+#endif
 #include <json.hpp>
 #include <miniz.h>
 #include <picosha2.h>
@@ -315,6 +320,44 @@ namespace
         job.setStage("portzone/jobs/removed"_i18n);
     }
 
+    // Puts the downloaded .nro where the running one is. PortZone's built-in files (fonts, translations, images) are
+    // read from inside its own .nro, which stays open while they are mounted, and the console won't rename an open
+    // file: they are unmounted for the swap, then mounted again from the new file. "" when done, else why not.
+    std::string swapSelf(const fs::path& self, const fs::path& fresh, const fs::path& old)
+    {
+#ifdef __SWITCH__
+        romfsExit();
+#endif
+        std::string error;
+        std::error_code ec;
+        // FAT cannot rename over a file: move the old one aside, put the new one in, then drop the old one.
+        fs::remove(old, ec);
+        fs::rename(self, old, ec);
+        if (ec)
+            error = brls::getStr("portzone/jobs/move_aside", ec.message());
+        else
+        {
+            fs::rename(fresh, self, ec);
+            if (ec)
+            {
+                error = brls::getStr("portzone/jobs/put_in_place", ec.message());
+                std::error_code ignored;
+                fs::rename(old, self, ignored);
+            }
+            else
+                fs::remove(old, ec);
+        }
+#ifdef __SWITCH__
+        romfsInit();
+#endif
+        if (!error.empty())
+        {
+            std::error_code ignored;
+            fs::remove(fresh, ignored);
+        }
+        return error;
+    }
+
     void runSelfUpdate(const github::Asset& asset, const std::string& tag, Job& job)
     {
         const fs::path self = config().selfPath;
@@ -350,25 +393,15 @@ namespace
             return;
         }
 
-        // FAT cannot rename over a file: move the old one aside, put the new one in, then drop the old one.
-        fs::remove(old, ec);
-        fs::rename(self, old, ec);
-        if (ec)
+        // The swap runs on the UI thread, which is the only reader of PortZone's built-in files once it has started.
+        std::promise<std::string> swapped;
+        auto result = swapped.get_future();
+        brls::sync([&] { swapped.set_value(swapSelf(self, fresh, old)); });
+        if (const std::string error = result.get(); !error.empty())
         {
-            fs::remove(fresh, ec);
-            job.fail(brls::getStr("portzone/jobs/move_aside", ec.message()));
+            job.fail(error);
             return;
         }
-        fs::rename(fresh, self, ec);
-        if (ec)
-        {
-            std::error_code ignored;
-            fs::rename(old, self, ignored);
-            fs::remove(fresh, ignored);
-            job.fail(brls::getStr("portzone/jobs/put_in_place", ec.message()));
-            return;
-        }
-        fs::remove(old, ec);
         job.fraction = 1;
         job.setStage(brls::getStr("portzone/jobs/updated_to", tag));
     }

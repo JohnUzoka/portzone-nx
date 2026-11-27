@@ -15,7 +15,7 @@ include(${BOREALIS_LIBRARY}/cmake/toolchain.cmake)
 project(portzone C CXX)
 set(VERSION_MAJOR "0")
 set(VERSION_MINOR "1")
-set(VERSION_ALTER "1")
+set(VERSION_ALTER "2")
 set(PROJECT_AUTHOR "JohnUzoka")
 # The homebrew menu needs a 256x256 JPEG; resources/icon/icon.png is the same logo for the app's header.
 set(PROJECT_ICON ${CMAKE_CURRENT_SOURCE_DIR}/resources/icon/icon.jpg)

@@ -20,6 +20,12 @@ std::string parseArgs(int argc, char* argv[])
     // hbloader passes the .nro's own path; launchers may add arguments of their own, which PortZone ignores.
     if (argc > 0 && std::string(argv[0]).rfind("sdmc:/", 0) == 0 && endsWithNoCase(argv[0], ".nro"))
         c.selfPath = argv[0];
+#ifdef PORTZONE_EMULATOR_BUILD
+    // Ryujinx starts the .nro without hbloader's argv[0]: assume the place portzone-ryu's live.sh puts it, so
+    // self-updates can be tried there.
+    if (c.selfPath.empty())
+        c.selfPath = "sdmc:/switch/portzone/portzone.nro";
+#endif
 #else
     c.sdRoot = fs::current_path() / "sdmc";
     for (int i = 1; i < argc; i++)

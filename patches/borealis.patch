@@ -72,6 +72,20 @@ index 1283138..cd14bec 100644
          {
              Application::giveFocus(toShow->getContentView());
          }
+diff --git a/library/lib/core/box.cpp b/library/lib/core/box.cpp
+index a9e85d0..ae031d5 100644
+--- a/library/lib/core/box.cpp
++++ b/library/lib/core/box.cpp
+@@ -221,6 +221,9 @@ void Box::removeView(View* view, bool free)
+     if (!view->isDetached())
+         YGNodeRemoveChild(this->ygNode, view->getYGNode());
+     this->children.erase(this->children.begin() + index);
++    // PortZone: as clearViews does; getDefaultFocus would otherwise call into the removed (soon deleted) view.
++    if (this->lastFocusedView == view)
++        this->lastFocusedView = nullptr;
+ 
+     // Update parent userdata
+     for (size_t i = index; i < this->children.size(); i++)
 diff --git a/library/lib/core/view.cpp b/library/lib/core/view.cpp
 index 13fb352..79118a2 100644
 --- a/library/lib/core/view.cpp
