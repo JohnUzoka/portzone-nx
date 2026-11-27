@@ -1,6 +1,7 @@
 #include "threads.hpp"
 
 #include <atomic>
+#include <cstdio>
 #include <list>
 #include <memory>
 #include <mutex>
@@ -39,7 +40,15 @@ void runInBackground(std::function<void()> work)
             ++it;
     }
     running.push_back({ std::thread([finished, work = std::move(work)] {
-                           work();
+                           // An exception escaping a thread ends the program: log it instead.
+                           try
+                           {
+                               work();
+                           }
+                           catch (const std::exception& e)
+                           {
+                               std::fprintf(stderr, "background task failed: %s\n", e.what());
+                           }
                            *finished = true;
                        }),
                         finished });

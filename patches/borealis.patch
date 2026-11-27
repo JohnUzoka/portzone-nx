@@ -1,3 +1,94 @@
+diff --git a/library/include/borealis/core/application.hpp b/library/include/borealis/core/application.hpp
+index cfff62b..2936ea4 100644
+--- a/library/include/borealis/core/application.hpp
++++ b/library/include/borealis/core/application.hpp
+@@ -141,6 +141,10 @@ class Application
+      */
+     static void giveFocus(View* view);
+ 
++    // PortZone: a view being destroyed stops being the focus or a remembered focus (giveFocus(nullptr) changes
++    // nothing, so a destroyed focused view would otherwise stay current and crash the next focus change).
++    static void forgetView(View* view);
++
+     inline static Style getStyle()
+     {
+         return brls::getStyle();
+diff --git a/library/lib/core/application.cpp b/library/lib/core/application.cpp
+index 1283138..cd14bec 100644
+--- a/library/lib/core/application.cpp
++++ b/library/lib/core/application.cpp
+@@ -529,9 +529,13 @@ void Application::navigate(FocusDirection direction, bool repeating)
+ 
+     View* currentFocus = Application::currentFocus;
+ 
+-    // Do nothing if there is no current focus
++    // No current focus (PortZone: its view was destroyed): take the screen's default focus back instead.
+     if (!currentFocus)
++    {
++        if (!Application::activitiesStack.empty())
++            Application::giveFocus(Application::activitiesStack.back()->getDefaultFocus());
+         return;
++    }
+ 
+     View* nextFocus = nullptr;
+ 
+@@ -902,6 +906,23 @@ void Application::giveFocus(View* view)
+     }
+ }
+ 
++void Application::forgetView(View* view)
++{
++    // Remembered for a screen below: that screen gets its default focus back when it shows again.
++    for (View*& saved : Application::focusStack)
++        if (saved == view)
++            saved = nullptr;
++
++    if (Application::currentFocus != view)
++        return;
++    Application::currentFocus = nullptr;
++    // Once the deletion is over, the top screen's default focus.
++    brls::sync([] {
++        if (!Application::currentFocus && !Application::activitiesStack.empty())
++            Application::giveFocus(Application::activitiesStack.back()->getDefaultFocus());
++    });
++}
++
+ bool Application::popActivity(TransitionAnimation animation, std::function<void(void)> cb, bool free)
+ {
+     if (Application::activitiesStack.size() <= 1) // never pop the first activity
+@@ -931,12 +952,13 @@ bool Application::popActivity(TransitionAnimation animation, std::function<void(
+     {
+         View* newFocus = Application::focusStack[Application::focusStack.size() - 1];
+ 
+-        if (!toShow || newFocus->getParentActivity() == toShow)
++        // PortZone: nullptr when the remembered view was destroyed meanwhile.
++        if (newFocus && (!toShow || newFocus->getParentActivity() == toShow))
+         {
+             Logger::debug("Giving focus to {}, and removing it from the focus stack", newFocus->describe());
+             Application::giveFocus(newFocus);
+         }
+-        else if (toShow)
++        else if (toShow && toShow->getContentView())
+         {
+             Application::giveFocus(toShow->getContentView());
+         }
+diff --git a/library/lib/core/view.cpp b/library/lib/core/view.cpp
+index 13fb352..79118a2 100644
+--- a/library/lib/core/view.cpp
++++ b/library/lib/core/view.cpp
+@@ -1528,9 +1528,9 @@ View::~View()
+         }
+     }
+ 
+-    // Focus sanity check
+-    if (Application::getCurrentFocus() == this)
+-        Application::giveFocus(nullptr);
++    // Focus sanity check (PortZone: giveFocus(nullptr) changes nothing; forgetView clears the focus and the focus
++    // stack's copies of this view)
++    Application::forgetView(this);
+ 
+     Application::tryDeinitFirstResponder(this);
+     for (GestureRecognizer* recognizer : this->gestureRecognizers)
 diff --git a/library/lib/platforms/switch/switch_font.cpp b/library/lib/platforms/switch/switch_font.cpp
 index 586b243..50e9ee9 100644
 --- a/library/lib/platforms/switch/switch_font.cpp
@@ -65,3 +156,49 @@ index 3faad3b..2b63b80 100644
  
      romfsExit();
  
+diff --git a/library/lib/views/h_scrolling_frame.cpp b/library/lib/views/h_scrolling_frame.cpp
+index a853df0..287ed37 100644
+--- a/library/lib/views/h_scrolling_frame.cpp
++++ b/library/lib/views/h_scrolling_frame.cpp
+@@ -158,7 +158,7 @@ void HScrollingFrame::naturalScrollingBehaviour()
+         // If current focus view is outside scrolling bounds,
+         // change focus to this.
+         View* currentFocus = Application::getCurrentFocus();
+-        if (!currentFocus->getFrame().inscribed(getFrame()))
++        if (currentFocus && !currentFocus->getFrame().inscribed(getFrame()))
+         {
+             Application::giveFocus(this);
+         }
+@@ -280,7 +280,8 @@ void HScrollingFrame::naturalScrollingButtonProcessing(FocusDirection focusDirec
+     if (isBorder && !*repeat)
+     {
+         *repeat = true;
+-        Application::getCurrentFocus()->shakeHighlight(focusDirection);
++        if (View* focus = Application::getCurrentFocus())
++            focus->shakeHighlight(focusDirection);
+         Application::getAudioPlayer()->play(SOUND_FOCUS_ERROR);
+     }
+ }
+diff --git a/library/lib/views/scrolling_frame.cpp b/library/lib/views/scrolling_frame.cpp
+index 0f3db07..84efc77 100644
+--- a/library/lib/views/scrolling_frame.cpp
++++ b/library/lib/views/scrolling_frame.cpp
+@@ -158,7 +158,7 @@ void ScrollingFrame::naturalScrollingBehaviour()
+         // If current focus view is outside scrolling bounds,
+         // change focus to this.
+         View* currentFocus = Application::getCurrentFocus();
+-        if (!currentFocus->getFrame().inscribed(getFrame()))
++        if (currentFocus && !currentFocus->getFrame().inscribed(getFrame()))
+         {
+             Application::giveFocus(this);
+         }
+@@ -280,7 +280,8 @@ void ScrollingFrame::naturalScrollingButtonProcessing(FocusDirection focusDirect
+     if (isBorder && !*repeat)
+     {
+         *repeat = true;
+-        Application::getCurrentFocus()->shakeHighlight(focusDirection);
++        if (View* focus = Application::getCurrentFocus())
++            focus->shakeHighlight(focusDirection);
+         Application::getAudioPlayer()->play(SOUND_FOCUS_ERROR);
+     }
+ }

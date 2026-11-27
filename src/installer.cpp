@@ -1,6 +1,8 @@
 #include "installer.hpp"
 
 #include <algorithm>
+#include <chrono>
+#include <deque>
 #include <fstream>
 #include <map>
 #include <set>
@@ -29,6 +31,28 @@ namespace
     std::map<std::string, std::shared_ptr<Job>> jobs;
 
     fs::path recordPath(const std::string& id) { return dataDir() / "installed" / (id + ".json"); }
+
+    // A download's speed over the last few seconds, for its progress line: "  ·  4.2 MB/s".
+    class DownloadSpeed
+    {
+      public:
+        // `done` bytes so far; "" until the first bytes have arrived and there is half a second to measure.
+        std::string text(uint64_t done)
+        {
+            const auto now = std::chrono::steady_clock::now();
+            if (samples.empty() || now - samples.back().first > std::chrono::milliseconds(250))
+                samples.emplace_back(now, done);
+            while (samples.size() > 1 && now - samples.front().first > std::chrono::seconds(3))
+                samples.pop_front();
+            const double seconds = std::chrono::duration<double>(now - samples.front().first).count();
+            if (done == 0 || seconds < 0.5 || done < samples.front().second)
+                return "";
+            return "  ·  " + formatSize(uint64_t(double(done - samples.front().second) / seconds)) + "/s";
+        }
+
+      private:
+        std::deque<std::pair<std::chrono::steady_clock::time_point, uint64_t>> samples;
+    };
 
     bool startsWithNoCase(const std::string& text, const std::string& prefix)
     {
@@ -203,9 +227,11 @@ namespace
         {
             const auto& asset = plan.steps[i].asset;
             downloads.push_back(tmp / (plan.id + "." + std::to_string(i) + ".download"));
+            DownloadSpeed speed;
             const auto response = http::download(asset.url, downloads.back(), [&](uint64_t done, uint64_t) {
                 job.fraction = 0.8f * float(before + done) / float(std::max<uint64_t>(total, 1));
-                job.setStage(brls::getStr("portzone/jobs/downloading", asset.name, formatSize(done), formatSize(asset.size)));
+                job.setStage(brls::getStr("portzone/jobs/downloading", asset.name, formatSize(done), formatSize(asset.size)) +
+                    speed.text(done));
                 return !job.cancel.load();
             });
             if (!response.ok())
@@ -302,9 +328,11 @@ namespace
         const fs::path old   = self.string() + ".old";
         std::error_code ec;
 
+        DownloadSpeed speed;
         const auto response = http::download(asset.url, fresh, [&](uint64_t done, uint64_t total) {
             job.fraction = 0.9f * float(done) / float(std::max<uint64_t>(total, 1));
-            job.setStage(brls::getStr("portzone/jobs/downloading_portzone", tag, formatSize(done), formatSize(total)));
+            job.setStage(brls::getStr("portzone/jobs/downloading_portzone", tag, formatSize(done), formatSize(total)) +
+                speed.text(done));
             return !job.cancel.load();
         });
         if (!response.ok())
@@ -356,7 +384,15 @@ std::shared_ptr<Job> startJob(const std::string& id, std::function<void(Job&)> w
     auto job = std::make_shared<Job>();
     jobs[id] = job;
     runInBackground([job, work = std::move(work)] {
-        work(*job);
+        // Anything thrown (a full card, a file system error) fails the job: uncaught, it would end PortZone.
+        try
+        {
+            work(*job);
+        }
+        catch (const std::exception& e)
+        {
+            job->fail(e.what());
+        }
         job->finished = true;
     });
     return job;
