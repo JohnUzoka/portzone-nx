@@ -53,12 +53,14 @@ class BrowseView : public brls::Box
     void openSearch();
     void chooseKind();
     void chooseSystem();
+    void chooseConsole();
     void chooseSort();
     void chooseView();
 
     bool installedOnly;
     int filter = 0;           // 0 all, then 1 + Section
     std::string systemFilter; // "" for every system
+    std::string consoleFilter; // "" for every console, else "switch" or "switch2" (a port's runs_on)
     std::string search;       // "" shows every port
     brls::Box* banner           = nullptr; // "PortZone vX is available", installed games with updates
     brls::Label* summary        = nullptr;

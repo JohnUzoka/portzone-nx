@@ -49,6 +49,9 @@
     "search_hint": "名前、作者、システム（空欄ですべて表示）",
     "menu_kind": "種類：{0}",
     "menu_system": "システム：{0}",
+    "menu_console": "本体: {0}",
+    "console_title": "本体",
+    "for_console": "{0}用",
     "menu_sort": "並び順：{0}",
     "menu_view": "表示：{0}",
     "show_everything": "すべて表示",
@@ -103,6 +106,7 @@
     "port_list_cache": "移植版リスト：{0}（オフライン：前回ダウンロードしたもの）",
     "port_list_builtin": "移植版リスト：{0}（オフライン：PortZone内蔵のリスト）",
     "sd_card": "SDカード：{0}",
+    "sgdb_credit": "独自のアイコンがないポートのアイコンは、SteamGridDB（steamgriddb.com）のコミュニティがアップロードしたものです。",
     "drafts": "portzone.jsonの下書き：{0}",
     "ports": "移植版",
     "ports_summary": "{1}本中{0}本にportzone.jsonがあります。残りは手動インストールです",
@@ -234,6 +238,17 @@
     "done_other": "完了：{0}個のファイル",
     "errors_one": "{0}、エラー{1}件",
     "errors_other": "{0}、エラー{1}件"
+  },
+  "whatsnew": {
+    "title": "PortZone {0} の新機能",
+    "welcome_title": "PortZoneへようこそ",
+    "welcome_1": "PortZoneはGitHubからゲームのポートをインストールし、あなた自身のゲームファイルをそれぞれ必要な場所に配置します。ゲームデータをダウンロードすることはありません。",
+    "welcome_2": "「さがす」にはすべてのポートが表示されます。「かんたん設定」のゲームは1ステップでインストールできます。「PCで準備」と「PCでビルド」のゲームは、先にパソコンでツールを使う必要があり、そのページにリンクがあります。",
+    "welcome_3": "「ゲームファイル」でファイルを本体に転送できます。同じWi-Fiにあるスマートフォンやパソコンから送信するか、SDカードにコピー済みのファイルをPortZoneに探させてください。",
+    "welcome_4": "「情報」で、この本体の種類（SwitchまたはSwitch 2）と言語を設定します。",
+    "continue": "続ける",
+    "loading": "リリースノートを読み込んでいます…",
+    "no_notes": "PortZoneは{0}になりました。リリースノートはgithub.com/{1}/releasesにあります。"
   },
   "update": {
     "title": "PortZoneの更新",

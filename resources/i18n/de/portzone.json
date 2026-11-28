@@ -49,6 +49,9 @@
     "search_hint": "Name, Autor oder System; leer zeigt alles",
     "menu_kind": "Art: {0}",
     "menu_system": "System: {0}",
+    "menu_console": "Konsole: {0}",
+    "console_title": "Konsole",
+    "for_console": "für {0}",
     "menu_sort": "Sortierung: {0}",
     "menu_view": "Ansicht: {0}",
     "show_everything": "Alles anzeigen",
@@ -99,6 +102,7 @@
     "port_list_cache": "Portierungsliste: {0} (offline: zuletzt heruntergeladene Kopie)",
     "port_list_builtin": "Portierungsliste: {0} (offline: in PortZone enthaltene Liste)",
     "sd_card": "SD-Karte: {0}",
+    "sgdb_credit": "Symbole für Ports ohne eigenes Symbol stammen von SteamGridDB (steamgriddb.com) und werden von dessen Community hochgeladen.",
     "drafts": "portzone.json-Entwürfe: {0}",
     "ports": "Portierungen",
     "ports_summary": "{0} von {1} haben eine portzone.json; der Rest wird manuell installiert",
@@ -234,6 +238,17 @@
     "done_other": "Fertig: {0} Dateien",
     "errors_one": "{0}, {1} Fehler",
     "errors_other": "{0}, {1} Fehler"
+  },
+  "whatsnew": {
+    "title": "Neu in PortZone {0}",
+    "welcome_title": "Willkommen bei PortZone",
+    "welcome_1": "PortZone installiert Spiele-Ports von GitHub und legt deine eigenen Spieldateien dort ab, wo jeder Port sie braucht. Es lädt niemals Spieldaten herunter.",
+    "welcome_2": "Durchsuchen listet alle Ports auf. Spiele der Art „Einfach“ werden in einem Schritt installiert; bei „Am PC vorbereiten“ und „Am PC kompilieren“ brauchst du zuerst ein Werkzeug auf einem Computer, das auf der Seite des Spiels verlinkt ist.",
+    "welcome_3": "Spieldateien bringt deine Dateien auf die Konsole: Sende sie von einem Handy oder PC im selben Wi-Fi, oder lass PortZone Dateien finden, die du bereits auf die SD-Karte kopiert hast.",
+    "welcome_4": "Lege unter Info fest, welche Konsole das ist (Switch oder Switch 2), und wähle deine Sprache.",
+    "continue": "Weiter",
+    "loading": "Versionshinweise werden geladen…",
+    "no_notes": "PortZone ist jetzt Version {0}. Die Versionshinweise findest du unter github.com/{1}/releases."
   },
   "update": {
     "title": "PortZone-Updates",

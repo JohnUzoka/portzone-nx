@@ -61,9 +61,10 @@ store/ports.json                   every listed port (added by pull request, see
 store/schema/ports.schema.json     one ports.json entry
 store/schema/portzone.schema.json  a port's own portzone.json (guide: docs/portzone-json.md)
 store/drafts/<id>/portzone.json    portzone.json files waiting for their porter
-store/manifests.json               generated: every port's portzone.json; do not edit
+store/manifests.json               generated: every port's portzone.json and the SteamGridDB fallback icons; do not edit
 store/sphaira.json                 generated for Sphaira; do not edit
-store/scripts/build_store.py       checks the store, writes the two generated files
+store/art.json                     which SteamGridDB game each port is (written by the build; reviewable by hand)
+store/scripts/build_store.py       checks the store, writes the generated files and art.json
 ```
 
 - **PortZone** reads `store/ports.json` and `store/manifests.json` at start: two requests, whatever the number of
@@ -75,8 +76,15 @@ store/scripts/build_store.py       checks the store, writes the two generated fi
 - **Sphaira** reads `store/sphaira.json` as a store source:
   `https://raw.githubusercontent.com/JohnUzoka/portzone-nx/main/store/sphaira.json`. Only ports whose own repository
   has a `portzone.json` with a release are in it.
-- `.github/workflows/store.yml` rebuilds both generated files on store changes and once a day, so porters' edits
-  reach every list without a pull request; pull requests run `build_store.py --check`.
+- `.github/workflows/store.yml` rebuilds the generated files and `art.json` on store changes and once a day, so
+  porters' edits reach every list without a pull request; pull requests run `build_store.py --check`.
+- **Fallback icons**: for ports with no icon of their own, the build matches the title to a SteamGridDB game and puts
+  its icon in `manifests.json`'s `"art"`; `art.json` records each match (`auto`, `review` when unsure, `reviewed` or
+  `none` when a person settled it; see CONTRIBUTING.md). The API key is the repository secret `SGDB_API_KEY`, given
+  only to the workflow's Build step; never print or commit it. Locally:
+  `SGDB_API_KEY="$(cat ~/.config/portzone-local/sgdb_key)" python3 store/scripts/build_store.py --review-out /tmp/art-review.md`.
+  Without the key the build skips the lookups and uses `art.json` as it is. Unsure matches are kept in one open issue,
+  "Store icons to review" (label `store-icons`), which the workflow closes when none are left.
 
 ## On the SD card
 

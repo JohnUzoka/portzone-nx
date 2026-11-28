@@ -49,6 +49,9 @@
     "search_hint": "Un nome, un autore o un sistema; vuoto mostra tutto",
     "menu_kind": "Tipo: {0}",
     "menu_system": "Sistema: {0}",
+    "menu_console": "Console: {0}",
+    "console_title": "Console",
+    "for_console": "per {0}",
     "menu_sort": "Ordine: {0}",
     "menu_view": "Vista: {0}",
     "show_everything": "Mostra tutto",
@@ -99,6 +102,7 @@
     "port_list_cache": "Elenco dei port: {0} (offline: ultima copia scaricata)",
     "port_list_builtin": "Elenco dei port: {0} (offline: elenco incluso in PortZone)",
     "sd_card": "Scheda SD: {0}",
+    "sgdb_credit": "Le icone dei port che non ne hanno una propria provengono da SteamGridDB (steamgriddb.com) e sono caricate dalla sua community.",
     "drafts": "Bozze di portzone.json: {0}",
     "ports": "Port",
     "ports_summary": "{0} su {1} hanno un portzone.json; gli altri si installano manualmente",
@@ -234,6 +238,17 @@
     "done_other": "Fatto: {0} file",
     "errors_one": "{0}, {1} errore",
     "errors_other": "{0}, {1} errori"
+  },
+  "whatsnew": {
+    "title": "Novità di PortZone {0}",
+    "welcome_title": "Benvenuto in PortZone",
+    "welcome_1": "PortZone installa port di giochi da GitHub e mette i tuoi file di gioco dove ciascuno ne ha bisogno. Non scarica mai dati di gioco.",
+    "welcome_2": "Esplora elenca tutti i port. I giochi Facile si installano in un solo passaggio; quelli Prepara su PC e Compila su PC richiedono prima uno strumento su un computer, indicato nella loro pagina.",
+    "welcome_3": "File di gioco porta i tuoi file sulla console: inviali da un telefono o PC sulla stessa rete Wi-Fi, oppure lascia che PortZone trovi i file già copiati sulla scheda SD.",
+    "welcome_4": "In Info, imposta quale console è questa (Switch o Switch 2) e la tua lingua.",
+    "continue": "Continua",
+    "loading": "Caricamento delle note di rilascio…",
+    "no_notes": "PortZone ora è alla versione {0}. Le note di rilascio sono su github.com/{1}/releases."
   },
   "update": {
     "title": "Aggiornamenti di PortZone",

@@ -49,6 +49,9 @@
     "search_hint": "A name, author or system; empty shows everything",
     "menu_kind": "Kind: {0}",
     "menu_system": "System: {0}",
+    "menu_console": "Console: {0}",
+    "console_title": "Console",
+    "for_console": "for {0}",
     "menu_sort": "Sort: {0}",
     "menu_view": "View: {0}",
     "show_everything": "Show everything",
@@ -103,6 +106,7 @@
     "port_list_cache": "Port list: {0} (offline: last downloaded copy)",
     "port_list_builtin": "Port list: {0} (offline: the list built into PortZone)",
     "sd_card": "SD card: {0}",
+    "sgdb_credit": "Icons for ports that have none of their own come from SteamGridDB (steamgriddb.com), uploaded by its community.",
     "drafts": "Draft portzone.json files: {0}",
     "ports": "Ports",
     "ports_summary": "{0} of {1} have a portzone.json; the rest are manual installs",
@@ -234,6 +238,17 @@
     "done_other": "Done: {0} files",
     "errors_one": "{0}, {1} error",
     "errors_other": "{0}, {1} errors"
+  },
+  "whatsnew": {
+    "title": "What's new in PortZone {0}",
+    "welcome_title": "Welcome to PortZone",
+    "welcome_1": "PortZone installs game ports from GitHub and puts your own game files where each one needs them. It never downloads game data.",
+    "welcome_2": "Browse lists every port. Easy Setup games install in one step; Prepare on PC and Build on PC games need a tool on a computer first, which their page links.",
+    "welcome_3": "Game files gets your files onto the console: send them from a phone or PC on the same Wi-Fi, or let PortZone find files you already copied to the SD card.",
+    "welcome_4": "In About, set which console this is (Switch or Switch 2) and your language.",
+    "continue": "Continue",
+    "loading": "Loading the release notes…",
+    "no_notes": "PortZone is now {0}. Its release notes are at github.com/{1}/releases."
   },
   "update": {
     "title": "PortZone updates",

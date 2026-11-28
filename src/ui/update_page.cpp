@@ -155,7 +155,12 @@ void UpdateActivity::fillNotes(brls::Box* box)
         return;
     box->addView(header(status.available ? brls::getStr("portzone/update/whats_new", status.tag) :
                                            brls::getStr("portzone/update/about_tag", status.tag)));
-    for (const auto& block : parseMarkdown(status.notes))
+    addReleaseNotes(box, status.notes);
+}
+
+void addReleaseNotes(brls::Box* box, const std::string& markdown)
+{
+    for (const auto& block : parseMarkdown(markdown))
     {
         if (block.kind == TextBlock::Kind::Heading)
             box->addView(textRow(block.text, 21, accentColor()));
@@ -164,6 +169,83 @@ void UpdateActivity::fillNotes(brls::Box* box)
         else
             box->addView(textRow(block.text, 18, block.kind == TextBlock::Kind::Code ? mutedColor() : textColor()));
     }
+}
+
+WhatsNewActivity::WhatsNewActivity(bool firstStart)
+    : firstStart(firstStart)
+{
+}
+
+WhatsNewActivity::~WhatsNewActivity() { *alive = false; }
+
+brls::View* WhatsNewActivity::createContentView()
+{
+    auto* content = new brls::Box(brls::Axis::COLUMN);
+    content->setAlignItems(brls::AlignItems::STRETCH);
+    content->setPadding(24, 48, 48, 48);
+
+    auto* intro = card(brls::Axis::ROW);
+    intro->setAlignItems(brls::AlignItems::CENTER);
+    auto* logo = new brls::Image();
+    logo->setImageFromRes("icon/icon.png");
+    logo->setWidth(72);
+    logo->setHeight(72);
+    logo->setMarginRight(20);
+    intro->addView(logo);
+    intro->addView(textBlock(firstStart ? "portzone/whatsnew/welcome_title"_i18n :
+                                          brls::getStr("portzone/whatsnew/title", PORTZONE_VERSION),
+        28));
+    content->addView(intro);
+
+    // Continue first, so A closes the page at once; the notes follow below it.
+    auto* actions = new brls::Box(brls::Axis::ROW);
+    actions->setMarginTop(18);
+    actions->addView(button("portzone/whatsnew/continue"_i18n, [] { brls::Application::popActivity(); }, true));
+    content->addView(actions);
+
+    notesBox = new brls::Box(brls::Axis::COLUMN);
+    notesBox->setAlignItems(brls::AlignItems::STRETCH);
+    notesBox->setMarginTop(12);
+    if (firstStart)
+        for (const char* key : { "portzone/whatsnew/welcome_1", "portzone/whatsnew/welcome_2", "portzone/whatsnew/welcome_3",
+                 "portzone/whatsnew/welcome_4" })
+        {
+            auto* paragraph = textBlock(brls::getStr(key), 19);
+            paragraph->setMarginTop(10);
+            notesBox->addView(paragraph);
+        }
+    else
+        notesBox->addView(textRow("portzone/whatsnew/loading"_i18n, 18, mutedColor()));
+    content->addView(notesBox);
+
+    auto* scroll = new brls::ScrollingFrame();
+    scroll->setContentView(content);
+    auto* frame = new brls::AppletFrame(scroll);
+    frame->setTitle(firstStart ? "portzone/whatsnew/welcome_title"_i18n : "portzone/update/title"_i18n);
+    return frame;
+}
+
+void WhatsNewActivity::onContentAvailable()
+{
+    if (firstStart)
+        return;
+    // This version's release notes, from the same releases PortZone updates from.
+    const std::string tag = std::string("v") + PORTZONE_VERSION;
+    background<std::shared_ptr<std::string>>(alive,
+        [tag] {
+            for (const auto& release : github::fetchReleases("https://github.com/" + config().updateRepo).releases)
+                if (release.tag == tag)
+                    return std::make_shared<std::string>(release.notes);
+            return std::make_shared<std::string>();
+        },
+        [this](std::shared_ptr<std::string> notes) {
+            notesBox->clearViews(); // focus is on Continue, outside this box
+            if (notes->empty())
+                notesBox->addView(textRow(brls::getStr("portzone/whatsnew/no_notes", PORTZONE_VERSION, config().updateRepo),
+                    18, mutedColor()));
+            else
+                addReleaseNotes(notesBox, *notes);
+        });
 }
 
 void UpdateActivity::startUpdate()

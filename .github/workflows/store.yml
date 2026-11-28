@@ -1,8 +1,9 @@
 name: store
 
 # Rebuilds the store's generated files (manifests.json, sphaira.json) from ports.json, the ports' own portzone.json
-# files and the drafts: on store changes, and once a day so porters' edits reach PortZone and Sphaira without a pull
-# request. Pull requests only check.
+# files and the drafts, and matches ports without an icon to SteamGridDB (art.json, manifests.json's "art"): on store
+# changes, and once a day so porters' edits reach PortZone and Sphaira without a pull request. The matches it is unsure
+# of are listed in one open issue, "Store icons to review". Pull requests only check (no SteamGridDB key there).
 on:
   schedule:
     - cron: "41 5 * * *"
@@ -15,6 +16,7 @@ on:
 
 permissions:
   contents: write
+  issues: write
 
 concurrency:
   group: store
@@ -34,13 +36,37 @@ jobs:
         run: python store/scripts/build_store.py --check
       - name: Build
         if: github.event_name != 'pull_request'
-        run: python store/scripts/build_store.py
+        env:
+          SGDB_API_KEY: ${{ secrets.SGDB_API_KEY }}
+        run: python store/scripts/build_store.py --review-out "$RUNNER_TEMP/art-review.md"
       - name: Commit generated files
         if: github.event_name != 'pull_request'
         run: |
-          git add store/manifests.json store/sphaira.json
+          git add store/manifests.json store/sphaira.json store/art.json
           git diff --cached --quiet && exit 0
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "Update the store's generated files"
           git push
+      # The build writes the review list only when it looked icons up: no file, no change to the issue.
+      - name: Update the icon review issue
+        if: github.event_name != 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          review="$RUNNER_TEMP/art-review.md"
+          [ -f "$review" ] || exit 0
+          title="Store icons to review"
+          number=$(gh issue list --state open --search "\"$title\" in:title" --json number,title \
+            --jq "map(select(.title == \"$title\")) | first | .number // empty")
+          if [ -s "$review" ]; then
+            if [ -n "$number" ]; then
+              gh issue edit "$number" --body-file "$review"
+            else
+              gh label create store-icons --color 5319e7 \
+                --description "SteamGridDB icon matches to check" 2>/dev/null || true
+              gh issue create --title "$title" --label store-icons --body-file "$review"
+            fi
+          elif [ -n "$number" ]; then
+            gh issue close "$number" --comment "Nothing left to review."
+          fi

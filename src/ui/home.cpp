@@ -219,6 +219,7 @@ namespace
             listKey = "portzone/home/port_list_builtin";
         box->addView(textRow(brls::getStr(listKey, config().indexUrl)));
         box->addView(textRow(brls::getStr("portzone/home/sd_card", config().sdRoot.string())));
+        box->addView(textRow("portzone/home/sgdb_credit"_i18n, 18, mutedColor()));
         if (!config().draftsDir.empty())
             box->addView(textRow(brls::getStr("portzone/home/drafts", config().draftsDir.string())));
         // Only the ports with something to say: a portzone.json, or one that couldn't be used. A row for each of the
@@ -328,6 +329,14 @@ void HomeActivity::load()
                 update::current().dismissed = dismissed;
             }
             showCatalog(0);
+            // Once per version: the release notes after an update, a welcome on the very first start.
+            if (settings().lastVersion != PORTZONE_VERSION)
+            {
+                const bool firstStart  = settings().lastVersion.empty();
+                settings().lastVersion = PORTZONE_VERSION;
+                saveSettings();
+                brls::Application::pushActivity(new WhatsNewActivity(firstStart));
+            }
             if (settings().checkUpdates)
                 checkPortUpdates();
         });

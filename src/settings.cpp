@@ -22,6 +22,10 @@ Settings& settings()
 
 void loadSettings()
 {
+    // Before last_version existed, or before any setting was saved: an earlier PortZone left its cache.
+    std::error_code ec;
+    if (fs::exists(dataDir() / "cache", ec))
+        settings().lastVersion = "0";
     std::ifstream file(settingsPath());
     if (!file)
         return;
@@ -37,6 +41,7 @@ void loadSettings()
         const std::string console = json.value("console", "");
         settings().console      = console == "switch" || console == "switch2" ? console : "";
         settings().language     = json.value("language", "");
+        settings().lastVersion  = json.value("last_version", std::string("0"));
     }
     catch (const std::exception&)
     {
@@ -54,6 +59,7 @@ void saveSettings()
         { "sort", settings().sortOrder == 1 ? "name-desc" : (settings().sortOrder == 2 ? "system" : "name") },
         { "console", settings().console },
         { "language", settings().language },
+        { "last_version", settings().lastVersion },
     };
     std::ofstream(settingsPath()) << json.dump(2) << "\n";
 }

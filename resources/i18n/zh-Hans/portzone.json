@@ -49,6 +49,9 @@
     "search_hint": "名称、作者或系统；留空显示全部",
     "menu_kind": "类型：{0}",
     "menu_system": "系统：{0}",
+    "menu_console": "主机：{0}",
+    "console_title": "主机",
+    "for_console": "适用于 {0}",
     "menu_sort": "排序：{0}",
     "menu_view": "显示：{0}",
     "show_everything": "显示全部",
@@ -103,6 +106,7 @@
     "port_list_cache": "移植版列表：{0}（离线：上次下载的副本）",
     "port_list_builtin": "移植版列表：{0}（离线：PortZone内置列表）",
     "sd_card": "SD卡：{0}",
+    "sgdb_credit": "没有自带图标的移植版图标来自 SteamGridDB（steamgriddb.com），由其社区上传。",
     "drafts": "portzone.json草稿：{0}",
     "ports": "移植版",
     "ports_summary": "{1}个中有{0}个带有portzone.json；其余为手动安装",
@@ -234,6 +238,17 @@
     "done_other": "完成：{0}个文件",
     "errors_one": "{0}，{1}个错误",
     "errors_other": "{0}，{1}个错误"
+  },
+  "whatsnew": {
+    "title": "PortZone {0} 新功能",
+    "welcome_title": "欢迎使用 PortZone",
+    "welcome_1": "PortZone 从 GitHub 安装游戏移植版，并将你自己的游戏文件放到各自需要的位置。它从不下载游戏数据。",
+    "welcome_2": "“浏览”列出所有移植版。“简易设置”游戏一步即可安装；“在电脑上准备”和“在电脑上构建”游戏需要先在电脑上使用工具，其页面中有链接。",
+    "welcome_3": "“游戏文件”可将你的文件传到主机：从同一 Wi-Fi 下的手机或电脑发送，或让 PortZone 查找你已复制到 SD 卡的文件。",
+    "welcome_4": "在“关于”中设置这是哪台主机（Switch 或 Switch 2）以及你的语言。",
+    "continue": "继续",
+    "loading": "正在加载更新说明…",
+    "no_notes": "PortZone 现已更新至 {0}。更新说明位于 github.com/{1}/releases。"
   },
   "update": {
     "title": "PortZone更新",

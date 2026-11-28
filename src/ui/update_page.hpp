@@ -36,4 +36,24 @@ class UpdateActivity : public brls::Activity
     AliveFlag alive = std::make_shared<bool>(true);
 };
 
+// Release notes as text rows: headings, bullets, paragraphs.
+void addReleaseNotes(brls::Box* box, const std::string& markdown);
+
+// Shown once when PortZone starts in a version it hasn't shown yet: that version's release notes from GitHub, or a
+// short welcome on the very first start.
+class WhatsNewActivity : public brls::Activity
+{
+  public:
+    explicit WhatsNewActivity(bool firstStart);
+    ~WhatsNewActivity() override;
+
+    brls::View* createContentView() override;
+    void onContentAvailable() override;
+
+  private:
+    bool firstStart;
+    brls::Box* notesBox = nullptr;
+    AliveFlag alive     = std::make_shared<bool>(true);
+};
+
 } // namespace pz::ui

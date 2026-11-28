@@ -1,0 +1,6956 @@
+{
+  "0ad-switch": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 15217,
+        "name": "0 Day"
+      },
+      {
+        "game": 5248416,
+        "name": "0 A.D. Empires Ascendant"
+      },
+      {
+        "game": 5459269,
+        "name": "A-Train 9 Version 5.0 Complete Pack DX+"
+      },
+      {
+        "game": 5389225,
+        "name": "LEVEL 0: A Backrooms Experience"
+      },
+      {
+        "game": 5512,
+        "name": "A-Train 9 V3.0 : Railway Simulator"
+      }
+    ]
+  },
+  "2ship2harkinian-switch": {
+    "status": "auto",
+    "game": 34302,
+    "name": "The Legend of Zelda: Majora's Mask",
+    "icon": "https://cdn2.steamgriddb.com/icon/4e0928de075538c593fbdabb0c5ef2c3.png",
+    "candidates": []
+  },
+  "a5_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5314380,
+        "name": "Asphalt 5"
+      },
+      {
+        "game": 5276192,
+        "name": "Asphalt 3D"
+      },
+      {
+        "game": 5265744,
+        "name": "Asphalt 7: Heat"
+      },
+      {
+        "game": 34678,
+        "name": "Asphalt Legends"
+      },
+      {
+        "game": 5314377,
+        "name": "Asphalt: Urban GT"
+      }
+    ]
+  },
+  "a6_nx": {
+    "status": "auto",
+    "game": 5314383,
+    "name": "Asphalt 6: Adrenaline",
+    "icon": "https://cdn2.steamgriddb.com/icon/66abd1e4544beed37b65e72639d88850.png",
+    "candidates": []
+  },
+  "a7_nx": {
+    "status": "auto",
+    "game": 5265744,
+    "name": "Asphalt 7: Heat",
+    "icon": "https://cdn2.steamgriddb.com/icon/4bf2689c42aae35e6924a432e435e0b1.png",
+    "candidates": []
+  },
+  "a8retry_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5250235,
+        "name": "Asphalt 8: Airborne"
+      },
+      {
+        "game": 5314377,
+        "name": "Asphalt: Urban GT"
+      },
+      {
+        "game": 5270722,
+        "name": "Asphalt: Urban GT 2"
+      },
+      {
+        "game": 5314378,
+        "name": "Asphalt 3: Street Rules"
+      },
+      {
+        "game": 5265744,
+        "name": "Asphalt 7: Heat"
+      }
+    ]
+  },
+  "abc_nx": {
+    "status": "auto",
+    "game": 34023,
+    "name": "After Burner Climax",
+    "icon": "https://cdn2.steamgriddb.com/icon/99744e96bcea04110a996d685f6c64db.png",
+    "candidates": []
+  },
+  "abforever_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5258601,
+        "name": "Angry Birds Friends"
+      },
+      {
+        "game": 5258598,
+        "name": "Angry Birds Rio"
+      },
+      {
+        "game": 5258599,
+        "name": "Angry Birds 2"
+      },
+      {
+        "game": 5256824,
+        "name": "Angry Birds"
+      },
+      {
+        "game": 2007,
+        "name": "Angry Birds Space"
+      }
+    ]
+  },
+  "abreloaded_nx": {
+    "status": "auto",
+    "game": 5292025,
+    "name": "Angry Birds Reloaded",
+    "icon": "https://cdn2.steamgriddb.com/icon/f449d27f42a9b2a25b247ac15989090f.png",
+    "candidates": []
+  },
+  "abspace_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 2007,
+        "name": "Angry Birds Space"
+      },
+      {
+        "game": 34986,
+        "name": "Angry Birds Star Wars"
+      },
+      {
+        "game": 5258599,
+        "name": "Angry Birds 2"
+      },
+      {
+        "game": 5256825,
+        "name": "Angry Birds Seasons"
+      },
+      {
+        "game": 5256824,
+        "name": "Angry Birds"
+      }
+    ]
+  },
+  "abstarwars2_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 34986,
+        "name": "Angry Birds Star Wars"
+      },
+      {
+        "game": 5258600,
+        "name": "Angry Birds Star Wars II"
+      },
+      {
+        "game": 5258599,
+        "name": "Angry Birds 2"
+      },
+      {
+        "game": 5256825,
+        "name": "Angry Birds Seasons"
+      },
+      {
+        "game": 2007,
+        "name": "Angry Birds Space"
+      }
+    ]
+  },
+  "abyssal_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 12556,
+        "name": "Deep Space Dash"
+      },
+      {
+        "game": 5545,
+        "name": "Deep Dungeons of Doom"
+      },
+      {
+        "game": 5609,
+        "name": "Deep Eclipse"
+      },
+      {
+        "game": 5178,
+        "name": "Deep Under the Sky"
+      },
+      {
+        "game": 12186,
+        "name": "Deep Blue"
+      }
+    ]
+  },
+  "acgc-switch-port": {
+    "status": "auto",
+    "game": 34931,
+    "name": "Animal Crossing",
+    "icon": "https://cdn2.steamgriddb.com/icon/63d9e8a72c3a2f029c635f9b194839d2.png",
+    "candidates": []
+  },
+  "acpc_nx": {
+    "status": "auto",
+    "game": 5255704,
+    "name": "Animal Crossing: Pocket Camp",
+    "icon": "https://cdn2.steamgriddb.com/icon/cb6e99dc32f0a791b9cf73b03a739277.png",
+    "candidates": []
+  },
+  "alice-nx": {
+    "status": "auto",
+    "game": 1615,
+    "name": "Alice: Madness Returns",
+    "icon": "https://cdn2.steamgriddb.com/icon/e113bb92c69391dd39e2488f9f588382.png",
+    "candidates": []
+  },
+  "angrybirds2_nx": {
+    "status": "auto",
+    "game": 5258599,
+    "name": "Angry Birds 2",
+    "icon": "https://cdn2.steamgriddb.com/icon/4aecfbe5d21e3f7912bf8eb29124423a.png",
+    "candidates": []
+  },
+  "angrybirdsas_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5277565,
+        "name": "Angry Birds Epic"
+      },
+      {
+        "game": 34986,
+        "name": "Angry Birds Star Wars"
+      },
+      {
+        "game": 5256825,
+        "name": "Angry Birds Seasons"
+      },
+      {
+        "game": 5258600,
+        "name": "Angry Birds Star Wars II"
+      },
+      {
+        "game": 5258598,
+        "name": "Angry Birds Rio"
+      }
+    ]
+  },
+  "angrybirdsclassic_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5256825,
+        "name": "Angry Birds Seasons"
+      },
+      {
+        "game": 5258598,
+        "name": "Angry Birds Rio"
+      },
+      {
+        "game": 5258599,
+        "name": "Angry Birds 2"
+      },
+      {
+        "game": 5256824,
+        "name": "Angry Birds"
+      },
+      {
+        "game": 2007,
+        "name": "Angry Birds Space"
+      }
+    ]
+  },
+  "angrybirdsjourney_nx": {
+    "status": "auto",
+    "game": 5323755,
+    "name": "Angry Birds Journey",
+    "icon": "https://cdn2.steamgriddb.com/icon/52a8ed6a81c88856e206aa74759a4103.png",
+    "candidates": []
+  },
+  "aodx-recomp": {
+    "status": "auto",
+    "game": 5278588,
+    "name": "Arcus Odyssey",
+    "icon": "https://cdn2.steamgriddb.com/icon/bb9866cabf57950faff6a0f8c26c9e0c.png",
+    "candidates": []
+  },
+  "aom_nx": {
+    "status": "auto",
+    "game": 5254844,
+    "name": "Adventures of Mana",
+    "icon": "https://cdn2.steamgriddb.com/icon/8b6cc3ee5ec407721ce3bf5ff4c0f56b.png",
+    "candidates": []
+  },
+  "assassinscreed_nx": {
+    "status": "auto",
+    "game": 5252480,
+    "name": "Assassin's Creed: Altaïr's Chronicles",
+    "icon": "https://cdn2.steamgriddb.com/icon/fbee8f6dd617eca0baab9df7c3a8cec0.png",
+    "candidates": []
+  },
+  "asura-nx": {
+    "status": "auto",
+    "game": 29913,
+    "name": "Asura's Wrath",
+    "icon": "https://cdn2.steamgriddb.com/icon/d1247a8f91c70206c37031f7f979d8a8.png",
+    "candidates": []
+  },
+  "atomic-bomberman": {
+    "status": "auto",
+    "game": 37889,
+    "name": "Atomic Bomberman",
+    "icon": "https://cdn2.steamgriddb.com/icon/6d1c762d9c16395a7e258d098091ee00.png",
+    "candidates": []
+  },
+  "avp-gold-nx-modern": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 1235,
+        "name": "Aliens vs. Predator"
+      },
+      {
+        "game": 5419537,
+        "name": "Alien vs. Predator (Capcom)"
+      },
+      {
+        "game": 5340703,
+        "name": "Alien vs. Predator (Atari)"
+      },
+      {
+        "game": 36481,
+        "name": "Alien vs. Predator (Nintendo)"
+      },
+      {
+        "game": 5260323,
+        "name": "Aliens vs. Predator: Requiem"
+      }
+    ]
+  },
+  "babel-recomp": {
+    "status": "auto",
+    "game": 36661,
+    "name": "Illusion of Gaia",
+    "icon": "https://cdn2.steamgriddb.com/icon/c44cc3a1dafb37ba0bec93b81ee3796a.png",
+    "candidates": []
+  },
+  "badpiggies_nx": {
+    "status": "auto",
+    "game": 5265668,
+    "name": "Bad Piggies",
+    "icon": "https://cdn2.steamgriddb.com/icon/f2bff080785c76aa81dbaffce7dea0ad.png",
+    "candidates": []
+  },
+  "baldi_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5260315,
+        "name": "Baldi's Basics Plus"
+      },
+      {
+        "game": 5306050,
+        "name": "Baldi's Basics Classic Remastered"
+      },
+      {
+        "game": 5521533,
+        "name": "Baldi's Basics in Funkin'"
+      },
+      {
+        "game": 5344738,
+        "name": "Baldi's Basics in Nightmares"
+      },
+      {
+        "game": 5368051,
+        "name": "Baldi's Basics Birthday Bash"
+      }
+    ]
+  },
+  "bananakong_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 22223,
+        "name": "Banana Town"
+      },
+      {
+        "game": 5448876,
+        "name": "Banana"
+      },
+      {
+        "game": 5320096,
+        "name": "Banana Hunter"
+      },
+      {
+        "game": 5323302,
+        "name": "Banana Shooter"
+      },
+      {
+        "game": 5262656,
+        "name": "Banana Hell"
+      }
+    ]
+  },
+  "bangaio-nx": {
+    "status": "auto",
+    "game": 5254282,
+    "name": "Bangai-O HD: Missile Fury",
+    "icon": "https://cdn2.steamgriddb.com/icon/6878e285968b17748945119c0b32a523.png",
+    "candidates": []
+  },
+  "battd_nx": {
+    "status": "auto",
+    "game": 32822,
+    "name": "Bloons Adventure Time TD",
+    "icon": "https://cdn2.steamgriddb.com/icon/8808eda0dd3dec4e4df50499f2fc75e8.png",
+    "candidates": []
+  },
+  "battleblockrecomp-nx": {
+    "status": "auto",
+    "game": 2700,
+    "name": "BattleBlock Theater",
+    "icon": "https://cdn2.steamgriddb.com/icon/cc6259186164ddfe838f0de7b64a922b.png",
+    "candidates": []
+  },
+  "battleship-switch": {
+    "status": "auto",
+    "game": 33624,
+    "name": "Super Smash Bros.",
+    "icon": "https://cdn2.steamgriddb.com/icon/9b698eb3105bd82528f23d0c92dedfc0.png",
+    "candidates": []
+  },
+  "battleshipnx": {
+    "status": "auto",
+    "game": 33624,
+    "name": "Super Smash Bros.",
+    "icon": "https://cdn2.steamgriddb.com/icon/9b698eb3105bd82528f23d0c92dedfc0.png",
+    "candidates": []
+  },
+  "bejeweled3-nx": {
+    "status": "auto",
+    "game": 24677,
+    "name": "Bejeweled 3",
+    "icon": "https://cdn2.steamgriddb.com/icon/48d23e87eb98cc2227b5a8c33fa00680.png",
+    "candidates": []
+  },
+  "ben10-nx": {
+    "status": "auto",
+    "game": 35024,
+    "name": "Ben 10: Protector Of Earth",
+    "icon": "https://cdn2.steamgriddb.com/icon/56a1bc911bbb44092f2f187055385981.png",
+    "candidates": []
+  },
+  "black-nx-port": {
+    "status": "auto",
+    "game": 35919,
+    "name": "Black",
+    "icon": "https://cdn2.steamgriddb.com/icon/57da02ce4f173fd8330aefd607b8eb47.png",
+    "candidates": []
+  },
+  "bloons_pop_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5282796,
+        "name": "Bloons"
+      },
+      {
+        "game": 4847,
+        "name": "Bloons TD5"
+      },
+      {
+        "game": 32148,
+        "name": "Bloons TD 6"
+      },
+      {
+        "game": 5282791,
+        "name": "Bloons TD 4"
+      },
+      {
+        "game": 5282793,
+        "name": "Bloons TD 3"
+      }
+    ]
+  },
+  "blur-nx": {
+    "status": "auto",
+    "game": 10019,
+    "name": "Blur",
+    "icon": "https://cdn2.steamgriddb.com/icon/ade5030ee9f5e26756bfced661de8588.png",
+    "candidates": []
+  },
+  "bm64switch": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 1680,
+        "name": "Bomberman 64"
+      },
+      {
+        "game": 5449034,
+        "name": "Bomberman 64"
+      },
+      {
+        "game": 35098,
+        "name": "Bomberman"
+      },
+      {
+        "game": 5270534,
+        "name": "Bomberman"
+      },
+      {
+        "game": 5296469,
+        "name": "Bomberman"
+      }
+    ]
+  },
+  "bo2-360-nx": {
+    "status": "auto",
+    "game": 1782,
+    "name": "Call of Duty: Black Ops II",
+    "icon": "https://cdn2.steamgriddb.com/icon/2865b46663e6d9a9170acda5132157d0.png",
+    "candidates": []
+  },
+  "bo2-requiem-nx": {
+    "status": "auto",
+    "game": 1782,
+    "name": "Call of Duty: Black Ops II",
+    "icon": "https://cdn2.steamgriddb.com/icon/2865b46663e6d9a9170acda5132157d0.png",
+    "candidates": []
+  },
+  "bombsquad_nx": {
+    "status": "auto",
+    "game": 5322886,
+    "name": "BombSquad",
+    "icon": "https://cdn2.steamgriddb.com/icon/887d5ebd12e5986bba47c292fdbc4da3.png",
+    "candidates": []
+  },
+  "bouncemasters_nx": {
+    "status": "auto",
+    "game": 5490335,
+    "name": "Bouncemasters",
+    "icon": "https://cdn2.steamgriddb.com/icon/950c9dde97a375c8e84ecffae623ee84.png",
+    "candidates": []
+  },
+  "brextreme-nx": {
+    "status": "auto",
+    "game": 34898,
+    "name": "Bloody Roar Extreme",
+    "icon": null,
+    "candidates": []
+  },
+  "bs_joyride_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5322886,
+        "name": "BombSquad"
+      },
+      {
+        "game": 16717,
+        "name": "Bomb Squad Academy"
+      },
+      {
+        "game": 5546134,
+        "name": "Royal Bomb Squad POP!"
+      },
+      {
+        "game": 5272050,
+        "name": "Ultimate Bomb Squad"
+      }
+    ]
+  },
+  "bse_rebombed_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 16717,
+        "name": "Bomb Squad Academy"
+      },
+      {
+        "game": 5322886,
+        "name": "BombSquad"
+      },
+      {
+        "game": 5546134,
+        "name": "Royal Bomb Squad POP!"
+      },
+      {
+        "game": 5272050,
+        "name": "Ultimate Bomb Squad"
+      }
+    ]
+  },
+  "btd5_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5452534,
+        "name": "Bloons TD5 Deluxe"
+      },
+      {
+        "game": 10764,
+        "name": "Bloons TD Battles"
+      },
+      {
+        "game": 4847,
+        "name": "Bloons TD5"
+      },
+      {
+        "game": 5285971,
+        "name": "Bloons TD Battles 2"
+      },
+      {
+        "game": 32148,
+        "name": "Bloons TD 6"
+      }
+    ]
+  },
+  "budokai3-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 1701,
+        "name": "Dragon Ball Z: Budokai 3"
+      },
+      {
+        "game": 56,
+        "name": "Dragon Ball Z: Budokai 2"
+      },
+      {
+        "game": 33990,
+        "name": "Dragon Ball Z: Budokai"
+      },
+      {
+        "game": 5258718,
+        "name": "Dragon Ball Z: Shin Budokai"
+      },
+      {
+        "game": 33639,
+        "name": "Dragon Ball Z: Budokai Tenkaichi"
+      }
+    ]
+  },
+  "buffy-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 37822,
+        "name": "Buffy the Vampire Slayer"
+      },
+      {
+        "game": 5272752,
+        "name": "Buffy the Vampire Slayer"
+      },
+      {
+        "game": 5332479,
+        "name": "Buffy the Vampire Slayer: Sacrifice"
+      },
+      {
+        "game": 37571,
+        "name": "Buffy the Vampire Slayer: Chaos Bleeds"
+      },
+      {
+        "game": 35247,
+        "name": "Buffy the Vampire Slayer: Wrath of the Darkhul King"
+      }
+    ]
+  },
+  "burgershop2_nx": {
+    "status": "auto",
+    "game": 22597,
+    "name": "Burger Shop 2",
+    "icon": null,
+    "candidates": []
+  },
+  "burgershop_nx": {
+    "status": "auto",
+    "game": 22596,
+    "name": "Burger Shop",
+    "icon": null,
+    "candidates": []
+  },
+  "burnout3-sw": {
+    "status": "auto",
+    "game": 37348,
+    "name": "Burnout 3: Takedown",
+    "icon": "https://cdn2.steamgriddb.com/icon/8cbd005a556ccd4211ce43f309bc0eac.png",
+    "candidates": []
+  },
+  "bustershiddentreasure-nx": {
+    "status": "auto",
+    "game": 38338,
+    "name": "Tiny Toon Adventures: Buster's Hidden Treasure",
+    "icon": "https://cdn2.steamgriddb.com/icon/e273345925b06f7a3d2aba558d8345f6.png",
+    "candidates": []
+  },
+  "cannonball-nx-modern": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 35252,
+        "name": "OutRun"
+      },
+      {
+        "game": 5464169,
+        "name": "OutRUN"
+      },
+      {
+        "game": 5257224,
+        "name": "OutRun 2"
+      },
+      {
+        "game": 5265844,
+        "name": "Outrun 3-D"
+      },
+      {
+        "game": 38547,
+        "name": "OutRun 2019"
+      }
+    ]
+  },
+  "cardwars_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5260479,
+        "name": "Adventure Time: Rock Bandits"
+      },
+      {
+        "game": 5466829,
+        "name": "Adventure Time"
+      },
+      {
+        "game": 9556,
+        "name": "Adventure Time: Magic Man's Head Games"
+      },
+      {
+        "game": 5260480,
+        "name": "Adventure Time: Time Tangle"
+      },
+      {
+        "game": 5260481,
+        "name": "Adventure Time: Treasure Fetch"
+      }
+    ]
+  },
+  "castleminerz-nx": {
+    "status": "auto",
+    "game": 3128,
+    "name": "CastleMiner Z",
+    "icon": "https://cdn2.steamgriddb.com/icon/6557f189e081a505c3cf7ccb1aa50f88.png",
+    "candidates": []
+  },
+  "cbfd-switch": {
+    "status": "auto",
+    "game": 36366,
+    "name": "Conker's Bad Fur Day",
+    "icon": "https://cdn2.steamgriddb.com/icon/98f52fe87356d1586f874c989af7b237.png",
+    "candidates": []
+  },
+  "celosia-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 86,
+        "name": "Shadow of the Colossus"
+      },
+      {
+        "game": 5414306,
+        "name": "Shadow of the Colossus"
+      },
+      {
+        "game": 22267,
+        "name": "Shadow of the Mask"
+      },
+      {
+        "game": 35228,
+        "name": "Shadow of the Beast"
+      },
+      {
+        "game": 153,
+        "name": "Shadow Of the Groundhog"
+      }
+    ]
+  },
+  "circleshootapp": {
+    "status": "auto",
+    "game": 5857,
+    "name": "Zuma Deluxe",
+    "icon": "https://cdn2.steamgriddb.com/icon/7ca99cfffb24341fd92c5739647210d8.png",
+    "candidates": []
+  },
+  "clayjamclassic_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5544757,
+        "name": "CLAY CLASH: Masterpiece"
+      },
+      {
+        "game": 5537005,
+        "name": "Clay Сlinic"
+      },
+      {
+        "game": 5262545,
+        "name": "Clay Game"
+      },
+      {
+        "game": 5481036,
+        "name": "Clay Beats"
+      },
+      {
+        "game": 5370093,
+        "name": "Clay Soldiers"
+      }
+    ]
+  },
+  "cod-boz-arm64-nx": {
+    "status": "auto",
+    "game": 5263881,
+    "name": "Call of Duty: Black Ops - Zombies",
+    "icon": "https://cdn2.steamgriddb.com/icon/d9d4f495e875a2e075a1a4a6e1b9770f.png",
+    "candidates": []
+  },
+  "cod-nx": {
+    "status": "auto",
+    "game": 38090,
+    "name": "Castlevania: Curse of Darkness",
+    "icon": "https://cdn2.steamgriddb.com/icon/cdebf2bdf97feb83d4ecdc46f7c4630a.png",
+    "candidates": []
+  },
+  "cod-strike-team-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 1959,
+        "name": "Call of Duty: Ghosts"
+      },
+      {
+        "game": 3374,
+        "name": "Call of Duty"
+      },
+      {
+        "game": 5419565,
+        "name": "Call of Duty"
+      },
+      {
+        "game": 406,
+        "name": "Call of Duty: World at War"
+      },
+      {
+        "game": 1782,
+        "name": "Call of Duty: Black Ops II"
+      }
+    ]
+  },
+  "codboz-nx": {
+    "status": "auto",
+    "game": 5263881,
+    "name": "Call of Duty: Black Ops - Zombies",
+    "icon": "https://cdn2.steamgriddb.com/icon/d9d4f495e875a2e075a1a4a6e1b9770f.png",
+    "candidates": []
+  },
+  "coi_nx": {
+    "status": "auto",
+    "game": 2449,
+    "name": "Castle of Illusion",
+    "icon": "https://cdn2.steamgriddb.com/icon/8688cb7c76fc1bd40704ac69becb564b.png",
+    "candidates": []
+  },
+  "cold-fear-nx-port": {
+    "status": "auto",
+    "game": 1467,
+    "name": "Cold Fear",
+    "icon": "https://cdn2.steamgriddb.com/icon/cb5cc509c06ce1b0d4da2c2411cc0020.png",
+    "candidates": []
+  },
+  "colorsheep_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5459587,
+        "name": "ColorSweeper"
+      },
+      {
+        "game": 7690,
+        "name": "Color Assembler"
+      },
+      {
+        "game": 939,
+        "name": "Color Jump"
+      },
+      {
+        "game": 5243,
+        "name": "Color Symphony"
+      },
+      {
+        "game": 9936,
+        "name": "Color Chaos"
+      }
+    ]
+  },
+  "condemned2bsx360-port-switch": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 32111,
+        "name": "John:Condemned"
+      },
+      {
+        "game": 5500532,
+        "name": "Condemned to Clean"
+      },
+      {
+        "game": 5265030,
+        "name": "Condemned 2: Bloodshot"
+      },
+      {
+        "game": 5489008,
+        "name": "CONDEMNED: Nightfall"
+      },
+      {
+        "game": 5482231,
+        "name": "CONDEMNED TO BE FREE"
+      }
+    ]
+  },
+  "condemnedcox360-port-switch": {
+    "status": "auto",
+    "game": 11958,
+    "name": "Condemned: Criminal Origins",
+    "icon": "https://cdn2.steamgriddb.com/icon/774ee176179061f842d33ec617d4b50a.png",
+    "candidates": []
+  },
+  "conker-lr-recomp": {
+    "status": "auto",
+    "game": 5256835,
+    "name": "Conker: Live & Reloaded",
+    "icon": "https://cdn2.steamgriddb.com/icon/a95af315af27989279e69ce9aa67a0bb.png",
+    "candidates": []
+  },
+  "cosmologyofkyoto-recompiled": {
+    "status": "auto",
+    "game": 5275541,
+    "name": "Cosmology of Kyoto",
+    "icon": null,
+    "candidates": []
+  },
+  "costumequest_nx": {
+    "status": "auto",
+    "game": 1322,
+    "name": "Costume Quest",
+    "icon": "https://cdn2.steamgriddb.com/icon/65719263bbf5589f8f727d38606c1416.png",
+    "candidates": []
+  },
+  "cr3_nx": {
+    "status": "auto",
+    "game": 5460097,
+    "name": "Chaos Rings III",
+    "icon": "https://cdn2.steamgriddb.com/icon/85d5f233371c9a0511187c1e3538dc06.png",
+    "candidates": []
+  },
+  "crazytaxy_nx": {
+    "status": "auto",
+    "game": 21778,
+    "name": "Crazy Taxi",
+    "icon": "https://cdn2.steamgriddb.com/icon/8a7a2a135d4d237e650116bc579d0d08.png",
+    "candidates": []
+  },
+  "css_nx": {
+    "status": "auto",
+    "game": 2733,
+    "name": "Counter-Strike: Source",
+    "icon": "https://cdn2.steamgriddb.com/icon/25b549aaf19a732387e3144c0e525c42.png",
+    "candidates": []
+  },
+  "ct2-nx": {
+    "status": "auto",
+    "game": 35507,
+    "name": "Crazy Taxi 2",
+    "icon": "https://cdn2.steamgriddb.com/icon/40d9e99b55270cbfe4b69241cf4c3ed8.png",
+    "candidates": []
+  },
+  "ct3-nx": {
+    "status": "auto",
+    "game": 5245360,
+    "name": "Crazy Taxi 3: High Roller",
+    "icon": "https://cdn2.steamgriddb.com/icon/41c5616561b681a62bcd64bc673b67cc.png",
+    "candidates": []
+  },
+  "ct_nx": {
+    "status": "auto",
+    "game": 17593,
+    "name": "Chrono Trigger",
+    "icon": "https://cdn2.steamgriddb.com/icon/241dfe5e876da942ca1dc3cd5986e093.png",
+    "candidates": []
+  },
+  "ctdc-nx": {
+    "status": "auto",
+    "game": 21778,
+    "name": "Crazy Taxi",
+    "icon": "https://cdn2.steamgriddb.com/icon/8a7a2a135d4d237e650116bc579d0d08.png",
+    "candidates": []
+  },
+  "ctr2_nx": {
+    "status": "auto",
+    "game": 5289145,
+    "name": "Cut the Rope 2",
+    "icon": "https://cdn2.steamgriddb.com/icon/0d8f919297a24c7c5223d403735715d7.png",
+    "candidates": []
+  },
+  "ctr_experiments_nx": {
+    "status": "auto",
+    "game": 5443859,
+    "name": "Cut the Rope: Experiments",
+    "icon": "https://cdn2.steamgriddb.com/icon/6b73214ee66823b12c5fe6a64ab0277f.png",
+    "candidates": []
+  },
+  "ctr_magic_nx": {
+    "status": "auto",
+    "game": 5350950,
+    "name": "Cut the Rope: Magic",
+    "icon": "https://cdn2.steamgriddb.com/icon/2a7d653e686f9eede1defe512016aea7.png",
+    "candidates": []
+  },
+  "ctr_nx": {
+    "status": "auto",
+    "game": 2330,
+    "name": "Cut the Rope",
+    "icon": "https://cdn2.steamgriddb.com/icon/c36b1132ac829ece87dda55d77ac06a4.png",
+    "candidates": []
+  },
+  "ctr_timetravel_nx": {
+    "status": "auto",
+    "game": 5443860,
+    "name": "Cut the Rope: Time Travel",
+    "icon": "https://cdn2.steamgriddb.com/icon/81ef6cd96ab8d7992d5a291b20897ec4.png",
+    "candidates": []
+  },
+  "culdcept-nx": {
+    "status": "auto",
+    "game": 5376338,
+    "name": "Culdcept Saga",
+    "icon": "https://cdn2.steamgriddb.com/icon/f86a3511cbb1ae422f932e01a91f1869.png",
+    "candidates": []
+  },
+  "cutarev-sh4-nx": {
+    "status": "auto",
+    "game": 36342,
+    "name": "Silent Hill 4: The Room",
+    "icon": "https://cdn2.steamgriddb.com/icon/e64caaff8e5c0399ab73c9fe1e37bd79.png",
+    "candidates": []
+  },
+  "cvhd-recomp": {
+    "status": "auto",
+    "game": 5250364,
+    "name": "Castlevania: Harmony of Despair",
+    "icon": "https://cdn2.steamgriddb.com/icon/f487c050e3c1f3c31f85b9f818ccc0c2.png",
+    "candidates": []
+  },
+  "cvrevamped_nx": {
+    "status": "auto",
+    "game": 5447702,
+    "name": "Castlevania ReVamped",
+    "icon": "https://cdn2.steamgriddb.com/icon/18fd0c19f24e132a9ca0ed7a5ab42b47.png",
+    "candidates": []
+  },
+  "cznn999-cod-nx": {
+    "status": "auto",
+    "game": 3451,
+    "name": "Call of Duty: United Offensive",
+    "icon": "https://cdn2.steamgriddb.com/icon/6acb084470c0a8bdf431d5427d1f29bc.png",
+    "candidates": []
+  },
+  "daggerfall_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 38717,
+        "name": "The Elder Scrolls II: Daggerfall"
+      },
+      {
+        "game": 7385,
+        "name": "The Elder Scrolls: Legends"
+      },
+      {
+        "game": 4849,
+        "name": "The Elder Scrolls Online"
+      },
+      {
+        "game": 2328,
+        "name": "The Elder Scrolls III: Morrowind"
+      },
+      {
+        "game": 12404,
+        "name": "The Elder Scrolls V: Skyrim - Special Edition"
+      }
+    ]
+  },
+  "dantes-inferno-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 29894,
+        "name": "Dante's Inferno"
+      },
+      {
+        "game": 5463631,
+        "name": "Dante's Inferno"
+      },
+      {
+        "game": 5255603,
+        "name": "Dantes Bullet Inferno"
+      },
+      {
+        "game": 14510,
+        "name": "Dante's Forest"
+      },
+      {
+        "game": 5469469,
+        "name": "Dante's 9"
+      }
+    ]
+  },
+  "dantheman_nx": {
+    "status": "auto",
+    "game": 5453894,
+    "name": "Dan the Man",
+    "icon": "https://cdn2.steamgriddb.com/icon/76a3839282e3a0d00cfde255d74109df.png",
+    "candidates": []
+  },
+  "datadefense_nx": {
+    "status": "auto",
+    "game": 4878723,
+    "name": "Data Defense",
+    "icon": null,
+    "candidates": []
+  },
+  "daytona-nx-modern": {
+    "status": "auto",
+    "game": 36357,
+    "name": "Daytona USA",
+    "icon": "https://cdn2.steamgriddb.com/icon/84445f9bf9203c148ad6809c64e170f2.png",
+    "candidates": []
+  },
+  "dcr_sea_nx": {
+    "status": "auto",
+    "game": 5493614,
+    "name": "Disney Crossy Road",
+    "icon": "https://cdn2.steamgriddb.com/icon/0222de3833afe9f975a00c3daf7ebc8b.png",
+    "candidates": []
+  },
+  "deadpool-nx": {
+    "status": "auto",
+    "game": 2359,
+    "name": "Deadpool",
+    "icon": "https://cdn2.steamgriddb.com/icon/ca6f73de60f0dcf1bcc7fb708229a9f2.png",
+    "candidates": []
+  },
+  "deadspace_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5271725,
+        "name": "Dead Space (Mobile)"
+      },
+      {
+        "game": 5260223,
+        "name": "Dead Space: Aftermath"
+      },
+      {
+        "game": 12088,
+        "name": "Dead Space 2"
+      },
+      {
+        "game": 38046,
+        "name": "Dead Space 3"
+      },
+      {
+        "game": 5248491,
+        "name": "Dead Space 3: Awakened"
+      }
+    ]
+  },
+  "defjam-sw": {
+    "status": "auto",
+    "game": 38885,
+    "name": "Def Jam: Fight for NY",
+    "icon": "https://cdn2.steamgriddb.com/icon/aef76e4e1d8adbe2fd95e03f6a126b57.png",
+    "candidates": []
+  },
+  "descent1-nx-modern": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 3715,
+        "name": "Descent"
+      },
+      {
+        "game": 5440659,
+        "name": "DESCENT"
+      },
+      {
+        "game": 5474704,
+        "name": "Descent"
+      },
+      {
+        "game": 5492156,
+        "name": "Descent"
+      },
+      {
+        "game": 5552096,
+        "name": "Descent"
+      }
+    ]
+  },
+  "descent2-nx-modern": {
+    "status": "auto",
+    "game": 3716,
+    "name": "Descent 2",
+    "icon": "https://cdn2.steamgriddb.com/icon/a66223a9ad8f9a48591cd8067ebf6dee.png",
+    "candidates": []
+  },
+  "dethrace-switch-fw21": {
+    "status": "auto",
+    "game": 36973,
+    "name": "Carmageddon",
+    "icon": "https://cdn2.steamgriddb.com/icon/2e8c9ec0a94375617e4f142e6156c2b3.png",
+    "candidates": []
+  },
+  "deusexgo_nx": {
+    "status": "auto",
+    "game": 5253269,
+    "name": "Deus Ex GO",
+    "icon": "https://cdn2.steamgriddb.com/icon/0501a5eef2c9f8edf6502b75733b5b7a.png",
+    "candidates": []
+  },
+  "devilutionx-nx-modern": {
+    "status": "auto",
+    "game": 34237,
+    "name": "Diablo",
+    "icon": "https://cdn2.steamgriddb.com/icon/2e3907cbad887e6a1bea84d450b756db.png",
+    "candidates": []
+  },
+  "dishonored-nx": {
+    "status": "auto",
+    "game": 1839,
+    "name": "Dishonored",
+    "icon": "https://cdn2.steamgriddb.com/icon/bd633866f8a4b9bc454788b71effead2.png",
+    "candidates": []
+  },
+  "dk64recomp-nx": {
+    "status": "auto",
+    "game": 37695,
+    "name": "Donkey Kong 64",
+    "icon": "https://cdn2.steamgriddb.com/icon/cfa3cd042a8f3e4fef1c323e4496c7d9.png",
+    "candidates": []
+  },
+  "dkc1recomp-nx": {
+    "status": "auto",
+    "game": 36958,
+    "name": "Donkey Kong Country",
+    "icon": "https://cdn2.steamgriddb.com/icon/c99e2f08597bf03c96de0e8348a1e041.png",
+    "candidates": []
+  },
+  "dkc2recomp-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5460185,
+        "name": "Donkey Kong Country Doom"
+      },
+      {
+        "game": 36288,
+        "name": "Donkey Kong Country Returns"
+      },
+      {
+        "game": 5464766,
+        "name": "Donkey Kong Country 2: Unveiled"
+      },
+      {
+        "game": 5253394,
+        "name": "Donkey Kong Country Returns 3D"
+      },
+      {
+        "game": 5455453,
+        "name": "Donkey Kong Country Returns HD"
+      }
+    ]
+  },
+  "dkc2recomp-switch": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 36958,
+        "name": "Donkey Kong Country"
+      },
+      {
+        "game": 5460185,
+        "name": "Donkey Kong Country Doom"
+      },
+      {
+        "game": 36288,
+        "name": "Donkey Kong Country Returns"
+      },
+      {
+        "game": 5253394,
+        "name": "Donkey Kong Country Returns 3D"
+      },
+      {
+        "game": 5455453,
+        "name": "Donkey Kong Country Returns HD"
+      }
+    ]
+  },
+  "dkc3recomp-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 36958,
+        "name": "Donkey Kong Country"
+      },
+      {
+        "game": 5460185,
+        "name": "Donkey Kong Country Doom"
+      },
+      {
+        "game": 36288,
+        "name": "Donkey Kong Country Returns"
+      },
+      {
+        "game": 5253394,
+        "name": "Donkey Kong Country Returns 3D"
+      },
+      {
+        "game": 5455453,
+        "name": "Donkey Kong Country Returns HD"
+      }
+    ]
+  },
+  "doa2u-nx": {
+    "status": "auto",
+    "game": 5438133,
+    "name": "Dead or Alive 2: Ultimate",
+    "icon": "https://cdn2.steamgriddb.com/icon/2c11a011210e0b1ccfa7db763c716960.png",
+    "candidates": []
+  },
+  "doa3-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5252193,
+        "name": "Dead or Alive 3"
+      },
+      {
+        "game": 5323087,
+        "name": "Dead or Alive 3++"
+      },
+      {
+        "game": 37548,
+        "name": "Dead or Alive"
+      },
+      {
+        "game": 5278821,
+        "name": "Dead or Alive Xtreme 3"
+      },
+      {
+        "game": 101,
+        "name": "Dead or Alive: Paradise"
+      }
+    ]
+  },
+  "docklight": {
+    "status": "auto",
+    "game": 35564,
+    "name": "Banjo-Kazooie",
+    "icon": "https://cdn2.steamgriddb.com/icon/d2d5ed7eddb632adc3d91b947834aeac.png",
+    "candidates": []
+  },
+  "domazinus-racewave46-switch": {
+    "status": "auto",
+    "game": 39034,
+    "name": "Wave Race 64",
+    "icon": "https://cdn2.steamgriddb.com/icon/7b6ce75e5d95acc103465e3522f9d2fd.png",
+    "candidates": []
+  },
+  "downhill-revived": {
+    "status": "auto",
+    "game": 5253254,
+    "name": "Downhill Domination",
+    "icon": "https://cdn2.steamgriddb.com/icon/cd5519b7dc0683241a253762230769f0.png",
+    "candidates": []
+  },
+  "drally_s": {
+    "status": "auto",
+    "game": 1256,
+    "name": "Death Rally",
+    "icon": "https://cdn2.steamgriddb.com/icon/ccaf655804f90ae01d0cc9a63a066e9d.png",
+    "candidates": []
+  },
+  "drmariomania_nx": {
+    "status": "auto",
+    "game": 5496743,
+    "name": "Dr. Mario Mania",
+    "icon": "https://cdn2.steamgriddb.com/icon/e36208f5db214779acb90fff4d3f75ca.png",
+    "candidates": []
+  },
+  "ds1-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 12088,
+        "name": "Dead Space 2"
+      },
+      {
+        "game": 38046,
+        "name": "Dead Space 3"
+      },
+      {
+        "game": 1559,
+        "name": "Dead Space"
+      },
+      {
+        "game": 5338378,
+        "name": "Dead Space"
+      },
+      {
+        "game": 5250185,
+        "name": "Dead Space: Downfall"
+      }
+    ]
+  },
+  "ds2-nx": {
+    "status": "auto",
+    "game": 12088,
+    "name": "Dead Space 2",
+    "icon": "https://cdn2.steamgriddb.com/icon/61b80b3c2e4d6c208f2c634ae5816887.png",
+    "candidates": []
+  },
+  "ds2_switch": {
+    "status": "auto",
+    "game": 5961,
+    "name": "Dark Souls II: Scholar of the First Sin",
+    "icon": "https://cdn2.steamgriddb.com/icon/a4f23670e1833f3fdb077ca70bbd5d66.png",
+    "candidates": []
+  },
+  "ds3-nx": {
+    "status": "auto",
+    "game": 38046,
+    "name": "Dead Space 3",
+    "icon": "https://cdn2.steamgriddb.com/icon/50a074e6a8da4662ae0a29edde722179.png",
+    "candidates": []
+  },
+  "ducktales-nx": {
+    "status": "auto",
+    "game": 2676,
+    "name": "DuckTales Remastered",
+    "icon": "https://cdn2.steamgriddb.com/icon/7a524160a2539c5fb01154613926881b.png",
+    "candidates": []
+  },
+  "dukedashington_nx": {
+    "status": "auto",
+    "game": 29598,
+    "name": "Duke Dashington Remastered",
+    "icon": null,
+    "candidates": []
+  },
+  "dunwall": {
+    "status": "auto",
+    "game": 1839,
+    "name": "Dishonored",
+    "icon": "https://cdn2.steamgriddb.com/icon/bd633866f8a4b9bc454788b71effead2.png",
+    "candidates": []
+  },
+  "dusklight": {
+    "status": "auto",
+    "game": 34645,
+    "name": "The Legend of Zelda: Twilight Princess",
+    "icon": "https://cdn2.steamgriddb.com/icon/d5f047af6f250b7b437567f9c03e0137.png",
+    "candidates": []
+  },
+  "dusklight-nx": {
+    "status": "auto",
+    "game": 34645,
+    "name": "The Legend of Zelda: Twilight Princess",
+    "icon": "https://cdn2.steamgriddb.com/icon/d5f047af6f250b7b437567f9c03e0137.png",
+    "candidates": []
+  },
+  "dw3-switch": {
+    "status": "auto",
+    "game": 35434,
+    "name": "Digimon World 3",
+    "icon": "https://cdn2.steamgriddb.com/icon/cb2b3d6542b6df97c27b5977f3dd471b.png",
+    "candidates": []
+  },
+  "earntodie2_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5323558,
+        "name": "Earn to Die"
+      },
+      {
+        "game": 10232,
+        "name": "Earn to Die 2"
+      },
+      {
+        "game": 5293216,
+        "name": "Earn to Die 2012"
+      },
+      {
+        "game": 5323560,
+        "name": "Earn to Die 2: Exodus"
+      },
+      {
+        "game": 5563553,
+        "name": "Earn Your Stripes"
+      }
+    ]
+  },
+  "f-zero-nx-modern": {
+    "status": "auto",
+    "game": 36803,
+    "name": "F-Zero",
+    "icon": "https://cdn2.steamgriddb.com/icon/c2e0571e50a35b2719088134251d0aa7.png",
+    "candidates": []
+  },
+  "fallout-ce-switch": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 2322,
+        "name": "Fallout 3"
+      },
+      {
+        "game": 7993,
+        "name": "Fallout 4"
+      },
+      {
+        "game": 17490,
+        "name": "Fallout 4 VR"
+      },
+      {
+        "game": 16612,
+        "name": "Fallout Shelter"
+      },
+      {
+        "game": 2352,
+        "name": "Fallout: New Vegas"
+      }
+    ]
+  },
+  "fallout2-ce-switch": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 2322,
+        "name": "Fallout 3"
+      },
+      {
+        "game": 7993,
+        "name": "Fallout 4"
+      },
+      {
+        "game": 17490,
+        "name": "Fallout 4 VR"
+      },
+      {
+        "game": 16612,
+        "name": "Fallout Shelter"
+      },
+      {
+        "game": 5465080,
+        "name": "Fallout 2 Remake 3D"
+      }
+    ]
+  },
+  "fc4-nx": {
+    "status": "auto",
+    "game": 4484,
+    "name": "Far Cry 4",
+    "icon": "https://cdn2.steamgriddb.com/icon/30d2f1316a7c26f1d83ad66d325336e4.png",
+    "candidates": []
+  },
+  "fear-nx": {
+    "status": "auto",
+    "game": 2012,
+    "name": "F.E.A.R.",
+    "icon": "https://cdn2.steamgriddb.com/icon/6a68d56bc29b2ba7743554740e04153c.png",
+    "candidates": []
+  },
+  "feedingfrenzy-nx": {
+    "status": "auto",
+    "game": 5263822,
+    "name": "Feeding Frenzy",
+    "icon": "https://cdn2.steamgriddb.com/icon/cd5eb3f52898118694eadbc2f578bdbb.png",
+    "candidates": []
+  },
+  "feedingfrenzy2-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 6137,
+        "name": "Feeding Frenzy 2: Shipwreck Showdown Deluxe"
+      },
+      {
+        "game": 5263822,
+        "name": "Feeding Frenzy"
+      },
+      {
+        "game": 5502752,
+        "name": "Feeding My Ducks"
+      },
+      {
+        "game": 31846,
+        "name": "Zombie Deathrace Feeding Frenzy"
+      },
+      {
+        "game": 5558043,
+        "name": "Feeding the Foxes"
+      }
+    ]
+  },
+  "ff3_3d_nx": {
+    "status": "auto",
+    "game": 2715,
+    "name": "Final Fantasy III (3D Remake)",
+    "icon": "https://cdn2.steamgriddb.com/icon/1cea629cd21eb8d3e013d04c79b1c32e.png",
+    "candidates": []
+  },
+  "ff4_3d_nx": {
+    "status": "auto",
+    "game": 5054,
+    "name": "Final Fantasy IV (3D Remake)",
+    "icon": "https://cdn2.steamgriddb.com/icon/bfaf03e3d41e25b94457fadfbc4521eb.png",
+    "candidates": []
+  },
+  "ff4_nx": {
+    "status": "auto",
+    "game": 5054,
+    "name": "Final Fantasy IV (3D Remake)",
+    "icon": "https://cdn2.steamgriddb.com/icon/bfaf03e3d41e25b94457fadfbc4521eb.png",
+    "candidates": []
+  },
+  "ff4tay_nx": {
+    "status": "auto",
+    "game": 6559,
+    "name": "Final Fantasy IV: The After Years",
+    "icon": "https://cdn2.steamgriddb.com/icon/8379b7910da24c71639dfbbcbfd03bda.png",
+    "candidates": []
+  },
+  "ffd2_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 4268,
+        "name": "Final Fantasy XIII"
+      },
+      {
+        "game": 2505,
+        "name": "Final Fantasy XI"
+      },
+      {
+        "game": 4269,
+        "name": "Final Fantasy XIII-2"
+      },
+      {
+        "game": 33565,
+        "name": "Final Fantasy"
+      },
+      {
+        "game": 5054,
+        "name": "Final Fantasy IV (3D Remake)"
+      }
+    ]
+  },
+  "ffd_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 4268,
+        "name": "Final Fantasy XIII"
+      },
+      {
+        "game": 2505,
+        "name": "Final Fantasy XI"
+      },
+      {
+        "game": 4269,
+        "name": "Final Fantasy XIII-2"
+      },
+      {
+        "game": 33565,
+        "name": "Final Fantasy"
+      },
+      {
+        "game": 5054,
+        "name": "Final Fantasy IV (3D Remake)"
+      }
+    ]
+  },
+  "ffxiii-2-nx": {
+    "status": "auto",
+    "game": 4269,
+    "name": "Final Fantasy XIII-2",
+    "icon": "https://cdn2.steamgriddb.com/icon/642c30b85aab4b8e49e795605bf6f368.png",
+    "candidates": []
+  },
+  "fheroes2": {
+    "status": "auto",
+    "game": 33800,
+    "name": "Heroes of Might & Magic II",
+    "icon": null,
+    "candidates": []
+  },
+  "fiestarun_nx": {
+    "status": "auto",
+    "game": 5325672,
+    "name": "Rayman Fiesta Run",
+    "icon": "https://cdn2.steamgriddb.com/icon/932db12621be9343f71934895bcd4b06.png",
+    "candidates": []
+  },
+  "flappy_bird_nx": {
+    "status": "auto",
+    "game": 5344733,
+    "name": "Flappy Bird",
+    "icon": "https://cdn2.steamgriddb.com/icon/a6101db109c4529f60805430ce177318.png",
+    "candidates": []
+  },
+  "flappybirdsfamily_nx": {
+    "status": "auto",
+    "game": 39001,
+    "name": "Flappy Birds Family",
+    "icon": "https://cdn2.steamgriddb.com/icon/43cf10a7ba626e330e4bacef823450a9.png",
+    "candidates": []
+  },
+  "flatout2-sw": {
+    "status": "auto",
+    "game": 4512,
+    "name": "FlatOut 2",
+    "icon": "https://cdn2.steamgriddb.com/icon/0633b7bb0014d1e17f52b06010aff548.png",
+    "candidates": []
+  },
+  "fnxf_xiii": {
+    "status": "auto",
+    "game": 4268,
+    "name": "Final Fantasy XIII",
+    "icon": "https://cdn2.steamgriddb.com/icon/db36794c39b9c28549d1e2f3e9d954c9.png",
+    "candidates": []
+  },
+  "freespace2_nx": {
+    "status": "auto",
+    "game": 3719,
+    "name": "Freespace 2",
+    "icon": "https://cdn2.steamgriddb.com/icon/3505514e9f9ba3724fc51cb3278e0e67.png",
+    "candidates": []
+  },
+  "fruitninjaclassic_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5311537,
+        "name": "Fruit Ninja"
+      },
+      {
+        "game": 12290,
+        "name": "Fruit Ninja VR"
+      },
+      {
+        "game": 5266865,
+        "name": "Fruit Ninja Kinect"
+      },
+      {
+        "game": 5288422,
+        "name": "Fruit Ninja VR 2"
+      },
+      {
+        "game": 9297,
+        "name": "Fruit Golf"
+      }
+    ]
+  },
+  "futari-nx": {
+    "status": "auto",
+    "game": 5252879,
+    "name": "Mushihime-sama Futari",
+    "icon": "https://cdn2.steamgriddb.com/icon/af5ac7432f2b60611a2b2081da85bdc0.png",
+    "candidates": []
+  },
+  "galaxian_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5490027,
+        "name": "Manticore Galaxy on Fire"
+      },
+      {
+        "game": 11497,
+        "name": "Galaxy Cannon Rider"
+      },
+      {
+        "game": 2052,
+        "name": "Galaxy on Fire 2™ Full HD"
+      },
+      {
+        "game": 7430,
+        "name": "Galaxy Union"
+      },
+      {
+        "game": 12345,
+        "name": "Galaxy in Turmoil"
+      }
+    ]
+  },
+  "gdash_nx": {
+    "status": "auto",
+    "game": 5427,
+    "name": "Geometry Dash",
+    "icon": "https://cdn2.steamgriddb.com/icon/2949acecb75460b645a0f2dabdb59bc7.png",
+    "candidates": []
+  },
+  "gears2-nx": {
+    "status": "auto",
+    "game": 37163,
+    "name": "Gears of War 2",
+    "icon": "https://cdn2.steamgriddb.com/icon/7fead16006fb29a5d5b15c842fe1757f.png",
+    "candidates": []
+  },
+  "gen1recomp": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5356567,
+        "name": "Pokémon XG: neXt Gen"
+      },
+      {
+        "game": 25634,
+        "name": "Pokémon Pinball"
+      },
+      {
+        "game": 34216,
+        "name": "Pokémon LeafGreen Version"
+      },
+      {
+        "game": 33831,
+        "name": "Pokémon Red Version"
+      },
+      {
+        "game": 34483,
+        "name": "Pokémon Black Version 2"
+      }
+    ]
+  },
+  "gen2recomped": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5356567,
+        "name": "Pokémon XG: neXt Gen"
+      },
+      {
+        "game": 34293,
+        "name": "Pokémon Stadium 2"
+      },
+      {
+        "game": 34483,
+        "name": "Pokémon Black Version 2"
+      },
+      {
+        "game": 25634,
+        "name": "Pokémon Pinball"
+      },
+      {
+        "game": 34216,
+        "name": "Pokémon LeafGreen Version"
+      }
+    ]
+  },
+  "gh3-nx": {
+    "status": "auto",
+    "game": 5247285,
+    "name": "Guitar Hero III: Legends of Rock",
+    "icon": "https://cdn2.steamgriddb.com/icon/37624b36da4d07cf5177e2b6fed5f7a5.png",
+    "candidates": []
+  },
+  "ghostship": {
+    "status": "auto",
+    "game": 37177,
+    "name": "Super Mario 64",
+    "icon": "https://cdn2.steamgriddb.com/icon/f2201f5191c4e92cc5af043eebfd0946.png",
+    "candidates": []
+  },
+  "gizmoduck-nx-modern": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": []
+  },
+  "godfather-nx": {
+    "status": "auto",
+    "game": 2943,
+    "name": "The Godfather",
+    "icon": "https://cdn2.steamgriddb.com/icon/10002631234370cc43d1ef36d9fd2f5b.png",
+    "candidates": []
+  },
+  "goemon64recomp-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5355366,
+        "name": "Mystical Ninja 2 Starring Goemon"
+      },
+      {
+        "game": 5440952,
+        "name": "Mystical Ninja Starring Goemon (Game Boy)"
+      },
+      {
+        "game": 33703,
+        "name": "Mystical Ninja Starring Goemon (Nintendo 64)"
+      },
+      {
+        "game": 5512779,
+        "name": "Mystical Ninja Goemon Zero"
+      },
+      {
+        "game": 5268934,
+        "name": "Mystical Mayhem"
+      }
+    ]
+  },
+  "goldenballoon_nx": {
+    "status": "auto",
+    "game": 36929,
+    "name": "Diddy Kong Racing",
+    "icon": "https://cdn2.steamgriddb.com/icon/a607946dc79f1013740366224ff2b175.png",
+    "candidates": []
+  },
+  "gow-collection-nx": {
+    "status": "auto",
+    "game": 5248520,
+    "name": "God of War: Collection",
+    "icon": "https://cdn2.steamgriddb.com/icon/cc73ed6fa658dab4deb142aa5266cff7.png",
+    "candidates": []
+  },
+  "grand-theft-auto-iv-native-port-nintendo-switch": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 3674,
+        "name": "Grand Theft Auto V"
+      },
+      {
+        "game": 1350,
+        "name": "Grand Theft Auto III"
+      },
+      {
+        "game": 1358,
+        "name": "Grand Theft Auto 2"
+      },
+      {
+        "game": 1357,
+        "name": "Grand Theft Auto"
+      },
+      {
+        "game": 1351,
+        "name": "Grand Theft Auto: Vice City"
+      }
+    ]
+  },
+  "granny2_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5253601,
+        "name": "Granny: Chapter Two"
+      },
+      {
+        "game": 5381216,
+        "name": "Granny Escape"
+      },
+      {
+        "game": 5447708,
+        "name": "Granny: Recaptured"
+      },
+      {
+        "game": 4485707,
+        "name": "Granny Simulator"
+      },
+      {
+        "game": 5408778,
+        "name": "Granny Remake"
+      }
+    ]
+  },
+  "granny3_nx": {
+    "status": "auto",
+    "game": 5292323,
+    "name": "Granny 3",
+    "icon": "https://cdn2.steamgriddb.com/icon/8ab70731b1553f17c11a3bbc87e0b605.png",
+    "candidates": []
+  },
+  "granny_nx": {
+    "status": "auto",
+    "game": 32232,
+    "name": "Granny",
+    "icon": "https://cdn2.steamgriddb.com/icon/fa8dbbcb682699544e4e8f2212115f73.png",
+    "candidates": []
+  },
+  "gta3-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 1358,
+        "name": "Grand Theft Auto 2"
+      },
+      {
+        "game": 3674,
+        "name": "Grand Theft Auto V"
+      },
+      {
+        "game": 1357,
+        "name": "Grand Theft Auto"
+      },
+      {
+        "game": 1350,
+        "name": "Grand Theft Auto III"
+      },
+      {
+        "game": 1351,
+        "name": "Grand Theft Auto: Vice City"
+      }
+    ]
+  },
+  "gtactw_nx": {
+    "status": "auto",
+    "game": 62,
+    "name": "Grand Theft Auto: Chinatown Wars",
+    "icon": "https://cdn2.steamgriddb.com/icon/2faee87e8295a785ed8bd638907b5852.png",
+    "candidates": []
+  },
+  "gtalcs_nx": {
+    "status": "auto",
+    "game": 33713,
+    "name": "Grand Theft Auto: Liberty City Stories",
+    "icon": "https://cdn2.steamgriddb.com/icon/47570c0e20eec98528284fe7c80c5f13.png",
+    "candidates": []
+  },
+  "gtasa_nx": {
+    "status": "auto",
+    "game": 1352,
+    "name": "Grand Theft Auto: San Andreas",
+    "icon": "https://cdn2.steamgriddb.com/icon/b7d0858d41a6c29b873e4aba411e6d04.png",
+    "candidates": []
+  },
+  "guardian-heroes-recomp-public": {
+    "status": "auto",
+    "game": 37759,
+    "name": "Guardian Heroes",
+    "icon": "https://cdn2.steamgriddb.com/icon/e8c3ffce73ea28b5d4874789c5828145.png",
+    "candidates": []
+  },
+  "guwange-nx": {
+    "status": "auto",
+    "game": 5263327,
+    "name": "Guwange",
+    "icon": "https://cdn2.steamgriddb.com/icon/f9ef8129579f7cc1f0623af693139649.png",
+    "candidates": []
+  },
+  "gzdoom-nx-2026": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 2460,
+        "name": "Doom"
+      },
+      {
+        "game": 8103,
+        "name": "Doom"
+      },
+      {
+        "game": 2492,
+        "name": "DOOM II"
+      },
+      {
+        "game": 25626,
+        "name": "DOOM 64"
+      },
+      {
+        "game": 18776,
+        "name": "DOOM VFR"
+      }
+    ]
+  },
+  "gzdoom-nx-modern": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 2460,
+        "name": "Doom"
+      },
+      {
+        "game": 8103,
+        "name": "Doom"
+      },
+      {
+        "game": 2492,
+        "name": "DOOM II"
+      },
+      {
+        "game": 25626,
+        "name": "DOOM 64"
+      },
+      {
+        "game": 18776,
+        "name": "DOOM VFR"
+      }
+    ]
+  },
+  "halo-ce-universal": {
+    "status": "auto",
+    "game": 38383,
+    "name": "Halo: Combat Evolved",
+    "icon": "https://cdn2.steamgriddb.com/icon/045cf83ab0722e782cf72d14e44adf98.png",
+    "candidates": []
+  },
+  "haloce-nx": {
+    "status": "auto",
+    "game": 38383,
+    "name": "Halo: Combat Evolved",
+    "icon": "https://cdn2.steamgriddb.com/icon/045cf83ab0722e782cf72d14e44adf98.png",
+    "candidates": []
+  },
+  "happywheels_nx": {
+    "status": "auto",
+    "game": 5252527,
+    "name": "Happy Wheels",
+    "icon": "https://cdn2.steamgriddb.com/icon/288cd2567953f06e460a33951f55daaf.png",
+    "candidates": []
+  },
+  "hard-corps-uprising-recompiled": {
+    "status": "auto",
+    "game": 5253571,
+    "name": "Hard Corps: Uprising",
+    "icon": "https://cdn2.steamgriddb.com/icon/22ced79030992233449d6c1e0cea47df.png",
+    "candidates": []
+  },
+  "hcr_nx": {
+    "status": "auto",
+    "game": 5341072,
+    "name": "Hill Climb Racing",
+    "icon": "https://cdn2.steamgriddb.com/icon/e1b06e553b1418a47d9cb81065cd0cfe.png",
+    "candidates": []
+  },
+  "heartstar_nx": {
+    "status": "auto",
+    "game": 5255728,
+    "name": "Heart Star",
+    "icon": null,
+    "candidates": []
+  },
+  "hexic2-nx": {
+    "status": "auto",
+    "game": 5319958,
+    "name": "Hexic 2",
+    "icon": null,
+    "candidates": []
+  },
+  "hexichd-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5319958,
+        "name": "Hexic 2"
+      },
+      {
+        "game": 5253270,
+        "name": "Hexic"
+      },
+      {
+        "game": 5272270,
+        "name": "Hexia"
+      },
+      {
+        "game": 5283525,
+        "name": "Hexio"
+      },
+      {
+        "game": 5441009,
+        "name": "Hexis"
+      }
+    ]
+  },
+  "hitmango_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 2663,
+        "name": "HITMAN"
+      },
+      {
+        "game": 2926,
+        "name": "Hitman: Contracts"
+      },
+      {
+        "game": 5253770,
+        "name": "Hitman GO: VR Edition"
+      },
+      {
+        "game": 1784,
+        "name": "Hitman: Absolution"
+      },
+      {
+        "game": 20490,
+        "name": "Hitman: Blood Money"
+      }
+    ]
+  },
+  "hl2_nx": {
+    "status": "auto",
+    "game": 2254,
+    "name": "Half-Life 2",
+    "icon": "https://cdn2.steamgriddb.com/icon/ef44470a9aec6c5a2086afebd72c4192.png",
+    "candidates": []
+  },
+  "hmd_nx": {
+    "status": "auto",
+    "game": 5498061,
+    "name": "How Many Dudes?",
+    "icon": "https://cdn2.steamgriddb.com/icon/f088f3bceb9b9a61ed624105f9fa9af8.png",
+    "candidates": []
+  },
+  "hotpursuitnx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 35936,
+        "name": "Need for Speed III: Hot Pursuit"
+      },
+      {
+        "game": 12103,
+        "name": "Need for Speed: Hot Pursuit"
+      },
+      {
+        "game": 37208,
+        "name": "Need for Speed: Hot Pursuit 2"
+      },
+      {
+        "game": 5299981,
+        "name": "Need for Speed II: Special Edition"
+      },
+      {
+        "game": 2968,
+        "name": "Need for Speed: SHIFT"
+      }
+    ]
+  },
+  "hp2_switch": {
+    "status": "auto",
+    "game": 2259,
+    "name": "Harry Potter and the Chamber of Secrets",
+    "icon": "https://cdn2.steamgriddb.com/icon/296add4760393dc63707e407affcbc84.png",
+    "candidates": []
+  },
+  "iceage2-sw": {
+    "status": "auto",
+    "game": 38054,
+    "name": "Ice Age 2: The Meltdown",
+    "icon": "https://cdn2.steamgriddb.com/icon/8c05cf5bf084d8a1908738d8f5f6bad7.png",
+    "candidates": []
+  },
+  "infinityblade_nx": {
+    "status": "auto",
+    "game": 5319953,
+    "name": "Infinity Blade",
+    "icon": "https://cdn2.steamgriddb.com/icon/41a4930d64c23bbfd176830081da1f41.png",
+    "candidates": []
+  },
+  "insaniquarium_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5811,
+        "name": "Insaniquarium! Deluxe"
+      }
+    ]
+  },
+  "isaac-switch-native": {
+    "status": "auto",
+    "game": 5280394,
+    "name": "The Binding of Isaac: Repentance",
+    "icon": "https://cdn2.steamgriddb.com/icon/b790198028e7b75cde4173bc1c825c64.png",
+    "candidates": []
+  },
+  "jak-project-switch": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5285926,
+        "name": "Jak and Daxter Collection"
+      },
+      {
+        "game": 37452,
+        "name": "Jak and Daxter: The Precursor Legacy"
+      },
+      {
+        "game": 35892,
+        "name": "Jak and Daxter: The Lost Frontier"
+      },
+      {
+        "game": 36801,
+        "name": "Jak II"
+      },
+      {
+        "game": 38498,
+        "name": "Jak X: Combat Racing"
+      }
+    ]
+  },
+  "jazz2": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5363149,
+        "name": "Jazz Jackrabbit 3"
+      },
+      {
+        "game": 5346906,
+        "name": "Jazz Jackrabbit"
+      },
+      {
+        "game": 34917,
+        "name": "Jazz Jackrabbit"
+      },
+      {
+        "game": 5247059,
+        "name": "Jazz Jackrabbit Collection"
+      },
+      {
+        "game": 5247060,
+        "name": "Jazz Jackrabbit 2: The Secret Files"
+      }
+    ]
+  },
+  "jet-set-radio-nx": {
+    "status": "auto",
+    "game": 1868,
+    "name": "Jet Set Radio",
+    "icon": "https://cdn2.steamgriddb.com/icon/ed277964a8959e72a0d987e598dfbe72.png",
+    "candidates": []
+  },
+  "jetpackjoyride_nx": {
+    "status": "auto",
+    "game": 5270695,
+    "name": "Jetpack Joyride",
+    "icon": "https://cdn2.steamgriddb.com/icon/05d8cccb5f47e5072f0a05b5f514941a.png",
+    "candidates": []
+  },
+  "jetsetradiofuture-unleashed-nx": {
+    "status": "auto",
+    "game": 5248415,
+    "name": "Jet Set Radio Future",
+    "icon": "https://cdn2.steamgriddb.com/icon/8164d892d7aea8f1875df07f4d82ffd0.png",
+    "candidates": []
+  },
+  "kameo-nx": {
+    "status": "auto",
+    "game": 5265763,
+    "name": "Kameo: Elements of Power",
+    "icon": "https://cdn2.steamgriddb.com/icon/6a9396f51fadc08f4d40ccf873451a4e.png",
+    "candidates": []
+  },
+  "kartpadnx": {
+    "status": "auto",
+    "game": 36054,
+    "name": "Mario Kart Wii",
+    "icon": "https://cdn2.steamgriddb.com/icon/e0501dd4a84df989ef1664ea7eb22adb.png",
+    "candidates": []
+  },
+  "katamari-nx": {
+    "status": "auto",
+    "game": 5273491,
+    "name": "Beautiful Katamari",
+    "icon": "https://cdn2.steamgriddb.com/icon/0b9b6d6d154e98ce34b3f2e4ef76eae9.png",
+    "candidates": []
+  },
+  "keflings-nx": {
+    "status": "auto",
+    "game": 5257108,
+    "name": "A Kingdom for Keflings",
+    "icon": "https://cdn2.steamgriddb.com/icon/6b7d24fd9a098d52b53fcc2cbd168789.png",
+    "candidates": []
+  },
+  "ketsui-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5252881,
+        "name": "Ketsui: Kizuna Jigoku Tachi"
+      },
+      {
+        "game": 5332764,
+        "name": "Do-Konjou Shougakusei: Bon Bīta - Hadaka no Choujou Ketsu-sen!! Bīta vs. Dokuro Dei!"
+      }
+    ]
+  },
+  "khux_nx": {
+    "status": "auto",
+    "game": 5430172,
+    "name": "Kingdom Hearts Union χ Dark Road",
+    "icon": "https://cdn2.steamgriddb.com/icon/21ffa8e349730e33009ddf85ce35c2a5.png",
+    "candidates": []
+  },
+  "killer-instinct-2-nx-modern": {
+    "status": "auto",
+    "game": 35666,
+    "name": "Killer Instinct 2",
+    "icon": "https://cdn2.steamgriddb.com/icon/fae0cf06831c3d5a43008b5ce036f541.png",
+    "candidates": []
+  },
+  "killer-instinct-nx-modern": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 16187,
+        "name": "Killer Instinct"
+      },
+      {
+        "game": 5262290,
+        "name": "Killer Instinct"
+      },
+      {
+        "game": 35666,
+        "name": "Killer Instinct 2"
+      },
+      {
+        "game": 38849,
+        "name": "Killer Instinct Gold"
+      },
+      {
+        "game": 33904,
+        "name": "Killer Instinct - Arcade"
+      }
+    ]
+  },
+  "killerbean_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5293871,
+        "name": "Killer Bean"
+      },
+      {
+        "game": 19435,
+        "name": "Killer Queen Black"
+      },
+      {
+        "game": 3351,
+        "name": "Killer is Dead"
+      },
+      {
+        "game": 33020,
+        "name": "Killer Clowns"
+      },
+      {
+        "game": 26931,
+        "name": "Killer Backflip 5"
+      }
+    ]
+  },
+  "kof2002um-nx": {
+    "status": "auto",
+    "game": 2309,
+    "name": "The King of Fighters 2002: Unlimited Match",
+    "icon": "https://cdn2.steamgriddb.com/icon/4c3419c75074a0734e4d1851aa66eb8b.png",
+    "candidates": []
+  },
+  "kohaku743-horizon-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 38365,
+        "name": "Minecraft"
+      },
+      {
+        "game": 5258201,
+        "name": "Minecraft Dungeons"
+      },
+      {
+        "game": 34356,
+        "name": "Minecraft Wii U Edition"
+      },
+      {
+        "game": 5248835,
+        "name": "Minecraft: Java Edition"
+      },
+      {
+        "game": 5268166,
+        "name": "Minecraft: Xbox One Edition"
+      }
+    ]
+  },
+  "labyrinth2_nx": {
+    "status": "auto",
+    "game": 5264225,
+    "name": "labyrinth 2",
+    "icon": null,
+    "candidates": []
+  },
+  "lainnx": {
+    "status": "auto",
+    "game": 5540205,
+    "name": "LAIN",
+    "icon": null,
+    "candidates": []
+  },
+  "laracroftgo_nx": {
+    "status": "auto",
+    "game": 14594,
+    "name": "Lara Croft GO",
+    "icon": "https://cdn2.steamgriddb.com/icon/ccf1db324b72a6343a422a52bed9aac7.png",
+    "candidates": []
+  },
+  "layton2_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 38328,
+        "name": "Professor Layton and the Diabolical Box"
+      },
+      {
+        "game": 5278188,
+        "name": "Professor Layton and the Diabolical Box HD for Mobile"
+      },
+      {
+        "game": 5245789,
+        "name": "Professor Layton and the Last Specter"
+      },
+      {
+        "game": 5246690,
+        "name": "Professor Layton and the Azran Legacy"
+      },
+      {
+        "game": 5246695,
+        "name": "Professor Layton and the Miracle Mask"
+      }
+    ]
+  },
+  "layton3_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5245789,
+        "name": "Professor Layton and the Last Specter"
+      },
+      {
+        "game": 38016,
+        "name": "Professor Layton and the Unwound Future"
+      },
+      {
+        "game": 38328,
+        "name": "Professor Layton and the Diabolical Box"
+      },
+      {
+        "game": 5246690,
+        "name": "Professor Layton and the Azran Legacy"
+      },
+      {
+        "game": 5246695,
+        "name": "Professor Layton and the Miracle Mask"
+      }
+    ]
+  },
+  "layton_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 38827,
+        "name": "Professor Layton and the Curious Village"
+      },
+      {
+        "game": 5278187,
+        "name": "Professor Layton and the Curious Village HD for Mobile"
+      },
+      {
+        "game": 5245789,
+        "name": "Professor Layton and the Last Specter"
+      },
+      {
+        "game": 38328,
+        "name": "Professor Layton and the Diabolical Box"
+      },
+      {
+        "game": 5252457,
+        "name": "Professor Layton vs. Phoenix Wright: Ace Attorney"
+      }
+    ]
+  },
+  "laytonbmr_nx": {
+    "status": "auto",
+    "game": 5278190,
+    "name": "Layton Brothers: Mystery Room",
+    "icon": "https://cdn2.steamgriddb.com/icon/20c86a628232a67e7bd46f76fba7ce12.png",
+    "candidates": []
+  },
+  "lazarus": {
+    "status": "auto",
+    "game": 2993,
+    "name": "Mass Effect 2",
+    "icon": "https://cdn2.steamgriddb.com/icon/1dc7eb7c735224b4aeec0c6bb0b36d94.png",
+    "candidates": []
+  },
+  "lbbg_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5094,
+        "name": "LEGO Batman 3: Beyond Gotham"
+      },
+      {
+        "game": 1996,
+        "name": "LEGO Batman: The Videogame"
+      },
+      {
+        "game": 5499345,
+        "name": "LEGO Batman: Legacy of the Dark Knight"
+      },
+      {
+        "game": 2083,
+        "name": "LEGO Batman 2: DC Super Heroes"
+      },
+      {
+        "game": 1677,
+        "name": "LEGO Star Wars: The Video Game"
+      }
+    ]
+  },
+  "legacyofdockness": {
+    "status": "auto",
+    "game": 12888,
+    "name": "Castlevania: Legacy of Darkness",
+    "icon": "https://cdn2.steamgriddb.com/icon/78b643f95b8a60758e226e7a0555dde3.png",
+    "candidates": []
+  },
+  "legobatman-recomp": {
+    "status": "auto",
+    "game": 1996,
+    "name": "LEGO Batman: The Videogame",
+    "icon": "https://cdn2.steamgriddb.com/icon/3788a72dbdac59ce36f46baf71ff41ee.png",
+    "candidates": []
+  },
+  "lm-nx": {
+    "status": "auto",
+    "game": 38627,
+    "name": "Luigi's Mansion",
+    "icon": "https://cdn2.steamgriddb.com/icon/0d0fd7c6e093f7b804fa0150b875b868.png",
+    "candidates": []
+  },
+  "lnsor_nx": {
+    "status": "auto",
+    "game": 5267390,
+    "name": "LEGO Ninjago: Shadow of Ronin",
+    "icon": "https://cdn2.steamgriddb.com/icon/98770eaf6ff8ad30a23849d7b81b97a1.png",
+    "candidates": []
+  },
+  "los1-nx": {
+    "status": "auto",
+    "game": 5275518,
+    "name": "Castlevania: Lords of Shadow",
+    "icon": "https://cdn2.steamgriddb.com/icon/5a6a3585884802546d5c8d4d8cbd7739.png",
+    "candidates": []
+  },
+  "lostodysseyrecomp": {
+    "status": "auto",
+    "game": 36456,
+    "name": "Lost Odyssey",
+    "icon": "https://cdn2.steamgriddb.com/icon/26a018f2968dbe32e887d311e62ec83e.png",
+    "candidates": []
+  },
+  "lswtcs_nx": {
+    "status": "auto",
+    "game": 5517,
+    "name": "LEGO Star Wars: The Complete Saga",
+    "icon": "https://cdn2.steamgriddb.com/icon/ce7715383bc3db796cdd375c1c4d2a13.png",
+    "candidates": []
+  },
+  "lswtfa_nx": {
+    "status": "auto",
+    "game": 10560,
+    "name": "LEGO Star Wars: The Force Awakens",
+    "icon": "https://cdn2.steamgriddb.com/icon/e317f8e550a112aa3947547bc7c83fa9.png",
+    "candidates": []
+  },
+  "luanti-nx": {
+    "status": "auto",
+    "game": 5470317,
+    "name": "Luanti",
+    "icon": "https://cdn2.steamgriddb.com/icon/fbff3e430b33ac364ed26e294730583f.png",
+    "candidates": []
+  },
+  "lummm_nx": {
+    "status": "auto",
+    "game": 5481055,
+    "name": "Level UP: Mario's Minigames Mayhem",
+    "icon": "https://cdn2.steamgriddb.com/icon/500043abdba70838b1082b45444ca3d2.png",
+    "candidates": []
+  },
+  "madagascar-nx-port": {
+    "status": "auto",
+    "game": 38397,
+    "name": "Madagascar",
+    "icon": "https://cdn2.steamgriddb.com/icon/7203c5fd9165b5cac35a2e0909331ba1.png",
+    "candidates": []
+  },
+  "magicalquesttrilogy-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 35186,
+        "name": "Disney's Magical Quest 3 starring Mickey and Donald"
+      },
+      {
+        "game": 38160,
+        "name": "Disney's Magical Mirror Starring Mickey Mouse"
+      },
+      {
+        "game": 5425,
+        "name": "Disney's Princess Enchanted Journey"
+      },
+      {
+        "game": 15465,
+        "name": "Disney's Aladdin"
+      },
+      {
+        "game": 5809,
+        "name": "Disney's Treasure Planet: Battle of Procyon"
+      }
+    ]
+  },
+  "manhunt1_nx": {
+    "status": "auto",
+    "game": 1353,
+    "name": "Manhunt",
+    "icon": "https://cdn2.steamgriddb.com/icon/61f27770bee91a5dda1b2128f2919291.png",
+    "candidates": []
+  },
+  "marathonrecomp-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5249681,
+        "name": "Sonic the Hedgehog"
+      },
+      {
+        "game": 35571,
+        "name": "Sonic the Hedgehog"
+      },
+      {
+        "game": 35189,
+        "name": "Sonic the Hedgehog 2"
+      },
+      {
+        "game": 37581,
+        "name": "Sonic the Hedgehog 3"
+      },
+      {
+        "game": 5481653,
+        "name": "Sonic The Hedgehog 2D"
+      }
+    ]
+  },
+  "mari0-switch": {
+    "status": "auto",
+    "game": 35028,
+    "name": "Mari0",
+    "icon": "https://cdn2.steamgriddb.com/icon/4801441f041958afaca324c43c40787b.png",
+    "candidates": []
+  },
+  "mari0_ae_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 10895,
+        "name": "Maria the Witch"
+      },
+      {
+        "game": 12862,
+        "name": "Mario Pinball Land"
+      },
+      {
+        "game": 1681,
+        "name": "Mario Golf: Advance Tour"
+      },
+      {
+        "game": 51,
+        "name": "Mario's Picross"
+      },
+      {
+        "game": 18724,
+        "name": "Marie's Room"
+      }
+    ]
+  },
+  "masseffect-nx": {
+    "status": "auto",
+    "game": 1558,
+    "name": "Mass Effect",
+    "icon": "https://cdn2.steamgriddb.com/icon/679fb477552c73cd38182cb9c0cb52ac.png",
+    "candidates": []
+  },
+  "max_nx_v2.1.131": {
+    "status": "auto",
+    "game": 1354,
+    "name": "Max Payne",
+    "icon": "https://cdn2.steamgriddb.com/icon/87948c8b4e338f2a7518a1575b6af9d1.png",
+    "candidates": []
+  },
+  "mbhaxe-switch": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5437356,
+        "name": "Marble Blast Platinum"
+      },
+      {
+        "game": 5437357,
+        "name": "Marble Blast Mobile"
+      },
+      {
+        "game": 21115,
+        "name": "Marble Blast Gold"
+      },
+      {
+        "game": 5254607,
+        "name": "Marble Blast Ultra"
+      },
+      {
+        "game": 6558,
+        "name": "Marble Age"
+      }
+    ]
+  },
+  "mc3_nx": {
+    "status": "auto",
+    "game": 5277083,
+    "name": "Modern Combat 3: Fallen Nation",
+    "icon": "https://cdn2.steamgriddb.com/icon/1c866cbb2df9ad14941c2f7d1ee0b027.png",
+    "candidates": []
+  },
+  "mc4_nx": {
+    "status": "auto",
+    "game": 5277082,
+    "name": "Modern Combat 4: Zero Hour",
+    "icon": "https://cdn2.steamgriddb.com/icon/99ee2d61ce22795acc55825466a1150f.png",
+    "candidates": []
+  },
+  "mcla-nx": {
+    "status": "auto",
+    "game": 5253393,
+    "name": "Midnight Club: Los Angeles",
+    "icon": "https://cdn2.steamgriddb.com/icon/fe1ad8d4f5dbb3cb866d0c89beb527a6.png",
+    "candidates": []
+  },
+  "mcosu-nx": {
+    "status": "auto",
+    "game": 17353,
+    "name": "McOsu",
+    "icon": null,
+    "candidates": []
+  },
+  "medabots-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 34443,
+        "name": "Medabots: Rokusho"
+      },
+      {
+        "game": 34204,
+        "name": "Medabots: Metabee"
+      },
+      {
+        "game": 36693,
+        "name": "Medabots AX: Rokusho Version"
+      },
+      {
+        "game": 34365,
+        "name": "Medabots AX: Metabee Version"
+      },
+      {
+        "game": 5295422,
+        "name": "Medabots Infinity"
+      }
+    ]
+  },
+  "mega-man-w-switch-homebrew": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 36337,
+        "name": "Mega Man"
+      },
+      {
+        "game": 5405751,
+        "name": "Mega Man"
+      },
+      {
+        "game": 1639,
+        "name": "Mega Man X8"
+      },
+      {
+        "game": 117,
+        "name": "Mega Man & Bass"
+      },
+      {
+        "game": 36243,
+        "name": "Mega Man: The Wily Wars"
+      }
+    ]
+  },
+  "megaman64recomp-nx": {
+    "status": "auto",
+    "game": 37399,
+    "name": "Mega Man 64",
+    "icon": "https://cdn2.steamgriddb.com/icon/850618e22f83f152773d2a3e51168812.png",
+    "candidates": []
+  },
+  "megamanx-nx": {
+    "status": "auto",
+    "game": 35466,
+    "name": "Mega Man X",
+    "icon": "https://cdn2.steamgriddb.com/icon/3721e4fa10597f0aa6ab442e95508de1.png",
+    "candidates": []
+  },
+  "melee-nx": {
+    "status": "auto",
+    "game": 37285,
+    "name": "Super Smash Bros. Melee",
+    "icon": "https://cdn2.steamgriddb.com/icon/e0688d13958a19e087e123148555e4b4.png",
+    "candidates": []
+  },
+  "metroid-zero-mission-nx": {
+    "status": "auto",
+    "game": 85,
+    "name": "Metroid: Zero Mission",
+    "icon": "https://cdn2.steamgriddb.com/icon/2c9eda504b57b32348f3437ac07c1fab.png",
+    "candidates": []
+  },
+  "mgr-nx-deko": {
+    "status": "auto",
+    "game": 2628,
+    "name": "Metal Gear Rising: Revengeance",
+    "icon": "https://cdn2.steamgriddb.com/icon/ab3dfe49a68e59f742ce0ac8dc72cf63.png",
+    "candidates": []
+  },
+  "mgstts-nx": {
+    "status": "auto",
+    "game": 38461,
+    "name": "Metal Gear Solid: The Twin Snakes",
+    "icon": "https://cdn2.steamgriddb.com/icon/4b34cc1bf1623b6d6532ed63ff6ae276.png",
+    "candidates": []
+  },
+  "mhnwis-nx": {
+    "status": "auto",
+    "game": 8854,
+    "name": "Monster High: New Ghoul in School",
+    "icon": "https://cdn2.steamgriddb.com/icon/03df03e90e72f604c91c85a482607965.png",
+    "candidates": []
+  },
+  "mickeyanddonaldcollection-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5430055,
+        "name": "Mickey & Donald (Game & Watch)"
+      },
+      {
+        "game": 29852,
+        "name": "Mickey's Ultimate Challenge"
+      },
+      {
+        "game": 36166,
+        "name": "Mickey's Dangerous Chase"
+      },
+      {
+        "game": 4598,
+        "name": "World of Illusion starring Mickey Mouse and Donald Duck"
+      },
+      {
+        "game": 35186,
+        "name": "Disney's Magical Quest 3 starring Mickey and Donald"
+      }
+    ]
+  },
+  "minecraft-switch": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5248835,
+        "name": "Minecraft: Java Edition"
+      },
+      {
+        "game": 38365,
+        "name": "Minecraft"
+      },
+      {
+        "game": 34356,
+        "name": "Minecraft Wii U Edition"
+      },
+      {
+        "game": 5268164,
+        "name": "Minecraft: PlayStation 3 Edition"
+      },
+      {
+        "game": 5258201,
+        "name": "Minecraft Dungeons"
+      }
+    ]
+  },
+  "mini-ninjas-nx": {
+    "status": "auto",
+    "game": 6713,
+    "name": "Mini Ninjas",
+    "icon": "https://cdn2.steamgriddb.com/icon/5f42cb789e6bdbac21808eef0ab77711.png",
+    "candidates": []
+  },
+  "mk9-nx": {
+    "status": "auto",
+    "game": 2668,
+    "name": "Mortal Kombat Komplete Edition",
+    "icon": "https://cdn2.steamgriddb.com/icon/f469edbf1a33bef986953ae249e3abdc.png",
+    "candidates": []
+  },
+  "mkdd-nx": {
+    "status": "auto",
+    "game": 36068,
+    "name": "Mario Kart: Double Dash!!",
+    "icon": "https://cdn2.steamgriddb.com/icon/b6084866846db24332059399de7d6b97.png",
+    "candidates": []
+  },
+  "mksc-nx": {
+    "status": "auto",
+    "game": 35520,
+    "name": "Mario Kart: Super Circuit",
+    "icon": "https://cdn2.steamgriddb.com/icon/43d0193b623ae62359f03ad342298498.png",
+    "candidates": []
+  },
+  "mmim_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5285328,
+        "name": "Mario vs. Donkey Kong: Minis March Again!"
+      },
+      {
+        "game": 33784,
+        "name": "Mario vs. Donkey Kong: Mini-Land Mayhem"
+      },
+      {
+        "game": 5322861,
+        "name": "British Mario VS I.M. Meen"
+      },
+      {
+        "game": 34138,
+        "name": "Mario vs. Donkey Kong 2: March of the Minis"
+      },
+      {
+        "game": 5256090,
+        "name": "Mario vs. Donkey Kong: Tipping Stars"
+      }
+    ]
+  },
+  "mmxregenesis_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5295637,
+        "name": "Mega Man X DiVE"
+      },
+      {
+        "game": 35466,
+        "name": "Mega Man X"
+      },
+      {
+        "game": 5419726,
+        "name": "Mega Man X DiVE Offline"
+      },
+      {
+        "game": 38735,
+        "name": "Mega Man X Collection"
+      },
+      {
+        "game": 23073,
+        "name": "Mega Man X Legacy Collection"
+      }
+    ]
+  },
+  "mp2-nx": {
+    "status": "auto",
+    "game": 36244,
+    "name": "Metroid Prime 2: Echoes",
+    "icon": "https://cdn2.steamgriddb.com/icon/a597e50502f5ff68e3e25b9114205d4a.png",
+    "candidates": []
+  },
+  "mp3-nx": {
+    "status": "auto",
+    "game": 1807,
+    "name": "Max Payne 3",
+    "icon": "https://cdn2.steamgriddb.com/icon/f28e9aa59e8ddfda9c8ae024d70df12f.png",
+    "candidates": []
+  },
+  "mph-nx": {
+    "status": "auto",
+    "game": 34541,
+    "name": "Metroid Prime: Hunters",
+    "icon": "https://cdn2.steamgriddb.com/icon/73c415581357651d534a25384d9315d3.png",
+    "candidates": []
+  },
+  "mpo_nx": {
+    "status": "auto",
+    "game": 5541387,
+    "name": "Metroid Prime Origins",
+    "icon": "https://cdn2.steamgriddb.com/icon/14a07bc8ee7d825bbe35a2bb5a2d0514.png",
+    "candidates": []
+  },
+  "mrot4-dkc1recomp-nx": {
+    "status": "auto",
+    "game": 36958,
+    "name": "Donkey Kong Country",
+    "icon": "https://cdn2.steamgriddb.com/icon/c99e2f08597bf03c96de0e8348a1e041.png",
+    "candidates": []
+  },
+  "mspacmanmazemadnessrecomp": {
+    "status": "auto",
+    "game": 34136,
+    "name": "Ms. Pac-Man: Maze Madness",
+    "icon": "https://cdn2.steamgriddb.com/icon/dbd0e9e3b2741c1ae10ab2ec12169e7d.png",
+    "candidates": []
+  },
+  "msr-nx": {
+    "status": "auto",
+    "game": 5245261,
+    "name": "Metroid: Samus Returns",
+    "icon": "https://cdn2.steamgriddb.com/icon/a3ab4ff8fa4deed2e3bae3a5077675f0.png",
+    "candidates": []
+  },
+  "mulmash_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": []
+  },
+  "mvp-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5295427,
+        "name": "MVP Baseball 2005"
+      },
+      {
+        "game": 5342371,
+        "name": "MVP Baseball"
+      },
+      {
+        "game": 5266717,
+        "name": "MVP Baseball 2004"
+      },
+      {
+        "game": 5271896,
+        "name": "MVP Baseball 2003"
+      },
+      {
+        "game": 5346619,
+        "name": "MVP 06: NCAA Baseball"
+      }
+    ]
+  },
+  "mw2nx": {
+    "status": "auto",
+    "game": 710,
+    "name": "Call of Duty: Modern Warfare 2",
+    "icon": "https://cdn2.steamgriddb.com/icon/665eaec789085e82f89b03c310430355.png",
+    "candidates": []
+  },
+  "naruto-rise-of-a-ninja-nx": {
+    "status": "auto",
+    "game": 5268809,
+    "name": "Naruto: Rise of a Ninja",
+    "icon": "https://cdn2.steamgriddb.com/icon/38ed4039c0b33e2ec51cc4579405d03e.png",
+    "candidates": []
+  },
+  "nbajam_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 38915,
+        "name": "NBA Jam"
+      },
+      {
+        "game": 5374657,
+        "name": "NBA Jam"
+      },
+      {
+        "game": 5460679,
+        "name": "NBA Jam"
+      },
+      {
+        "game": 37434,
+        "name": "NBA Jam 99"
+      },
+      {
+        "game": 33813,
+        "name": "NBA Jam 2000"
+      }
+    ]
+  },
+  "nearchuckle_nx": {
+    "status": "auto",
+    "game": 1432,
+    "name": "Far Cry",
+    "icon": "https://cdn2.steamgriddb.com/icon/86158a6b3924670a32dad65bbc41bd95.png",
+    "candidates": []
+  },
+  "nfs-carbon-nx": {
+    "status": "auto",
+    "game": 34648,
+    "name": "Need for Speed: Carbon",
+    "icon": "https://cdn2.steamgriddb.com/icon/00755a54ea07fa69087afa4ffe9955e7.png",
+    "candidates": []
+  },
+  "nfscarbon-nx": {
+    "status": "auto",
+    "game": 34648,
+    "name": "Need for Speed: Carbon",
+    "icon": "https://cdn2.steamgriddb.com/icon/00755a54ea07fa69087afa4ffe9955e7.png",
+    "candidates": []
+  },
+  "nfshp2_switch_port": {
+    "status": "auto",
+    "game": 37208,
+    "name": "Need for Speed: Hot Pursuit 2",
+    "icon": "https://cdn2.steamgriddb.com/icon/5dd8afda4d4871c47ef248747fa1f71d.png",
+    "candidates": []
+  },
+  "nfsmostwanted2012-android-switch": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 38250,
+        "name": "Need for Speed: Most Wanted"
+      },
+      {
+        "game": 5258915,
+        "name": "Need for Speed: Most Wanted"
+      },
+      {
+        "game": 5256025,
+        "name": "Need for Speed: Most Wanted U"
+      },
+      {
+        "game": 37762,
+        "name": "Need for Speed: Most Wanted 5-1-0"
+      },
+      {
+        "game": 5518056,
+        "name": "Need For Speed: Most Wanted Redux"
+      }
+    ]
+  },
+  "nfsmw-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 38250,
+        "name": "Need for Speed: Most Wanted"
+      },
+      {
+        "game": 5258915,
+        "name": "Need for Speed: Most Wanted"
+      },
+      {
+        "game": 5256025,
+        "name": "Need for Speed: Most Wanted U"
+      },
+      {
+        "game": 37762,
+        "name": "Need for Speed: Most Wanted 5-1-0"
+      },
+      {
+        "game": 5518056,
+        "name": "Need For Speed: Most Wanted Redux"
+      }
+    ]
+  },
+  "nfsu1-sw": {
+    "status": "auto",
+    "game": 34529,
+    "name": "Need for Speed: Underground",
+    "icon": "https://cdn2.steamgriddb.com/icon/82748072a2779538dfc56b11f67cc4bd.png",
+    "candidates": []
+  },
+  "nfsu2-sw": {
+    "status": "auto",
+    "game": 29882,
+    "name": "Need for Speed: Underground 2",
+    "icon": "https://cdn2.steamgriddb.com/icon/6cc781cf2633337384a0a72f8c2b6359.png",
+    "candidates": []
+  },
+  "nfsuc-sw": {
+    "status": "auto",
+    "game": 34648,
+    "name": "Need for Speed: Carbon",
+    "icon": "https://cdn2.steamgriddb.com/icon/00755a54ea07fa69087afa4ffe9955e7.png",
+    "candidates": []
+  },
+  "nier-nx": {
+    "status": "auto",
+    "game": 38645,
+    "name": "NieR",
+    "icon": "https://cdn2.steamgriddb.com/icon/7b9d31aa17b849b238ab79cef0733041.png",
+    "candidates": []
+  },
+  "night100": {
+    "status": "auto",
+    "game": 5270264,
+    "name": "Scooby-Doo! Night of 100 Frights",
+    "icon": "https://cdn2.steamgriddb.com/icon/d54b7c38526426b0db6345a3f0e9aee0.png",
+    "candidates": []
+  },
+  "nights-nx": {
+    "status": "auto",
+    "game": 2252,
+    "name": "NiGHTS into Dreams...",
+    "icon": "https://cdn2.steamgriddb.com/icon/e01d99d462e63557ab72b61e865d53f1.png",
+    "candidates": []
+  },
+  "nova3-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5454575,
+        "name": "N.O.V.A. 2: Near Orbit Vanguard Alliance"
+      },
+      {
+        "game": 5276451,
+        "name": "N.O.V.A. Near Orbit Vanguard Alliance"
+      },
+      {
+        "game": 5440012,
+        "name": "N.O.V.A. 3"
+      },
+      {
+        "game": 5280007,
+        "name": "O.V.N.I. Abduction"
+      },
+      {
+        "game": 5415053,
+        "name": "N.O.V.A"
+      }
+    ]
+  },
+  "nsmbw-nx": {
+    "status": "auto",
+    "game": 37961,
+    "name": "New Super Mario Bros. Wii",
+    "icon": "https://cdn2.steamgriddb.com/icon/1a0a283bfe7c549dee6c638a05200e32.png",
+    "candidates": []
+  },
+  "nsmbw-switch": {
+    "status": "auto",
+    "game": 37961,
+    "name": "New Super Mario Bros. Wii",
+    "icon": "https://cdn2.steamgriddb.com/icon/1a0a283bfe7c549dee6c638a05200e32.png",
+    "candidates": []
+  },
+  "nv-rs-nx": {
+    "status": "auto",
+    "game": 2352,
+    "name": "Fallout: New Vegas",
+    "icon": "https://cdn2.steamgriddb.com/icon/82cec96096d4281b7c95cd7e74623496.png",
+    "candidates": []
+  },
+  "nx-diffuser": {
+    "status": "auto",
+    "game": 38893,
+    "name": "F-Zero X",
+    "icon": "https://cdn2.steamgriddb.com/icon/9288e7d7c367bdea1f049b71ddc3a4b5.png",
+    "candidates": []
+  },
+  "nx-vvvvvv--recomp": {
+    "status": "auto",
+    "game": 21335,
+    "name": "VVVVVV",
+    "icon": "https://cdn2.steamgriddb.com/icon/a792113bb3e7dbb10067989ea36f38cf.png",
+    "candidates": []
+  },
+  "nx-yumenikki": {
+    "status": "auto",
+    "game": 18798,
+    "name": "Yume Nikki",
+    "icon": "https://cdn2.steamgriddb.com/icon/b3579acde25b2dab713999fa7f42c914.png",
+    "candidates": []
+  },
+  "nzportable": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5439843,
+        "name": "Nazi Zombies: Portable (NZ:P)"
+      },
+      {
+        "game": 5504975,
+        "name": "Nazi Zombies"
+      },
+      {
+        "game": 5441765,
+        "name": "Nazizombies Slayer"
+      },
+      {
+        "game": 2436,
+        "name": "Sniper Elite: Nazi Zombie Army"
+      },
+      {
+        "game": 2937,
+        "name": "Sniper Elite: Nazi Zombie Army 2"
+      }
+    ]
+  },
+  "openaok": {
+    "status": "auto",
+    "game": 36303,
+    "name": "Age of Empires II: The Age of Kings",
+    "icon": "https://cdn2.steamgriddb.com/icon/0424d20160a6a558e5bf86a7bc9b67f0.png",
+    "candidates": []
+  },
+  "openblack": {
+    "status": "auto",
+    "game": 37411,
+    "name": "Black & White",
+    "icon": null,
+    "candidates": []
+  },
+  "openblops-nx": {
+    "status": "auto",
+    "game": 10034,
+    "name": "Call of Duty: Black Ops",
+    "icon": "https://cdn2.steamgriddb.com/icon/7fdaf48b6b9b24cfe0823a1277862035.png",
+    "candidates": []
+  },
+  "opence-nx": {
+    "status": "auto",
+    "game": 38383,
+    "name": "Halo: Combat Evolved",
+    "icon": "https://cdn2.steamgriddb.com/icon/045cf83ab0722e782cf72d14e44adf98.png",
+    "candidates": []
+  },
+  "openmohaa_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 35422,
+        "name": "Medal of Honor: Allied Assault War Chest"
+      },
+      {
+        "game": 5248982,
+        "name": "Medal of Honor: Allied Assault - Spearhead"
+      },
+      {
+        "game": 5248983,
+        "name": "Medal of Honor: Allied Assault - Breakthrough"
+      },
+      {
+        "game": 2952,
+        "name": "Medal of Honor: Airborne"
+      },
+      {
+        "game": 12101,
+        "name": "Medal of Honor Multiplayer"
+      }
+    ]
+  },
+  "openmw": {
+    "status": "auto",
+    "game": 2328,
+    "name": "The Elder Scrolls III: Morrowind",
+    "icon": "https://cdn2.steamgriddb.com/icon/4a3fd911279cd8bc597fa13222ef83be.png",
+    "candidates": []
+  },
+  "openmw-nx": {
+    "status": "auto",
+    "game": 2328,
+    "name": "The Elder Scrolls III: Morrowind",
+    "icon": "https://cdn2.steamgriddb.com/icon/4a3fd911279cd8bc597fa13222ef83be.png",
+    "candidates": []
+  },
+  "openomf-nx-modern": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5254675,
+        "name": "One Must Fall: 2097"
+      },
+      {
+        "game": 5555450,
+        "name": "One Must Fall 2097"
+      },
+      {
+        "game": 5553058,
+        "name": "One Must Rule"
+      },
+      {
+        "game": 5451436,
+        "name": "One Must Fall: Battlegrounds"
+      },
+      {
+        "game": 6087,
+        "name": "Nameless ~The one thing you must recall~"
+      }
+    ]
+  },
+  "openq4_s": {
+    "status": "auto",
+    "game": 2275,
+    "name": "Quake 4",
+    "icon": "https://cdn2.steamgriddb.com/icon/e86698eadde4101913eaf1c8ea42c8ce.png",
+    "candidates": []
+  },
+  "openrct2-switch": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 4614,
+        "name": "RollerCoaster Tycoon"
+      },
+      {
+        "game": 5333931,
+        "name": "RollerCoaster Tycoon 3D"
+      },
+      {
+        "game": 3938,
+        "name": "RollerCoaster Tycoon World"
+      },
+      {
+        "game": 4034,
+        "name": "RollerCoaster Tycoon: Deluxe"
+      },
+      {
+        "game": 20402,
+        "name": "RollerCoaster Tycoon Classic"
+      }
+    ]
+  },
+  "opentrickynx": {
+    "status": "auto",
+    "game": 1638,
+    "name": "SSX Tricky",
+    "icon": "https://cdn2.steamgriddb.com/icon/2be8328f41144106f7144802f2367487.png",
+    "candidates": []
+  },
+  "operation-darkness-nx": {
+    "status": "auto",
+    "game": 5434288,
+    "name": "Operation Darkness",
+    "icon": "https://cdn2.steamgriddb.com/icon/34164328c04dabc126f4fe82bbb2d5e6.png",
+    "candidates": []
+  },
+  "oracles-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 38450,
+        "name": "The Legend of Zelda: Oracle of Seasons"
+      },
+      {
+        "game": 35190,
+        "name": "The Legend of Zelda: Oracle of Ages"
+      },
+      {
+        "game": 21202,
+        "name": "The Legend of Zelda: Ocarina of Time"
+      },
+      {
+        "game": 34336,
+        "name": "The Legend of Zelda: Link's Awakening"
+      },
+      {
+        "game": 34302,
+        "name": "The Legend of Zelda: Majora's Mask"
+      }
+    ]
+  },
+  "osbm": {
+    "status": "auto",
+    "game": 2048,
+    "name": "Starbound",
+    "icon": null,
+    "candidates": []
+  },
+  "osmos_nx": {
+    "status": "auto",
+    "game": 4258,
+    "name": "Osmos",
+    "icon": "https://cdn2.steamgriddb.com/icon/bab04bacca859af6549e224654b1363d.png",
+    "candidates": []
+  },
+  "outrun2-decomp": {
+    "status": "auto",
+    "game": 11968,
+    "name": "OutRun 2006: Coast 2 Coast",
+    "icon": "https://cdn2.steamgriddb.com/icon/da9f9e78bb2664610e28d7210404f965.png",
+    "candidates": []
+  },
+  "outrunners-port": {
+    "status": "auto",
+    "game": 5246243,
+    "name": "OutRunners",
+    "icon": "https://cdn2.steamgriddb.com/icon/c47a3ba2c793b5b9e21260f903c37d4d.png",
+    "candidates": []
+  },
+  "pacman-nx": {
+    "status": "auto",
+    "game": 2653,
+    "name": "Pac-Man Championship Edition DX+",
+    "icon": "https://cdn2.steamgriddb.com/icon/8f20d1ed304d673e52c9bd08a722c289.png",
+    "candidates": []
+  },
+  "papapear_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5294073,
+        "name": "Papa's Pastaria"
+      },
+      {
+        "game": 5283847,
+        "name": "Papa's Pizzeria"
+      },
+      {
+        "game": 5294072,
+        "name": "Papa's Scooperia"
+      },
+      {
+        "game": 5265210,
+        "name": "Papa's Burgeria"
+      },
+      {
+        "game": 5283845,
+        "name": "Papa's Freezeria"
+      }
+    ]
+  },
+  "papapizzatg_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5283847,
+        "name": "Papa's Pizzeria"
+      },
+      {
+        "game": 5468398,
+        "name": "Papa's Pizzeria Deluxe"
+      },
+      {
+        "game": 5283845,
+        "name": "Papa's Freezeria"
+      },
+      {
+        "game": 5294072,
+        "name": "Papa's Scooperia"
+      },
+      {
+        "game": 5294074,
+        "name": "Papa's Cupcakeria"
+      }
+    ]
+  },
+  "papasburgeria_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5265210,
+        "name": "Papa's Burgeria"
+      },
+      {
+        "game": 5283845,
+        "name": "Papa's Freezeria"
+      },
+      {
+        "game": 5294074,
+        "name": "Papa's Cupcakeria"
+      },
+      {
+        "game": 5283847,
+        "name": "Papa's Pizzeria"
+      },
+      {
+        "game": 5283846,
+        "name": "Papa's Hot Doggeria"
+      }
+    ]
+  },
+  "papascluckeria_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5294074,
+        "name": "Papa's Cupcakeria"
+      },
+      {
+        "game": 5265210,
+        "name": "Papa's Burgeria"
+      },
+      {
+        "game": 5294072,
+        "name": "Papa's Scooperia"
+      },
+      {
+        "game": 5283847,
+        "name": "Papa's Pizzeria"
+      },
+      {
+        "game": 5283845,
+        "name": "Papa's Freezeria"
+      }
+    ]
+  },
+  "papaspaleteria_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5565908,
+        "name": "Papa's Paleteria Deluxe"
+      },
+      {
+        "game": 5294073,
+        "name": "Papa's Pastaria"
+      },
+      {
+        "game": 5294074,
+        "name": "Papa's Cupcakeria"
+      },
+      {
+        "game": 5283847,
+        "name": "Papa's Pizzeria"
+      },
+      {
+        "game": 5283845,
+        "name": "Papa's Freezeria"
+      }
+    ]
+  },
+  "paperboat-nx": {
+    "status": "auto",
+    "game": 36997,
+    "name": "Paper Mario",
+    "icon": "https://cdn2.steamgriddb.com/icon/6e6d5361da6fb4a2d24b4ef90f224f46.png",
+    "candidates": []
+  },
+  "paperboat-nx-modern": {
+    "status": "auto",
+    "game": 36997,
+    "name": "Paper Mario",
+    "icon": "https://cdn2.steamgriddb.com/icon/6e6d5361da6fb4a2d24b4ef90f224f46.png",
+    "candidates": []
+  },
+  "papersplease_nx": {
+    "status": "auto",
+    "game": 2712,
+    "name": "Papers, Please",
+    "icon": "https://cdn2.steamgriddb.com/icon/04dce75ffbe9517b642899d80d63d41f.png",
+    "candidates": []
+  },
+  "partyboard-nx": {
+    "status": "auto",
+    "game": 33887,
+    "name": "Mario Party 4",
+    "icon": "https://cdn2.steamgriddb.com/icon/3e60e09c222f206c725385f53d7e567c.png",
+    "candidates": []
+  },
+  "pcl_nx": {
+    "status": "auto",
+    "game": 5329675,
+    "name": "Pocket Crystal League",
+    "icon": "https://cdn2.steamgriddb.com/icon/bb362cee390d6a412b936924e97085d1.png",
+    "candidates": []
+  },
+  "peggle1-nx": {
+    "status": "auto",
+    "game": 37312,
+    "name": "Peggle",
+    "icon": "https://cdn2.steamgriddb.com/icon/d9eb09a4dbf0b2098faf20331f294afe.png",
+    "candidates": []
+  },
+  "peggle2-nx": {
+    "status": "auto",
+    "game": 5341069,
+    "name": "Peggle 2",
+    "icon": null,
+    "candidates": []
+  },
+  "perfect_dark": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 37787,
+        "name": "Perfect Dark"
+      },
+      {
+        "game": 5454524,
+        "name": "Perfect Dark"
+      },
+      {
+        "game": 5262078,
+        "name": "Perfect Dark Zero"
+      },
+      {
+        "game": 5277965,
+        "name": "Perfect Dark: Source"
+      },
+      {
+        "game": 5441442,
+        "name": "Perfect Dark: GoldSrc"
+      }
+    ]
+  },
+  "pewdiepie_nx": {
+    "status": "auto",
+    "game": 8581,
+    "name": "PewDiePie: Legend of the Brofist",
+    "icon": "https://cdn2.steamgriddb.com/icon/57fb60bd7737412b1e8f63c3447dfc54.png",
+    "candidates": []
+  },
+  "phigros_nx": {
+    "status": "auto",
+    "game": 5468886,
+    "name": "Phigros",
+    "icon": null,
+    "candidates": []
+  },
+  "phigros_nx_cn": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5468886,
+        "name": "Phigros"
+      }
+    ]
+  },
+  "poinpy_nx": {
+    "status": "auto",
+    "game": 5490209,
+    "name": "Poinpy",
+    "icon": null,
+    "candidates": []
+  },
+  "pokemmo-nx": {
+    "status": "auto",
+    "game": 5249074,
+    "name": "PokeMMO",
+    "icon": "https://cdn2.steamgriddb.com/icon/ffc58105bf6f8a91aba0fa2d99e6f106.png",
+    "candidates": []
+  },
+  "pokemon-fulldex": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 25634,
+        "name": "Pokémon Pinball"
+      },
+      {
+        "game": 34250,
+        "name": "Pokémon Puzzle League"
+      },
+      {
+        "game": 34084,
+        "name": "Pokémon Yellow Version"
+      },
+      {
+        "game": 33831,
+        "name": "Pokémon Red Version"
+      },
+      {
+        "game": 33987,
+        "name": "Pokémon FireRed Version"
+      }
+    ]
+  },
+  "poorbunny_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5434260,
+        "name": "Poor Mouse"
+      },
+      {
+        "game": 548,
+        "name": "Poor Stickman"
+      },
+      {
+        "game": 5516578,
+        "name": "Poor Samantha"
+      },
+      {
+        "game": 5449262,
+        "name": "Poor Thief"
+      },
+      {
+        "game": 5479888,
+        "name": "Poor Piggy Pirate"
+      }
+    ]
+  },
+  "port0r": {
+    "status": "auto",
+    "game": 1195,
+    "name": "Sega Rally",
+    "icon": null,
+    "candidates": []
+  },
+  "pou_nx": {
+    "status": "auto",
+    "game": 5320639,
+    "name": "Pou",
+    "icon": "https://cdn2.steamgriddb.com/icon/56138186020206c2b1d99be41c8dc9b8.png",
+    "candidates": []
+  },
+  "project-dam-nx": {
+    "status": "auto",
+    "game": 34306,
+    "name": "GoldenEye 007",
+    "icon": "https://cdn2.steamgriddb.com/icon/c967fb654df41177901d1f5f135bf9e6.png",
+    "candidates": []
+  },
+  "project8-sw": {
+    "status": "auto",
+    "game": 34809,
+    "name": "Tony Hawk's Project 8",
+    "icon": "https://cdn2.steamgriddb.com/icon/c6036a69be21cb660499b75718a3ef24.png",
+    "candidates": []
+  },
+  "projectdream_nx": {
+    "status": "auto",
+    "game": 5435403,
+    "name": "Sonic Dream Team",
+    "icon": "https://cdn2.steamgriddb.com/icon/bfb84f7071c8c1cde8470c81e3ff294e.png",
+    "candidates": []
+  },
+  "pt-nx": {
+    "status": "auto",
+    "game": 5250177,
+    "name": "P.T.",
+    "icon": "https://cdn2.steamgriddb.com/icon/273af6d7e3ac35692d1a605b065cd74f.png",
+    "candidates": []
+  },
+  "pure-nx": {
+    "status": "auto",
+    "game": 5442,
+    "name": "PURE",
+    "icon": "https://cdn2.steamgriddb.com/icon/99a1f00c02912c27848c8e62b256bf9f.png",
+    "candidates": []
+  },
+  "pvs_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5249112,
+        "name": "Pizza Tower"
+      },
+      {
+        "game": 6373,
+        "name": "Pizza Frenzy"
+      },
+      {
+        "game": 7911,
+        "name": "Pizza Express"
+      },
+      {
+        "game": 26501,
+        "name": "Pizza Titan Ultra"
+      },
+      {
+        "game": 5247365,
+        "name": "Pizza Game"
+      }
+    ]
+  },
+  "pvz-portable": {
+    "status": "auto",
+    "game": 5331605,
+    "name": "Plants vs. Zombies",
+    "icon": "https://cdn2.steamgriddb.com/icon/35c6d8b3f57f2dad9ba614297dccc99c.png",
+    "candidates": []
+  },
+  "pvz2_nx": {
+    "status": "auto",
+    "game": 5278252,
+    "name": "Plants vs. Zombies 2",
+    "icon": "https://cdn2.steamgriddb.com/icon/7edccc661418aeb5761dbcdc06ad490c.png",
+    "candidates": []
+  },
+  "pvz2rf_nx": {
+    "status": "auto",
+    "game": 5358950,
+    "name": "Plants vs. Zombies 2 Reflourished",
+    "icon": "https://cdn2.steamgriddb.com/icon/24712d3d099483eab75b632cab4ba7b8.png",
+    "candidates": []
+  },
+  "pvz_fusion_en_nx": {
+    "status": "auto",
+    "game": 5476779,
+    "name": "Plants vs. Zombies: Fusion",
+    "icon": "https://cdn2.steamgriddb.com/icon/043555cbce9685a223341da753a18198.png",
+    "candidates": []
+  },
+  "pvz_touch_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5278252,
+        "name": "Plants vs. Zombies 2"
+      },
+      {
+        "game": 5298419,
+        "name": "Plants vs. Zombies 3"
+      },
+      {
+        "game": 5331605,
+        "name": "Plants vs. Zombies"
+      },
+      {
+        "game": 5285164,
+        "name": "Plants vs. Zombies: Heroes"
+      },
+      {
+        "game": 5283622,
+        "name": "Plants vs. Zombies 2 PAK"
+      }
+    ]
+  },
+  "pvzdlc_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5483971,
+        "name": "Plants Vs Zombies: DLC"
+      },
+      {
+        "game": 5285164,
+        "name": "Plants vs. Zombies: Heroes"
+      },
+      {
+        "game": 5278252,
+        "name": "Plants vs. Zombies 2"
+      },
+      {
+        "game": 5298419,
+        "name": "Plants vs. Zombies 3"
+      },
+      {
+        "game": 5331605,
+        "name": "Plants vs. Zombies"
+      }
+    ]
+  },
+  "quake2-nx-modern": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 2534,
+        "name": "Quake II"
+      },
+      {
+        "game": 5413707,
+        "name": "Coffee Quake 2"
+      },
+      {
+        "game": 5102859,
+        "name": "Quake II RTX"
+      },
+      {
+        "game": 5342326,
+        "name": "Quake II Zaero"
+      },
+      {
+        "game": 5434931,
+        "name": "Quake Brutalist Jam 2"
+      }
+    ]
+  },
+  "quakespasm-nx-modern": {
+    "status": "auto",
+    "game": 2514,
+    "name": "Quake",
+    "icon": "https://cdn2.steamgriddb.com/icon/4cfe33e2fcffb085216defa6daf9a004.png",
+    "candidates": []
+  },
+  "ra2-engine-switch": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 1560,
+        "name": "Command & Conquer: Red Alert 3"
+      },
+      {
+        "game": 2940,
+        "name": "Command & Conquer: Red Alert 3 - Uprising"
+      },
+      {
+        "game": 5446171,
+        "name": "Command & Conquer: Red Alert 2 and Yuri’s Revenge"
+      },
+      {
+        "game": 2936,
+        "name": "Command & Conquer 3: Tiberium Wars"
+      },
+      {
+        "game": 2941,
+        "name": "Command & Conquer 3: Kane's Wrath"
+      }
+    ]
+  },
+  "racewave46-switch": {
+    "status": "auto",
+    "game": 39034,
+    "name": "Wave Race 64",
+    "icon": "https://cdn2.steamgriddb.com/icon/7b6ce75e5d95acc103465e3522f9d2fd.png",
+    "candidates": []
+  },
+  "raging-blast-2-switch": {
+    "status": "auto",
+    "game": 5259026,
+    "name": "Dragon Ball: Raging Blast 2",
+    "icon": "https://cdn2.steamgriddb.com/icon/e646e2fec7dcbe33111f4481a96523af.png",
+    "candidates": []
+  },
+  "rampagere": {
+    "status": "auto",
+    "game": 36476,
+    "name": "Rampage: Total Destruction",
+    "icon": "https://cdn2.steamgriddb.com/icon/ad59725c2849487f72545fa97298bcad.png",
+    "candidates": []
+  },
+  "rayman_nx": {
+    "status": "auto",
+    "game": 5320896,
+    "name": "Rayman Jungle Run",
+    "icon": "https://cdn2.steamgriddb.com/icon/6b4017c4c626882acb363d25dbb6f3c0.png",
+    "candidates": []
+  },
+  "realdrift_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5456543,
+        "name": "REAL CAR DRIFT RACING"
+      },
+      {
+        "game": 3129,
+        "name": "Real World Racing"
+      },
+      {
+        "game": 26417,
+        "name": "Real Drift"
+      },
+      {
+        "game": 5427166,
+        "name": "Real Drift Multiplayer 2"
+      },
+      {
+        "game": 5409996,
+        "name": "Real Drift Multiplayer"
+      }
+    ]
+  },
+  "reblue": {
+    "status": "auto",
+    "game": 5254283,
+    "name": "Blue Dragon",
+    "icon": "https://cdn2.steamgriddb.com/icon/0373773367d222af429a7e5ab573a42d.png",
+    "candidates": []
+  },
+  "rechan-switch": {
+    "status": "auto",
+    "game": 5262934,
+    "name": "Jackie Chan Stuntmaster",
+    "icon": "https://cdn2.steamgriddb.com/icon/2533522657a530845c07f2496211d415.png",
+    "candidates": []
+  },
+  "redriver2-switch": {
+    "status": "auto",
+    "game": 36700,
+    "name": "Driver 2",
+    "icon": "https://cdn2.steamgriddb.com/icon/68e5aed89d5b0902a3b88078268bc9b8.png",
+    "candidates": []
+  },
+  "reflex909-2ship2harkinian-switch": {
+    "status": "auto",
+    "game": 34302,
+    "name": "The Legend of Zelda: Majora's Mask",
+    "icon": "https://cdn2.steamgriddb.com/icon/4e0928de075538c593fbdabb0c5ef2c3.png",
+    "candidates": []
+  },
+  "rehatched-nx": {
+    "status": "auto",
+    "game": 33881,
+    "name": "Angry Birds Trilogy",
+    "icon": "https://cdn2.steamgriddb.com/icon/d576556711ce6a6cf8bb14f698ef66d4.png",
+    "candidates": []
+  },
+  "renut-nx": {
+    "status": "auto",
+    "game": 37213,
+    "name": "Banjo-Kazooie: Nuts & Bolts",
+    "icon": "https://cdn2.steamgriddb.com/icon/f88920d4589dae7abec2eb05fca153e3.png",
+    "candidates": []
+  },
+  "resident-code-veronica-nx-port": {
+    "status": "auto",
+    "game": 35742,
+    "name": "Resident Evil - Code: Veronica X",
+    "icon": "https://cdn2.steamgriddb.com/icon/619427579e7b067421f6aa89d4a8990c.png",
+    "candidates": []
+  },
+  "revolt_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 9692,
+        "name": "Revolt"
+      },
+      {
+        "game": 16960,
+        "name": "REVOLT 1917"
+      },
+      {
+        "game": 22795,
+        "name": "The Revolt: Awakening"
+      },
+      {
+        "game": 5284131,
+        "name": "Royal Revolt II"
+      },
+      {
+        "game": 13281,
+        "name": "ROD: Revolt Of Defense"
+      }
+    ]
+  },
+  "ristar_nx": {
+    "status": "auto",
+    "game": 35219,
+    "name": "Ristar",
+    "icon": "https://cdn2.steamgriddb.com/icon/f3971ac4ef3eb040dadaeed846ac6b4e.png",
+    "candidates": []
+  },
+  "rondo-nx": {
+    "status": "auto",
+    "game": 37451,
+    "name": "Castlevania: Rondo of Blood",
+    "icon": "https://cdn2.steamgriddb.com/icon/6a1249dfc7679f6c64c937d9c8432874.png",
+    "candidates": []
+  },
+  "rr6-nx": {
+    "status": "auto",
+    "game": 5277687,
+    "name": "Ridge Racer 6",
+    "icon": "https://cdn2.steamgriddb.com/icon/16e66f0d674db0deec510772414cd5b1.png",
+    "candidates": []
+  },
+  "rs64-nx": {
+    "status": "auto",
+    "game": 38815,
+    "name": "Star Wars: Rogue Squadron",
+    "icon": "https://cdn2.steamgriddb.com/icon/ce4803f46af6cc63c81bde4fa8996638.png",
+    "candidates": []
+  },
+  "rvgl-for-switch": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": []
+  },
+  "s4ep1-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 1773,
+        "name": "Sonic the Hedgehog 4: Episode I"
+      },
+      {
+        "game": 1793,
+        "name": "Sonic The Hedgehog 4: Episode II"
+      },
+      {
+        "game": 37127,
+        "name": "Sonic the Hedgehog Genesis"
+      },
+      {
+        "game": 5490388,
+        "name": "Sonic the Hedgehog 4 (Hack)"
+      },
+      {
+        "game": 35189,
+        "name": "Sonic the Hedgehog 2"
+      }
+    ]
+  },
+  "s4ep2-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 1773,
+        "name": "Sonic the Hedgehog 4: Episode I"
+      },
+      {
+        "game": 1793,
+        "name": "Sonic The Hedgehog 4: Episode II"
+      },
+      {
+        "game": 1734,
+        "name": "Sonic CD"
+      },
+      {
+        "game": 5319597,
+        "name": "Sonic Advance 4: Advanced"
+      },
+      {
+        "game": 1668,
+        "name": "Sonic Advance"
+      }
+    ]
+  },
+  "s4ep2-xbla-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 1773,
+        "name": "Sonic the Hedgehog 4: Episode I"
+      },
+      {
+        "game": 1793,
+        "name": "Sonic The Hedgehog 4: Episode II"
+      },
+      {
+        "game": 35189,
+        "name": "Sonic the Hedgehog 2"
+      },
+      {
+        "game": 37127,
+        "name": "Sonic the Hedgehog Genesis"
+      },
+      {
+        "game": 5490388,
+        "name": "Sonic the Hedgehog 4 (Hack)"
+      }
+    ]
+  },
+  "safehouse": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5520515,
+        "name": "Sly Apes"
+      },
+      {
+        "game": 5523067,
+        "name": "Sly Crow"
+      },
+      {
+        "game": 35240,
+        "name": "Sly Cooper: Thieves in Time"
+      },
+      {
+        "game": 33512,
+        "name": "Sly Pigs"
+      },
+      {
+        "game": 5265195,
+        "name": "Sly Slime"
+      }
+    ]
+  },
+  "samurai-ii-android-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5263036,
+        "name": "Samurai Aces III: Sengoku Cannon"
+      },
+      {
+        "game": 5545038,
+        "name": "Samurai Aces III: Sengoku Cannon"
+      },
+      {
+        "game": 5426,
+        "name": "Afro Samurai 2: Revenge of Kuma Volume One"
+      },
+      {
+        "game": 35355,
+        "name": "Samurai Shodown II"
+      },
+      {
+        "game": 36232,
+        "name": "Samurai Warriors 2"
+      }
+    ]
+  },
+  "sasrt-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 2067,
+        "name": "Sonic & All-Stars Racing Transformed Collection"
+      },
+      {
+        "game": 6313,
+        "name": "Sonic and SEGA All Stars Racing"
+      },
+      {
+        "game": 5716,
+        "name": "Sonic Lost World"
+      },
+      {
+        "game": 5361927,
+        "name": "Five Nights at Sonic's: All-Stars"
+      },
+      {
+        "game": 1668,
+        "name": "Sonic Advance"
+      }
+    ]
+  },
+  "sc5p2-nx": {
+    "status": "auto",
+    "game": 21788,
+    "name": "Space Channel 5: Part 2",
+    "icon": "https://cdn2.steamgriddb.com/icon/b412347c78ebfd6f45811c790b096b63.png",
+    "candidates": []
+  },
+  "scct-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 1436,
+        "name": "Tom Clancy's Splinter Cell: Chaos Theory"
+      },
+      {
+        "game": 35888,
+        "name": "Tom Clancy's Splinter Cell: Pandora Tomorrow"
+      },
+      {
+        "game": 5815,
+        "name": "Tom Clancy's Splinter Cell: Conviction"
+      },
+      {
+        "game": 2632,
+        "name": "Tom Clancy's Splinter Cell: Blacklist"
+      },
+      {
+        "game": 5276193,
+        "name": "Tom Clancy's Splinter Cell 3D"
+      }
+    ]
+  },
+  "scda-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 1437,
+        "name": "Tom Clancy's Splinter Cell: Double Agent"
+      },
+      {
+        "game": 2632,
+        "name": "Tom Clancy's Splinter Cell: Blacklist"
+      },
+      {
+        "game": 5319784,
+        "name": "Tom Clancy's Splinter Cell: Essentials"
+      },
+      {
+        "game": 5276193,
+        "name": "Tom Clancy's Splinter Cell 3D"
+      },
+      {
+        "game": 5815,
+        "name": "Tom Clancy's Splinter Cell: Conviction"
+      }
+    ]
+  },
+  "scpt-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 35888,
+        "name": "Tom Clancy's Splinter Cell: Pandora Tomorrow"
+      },
+      {
+        "game": 1437,
+        "name": "Tom Clancy's Splinter Cell: Double Agent"
+      },
+      {
+        "game": 5276193,
+        "name": "Tom Clancy's Splinter Cell 3D"
+      },
+      {
+        "game": 1436,
+        "name": "Tom Clancy's Splinter Cell: Chaos Theory"
+      },
+      {
+        "game": 2632,
+        "name": "Tom Clancy's Splinter Cell: Blacklist"
+      }
+    ]
+  },
+  "scudrace-nx": {
+    "status": "auto",
+    "game": 5254033,
+    "name": "Scud Race",
+    "icon": "https://cdn2.steamgriddb.com/icon/5fe965190d817610081f185a5c8b683c.png",
+    "candidates": []
+  },
+  "sd2-nx": {
+    "status": "auto",
+    "game": 5247861,
+    "name": "Soda Dungeon 2",
+    "icon": "https://cdn2.steamgriddb.com/icon/308a4f1079d3c50653dfeca80d85ea6a.png",
+    "candidates": []
+  },
+  "sega-vr-disasm": {
+    "status": "auto",
+    "game": 38865,
+    "name": "Virtua Racing Deluxe",
+    "icon": "https://cdn2.steamgriddb.com/icon/8d8298cd3b11abb387c24a80d0d724a2.png",
+    "candidates": []
+  },
+  "segasonic-nx": {
+    "status": "auto",
+    "game": 5262676,
+    "name": "SegaSonic the Hedgehog",
+    "icon": "https://cdn2.steamgriddb.com/icon/845ce31b9cf79c9aad515d0209881a3c.png",
+    "candidates": []
+  },
+  "sfa-nx": {
+    "status": "auto",
+    "game": 38820,
+    "name": "Star Fox Adventures",
+    "icon": "https://cdn2.steamgriddb.com/icon/4aa7ab0e92d42b052e3e3a008df6d472.png",
+    "candidates": []
+  },
+  "sh2-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 36708,
+        "name": "Silent Hill 2"
+      },
+      {
+        "game": 5359291,
+        "name": "Silent Hill 2"
+      },
+      {
+        "game": 5436496,
+        "name": "Silent Hill: Mobile 2"
+      },
+      {
+        "game": 1605,
+        "name": "Silent Hill: Homecoming"
+      },
+      {
+        "game": 5471929,
+        "name": "Silent Hill 2: Inner Fears"
+      }
+    ]
+  },
+  "sh3-nx": {
+    "status": "auto",
+    "game": 35889,
+    "name": "Silent Hill 3",
+    "icon": "https://cdn2.steamgriddb.com/icon/3122a770372bf92238db8973f6044160.png",
+    "candidates": []
+  },
+  "sh4-nx": {
+    "status": "auto",
+    "game": 36342,
+    "name": "Silent Hill 4: The Room",
+    "icon": "https://cdn2.steamgriddb.com/icon/e64caaff8e5c0399ab73c9fe1e37bd79.png",
+    "candidates": []
+  },
+  "shadow-nx": {
+    "status": "auto",
+    "game": 36636,
+    "name": "Shadow the Hedgehog",
+    "icon": "https://cdn2.steamgriddb.com/icon/03d87dbc6854661203c121d7b9cbb940.png",
+    "candidates": []
+  },
+  "shank1-nx": {
+    "status": "auto",
+    "game": 17510,
+    "name": "Shank",
+    "icon": "https://cdn2.steamgriddb.com/icon/33ef701c8059391708f1c3ddbe9f1f81.png",
+    "candidates": []
+  },
+  "shank2-nx": {
+    "status": "auto",
+    "game": 987,
+    "name": "Shank 2",
+    "icon": "https://cdn2.steamgriddb.com/icon/4af5c33a941045a3c21c79705bc23d08.png",
+    "candidates": []
+  },
+  "shaolinmonks-nx": {
+    "status": "auto",
+    "game": 37375,
+    "name": "Mortal Kombat: Shaolin Monks",
+    "icon": "https://cdn2.steamgriddb.com/icon/cd999c9c0d30e10a8fe77e72fe4a518d.png",
+    "candidates": []
+  },
+  "sheepdogwolf-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5327628,
+        "name": "Sheep, Dog 'n' Wolf"
+      },
+      {
+        "game": 5476353,
+        "name": "Sheep Dog"
+      },
+      {
+        "game": 27334,
+        "name": "Sheep Game"
+      },
+      {
+        "game": 496100,
+        "name": "Sheep Collision"
+      },
+      {
+        "game": 5133117,
+        "name": "SHEEP.IO"
+      }
+    ]
+  },
+  "sheroes-nx": {
+    "status": "auto",
+    "game": 38740,
+    "name": "Sonic Heroes",
+    "icon": "https://cdn2.steamgriddb.com/icon/ad3019b856147c17e82a5bead782d2a8.png",
+    "candidates": []
+  },
+  "shh-nx-port": {
+    "status": "auto",
+    "game": 1605,
+    "name": "Silent Hill: Homecoming",
+    "icon": "https://cdn2.steamgriddb.com/icon/b05aa5ae598aff32ec94a1156bd7132b.png",
+    "candidates": []
+  },
+  "shipwright-switch": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 21202,
+        "name": "The Legend of Zelda: Ocarina of Time"
+      },
+      {
+        "game": 5532594,
+        "name": "The Legend of Zelda: Ocarina of Time"
+      },
+      {
+        "game": 36271,
+        "name": "The Legend of Zelda: Ocarina of Time 3D"
+      },
+      {
+        "game": 5258646,
+        "name": "The Legend of Zelda: Ocarina of Time Online"
+      },
+      {
+        "game": 5365080,
+        "name": "The Legend of Zelda: Ocarina of Time Ura Quest"
+      }
+    ]
+  },
+  "silent-hill-decomp-nx": {
+    "status": "auto",
+    "game": 37313,
+    "name": "Silent Hill",
+    "icon": "https://cdn2.steamgriddb.com/icon/4734ba6f3de83d861c3176a6273cac6d.png",
+    "candidates": []
+  },
+  "silent-hill-downpour-switch": {
+    "status": "auto",
+    "game": 34912,
+    "name": "Silent Hill: Downpour",
+    "icon": "https://cdn2.steamgriddb.com/icon/92c0582afa13062e3257b8c3e4c1f85a.png",
+    "candidates": []
+  },
+  "silent-hill-hd-collection-nx": {
+    "status": "auto",
+    "game": 35889,
+    "name": "Silent Hill 3",
+    "icon": "https://cdn2.steamgriddb.com/icon/3122a770372bf92238db8973f6044160.png",
+    "candidates": []
+  },
+  "simpsons-nx-modern": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 35540,
+        "name": "The Simpsons Game"
+      },
+      {
+        "game": 29918,
+        "name": "The Simpsons: Bart vs. the World"
+      },
+      {
+        "game": 34479,
+        "name": "The Simpsons: Hit & Run"
+      },
+      {
+        "game": 37705,
+        "name": "The Simpsons: Bart's Nightmare"
+      },
+      {
+        "game": 34842,
+        "name": "The Simpsons: Bart vs. the Juggernauts"
+      }
+    ]
+  },
+  "simpsons-port": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 35540,
+        "name": "The Simpsons Game"
+      },
+      {
+        "game": 34479,
+        "name": "The Simpsons: Hit & Run"
+      },
+      {
+        "game": 37705,
+        "name": "The Simpsons: Bart's Nightmare"
+      },
+      {
+        "game": 1659,
+        "name": "The Simpsons: Bart vs. the Space Mutants"
+      },
+      {
+        "game": 33974,
+        "name": "The Simpsons: Bart & the Beanstalk"
+      }
+    ]
+  },
+  "sims3-nx": {
+    "status": "auto",
+    "game": 12105,
+    "name": "The Sims 3",
+    "icon": "https://cdn2.steamgriddb.com/icon/cd18a8e0f4ac598650630bec7152d9ef.png",
+    "candidates": []
+  },
+  "singularity-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 10026,
+        "name": "Singularity"
+      },
+      {
+        "game": 5272822,
+        "name": "Singularity"
+      },
+      {
+        "game": 5361155,
+        "name": "SINGULARITY"
+      },
+      {
+        "game": 5502994,
+        "name": "Singularity"
+      },
+      {
+        "game": 5525433,
+        "name": "Singularity"
+      }
+    ]
+  },
+  "skate3rust": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5249006,
+        "name": "Skate 3"
+      },
+      {
+        "game": 37332,
+        "name": "Skate or Die"
+      },
+      {
+        "game": 5253546,
+        "name": "skate."
+      },
+      {
+        "game": 5479288,
+        "name": "skate."
+      },
+      {
+        "game": 37485,
+        "name": "Skate Or Die: Tour de Thrash"
+      }
+    ]
+  },
+  "slither_nx": {
+    "status": "auto",
+    "game": 5288580,
+    "name": "slither.io",
+    "icon": "https://cdn2.steamgriddb.com/icon/6106c564e568969d698ddd9c43632195.png",
+    "candidates": []
+  },
+  "sm127_nx": {
+    "status": "auto",
+    "game": 5294032,
+    "name": "Super Mario 127",
+    "icon": "https://cdn2.steamgriddb.com/icon/0f132d56f03842186821ce5d5fd63cb7.png",
+    "candidates": []
+  },
+  "sm63redux_nx": {
+    "status": "auto",
+    "game": 5430732,
+    "name": "Super Mario 63 Redux",
+    "icon": "https://cdn2.steamgriddb.com/icon/ba2cec26293a1db3489823447cd00914.png",
+    "candidates": []
+  },
+  "smashhit_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5369029,
+        "name": "Smash Hit"
+      },
+      {
+        "game": 5561960,
+        "name": "Smash Hit"
+      },
+      {
+        "game": 5509394,
+        "name": "Smash Hit!"
+      },
+      {
+        "game": 734,
+        "name": "Smash team"
+      },
+      {
+        "game": 5338570,
+        "name": "Smash"
+      }
+    ]
+  },
+  "smk2_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5450168,
+        "name": "Bloons Super Monkey 2"
+      },
+      {
+        "game": 5431521,
+        "name": "Bloons Super Monkey"
+      },
+      {
+        "game": 5255659,
+        "name": "Bloons Monkey City"
+      },
+      {
+        "game": 5258371,
+        "name": "Bloons Monkey City"
+      },
+      {
+        "game": 32822,
+        "name": "Bloons Adventure Time TD"
+      }
+    ]
+  },
+  "snowboardkids2-recomp-switch": {
+    "status": "auto",
+    "game": 1667,
+    "name": "Snowboard Kids 2",
+    "icon": "https://cdn2.steamgriddb.com/icon/25780194564b89eb52c5689daa6f3ee9.png",
+    "candidates": []
+  },
+  "sonadvance-nx": {
+    "status": "auto",
+    "game": 1668,
+    "name": "Sonic Advance",
+    "icon": "https://cdn2.steamgriddb.com/icon/016d35fbe2f0f8985bdbc8e5c7175b68.png",
+    "candidates": []
+  },
+  "sonic-r-nx-modern": {
+    "status": "auto",
+    "game": 37385,
+    "name": "Sonic R",
+    "icon": "https://cdn2.steamgriddb.com/icon/5aa69473df6673476b7fbcbdf4455955.png",
+    "candidates": []
+  },
+  "sonic-riders-recomp": {
+    "status": "auto",
+    "game": 12904,
+    "name": "Sonic Riders",
+    "icon": "https://cdn2.steamgriddb.com/icon/68c20262d2657796f56d2101e46b3e73.png",
+    "candidates": []
+  },
+  "sonic_advance2_nx": {
+    "status": "auto",
+    "game": 35290,
+    "name": "Sonic Advance 2",
+    "icon": "https://cdn2.steamgriddb.com/icon/44f95c37a24495521a98b63f0bbf4268.png",
+    "candidates": []
+  },
+  "sonic_allstars_nx": {
+    "status": "auto",
+    "game": 6313,
+    "name": "Sonic and SEGA All Stars Racing",
+    "icon": "https://cdn2.steamgriddb.com/icon/02c7b9e35b5abe16eff4721993beb0fd.png",
+    "candidates": []
+  },
+  "sonic_r_nx": {
+    "status": "auto",
+    "game": 37385,
+    "name": "Sonic R",
+    "icon": "https://cdn2.steamgriddb.com/icon/5aa69473df6673476b7fbcbdf4455955.png",
+    "candidates": []
+  },
+  "sonic_runners_adventure_nx": {
+    "status": "auto",
+    "game": 5265247,
+    "name": "Sonic Runners Adventure",
+    "icon": "https://cdn2.steamgriddb.com/icon/a990d7a6b3327afe16cff8e7bfa58114.png",
+    "candidates": []
+  },
+  "sonic_the_fighters_nx": {
+    "status": "auto",
+    "game": 29859,
+    "name": "Sonic the Fighters",
+    "icon": "https://cdn2.steamgriddb.com/icon/e4e2602e040333a9d03277cf9312e1a7.png",
+    "candidates": []
+  },
+  "sonicadventurere-nx": {
+    "status": "auto",
+    "game": 34154,
+    "name": "Sonic Adventure",
+    "icon": "https://cdn2.steamgriddb.com/icon/9fd81843ad7f202f26c1a174c7357585.png",
+    "candidates": []
+  },
+  "sonicboomdash_nx": {
+    "status": "auto",
+    "game": 5265253,
+    "name": "Sonic Dash 2: Sonic Boom",
+    "icon": "https://cdn2.steamgriddb.com/icon/c04ee68bad31e814e67c402f57dbf1d2.png",
+    "candidates": []
+  },
+  "sonicdash_nx": {
+    "status": "auto",
+    "game": 34110,
+    "name": "Sonic Dash",
+    "icon": "https://cdn2.steamgriddb.com/icon/395fb64a55a3a57fdd9de78e425b9852.png",
+    "candidates": []
+  },
+  "sonicdreamteam-nx": {
+    "status": "auto",
+    "game": 5435403,
+    "name": "Sonic Dream Team",
+    "icon": "https://cdn2.steamgriddb.com/icon/bfb84f7071c8c1cde8470c81e3ff294e.png",
+    "candidates": []
+  },
+  "sonicjump_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5265788,
+        "name": "Sonic Jump"
+      },
+      {
+        "game": 5482394,
+        "name": "Sonic Jump"
+      },
+      {
+        "game": 5282805,
+        "name": "Sonic Jump 2"
+      },
+      {
+        "game": 5278234,
+        "name": "Sonic the Broad Jump"
+      },
+      {
+        "game": 1734,
+        "name": "Sonic CD"
+      }
+    ]
+  },
+  "sonicjumpfever_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5282805,
+        "name": "Sonic Jump 2"
+      },
+      {
+        "game": 5265788,
+        "name": "Sonic Jump"
+      },
+      {
+        "game": 5482394,
+        "name": "Sonic Jump"
+      },
+      {
+        "game": 5278234,
+        "name": "Sonic the Broad Jump"
+      },
+      {
+        "game": 2086,
+        "name": "Sonic Adventure 2"
+      }
+    ]
+  },
+  "sorx_nx": {
+    "status": "auto",
+    "game": 5487354,
+    "name": "Streets of Rage X",
+    "icon": "https://cdn2.steamgriddb.com/icon/1a5b64a6198527dbf0e2f0b56c7347c5.png",
+    "candidates": []
+  },
+  "sotn_nx": {
+    "status": "auto",
+    "game": 37654,
+    "name": "Castlevania: Symphony of the Night",
+    "icon": "https://cdn2.steamgriddb.com/icon/e8219d4c93f6c55c6b10fe6bfe997c6c.png",
+    "candidates": []
+  },
+  "soulcalibur2-nx": {
+    "status": "auto",
+    "game": 34146,
+    "name": "SoulCalibur II",
+    "icon": "https://cdn2.steamgriddb.com/icon/26dd0dbc6e3f4c8043749885523d6a25.png",
+    "candidates": []
+  },
+  "spacecadetpinball-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5390679,
+        "name": "Space Wing Cadet"
+      },
+      {
+        "game": 17822,
+        "name": "3D Pinball: Space Cadet"
+      },
+      {
+        "game": 165,
+        "name": "Space Rift"
+      },
+      {
+        "game": 5335411,
+        "name": "\"Space\""
+      },
+      {
+        "game": 5345066,
+        "name": "Space"
+      }
+    ]
+  },
+  "spacehulk-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 2788,
+        "name": "Space Hulk"
+      },
+      {
+        "game": 5287182,
+        "name": "Space Hulk"
+      },
+      {
+        "game": 12498,
+        "name": "Space Hulk: Tactics"
+      },
+      {
+        "game": 4509,
+        "name": "Space Hulk: Deathwing"
+      },
+      {
+        "game": 5251,
+        "name": "Space Hulk Ascension"
+      }
+    ]
+  },
+  "spaghettikart": {
+    "status": "auto",
+    "game": 21164,
+    "name": "Mario Kart 64",
+    "icon": "https://cdn2.steamgriddb.com/icon/f57e9defd1303332611ab2ca1994500d.png",
+    "candidates": []
+  },
+  "spiderman2-2004-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 38970,
+        "name": "Spider-Man 2"
+      },
+      {
+        "game": 5439866,
+        "name": "Spider-Man 2"
+      },
+      {
+        "game": 3546,
+        "name": "The Amazing Spider-Man 2"
+      },
+      {
+        "game": 5295908,
+        "name": "Marvel's Spider-Man 2"
+      },
+      {
+        "game": 5245357,
+        "name": "Spider-Man 2: Enter Electro"
+      }
+    ]
+  },
+  "spiderman_total_mayhem_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 37214,
+        "name": "Ultimate Spider-Man"
+      },
+      {
+        "game": 24549,
+        "name": "Ultimate Spider Hero"
+      },
+      {
+        "game": 6314,
+        "name": "Ultimate Space Commando"
+      },
+      {
+        "game": 7211,
+        "name": "Ultimate Tic-Tac-Toe"
+      },
+      {
+        "game": 1625,
+        "name": "Ultimate Air Combat"
+      }
+    ]
+  },
+  "spm-nx": {
+    "status": "auto",
+    "game": 38613,
+    "name": "Super Paper Mario",
+    "icon": "https://cdn2.steamgriddb.com/icon/84e2d85ac232c681a641da1ec663888c.png",
+    "candidates": []
+  },
+  "spongebob_movie-switch": {
+    "status": "auto",
+    "game": 36796,
+    "name": "The SpongeBob SquarePants Movie",
+    "icon": "https://cdn2.steamgriddb.com/icon/531a377c94fa56202dbb7fd47ae217f5.png",
+    "candidates": []
+  },
+  "starcraft64-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 36754,
+        "name": "StarCraft 64"
+      },
+      {
+        "game": 4609,
+        "name": "StarCraft"
+      },
+      {
+        "game": 34795,
+        "name": "StarCraft II"
+      },
+      {
+        "game": 39070,
+        "name": "StarCraft: Brood War"
+      },
+      {
+        "game": 5254016,
+        "name": "StarCraft Cartooned"
+      }
+    ]
+  },
+  "starfox-enhanced": {
+    "status": "auto",
+    "game": 33696,
+    "name": "Star Fox",
+    "icon": "https://cdn2.steamgriddb.com/icon/6c19e0a6da12dc02239312f151072ddd.png",
+    "candidates": []
+  },
+  "stevenrpg_nx": {
+    "status": "auto",
+    "game": 5255144,
+    "name": "Steven Universe: Attack the Light",
+    "icon": "https://cdn2.steamgriddb.com/icon/bef3c6e0d3b86a587cca64bc4f01d4e2.png",
+    "candidates": []
+  },
+  "stonestory_nx": {
+    "status": "auto",
+    "game": 17202,
+    "name": "Stone Story RPG",
+    "icon": "https://cdn2.steamgriddb.com/icon/9a685331c941016861f528b434a33461.png",
+    "candidates": []
+  },
+  "street-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5257940,
+        "name": "FIFA Street"
+      },
+      {
+        "game": 5259702,
+        "name": "FIFA Street"
+      },
+      {
+        "game": 19632,
+        "name": "FIFA Street 2"
+      },
+      {
+        "game": 5259703,
+        "name": "FIFA Street 3"
+      },
+      {
+        "game": 33566,
+        "name": "FIFA 99"
+      }
+    ]
+  },
+  "street2-nx": {
+    "status": "auto",
+    "game": 19632,
+    "name": "FIFA Street 2",
+    "icon": "https://cdn2.steamgriddb.com/icon/c8c8a8553190135d484c12e7af6e3594.png",
+    "candidates": []
+  },
+  "strikers": {
+    "status": "auto",
+    "game": 37586,
+    "name": "Super Mario Strikers",
+    "icon": "https://cdn2.steamgriddb.com/icon/729d1221683eaf66616b5a8b301522d1.png",
+    "candidates": []
+  },
+  "sts2_nx": {
+    "status": "auto",
+    "game": 5448946,
+    "name": "Slay the Spire 2",
+    "icon": "https://cdn2.steamgriddb.com/icon/c5a817fec1885ae3782069d1987bc375.png",
+    "candidates": []
+  },
+  "stt16bit_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5274910,
+        "name": "Sonic the Hedgehog: Triple Trouble (16-Bit)"
+      },
+      {
+        "game": 5252928,
+        "name": "Sonic the Hedgehog: Triple Trouble"
+      },
+      {
+        "game": 1773,
+        "name": "Sonic the Hedgehog 4: Episode I"
+      },
+      {
+        "game": 2086,
+        "name": "Sonic Adventure 2"
+      },
+      {
+        "game": 1793,
+        "name": "Sonic The Hedgehog 4: Episode II"
+      }
+    ]
+  },
+  "stupid-zombies-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5269663,
+        "name": "Stupid Stories"
+      },
+      {
+        "game": 2578691,
+        "name": "Stupid Quest"
+      },
+      {
+        "game": 5261657,
+        "name": "Stupid Invaders"
+      },
+      {
+        "game": 5208918,
+        "name": "Stupid Bat"
+      },
+      {
+        "game": 5413527,
+        "name": "Stupid Camera"
+      }
+    ]
+  },
+  "subwaysurfers_nx": {
+    "status": "auto",
+    "game": 5283916,
+    "name": "Subway Surfers",
+    "icon": "https://cdn2.steamgriddb.com/icon/45b4f8abe6c172cab391e43e1e0e6611.png",
+    "candidates": []
+  },
+  "super-mario-bros.-remastered-switch": {
+    "status": "auto",
+    "game": 5502073,
+    "name": "Super Mario Bros. Remastered",
+    "icon": "https://cdn2.steamgriddb.com/icon/a621efaaba2ded5a8727db161094fe88.png",
+    "candidates": []
+  },
+  "super-mario-world-remastered-plus-switch": {
+    "status": "auto",
+    "game": 5505315,
+    "name": "Super Mario World Remastered Plus",
+    "icon": "https://cdn2.steamgriddb.com/icon/40f2165a405edf2145b3840fa4bd1c75.png",
+    "candidates": []
+  },
+  "supermarioallstars-nx": {
+    "status": "auto",
+    "game": 35547,
+    "name": "Super Mario All-Stars",
+    "icon": "https://cdn2.steamgriddb.com/icon/51c9d0385c088de752dfb41cfa835a37.png",
+    "candidates": []
+  },
+  "supermariowar-nx": {
+    "status": "auto",
+    "game": 5279648,
+    "name": "Super Mario War",
+    "icon": "https://cdn2.steamgriddb.com/icon/4f3fcf17644bb65a1732f02d6f10034a.png",
+    "candidates": []
+  },
+  "swi-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5264671,
+        "name": "Stick With It"
+      },
+      {
+        "game": 5501306,
+        "name": "Stick With It"
+      },
+      {
+        "game": 3063,
+        "name": "Stick It To The Man!"
+      },
+      {
+        "game": 5448673,
+        "name": "I got STICKY with a FEMBOY"
+      },
+      {
+        "game": 5514424,
+        "name": "Stuck in a Well with a Frog"
+      }
+    ]
+  },
+  "switchwaker": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 37510,
+        "name": "The Legend of Zelda: The Wind Waker"
+      },
+      {
+        "game": 35048,
+        "name": "The Legend of Zelda: The Wind Waker HD"
+      },
+      {
+        "game": 5256582,
+        "name": "The Legend of Zelda: The Wind Waker HD (Trial)"
+      },
+      {
+        "game": 5358412,
+        "name": "The Legend of Zelda: The Wind Waker Randomizer"
+      },
+      {
+        "game": 5375154,
+        "name": "The Legend of Zelda: The Wind Waker Multiplayer"
+      }
+    ]
+  },
+  "switchwakerhd": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 35048,
+        "name": "The Legend of Zelda: The Wind Waker HD"
+      },
+      {
+        "game": 37510,
+        "name": "The Legend of Zelda: The Wind Waker"
+      },
+      {
+        "game": 5256582,
+        "name": "The Legend of Zelda: The Wind Waker HD (Trial)"
+      },
+      {
+        "game": 5358412,
+        "name": "The Legend of Zelda: The Wind Waker Randomizer"
+      },
+      {
+        "game": 5375154,
+        "name": "The Legend of Zelda: The Wind Waker Multiplayer"
+      }
+    ]
+  },
+  "swordigo_nx": {
+    "status": "auto",
+    "game": 5507475,
+    "name": "Swordigo",
+    "icon": null,
+    "candidates": []
+  },
+  "tasm2_nx": {
+    "status": "auto",
+    "game": 3546,
+    "name": "The Amazing Spider-Man 2",
+    "icon": "https://cdn2.steamgriddb.com/icon/00eaecedf2482f81ff5877de3d923dea.png",
+    "candidates": []
+  },
+  "tdkr_nx": {
+    "status": "auto",
+    "game": 5263184,
+    "name": "The Dark Knight Rises",
+    "icon": null,
+    "candidates": []
+  },
+  "teenyfigure_nx": {
+    "status": "auto",
+    "game": 5253769,
+    "name": "Teen Titans GO! Figure",
+    "icon": "https://cdn2.steamgriddb.com/icon/35675fd71a153bf3baab29b904e525c8.png",
+    "candidates": []
+  },
+  "teenytitans_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 37741,
+        "name": "Teen Titans 2"
+      },
+      {
+        "game": 38312,
+        "name": "Teen Titans"
+      },
+      {
+        "game": 5253769,
+        "name": "Teen Titans GO! Figure"
+      },
+      {
+        "game": 23118,
+        "name": "TEEN DATE SIMULATOR"
+      },
+      {
+        "game": 5285138,
+        "name": "Teen Witches Academy"
+      }
+    ]
+  },
+  "tekken3-nx": {
+    "status": "auto",
+    "game": 34876,
+    "name": "Tekken 3",
+    "icon": "https://cdn2.steamgriddb.com/icon/07ac249c38dbc96a98836118f6b5ae57.png",
+    "candidates": []
+  },
+  "terraria": {
+    "status": "auto",
+    "game": 1226,
+    "name": "Terraria",
+    "icon": "https://cdn2.steamgriddb.com/icon/912b92ae7dbedd0344a6580a7b90efc6.png",
+    "candidates": []
+  },
+  "tf2_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 1706,
+        "name": "Team Fortress Classic"
+      },
+      {
+        "game": 5262654,
+        "name": "Team Fortress 2 Classified"
+      },
+      {
+        "game": 13797,
+        "name": "Team Fortress 2 Beta"
+      },
+      {
+        "game": 5484461,
+        "name": "Team Fortress 2 Legacy"
+      },
+      {
+        "game": 5490237,
+        "name": "Team Fortress 2: Reborn"
+      }
+    ]
+  },
+  "th06-switch": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 104,
+        "name": "Touhou Koumakyou: The Embodiment of Scarlet Devil (Touhou 6)"
+      },
+      {
+        "game": 27525,
+        "name": "Touhou: Scarlet Curiosity"
+      },
+      {
+        "game": 1066,
+        "name": "TouHou Makuka Sai ~ Fantastic Danmaku Festival Part II"
+      },
+      {
+        "game": 12916,
+        "name": "Touhou Yumejikuu: The Phantasmagoria of Dim.Dream (Touhou 3)"
+      },
+      {
+        "game": 31049,
+        "name": "Touhou Genso Wanderer: Reloaded"
+      }
+    ]
+  },
+  "th07-switch": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 38787,
+        "name": "Touhou Youyoumu: Perfect Cherry Blossom (Touhou 7)"
+      },
+      {
+        "game": 27525,
+        "name": "Touhou: Scarlet Curiosity"
+      },
+      {
+        "game": 27731,
+        "name": "Touhou Luna Nights"
+      },
+      {
+        "game": 104,
+        "name": "Touhou Koumakyou: The Embodiment of Scarlet Devil (Touhou 6)"
+      },
+      {
+        "game": 23168,
+        "name": "Touhou Tenkuushou: Hidden Star in Four Seasons (Touhou 16)"
+      }
+    ]
+  },
+  "th075-switch": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 36894,
+        "name": "Touhou Suimusou: Immaterial and Missing Power (Touhou 7.5)"
+      },
+      {
+        "game": 21971,
+        "name": "Touhou Hyouibana: Antinomy of Common Flowers (Touhou 15.5)"
+      },
+      {
+        "game": 1066,
+        "name": "TouHou Makuka Sai ~ Fantastic Danmaku Festival Part II"
+      },
+      {
+        "game": 27731,
+        "name": "Touhou Luna Nights"
+      },
+      {
+        "game": 27525,
+        "name": "Touhou: Scarlet Curiosity"
+      }
+    ]
+  },
+  "th08-switch": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5248274,
+        "name": "Touhou Eiyashou: Imperishable Night (Touhou 8)"
+      },
+      {
+        "game": 27731,
+        "name": "Touhou Luna Nights"
+      },
+      {
+        "game": 27525,
+        "name": "Touhou: Scarlet Curiosity"
+      },
+      {
+        "game": 104,
+        "name": "Touhou Koumakyou: The Embodiment of Scarlet Devil (Touhou 6)"
+      },
+      {
+        "game": 21971,
+        "name": "Touhou Hyouibana: Antinomy of Common Flowers (Touhou 15.5)"
+      }
+    ]
+  },
+  "th09-switch": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5248275,
+        "name": "Touhou Kaeizuka: Phantasmagoria of Flower View (Touhou 9)"
+      },
+      {
+        "game": 12916,
+        "name": "Touhou Yumejikuu: The Phantasmagoria of Dim.Dream (Touhou 3)"
+      },
+      {
+        "game": 21971,
+        "name": "Touhou Hyouibana: Antinomy of Common Flowers (Touhou 15.5)"
+      },
+      {
+        "game": 1066,
+        "name": "TouHou Makuka Sai ~ Fantastic Danmaku Festival Part II"
+      },
+      {
+        "game": 23168,
+        "name": "Touhou Tenkuushou: Hidden Star in Four Seasons (Touhou 16)"
+      }
+    ]
+  },
+  "th10-switch": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5248276,
+        "name": "Touhou Fuujinroku: Mountain of Faith (Touhou 10)"
+      },
+      {
+        "game": 5512328,
+        "name": "TOUHOU ROCK MAIDEN X"
+      },
+      {
+        "game": 104,
+        "name": "Touhou Koumakyou: The Embodiment of Scarlet Devil (Touhou 6)"
+      },
+      {
+        "game": 12916,
+        "name": "Touhou Yumejikuu: The Phantasmagoria of Dim.Dream (Touhou 3)"
+      },
+      {
+        "game": 27525,
+        "name": "Touhou: Scarlet Curiosity"
+      }
+    ]
+  },
+  "th11-switch": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5248277,
+        "name": "Touhou Chireiden: Subterranean Animism (Touhou 11)"
+      },
+      {
+        "game": 27731,
+        "name": "Touhou Luna Nights"
+      },
+      {
+        "game": 31049,
+        "name": "Touhou Genso Wanderer: Reloaded"
+      },
+      {
+        "game": 1066,
+        "name": "TouHou Makuka Sai ~ Fantastic Danmaku Festival Part II"
+      },
+      {
+        "game": 27525,
+        "name": "Touhou: Scarlet Curiosity"
+      }
+    ]
+  },
+  "th12-switch": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5248287,
+        "name": "Touhou Seirensen: Undefined Fantastic Object (Touhou 12)"
+      },
+      {
+        "game": 1066,
+        "name": "TouHou Makuka Sai ~ Fantastic Danmaku Festival Part II"
+      },
+      {
+        "game": 12916,
+        "name": "Touhou Yumejikuu: The Phantasmagoria of Dim.Dream (Touhou 3)"
+      },
+      {
+        "game": 27525,
+        "name": "Touhou: Scarlet Curiosity"
+      },
+      {
+        "game": 104,
+        "name": "Touhou Koumakyou: The Embodiment of Scarlet Devil (Touhou 6)"
+      }
+    ]
+  },
+  "th15-switch": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 1150408,
+        "name": "Touhou Kanjuden: Legacy of Lunatic Kingdom (Touhou 15)"
+      },
+      {
+        "game": 27731,
+        "name": "Touhou Luna Nights"
+      },
+      {
+        "game": 1066,
+        "name": "TouHou Makuka Sai ~ Fantastic Danmaku Festival Part II"
+      },
+      {
+        "game": 27525,
+        "name": "Touhou: Scarlet Curiosity"
+      },
+      {
+        "game": 12916,
+        "name": "Touhou Yumejikuu: The Phantasmagoria of Dim.Dream (Touhou 3)"
+      }
+    ]
+  },
+  "the-legend-of-zelda-a-link-to-the-past-alek-s-ultimate-nx-editi": {
+    "status": "auto",
+    "game": 38124,
+    "name": "The Legend of Zelda: A Link to the Past",
+    "icon": "https://cdn2.steamgriddb.com/icon/6bdb3b5d567a727c51d69ea8bf4accde.png",
+    "candidates": []
+  },
+  "the-legend-of-zelda-link-s-awakening-dx-hd-alek-s-ultimate-nx-e": {
+    "status": "auto",
+    "game": 34978,
+    "name": "The Legend of Zelda: Link's Awakening DX",
+    "icon": "https://cdn2.steamgriddb.com/icon/440924c5948e05070663f88e69e8242b.png",
+    "candidates": []
+  },
+  "the-legend-of-zelda-the-minish-cap-alek-s-ultimate-nx-edition": {
+    "status": "auto",
+    "game": 34539,
+    "name": "The Legend of Zelda: The Minish Cap",
+    "icon": "https://cdn2.steamgriddb.com/icon/004e34995df78f6f34f7a819fb426343.png",
+    "candidates": []
+  },
+  "the-legend-of-zelda-twilight-princess-alek-s-ultimate-nx-editio": {
+    "status": "auto",
+    "game": 34645,
+    "name": "The Legend of Zelda: Twilight Princess",
+    "icon": "https://cdn2.steamgriddb.com/icon/d5f047af6f250b7b437567f9c03e0137.png",
+    "candidates": []
+  },
+  "the-oracles-project-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 38450,
+        "name": "The Legend of Zelda: Oracle of Seasons"
+      },
+      {
+        "game": 35190,
+        "name": "The Legend of Zelda: Oracle of Ages"
+      },
+      {
+        "game": 21202,
+        "name": "The Legend of Zelda: Ocarina of Time"
+      },
+      {
+        "game": 34336,
+        "name": "The Legend of Zelda: Link's Awakening"
+      },
+      {
+        "game": 34302,
+        "name": "The Legend of Zelda: Majora's Mask"
+      }
+    ]
+  },
+  "the-simpsons-game-nx": {
+    "status": "auto",
+    "game": 35540,
+    "name": "The Simpsons Game",
+    "icon": "https://cdn2.steamgriddb.com/icon/38862237f701dd26bc89bb7906950b3a.png",
+    "candidates": []
+  },
+  "the-simpsons-hit-and-run": {
+    "status": "auto",
+    "game": 34479,
+    "name": "The Simpsons: Hit & Run",
+    "icon": "https://cdn2.steamgriddb.com/icon/701d804549a4a23d3cae801dac6c2c75.png",
+    "candidates": []
+  },
+  "the_executive_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 22906,
+        "name": "The Executioner"
+      },
+      {
+        "game": 5435360,
+        "name": "The Quiet Execution"
+      },
+      {
+        "game": 19971,
+        "name": "The Executioner: Prologue"
+      },
+      {
+        "game": 5452178,
+        "name": "The Executive - A Movie Industry Tycoon"
+      },
+      {
+        "game": 5442908,
+        "name": "Whispers of Prague: The Executioner's Last Cut"
+      }
+    ]
+  },
+  "thorhax-starcraft64-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 36754,
+        "name": "StarCraft 64"
+      },
+      {
+        "game": 4609,
+        "name": "StarCraft"
+      },
+      {
+        "game": 34795,
+        "name": "StarCraft II"
+      },
+      {
+        "game": 34722,
+        "name": "StarCraft Anthology"
+      },
+      {
+        "game": 39070,
+        "name": "StarCraft: Brood War"
+      }
+    ]
+  },
+  "thwww-switch": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 31445,
+        "name": "Touhou: Dreaming Butterfly | 东方蝶梦志"
+      },
+      {
+        "game": 31049,
+        "name": "Touhou Genso Wanderer: Reloaded"
+      },
+      {
+        "game": 27731,
+        "name": "Touhou Luna Nights"
+      },
+      {
+        "game": 27525,
+        "name": "Touhou: Scarlet Curiosity"
+      },
+      {
+        "game": 1632,
+        "name": "Touhou Hisoutensoku: Choudokyuu Guignol no Nazo wo Oe (Touhou 12.3)"
+      }
+    ]
+  },
+  "timeshift-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 553,
+        "name": "TimeShift"
+      },
+      {
+        "game": 5398920,
+        "name": "Timeshift"
+      },
+      {
+        "game": 5286779,
+        "name": "TimeShifters"
+      },
+      {
+        "game": 5265856,
+        "name": "TinShift"
+      },
+      {
+        "game": 5436044,
+        "name": "Timeshift Detective"
+      }
+    ]
+  },
+  "titansouls-nx": {
+    "status": "auto",
+    "game": 4455,
+    "name": "Titan Souls",
+    "icon": "https://cdn2.steamgriddb.com/icon/68cc422a92a25b49f1374a2b4820da29.png",
+    "candidates": []
+  },
+  "tmc": {
+    "status": "auto",
+    "game": 34539,
+    "name": "The Legend of Zelda: The Minish Cap",
+    "icon": "https://cdn2.steamgriddb.com/icon/004e34995df78f6f34f7a819fb426343.png",
+    "candidates": []
+  },
+  "tmnt-port": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5256611,
+        "name": "Teenage Mutant Ninja Turtles"
+      },
+      {
+        "game": 5270513,
+        "name": "Teenage Mutant Ninja Turtles"
+      },
+      {
+        "game": 5333877,
+        "name": "Teenage Mutant Ninja Turtles"
+      },
+      {
+        "game": 5333941,
+        "name": "Teenage Mutant Ninja Turtles"
+      },
+      {
+        "game": 21240,
+        "name": "Teenage Mutant Ninja Turtles: Portal Power"
+      }
+    ]
+  },
+  "tmodloader": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5494422,
+        "name": "TSG DH ModLoader"
+      },
+      {
+        "game": 5258886,
+        "name": "tModloader (Program)"
+      },
+      {
+        "game": 5366153,
+        "name": "ModLoader64 (Emulator)"
+      }
+    ]
+  },
+  "torchlight-nx": {
+    "status": "auto",
+    "game": 9624,
+    "name": "Torchlight",
+    "icon": "https://cdn2.steamgriddb.com/icon/5919cc509bc0234c73ddec244c930964.png",
+    "candidates": []
+  },
+  "torchlight-rekindled": {
+    "status": "auto",
+    "game": 9624,
+    "name": "Torchlight",
+    "icon": "https://cdn2.steamgriddb.com/icon/5919cc509bc0234c73ddec244c930964.png",
+    "candidates": []
+  },
+  "totalpartykill_nx": {
+    "status": "auto",
+    "game": 5102869,
+    "name": "Total Party Kill",
+    "icon": "https://cdn2.steamgriddb.com/icon/1b0e7baae0b3154624caf0cfb717eda3.png",
+    "candidates": []
+  },
+  "tte_nx": {
+    "status": "auto",
+    "game": 18369,
+    "name": "Ticket to Earth",
+    "icon": null,
+    "candidates": []
+  },
+  "tw2de_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 1953,
+        "name": "The Witcher: Enhanced Edition"
+      },
+      {
+        "game": 12833,
+        "name": "The Witcher 3: Wild Hunt - Game of the Year Edition"
+      },
+      {
+        "game": 1962,
+        "name": "The Witcher 2: Assassins of Kings Enhanced Edition"
+      },
+      {
+        "game": 5449317,
+        "name": "The Witcher 3 REDkit"
+      },
+      {
+        "game": 4776,
+        "name": "The Witcher Adventure Game"
+      }
+    ]
+  },
+  "undertale-yellow-nx": {
+    "status": "auto",
+    "game": 5260619,
+    "name": "Undertale Yellow",
+    "icon": "https://cdn2.steamgriddb.com/icon/ad51c2da96522b43ff838bca1f6cdc57.png",
+    "candidates": []
+  },
+  "unleashedrecomp-nx": {
+    "status": "auto",
+    "game": 34584,
+    "name": "Sonic Unleashed",
+    "icon": "https://cdn2.steamgriddb.com/icon/c2e8b74defb073cd8cf4e942136ea164.png",
+    "candidates": []
+  },
+  "usf4-nx": {
+    "status": "auto",
+    "game": 11332,
+    "name": "Ultra Street Fighter IV",
+    "icon": "https://cdn2.steamgriddb.com/icon/0937fb5864ed06ffb59ae5f9b5ed67a9.png",
+    "candidates": []
+  },
+  "usm_switch": {
+    "status": "auto",
+    "game": 37214,
+    "name": "Ultimate Spider-Man",
+    "icon": "https://cdn2.steamgriddb.com/icon/d239e36e539c4056681d799900449474.png",
+    "candidates": []
+  },
+  "vcmi_nx": {
+    "status": "auto",
+    "game": 5545374,
+    "name": "Heroes Of Might And Magic III",
+    "icon": null,
+    "candidates": []
+  },
+  "vcsnx": {
+    "status": "auto",
+    "game": 34363,
+    "name": "Grand Theft Auto: Vice City Stories",
+    "icon": "https://cdn2.steamgriddb.com/icon/1a68e5f4ade56ed1d4bf273e55510750.png",
+    "candidates": []
+  },
+  "vf2-nx-modern": {
+    "status": "auto",
+    "game": 36148,
+    "name": "Virtua Fighter 2",
+    "icon": "https://cdn2.steamgriddb.com/icon/2e4590d7bec6569eda30778eebb69bad.png",
+    "candidates": []
+  },
+  "virtual-on-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 36916,
+        "name": "Cyber Troopers Virtual-On Marz"
+      },
+      {
+        "game": 36015,
+        "name": "Cyber Troopers Virtual-On Oratorio Tangram"
+      },
+      {
+        "game": 11224,
+        "name": "Cyber City 2157: The Visual Novel"
+      },
+      {
+        "game": 38099,
+        "name": "Virtual-On: Cyber Troopers"
+      },
+      {
+        "game": 17061,
+        "name": "Cyber Complex"
+      }
+    ]
+  },
+  "vln_nx": {
+    "status": "auto",
+    "game": 5296922,
+    "name": "Very Little Nightmares",
+    "icon": null,
+    "candidates": []
+  },
+  "vovochka": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": []
+  },
+  "vpl_nx": {
+    "status": "auto",
+    "game": 36151,
+    "name": "Valkyrie Profile: Lenneth",
+    "icon": "https://cdn2.steamgriddb.com/icon/ce6f311f2548c0e40fbd9beaaa288d32.png",
+    "candidates": []
+  },
+  "war1gus-nx-modern": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5316576,
+        "name": "Warcraft III: Nirvana"
+      },
+      {
+        "game": 5252454,
+        "name": "Warcraft III: Reforged"
+      },
+      {
+        "game": 38783,
+        "name": "Warcraft: Orcs & Humans"
+      },
+      {
+        "game": 5265818,
+        "name": "Warcraft II: The Dark Saga"
+      },
+      {
+        "game": 38797,
+        "name": "Warcraft III: Reign of Chaos"
+      }
+    ]
+  },
+  "wargus-nx-modern": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5316576,
+        "name": "Warcraft III: Nirvana"
+      },
+      {
+        "game": 5252454,
+        "name": "Warcraft III: Reforged"
+      },
+      {
+        "game": 5470611,
+        "name": "Warcraft II: Remastered"
+      },
+      {
+        "game": 5470612,
+        "name": "Warcraft I: Remastered"
+      },
+      {
+        "game": 5265818,
+        "name": "Warcraft II: The Dark Saga"
+      }
+    ]
+  },
+  "wipeout-rewrite-nintendo-switch-homebrew": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 15166,
+        "name": "WipeOut"
+      },
+      {
+        "game": 5296247,
+        "name": "WipeOut"
+      },
+      {
+        "game": 12907,
+        "name": "Wipeout XL"
+      },
+      {
+        "game": 35614,
+        "name": "Wipeout 64"
+      },
+      {
+        "game": 5248384,
+        "name": "Wipeout 2097"
+      }
+    ]
+  },
+  "witcher2nx": {
+    "status": "auto",
+    "game": 38500,
+    "name": "The Witcher 2: Assassins of Kings",
+    "icon": "https://cdn2.steamgriddb.com/icon/7ea51fd2f0dd47dff6eb12321e54e9b0.png",
+    "candidates": []
+  },
+  "wmw2_nx": {
+    "status": "auto",
+    "game": 5350947,
+    "name": "Where's My Water? 2",
+    "icon": "https://cdn2.steamgriddb.com/icon/15e2ac0d5ff5acbb13d2e595a3f735e8.png",
+    "candidates": []
+  },
+  "wmw_nx": {
+    "status": "auto",
+    "game": 5350946,
+    "name": "Where's My Water?",
+    "icon": "https://cdn2.steamgriddb.com/icon/dac0df83b3e7d04bf4d3f51de0f83ccd.png",
+    "candidates": []
+  },
+  "wolf4sdl-nx-modern": {
+    "status": "auto",
+    "game": 2428,
+    "name": "Wolfenstein 3D",
+    "icon": "https://cdn2.steamgriddb.com/icon/ff890f0676c8a7da4fe5f9c3f4df7c0b.png",
+    "candidates": []
+  },
+  "woodyre": {
+    "status": "auto",
+    "game": 5345132,
+    "name": "Woody Woodpecker: Escape from Buzz Buzzard Park",
+    "icon": "https://cdn2.steamgriddb.com/icon/a190da2acb20db0c3b17cf65d576ecb2.png",
+    "candidates": []
+  },
+  "wotw-nx": {
+    "status": "auto",
+    "game": 5252751,
+    "name": "Tom and Jerry in War of the Whiskers",
+    "icon": "https://cdn2.steamgriddb.com/icon/e6691ec6ea3844262e0470e827774ff0.png",
+    "candidates": []
+  },
+  "xash3d-fwgs": {
+    "status": "auto",
+    "game": 21207,
+    "name": "Half-Life",
+    "icon": "https://cdn2.steamgriddb.com/icon/2b31595206d7115ea2bcdc2a0fcd6757.png",
+    "candidates": []
+  },
+  "xmow-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5247686,
+        "name": "X-Men Origins: Wolverine"
+      },
+      {
+        "game": 37112,
+        "name": "X-Men: Reign of Apocalypse"
+      },
+      {
+        "game": 34785,
+        "name": "X-Men (Genesis)"
+      },
+      {
+        "game": 33777,
+        "name": "X-Men: Mutant Academy 2"
+      },
+      {
+        "game": 35068,
+        "name": "X-Men (Arcade)"
+      }
+    ]
+  },
+  "ys1x_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5511527,
+        "name": "Ys I & II Chronicles"
+      },
+      {
+        "game": 37381,
+        "name": "Ys I & II Chronicles+"
+      },
+      {
+        "game": 5041,
+        "name": "Ys VI: The Ark of Napishtim"
+      },
+      {
+        "game": 1909,
+        "name": "Ys Origin"
+      },
+      {
+        "game": 4596,
+        "name": "Ys Strategy"
+      }
+    ]
+  },
+  "yttd-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5445316,
+        "name": "Your Turn to Disembark"
+      },
+      {
+        "game": 1049,
+        "name": "Your Future Self"
+      },
+      {
+        "game": 5249562,
+        "name": "Your Turn to Die: Death Game by Majority"
+      },
+      {
+        "game": 640,
+        "name": "Your Home"
+      },
+      {
+        "game": 13800,
+        "name": "Your Star"
+      }
+    ]
+  },
+  "zelda-la-dx-hd-updated": {
+    "status": "auto",
+    "game": 34978,
+    "name": "The Legend of Zelda: Link's Awakening DX",
+    "icon": "https://cdn2.steamgriddb.com/icon/440924c5948e05070663f88e69e8242b.png",
+    "candidates": []
+  },
+  "zelda3t": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5464086,
+        "name": "The Legend of Zelda: Time Lost"
+      },
+      {
+        "game": 5258646,
+        "name": "The Legend of Zelda: Ocarina of Time Online"
+      },
+      {
+        "game": 5471613,
+        "name": "The Legend of Zelda: Sands of Time"
+      },
+      {
+        "game": 5264549,
+        "name": "The Legend of Zelda: Master of Time"
+      },
+      {
+        "game": 36271,
+        "name": "The Legend of Zelda: Ocarina of Time 3D"
+      }
+    ]
+  },
+  "zeldaolb-new-engine": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 34336,
+        "name": "The Legend of Zelda: Link's Awakening"
+      },
+      {
+        "game": 34978,
+        "name": "The Legend of Zelda: Link's Awakening DX"
+      },
+      {
+        "game": 34645,
+        "name": "The Legend of Zelda: Twilight Princess"
+      },
+      {
+        "game": 21202,
+        "name": "The Legend of Zelda: Ocarina of Time"
+      },
+      {
+        "game": 38050,
+        "name": "The Legend of Zelda"
+      }
+    ]
+  },
+  "zeldaroth-new-engine": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 21202,
+        "name": "The Legend of Zelda: Ocarina of Time"
+      },
+      {
+        "game": 34539,
+        "name": "The Legend of Zelda: The Minish Cap"
+      },
+      {
+        "game": 33648,
+        "name": "The Legend of Zelda: Parallel Worlds"
+      },
+      {
+        "game": 34336,
+        "name": "The Legend of Zelda: Link's Awakening"
+      },
+      {
+        "game": 1673,
+        "name": "The Legend of Zelda: Four Swords Adventures"
+      }
+    ]
+  },
+  "zomboid-switch": {
+    "status": "auto",
+    "game": 1255,
+    "name": "Project Zomboid",
+    "icon": "https://cdn2.steamgriddb.com/icon/30999ce1f0a35aeff9a456e4487f9924.png",
+    "candidates": []
+  },
+  "zookeeperdx_nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 1623532,
+        "name": "ZooKeeper"
+      },
+      {
+        "game": 37457,
+        "name": "Zoo Keeper"
+      },
+      {
+        "game": 5252959,
+        "name": "ZooKeeper Simulator"
+      },
+      {
+        "game": 5333322,
+        "name": "Imagine: Zookeeper"
+      },
+      {
+        "game": 18977,
+        "name": "The Eldritch Zookeeper"
+      }
+    ]
+  },
+  "zuma-nx": {
+    "status": "review",
+    "game": null,
+    "name": null,
+    "icon": null,
+    "candidates": [
+      {
+        "game": 5857,
+        "name": "Zuma Deluxe"
+      },
+      {
+        "game": 5506471,
+        "name": "ZUMANU Trip"
+      },
+      {
+        "game": 7268,
+        "name": "Zuma's Revenge!"
+      },
+      {
+        "game": 31233,
+        "name": "Zuma Legend VR"
+      },
+      {
+        "game": 7415,
+        "name": "Zuma's Revenge! - Adventure"
+      }
+    ]
+  },
+  "zumasrevenge-nx": {
+    "status": "auto",
+    "game": 7268,
+    "name": "Zuma's Revenge!",
+    "icon": "https://cdn2.steamgriddb.com/icon/6ba7e6d5863e1b7a4ed2346333d175d7.png",
+    "candidates": []
+  }
+}

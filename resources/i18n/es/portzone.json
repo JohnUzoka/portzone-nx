@@ -49,6 +49,9 @@
     "search_hint": "Un nombre, autor o sistema; vacío muestra todo",
     "menu_kind": "Tipo: {0}",
     "menu_system": "Sistema: {0}",
+    "menu_console": "Consola: {0}",
+    "console_title": "Consola",
+    "for_console": "para {0}",
     "menu_sort": "Orden: {0}",
     "menu_view": "Vista: {0}",
     "show_everything": "Mostrar todo",
@@ -99,6 +102,7 @@
     "port_list_cache": "Lista de ports: {0} (sin conexión: última copia descargada)",
     "port_list_builtin": "Lista de ports: {0} (sin conexión: la lista incluida en PortZone)",
     "sd_card": "Tarjeta SD: {0}",
+    "sgdb_credit": "Los iconos de los ports que no tienen uno propio provienen de SteamGridDB (steamgriddb.com) y los sube su comunidad.",
     "drafts": "Borradores de portzone.json: {0}",
     "ports": "Ports",
     "ports_summary": "{0} de {1} tienen un portzone.json; el resto se instalan de forma manual",
@@ -234,6 +238,17 @@
     "done_other": "Listo: {0} archivos",
     "errors_one": "{0}, {1} error",
     "errors_other": "{0}, {1} errores"
+  },
+  "whatsnew": {
+    "title": "Novedades de PortZone {0}",
+    "welcome_title": "Bienvenido a PortZone",
+    "welcome_1": "PortZone instala ports de juegos desde GitHub y coloca tus propios archivos del juego donde cada uno los necesita. Nunca descarga datos de juegos.",
+    "welcome_2": "Explorar muestra todos los ports. Los juegos Fácil se instalan en un paso; los de Preparar en PC y Compilar en PC necesitan antes una herramienta en un ordenador, enlazada en su página.",
+    "welcome_3": "Archivos del juego lleva tus archivos a la consola: envíalos desde un móvil o PC en la misma red Wi-Fi, o deja que PortZone encuentre los archivos que ya copiaste a la tarjeta SD.",
+    "welcome_4": "En Acerca de, indica qué consola es esta (Switch o Switch 2) y tu idioma.",
+    "continue": "Continuar",
+    "loading": "Cargando las notas de la versión…",
+    "no_notes": "PortZone ahora está en la versión {0}. Sus notas de la versión están en github.com/{1}/releases."
   },
   "update": {
     "title": "Actualizaciones de PortZone",

@@ -27,10 +27,12 @@ struct Port
     nlohmann::json manifestJson; // as read, to tell when the repository's own copy has changed
     std::string manifestSource;  // where portzone.json came from
     std::string manifestError;   // a portzone.json that exists but cannot be used
+    std::string storeIcon;       // a SteamGridDB icon the store matched to a port without one (manifests.json "art")
 
     Section section() const;
     const std::string& description() const;
-    // portzone.json's image in the repository, then ports.json's, then (icon only) the owner's GitHub avatar.
+    // portzone.json's image in the repository, then ports.json's, then (icon only) the store's SteamGridDB match,
+    // then the owner's GitHub avatar.
     std::string iconUrl() const;
     std::string bannerUrl() const; // "" when there is none
     // portzone.json's platform, then ports.json's.

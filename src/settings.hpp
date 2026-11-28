@@ -16,6 +16,7 @@ struct Settings
     int sortOrder = 0;                // Browse and Installed: 0 name A-Z, 1 name Z-A, 2 by system
     std::string console;              // "switch" or "switch2": which build to install; "" until the player picks
     std::string language;             // a languages() code; "" follows the console
+    std::string lastVersion;          // the version whose What's new was shown; "" before the first start
 };
 
 Settings& settings();

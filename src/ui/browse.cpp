@@ -39,6 +39,17 @@ namespace
         return filter == 0 || port.section() == Section(filter - 1);
     }
 
+    // Whether `port` runs on `console` ("" for any console).
+    bool runsOnConsole(const Port& port, const std::string& console)
+    {
+        if (console.empty())
+            return true;
+        const auto consoles = port.runsOn();
+        return std::find(consoles.begin(), consoles.end(), console) != consoles.end();
+    }
+
+    std::string consoleName(const std::string& console) { return console == "switch2" ? "Switch 2" : "Switch"; }
+
     // `query` is already lower case.
     bool searched(const Port& port, const std::string& query)
     {
@@ -241,11 +252,14 @@ void BrowseView::apply()
         text = installedOnly ? text + "  ·  " + filterName(filter) : filterName(filter);
     text += "  ·  " + (systemFilter.empty() ? "portzone/browse/every_system"_i18n :
                                               brls::getStr("portzone/browse/from_system", systemFilter));
+    if (!consoleFilter.empty())
+        text += "  ·  " + brls::getStr("portzone/browse/for_console", consoleName(consoleFilter));
     text += "  ·  " + sortName(settings().sortOrder);
     summary->setText(text);
     searchButton->setText(search.empty() ? "portzone/browse/search"_i18n : brls::getStr("portzone/browse/search_quoted", search));
     searchButton->setStyle(search.empty() ? &brls::BUTTONSTYLE_BORDERED : &brls::BUTTONSTYLE_PRIMARY);
-    filtersButton->setStyle(filter != 0 || !systemFilter.empty() ? &brls::BUTTONSTYLE_PRIMARY : &brls::BUTTONSTYLE_BORDERED);
+    filtersButton->setStyle(filter != 0 || !systemFilter.empty() || !consoleFilter.empty() ? &brls::BUTTONSTYLE_PRIMARY :
+                                                                                            &brls::BUTTONSTYLE_BORDERED);
     rebuild(list, filtersButton, [this](brls::Box*) { fillList(); });
 }
 
@@ -259,10 +273,11 @@ void BrowseView::openSearch()
 
 void BrowseView::openFilters()
 {
-    const bool filtered = filter != 0 || !systemFilter.empty() || !search.empty();
+    const bool filtered = filter != 0 || !systemFilter.empty() || !consoleFilter.empty() || !search.empty();
     std::vector<std::string> items = {
         brls::getStr("portzone/browse/menu_kind", filterName(filter)),
         brls::getStr("portzone/browse/menu_system", systemFilter.empty() ? "portzone/browse/all"_i18n : systemFilter),
+        brls::getStr("portzone/browse/menu_console", consoleFilter.empty() ? "portzone/browse/all"_i18n : consoleName(consoleFilter)),
         brls::getStr("portzone/browse/menu_sort", sortName(settings().sortOrder)),
         brls::getStr("portzone/browse/menu_view",
             settings().gridView ? "portzone/browse/view_grid"_i18n : "portzone/browse/view_cards"_i18n),
@@ -277,18 +292,47 @@ void BrowseView::openFilters()
         else if (chosen == 1)
             chooseSystem();
         else if (chosen == 2)
-            chooseSort();
+            chooseConsole();
         else if (chosen == 3)
-            chooseView();
+            chooseSort();
         else if (chosen == 4)
+            chooseView();
+        else if (chosen == 5)
         {
             filter = 0;
             systemFilter.clear();
+            consoleFilter.clear();
             search.clear();
             apply();
         }
     });
     brls::Application::pushActivity(new brls::Activity(menu));
+}
+
+void BrowseView::chooseConsole()
+{
+    // The consoles a port's release runs on (runs_on): a port for both counts for each.
+    const std::vector<std::string> consoles = { "", "switch", "switch2" };
+    std::vector<std::string> names;
+    int selected = 0;
+    for (size_t i = 0; i < consoles.size(); i++)
+    {
+        size_t count = 0;
+        for (const auto& port : Catalog::get().ports)
+            count += runsOnConsole(port, consoles[i]);
+        names.push_back((consoles[i].empty() ? "portzone/browse/all"_i18n : consoleName(consoles[i])) + "  " +
+            std::to_string(count));
+        if (consoles[i] == consoleFilter)
+            selected = int(i);
+    }
+    auto* dropdown = new brls::Dropdown("portzone/browse/console_title"_i18n, names, [](int) {}, selected,
+        [this, consoles](int chosen) {
+            if (chosen < 0 || chosen >= int(consoles.size()))
+                return;
+            consoleFilter = consoles[size_t(chosen)];
+            apply();
+        });
+    brls::Application::pushActivity(new brls::Activity(dropdown));
 }
 
 void BrowseView::chooseKind()
@@ -371,6 +415,7 @@ std::vector<std::string> BrowseView::wanted() const
     std::vector<const Port*> ports;
     for (const auto& port : Catalog::get().ports)
         if (matches(port, filter) && (systemFilter.empty() || port.originalPlatform() == systemFilter) &&
+            runsOnConsole(port, consoleFilter) &&
             (!installedOnly || installed.count(port.info.id)) && searched(port, query))
             ports.push_back(&port);
     if (settings().sortOrder == 1)
@@ -397,7 +442,7 @@ void BrowseView::fillList()
 
     if (shown.empty())
     {
-        std::string message = installedOnly && search.empty() && filter == 0 && systemFilter.empty() ?
+        std::string message = installedOnly && search.empty() && filter == 0 && systemFilter.empty() && consoleFilter.empty() ?
             "portzone/browse/nothing_installed"_i18n : "portzone/browse/no_match"_i18n;
         if (!search.empty())
             message = brls::getStr("portzone/browse/no_match_search", search);

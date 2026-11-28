@@ -147,6 +147,8 @@ std::string Port::iconUrl() const
         return "https://raw.githubusercontent.com/" + repo + "/HEAD/" + manifest->icon;
     if (!info.icon.empty())
         return info.icon;
+    if (!storeIcon.empty())
+        return storeIcon;
     return "https://github.com/" + repo.substr(0, repo.find('/')) + ".png?size=256";
 }
 
@@ -218,6 +220,7 @@ Catalog::Loaded Catalog::fetch()
 
     // Every port's portzone.json in one file beside ports.json; without it every port is a manual install.
     std::map<std::string, std::pair<json, std::string>> manifests; // id -> (portzone.json, where it came from)
+    std::map<std::string, std::string> storeIcons;                 // id -> the store's SteamGridDB icon ("art")
     std::string indexText, indexError;
     Source indexSource = result.source;
     const std::string indexLocation = isUrl(url) ? url.substr(0, url.rfind('/') + 1) + "manifests.json" :
@@ -231,6 +234,10 @@ Catalog::Loaded Catalog::fetch()
             for (const auto& [id, entry] : index.at("manifests").items())
                 manifests[id] = { entry.at("portzone"),
                     entry.value("source", "") == "store draft" ? fromDraft() : fromRepository() };
+            if (const auto art = index.find("art"); art != index.end() && art->is_object())
+                for (const auto& [id, icon] : art->items())
+                    if (icon.is_string() && icon.get<std::string>().rfind("https://", 0) == 0)
+                        storeIcons[id] = icon.get<std::string>();
         }
         catch (const std::exception& e)
         {
@@ -246,6 +253,8 @@ Catalog::Loaded Catalog::fetch()
     {
         Port& port = loaded[i];
         port.info  = entries[i];
+        if (const auto icon = storeIcons.find(port.info.id); icon != storeIcons.end())
+            port.storeIcon = icon->second;
         const fs::path draft =
             config().draftsDir.empty() ? fs::path() : config().draftsDir / port.info.id / "portzone.json";
         std::string draftText;

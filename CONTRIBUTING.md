@@ -51,7 +51,14 @@ folder or version.** If something is not written down anywhere, leave it out and
 - **No ways around copy protection.** Say which file the player needs, not how to get it past protection: no
   decryption tools or key and firmware dumping guides, and no links to them.
 - **Names are only for naming.** No logos, box art or other artwork you don't have the rights to in `icon` or
-  `banner`, and nothing that suggests a company endorses the port.
+  `banner` (in `ports.json` or in `portzone.json`), and nothing that suggests a company endorses the port.
+- **Fallback icons.** For a port with no icon of its own, the store may show an icon from
+  [SteamGridDB](https://www.steamgriddb.com) (community-uploaded, credited in PortZone's About). The store's daily
+  build picks it; [`store/art.json`](store/art.json) records which SteamGridDB game each port was matched to, and
+  matches it is unsure of wait in the "Store icons to review" issue. To correct one, set its entry's `game` to the
+  right SteamGridDB game id (the number in `https://www.steamgriddb.com/game/<id>`), `status` to `reviewed` and
+  `icon` to `null`; to remove one, set `status` to `none`. Either by pull request. A port's own `icon` always
+  replaces the fallback.
 - **Projects only.** List open repositories whose releases hold the port. No repackaged copies of someone else's
   build, and nothing that bundles a game's own files.
 - Don't copy descriptions from other stores word for word (HB App Store metadata is CC-BY-SA).

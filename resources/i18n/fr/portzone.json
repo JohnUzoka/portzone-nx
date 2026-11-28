@@ -49,6 +49,9 @@
     "search_hint": "Un nom, un auteur ou un système ; vide pour tout afficher",
     "menu_kind": "Type : {0}",
     "menu_system": "Système : {0}",
+    "menu_console": "Console : {0}",
+    "console_title": "Console",
+    "for_console": "pour {0}",
     "menu_sort": "Tri : {0}",
     "menu_view": "Affichage : {0}",
     "show_everything": "Tout afficher",
@@ -99,6 +102,7 @@
     "port_list_cache": "Liste des portages : {0} (hors ligne : dernière copie téléchargée)",
     "port_list_builtin": "Liste des portages : {0} (hors ligne : liste intégrée à PortZone)",
     "sd_card": "Carte SD : {0}",
+    "sgdb_credit": "Les icônes des ports qui n'en ont pas proviennent de SteamGridDB (steamgriddb.com) et sont mises en ligne par sa communauté.",
     "drafts": "Brouillons de portzone.json : {0}",
     "ports": "Portages",
     "ports_summary": "{0} sur {1} ont un portzone.json ; les autres s'installent manuellement",
@@ -234,6 +238,17 @@
     "done_other": "Terminé : {0} fichiers",
     "errors_one": "{0}, {1} erreur",
     "errors_other": "{0}, {1} erreurs"
+  },
+  "whatsnew": {
+    "title": "Nouveautés de PortZone {0}",
+    "welcome_title": "Bienvenue dans PortZone",
+    "welcome_1": "PortZone installe des portages de jeux depuis GitHub et place vos propres fichiers de jeu là où chacun en a besoin. Il ne télécharge jamais de données de jeu.",
+    "welcome_2": "Parcourir liste tous les ports. Les jeux Facile s'installent en une étape ; ceux de Préparer sur PC et Compiler sur PC nécessitent d'abord un outil sur un ordinateur, indiqué sur leur page.",
+    "welcome_3": "Fichiers du jeu place vos fichiers sur la console : envoyez-les depuis un téléphone ou un PC sur le même Wi-Fi, ou laissez PortZone trouver les fichiers déjà copiés sur la carte SD.",
+    "welcome_4": "Dans À propos, indiquez de quelle console il s'agit (Switch ou Switch 2) et votre langue.",
+    "continue": "Continuer",
+    "loading": "Chargement des notes de version…",
+    "no_notes": "PortZone est maintenant en version {0}. Ses notes de version sont sur github.com/{1}/releases."
   },
   "update": {
     "title": "Mises à jour de PortZone",

@@ -131,7 +131,8 @@ Real files in this repository's store, each a different kind of port:
   no "amazing", emoji or version numbers; don't start with the title. Example: `Sonic Adventure 2 (Xbox Live Arcade)
   recompiled to run natively at 60 FPS. Needs your own Xbox 360 copy, converted on a PC.`
 - **`icon`**: square PNG or JPEG, 256x256 or larger, at most 1 MB. Most ports already have one for their `.nro`.
-  Without one PortZone shows your GitHub avatar.
+  Without one PortZone shows the store's fallback icon from SteamGridDB, else your GitHub avatar; your own `icon`
+  always replaces the store's fallback.
 - **`banner`**: 16:9 PNG or JPEG (1280x720), at most 2 MB, across the top of the port's page. A screenshot of the game
   running on a Switch works well. No logos or box art you don't have the rights to.
 - **`platform.original`**: what the port was made from, from the schema's list: the system the game came out on
