@@ -4,8 +4,9 @@
 
 **Browse** lists every port, as cards or a grid of icons. **Search** (or **−**) finds games by name, author or
 system. **Filter and view** (or **X**) chooses the kind of port, the system the game came from (PC, 3DS, Xbox 360,
-source code...), the order (name A-Z or Z-A, or by system) and cards or grid. **Installed** has the same search and
-choices. The kinds:
+source code...), the console its release runs on (Switch or Switch 2), the order (name A-Z or Z-A, or by system) and
+cards or grid. **Installed** has the same search and choices. A game without an icon of its own shows one from
+SteamGridDB when the store found a match. After an update, PortZone shows what's new once. The kinds:
 
 - **Easy Setup**: the port has a `portzone.json`. One-button install, a checklist of your files, the folder layout.
 - **Prepare on PC**: PortZone installs the game; a tool on a PC makes its files from your copy. PortZone links the
